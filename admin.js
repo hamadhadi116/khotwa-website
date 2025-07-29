@@ -125,10 +125,18 @@ function initAdmin() {
   const students = JSON.parse(localStorage.getItem('registrations') || '[]');
   students.forEach(s => {
     const li = document.createElement('li');
-    li.textContent = `${s.name} – ${s.email} – ${s.major} – ${s.level}`;
+    li.innerHTML = `
+      <div>
+        <strong>${s.name}</strong><br>
+        📧 ${s.email}<br>
+        🧪 Major: ${s.major}<br>
+        🎓 Level: ${s.level}
+      </div>
+    `;
     list.appendChild(li);
   });
 }
+
 
 
   // تحميل البيانات
