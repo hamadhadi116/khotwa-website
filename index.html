@@ -9,12 +9,13 @@
 <body>
 
   <header class="navbar">
-    <div class="logo"><a href = "index.html">KHOTWA COUNCIL</a></div>
+    <div class="logo">KHOTWA COUNCIL</div>
     <nav>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="admin.html">Admin</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
     <button id="darkToggle" class="dark-btn">🌙</button>
@@ -28,23 +29,17 @@
 
   <section id="about" class="section">
     <h2>About Us</h2>
-    <p>
-      We are the voice of students, working towards better opportunities,
-      activities, and representation within the academic environment.
-    </p>
+    <p id="aboutContent">Loading...</p>
   </section>
 
   <section id="events" class="section bg-light">
     <h2>Upcoming Events</h2>
-    <ul>
-      <li>📅 Workshop on Leadership – August 10</li>
-      <li>📅 Campus Cleanup Day – September 2</li>
-      <li>📅 Annual Student Meetup – October 14</li>
-    </ul>
+    <ul id="eventsContainer"></ul>
   </section>
 
   <section id="contact" class="section">
     <h2>Contact Us</h2>
+    <p id="contactContent">Loading...</p>
     <form id="contactForm">
       <input type="text" placeholder="Your Name" required />
       <input type="email" placeholder="Your Email" required />
@@ -57,8 +52,29 @@
     &copy; 2025 KHOTWA Student Council. All rights reserved.
   </footer>
 
-  <script src="script.js"></script>
   <script src="dark-toggle.js"></script>
+  <script>
+    // تحميل محتوى الإدمن
+    document.getElementById('aboutContent').textContent = localStorage.getItem('aboutText') || 'No content yet.';
+    document.getElementById('contactContent').textContent = localStorage.getItem('contactText') || 'Feel free to reach us.';
+
+    // تحميل الأحداث
+    const events = JSON.parse(localStorage.getItem('events') || '[]');
+    const container = document.getElementById('eventsContainer');
+    events
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
+      .forEach(ev => {
+        const li = document.createElement('li');
+        const img = ev.image ? `<img src="${ev.image}" style="height:50px;border-radius:4px;margin-right:8px;" />` : '';
+        li.innerHTML = `${img}${ev.date} – ${ev.title}`;
+        container.appendChild(li);
+      });
+
+    // رسالة نجاح فورم
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Thanks for reaching out! ✔️');
+    });
+  </script>
 </body>
 </html>
-
