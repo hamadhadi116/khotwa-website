@@ -14,15 +14,18 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background-color: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .navbar {
   background-color: var(--black);
   color: var(--white);
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
 }
 
 .logo {
@@ -33,7 +36,10 @@ body {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-links a {
@@ -57,7 +63,7 @@ body {
 .hero {
   background: linear-gradient(to right, var(--red), var(--green));
   color: var(--white);
-  padding: 6rem 2rem;
+  padding: 5rem 2rem;
   text-align: center;
 }
 
@@ -73,7 +79,7 @@ body {
 }
 
 .section {
-  padding: 4rem 2rem;
+  padding: 3rem 1.5rem;
   text-align: center;
 }
 
@@ -84,6 +90,7 @@ form {
   gap: 1rem;
   max-width: 400px;
   margin: 0 auto;
+  width: 100%;
 }
 
 form input,
@@ -92,6 +99,7 @@ form textarea {
   padding: 0.75rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 1rem;
 }
 
 form button {
@@ -115,7 +123,7 @@ form button:hover {
   padding: 1rem;
 }
 
-/* === لوحة التحكم === */
+/* شاشة تسجيل الدخول */
 .login-screen {
   display: flex;
   flex-direction: column;
@@ -145,6 +153,7 @@ form button:hover {
   cursor: pointer;
 }
 
+/* لوحة التحكم */
 .admin-panel-wrapper {
   display: flex;
   flex-direction: column;
@@ -233,6 +242,11 @@ form button:hover {
   background-color: var(--green);
 }
 
+/* خلفية خفيفة */
+.bg-light {
+  background-color: #f8f8f8;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .admin-panel {
@@ -245,6 +259,31 @@ form button:hover {
   textarea,
   input,
   button {
+    font-size: 1rem;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 0;
+    display: block;
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero p {
     font-size: 1rem;
   }
 }
