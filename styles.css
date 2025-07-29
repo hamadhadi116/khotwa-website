@@ -63,9 +63,35 @@ body {
 .hero {
   background: linear-gradient(to right, var(--red), var(--green));
   color: var(--white);
-  padding: 5rem 2rem;
+  padding: 6rem 2rem;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.hero-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.primary-btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--white);
+  background-color: var(--black);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.primary-btn:hover {
+  background-color: var(--green);
+}
+
 
 .btn {
   margin-top: 1rem;
