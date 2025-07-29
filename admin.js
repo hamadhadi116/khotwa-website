@@ -120,16 +120,16 @@ function initAdmin() {
 
   // الطلاب
   function loadStudents() {
-    const list = document.getElementById("registeredList");
-    list.innerHTML = "";
-    const students = JSON.parse(localStorage.getItem("registrations") || "[]");
+  const list = document.getElementById('registeredList');
+  list.innerHTML = '';
+  const students = JSON.parse(localStorage.getItem('registrations') || '[]');
+  students.forEach(s => {
+    const li = document.createElement('li');
+    li.textContent = `${s.name} – ${s.email} – ${s.major} – ${s.level}`;
+    list.appendChild(li);
+  });
+}
 
-    students.forEach((s) => {
-      const li = document.createElement("li");
-      li.textContent = `${s.name} – ${s.email}`;
-      list.appendChild(li);
-    });
-  }
 
   // تحميل البيانات
   loadEvents();
