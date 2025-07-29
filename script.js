@@ -1,22 +1,17 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("registerForm");
+document.getElementById("regForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-  form?.addEventListener("submit", e => {
-    e.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const major = document.getElementById("major").value.trim();
+  const level = document.getElementById("level").value;
 
-    const name = document.getElementById("studentName").value.trim();
-    const email = document.getElementById("studentEmail").value.trim();
+  const student = { name, email, major, level };
 
-    if (!name || !email) {
-      alert("Please fill in all fields.");
-      return;
-    }
+  const students = JSON.parse(localStorage.getItem("registrations") || "[]");
+  students.push(student);
+  localStorage.setItem("registrations", JSON.stringify(students));
 
-    const registrations = JSON.parse(localStorage.getItem("registrations") || "[]");
-    registrations.push({ name, email });
-    localStorage.setItem("registrations", JSON.stringify(registrations));
-
-    alert("🎉 Registration successful!");
-    form.reset();
-  });
+  alert("✔️ Registered successfully!");
+  this.reset();
 });
