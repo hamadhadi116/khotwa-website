@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Panel – Khotwa Council</title>
-  <link rel="stylesheet" href="styles.css" id="theme-link">
+  <link rel="stylesheet" href="styles.css" id="theme-link" />
 </head>
 <body>
 
-  <!-- Login Screen -->
+  <!-- شاشة تسجيل الدخول -->
   <div id="loginScreen" class="login-screen">
     <h2>🔒 Admin Login</h2>
     <input type="password" id="adminPass" placeholder="Enter Admin Password" />
     <button onclick="checkLogin()">Login</button>
   </div>
 
-  <!-- Admin Panel -->
-  <div id="adminPanel" class="admin-panel-wrapper" style="display:none;">
+  <!-- لوحة تحكم الأدمن -->
+  <div id="adminPanel" class="admin-panel-wrapper" style="display: none;">
     <header class="navbar">
-  <div class="logo">KHOTWA ADMIN</div>
-  <div class="navbar-actions">
-    <button id="darkToggle" class="dark-btn">🌙</button>
-    <button id="logoutBtn" class="logout-btn">Logout</button>
-  </div>
-</header>
-
+      <div class="logo">KHOTWA ADMIN</div>
+      <div class="navbar-actions">
+        <button id="darkToggle" class="dark-btn">🌙</button>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </header>
 
     <main class="admin-panel">
+      <!-- تعديل المحتوى الرئيسي -->
       <section class="card card-content">
         <h2>📝 Edit Site Content</h2>
         <label>About Us:</label>
@@ -38,16 +38,19 @@
         <button id="saveContact">Save Contact</button>
       </section>
 
+      <!-- إدارة الأحداث -->
       <section class="card card-events">
         <h2>📅 Manage Events</h2>
         <form id="newEventForm">
           <input type="text" id="eventTitle" placeholder="Event Title" required />
           <input type="date" id="eventDate" required />
+          <input type="file" id="eventImage" accept="image/*" />
           <button type="submit">Add Event</button>
         </form>
         <ul id="eventsList" class="data-list"></ul>
       </section>
 
+      <!-- الطلاب المسجلين -->
       <section class="card card-students">
         <h2>👨‍🎓 Registered Students</h2>
         <ul id="registeredList" class="data-list"></ul>
