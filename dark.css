@@ -20,14 +20,34 @@ body {
   background-color: #1c1c1c;
   color: var(--white);
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
 }
 
 .logo {
   font-weight: bold;
   font-size: 1.5rem;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: var(--green);
 }
 
 .navbar-actions button {
@@ -94,4 +114,35 @@ button:hover {
   height: 60px;
   border-radius: 4px;
   margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .nav-links a {
+    padding: 0.5rem 0;
+    display: block;
+  }
+
+  .section,
+  .card {
+    padding: 1.5rem 1rem;
+  }
+
+  textarea,
+  input,
+  button {
+    font-size: 1rem;
+  }
 }
