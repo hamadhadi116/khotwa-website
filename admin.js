@@ -34,7 +34,6 @@ function initAdmin() {
     toggle.textContent = '☀️';
   }
 
-  // Content
   const aboutText = document.getElementById('aboutText');
   const contactText = document.getElementById('contactText');
   aboutText.value = localStorage.getItem('aboutText') || '';
@@ -48,7 +47,6 @@ function initAdmin() {
     alert("Contact section saved!");
   };
 
-  // Events
   function loadEvents() {
     const events = JSON.parse(localStorage.getItem('events') || '[]');
     const list = document.getElementById('eventsList');
@@ -78,7 +76,6 @@ function initAdmin() {
     e.target.reset();
   };
 
-  // Students
   function loadStudents() {
     const list = document.getElementById('registeredList');
     const students = JSON.parse(localStorage.getItem('registrations') || '[]');
