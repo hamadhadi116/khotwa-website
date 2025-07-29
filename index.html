@@ -16,7 +16,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#contact">Contact</a></li>
-         <li><a href="admin.html">Admin</a></li>
+        <li><a href="admin.html">Admin</a></li>
       </ul>
     </nav>
     <button id="darkToggle" class="dark-btn">🌙</button>
@@ -33,7 +33,7 @@
     <p id="aboutContent">Loading...</p>
   </section>
 
-  <section id="events" class="section bg-light">
+  <section id="events" class="section">
     <h2>Upcoming Events</h2>
     <ul id="eventsContainer"></ul>
   </section>
@@ -55,26 +55,33 @@
 
   <script src="dark-toggle.js"></script>
   <script>
-    // تحميل محتوى الإدمن
-    document.getElementById('aboutContent').textContent = localStorage.getItem('aboutText') || 'No content yet.';
-    document.getElementById('contactContent').textContent = localStorage.getItem('contactText') || 'Feel free to reach us.';
+    window.addEventListener("DOMContentLoaded", () => {
+      // تحميل محتوى الإدمن
+      document.getElementById('aboutContent').textContent =
+        localStorage.getItem('aboutText') || 'No content yet.';
+      document.getElementById('contactContent').textContent =
+        localStorage.getItem('contactText') || 'Feel free to reach us.';
 
-    // تحميل الأحداث
-    const events = JSON.parse(localStorage.getItem('events') || '[]');
-    const container = document.getElementById('eventsContainer');
-    events
-      .sort((a, b) => new Date(a.date) - new Date(b.date))
-      .forEach(ev => {
-        const li = document.createElement('li');
-        const img = ev.image ? `<img src="${ev.image}" style="height:50px;border-radius:4px;margin-right:8px;" />` : '';
-        li.innerHTML = `${img}${ev.date} – ${ev.title}`;
-        container.appendChild(li);
+      // تحميل الأحداث
+      const events = JSON.parse(localStorage.getItem('events') || '[]');
+      const container = document.getElementById('eventsContainer');
+      events
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .forEach(ev => {
+          const li = document.createElement('li');
+          const img = ev.image
+            ? `<img src="${ev.image}" style="height:50px;border-radius:4px;margin-right:8px;" />`
+            : '';
+          li.innerHTML = `${img}${ev.date} – ${ev.title}`;
+          container.appendChild(li);
+        });
+
+      // رسالة نجاح فورم
+      document.getElementById('contactForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert('Thanks for reaching out! ✔️');
+        this.reset();
       });
-
-    // رسالة نجاح فورم
-    document.getElementById('contactForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert('Thanks for reaching out! ✔️');
     });
   </script>
 </body>
