@@ -42,10 +42,11 @@ function initAdmin() {
   }
 
   // تسجيل الخروج
-  document.getElementById("logoutBtn").onclick = () => {
-    localStorage.removeItem("khotwa_admin");
-    location.reload();
-  };
+ document.getElementById('logoutBtn').onclick = () => {
+  localStorage.removeItem('khotwa_admin');
+  window.location.href = 'index.html'; // يرجع للصفحة الرئيسية
+};
+
 
   // المحتوى
   const aboutText = document.getElementById("aboutText");
