@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events Calendar – KHOTWA</title>
+
+  <!-- FullCalendar CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+  <!-- تنسيق بسيط -->
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 1rem 2rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    #calendar {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .fc-event-title {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>📅 KHOTWA Event Calendar</header>
+
+  <div id="calendar"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const savedEvents = JSON.parse(localStorage.getItem("events") || "[]");
+      const events = savedEvents.map(ev => ({
+        title: ev.title,
+        start: ev.date,
+        backgroundColor: "#d41c0f",
+        borderColor: "#d41c0f"
+      }));
+
+      const calendarEl = document.getElementById("calendar");
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        events: events,
+        height: "auto"
+      });
+      calendar.render();
+    });
+  </script>
+
+</body>
+</html>
