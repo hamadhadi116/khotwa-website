@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel – Khotwa Council</title>
-  <link rel="stylesheet" href="styles.css" id="theme-link" />
+  <link rel="stylesheet" href="styles.css" id="theme-link">
 </head>
 <body>
 
-  <!-- شاشة تسجيل الدخول -->
-  <div id="loginScreen" class="section">
+  <!-- Login Screen -->
+  <div id="loginScreen" class="login-screen">
     <h2>🔒 Admin Login</h2>
     <input type="password" id="adminPass" placeholder="Enter Admin Password" />
     <button onclick="checkLogin()">Login</button>
   </div>
 
-  <!-- لوحة التحكم -->
-  <div id="adminPanel" style="display: none;">
+  <!-- Admin Panel -->
+  <div id="adminPanel" class="admin-panel-wrapper" style="display:none;">
     <header class="navbar">
       <div class="logo">KHOTWA ADMIN</div>
       <button id="darkToggle" class="dark-btn">🌙</button>
     </header>
 
     <main class="admin-panel">
-      <section class="card">
-        <h2>📝 Edit Content</h2>
+      <section class="card card-content">
+        <h2>📝 Edit Site Content</h2>
         <label>About Us:</label>
-        <textarea id="aboutText" rows="3"></textarea>
+        <textarea id="aboutText" rows="4"></textarea>
         <button id="saveAbout">Save About</button>
 
-        <label>Contact Us:</label>
-        <textarea id="contactText" rows="2"></textarea>
+        <label>Contact Intro:</label>
+        <textarea id="contactText" rows="3"></textarea>
         <button id="saveContact">Save Contact</button>
       </section>
 
-      <section class="card">
+      <section class="card card-events">
         <h2>📅 Manage Events</h2>
         <form id="newEventForm">
           <input type="text" id="eventTitle" placeholder="Event Title" required />
@@ -44,13 +44,13 @@
         <ul id="eventsList" class="data-list"></ul>
       </section>
 
-      <section class="card">
+      <section class="card card-students">
         <h2>👨‍🎓 Registered Students</h2>
         <ul id="registeredList" class="data-list"></ul>
       </section>
     </main>
 
-    <footer class="footer">&copy; 2025 KHOTWA Council</footer>
+    <footer class="footer">&copy; 2025 KHOTWA Student Council</footer>
   </div>
 
   <script src="dark-toggle.js"></script>
