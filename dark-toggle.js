@@ -1,17 +1,21 @@
-const toggle = document.getElementById('darkToggle');
-const themeLink = document.getElementById('theme-link');
+window.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("darkToggle");
+  const themeLink = document.getElementById("theme-link");
 
-toggle.addEventListener('click', () => {
-  const curr = themeLink.getAttribute('href');
-  const nowDark = curr === 'styles.css';
-  themeLink.setAttribute('href', nowDark ? 'dark.css' : 'styles.css');
-  toggle.textContent = nowDark ? '☀️' : '🌙';
-  localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+  // تبديل الوضع عند الضغط
+  toggle.addEventListener("click", () => {
+    const isDark = themeLink.getAttribute("href") === "styles.css";
+    themeLink.setAttribute("href", isDark ? "dark.css" : "styles.css");
+    toggle.textContent = isDark ? "☀️" : "🌙";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  // عند تحميل الصفحة، استخدام التفضيل المحفوظ
+  const saved = localStorage.getItem("theme");
+  if (saved === "dark") {
+    themeLink.setAttribute("href", "dark.css");
+    toggle.textContent = "☀️";
+  } else {
+    toggle.textContent = "🌙";
+  }
 });
-
-// عند التحميل:
-const saved = localStorage.getItem('theme');
-if (saved === 'dark') {
-  themeLink.setAttribute('href', 'dark.css');
-  toggle.textContent = '☀️';
-}
