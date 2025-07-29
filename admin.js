@@ -21,50 +21,48 @@ if (localStorage.getItem("khotwa_admin") === "ok") {
 function initAdmin() {
   const toggle = document.getElementById('darkToggle');
   const themeLink = document.getElementById('theme-link');
-
   toggle.addEventListener('click', () => {
     const isDark = themeLink.getAttribute('href') === 'styles.css';
     themeLink.setAttribute('href', isDark ? 'dark.css' : 'styles.css');
     toggle.textContent = isDark ? '☀️' : '🌙';
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
-
   if (localStorage.getItem('theme') === 'dark') {
     themeLink.setAttribute('href', 'dark.css');
     toggle.textContent = '☀️';
   }
 
+  // Content editing
   const aboutText = document.getElementById('aboutText');
   const contactText = document.getElementById('contactText');
   aboutText.value = localStorage.getItem('aboutText') || '';
   contactText.value = localStorage.getItem('contactText') || '';
   document.getElementById('saveAbout').onclick = () => {
     localStorage.setItem('aboutText', aboutText.value);
-    alert("About section saved!");
+    alert("About saved!");
   };
   document.getElementById('saveContact').onclick = () => {
     localStorage.setItem('contactText', contactText.value);
-    alert("Contact section saved!");
+    alert("Contact saved!");
   };
 
+  // Events management
   function loadEvents() {
     const events = JSON.parse(localStorage.getItem('events') || '[]');
     const list = document.getElementById('eventsList');
     list.innerHTML = '';
     events.forEach((ev, i) => {
       const li = document.createElement('li');
-      li.innerHTML = `${ev.date} - ${ev.title} <button onclick="removeEvent(${i})">Delete</button>`;
+      li.innerHTML = `<span>${ev.date} - ${ev.title}</span><button onclick="removeEvent(${i})">Delete</button>`;
       list.appendChild(li);
     });
   }
-
-  window.removeEvent = function(index) {
+  window.removeEvent = function(i) {
     const events = JSON.parse(localStorage.getItem('events') || '[]');
-    events.splice(index, 1);
+    events.splice(i, 1);
     localStorage.setItem('events', JSON.stringify(events));
     loadEvents();
   };
-
   document.getElementById('newEventForm').onsubmit = e => {
     e.preventDefault();
     const title = document.getElementById('eventTitle').value;
@@ -76,10 +74,11 @@ function initAdmin() {
     e.target.reset();
   };
 
+  // Student list
   function loadStudents() {
     const list = document.getElementById('registeredList');
-    const students = JSON.parse(localStorage.getItem('registrations') || '[]');
     list.innerHTML = '';
+    const students = JSON.parse(localStorage.getItem('registrations') || '[]');
     students.forEach(s => {
       const li = document.createElement('li');
       li.textContent = `${s.name} – ${s.email}`;
