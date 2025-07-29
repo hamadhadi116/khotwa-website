@@ -446,4 +446,20 @@ textarea, input[type="text"], input[type="date"] {
     padding: 1rem;
   }
 }
+.navbar-actions {
+  display: flex;
+  gap: 10px;
+}
+.logout-btn {
+  background: var(--red);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  background-color: var(--green);
+}
 
