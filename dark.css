@@ -1,0 +1,22 @@
+:root {
+  --red: #d41c0f;
+  --green: #00703c;
+  --black: #000;
+  --white: #fff;
+  --bg: #121212;
+  --text: #e0e0e0;
+  --btn-bg: var(--green);
+  --btn-text: var(--white);
+}
+
+/* توليد نفس التنسيقات لكن بالألوان الداكنة */
+body { background-color: var(--bg); color: var(--text); }
+.navbar { background-color: var(--black); }
+.nav-links a { color: var(--white); }
+.nav-links a:hover { color: var(--red); }
+.hero { background: linear-gradient(to right, var(--red), var(--green)); color: var(--white); }
+.btn { background-color: var(--btn-bg); color: var(--btn-text); }
+.btn:hover { background-color: var(--red); }
+.footer { background-color: var(--black); color: var(--white); }
+.dark-btn { color: var(--white); }
+form input, form textarea { background-color: #1e1e1e; color: var(--text); border: 1px solid #333; }
