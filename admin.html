@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="styles.css" id="theme-link" />
 </head>
 <body>
-
   <!-- شاشة تسجيل الدخول -->
   <div id="loginScreen" class="login-screen">
     <h2>🔒 Admin Login</h2>
@@ -26,20 +25,20 @@
     </header>
 
     <main class="admin-panel">
-      <!-- تعديل المحتوى الرئيسي -->
-      <section class="card card-content">
+      <!-- تعديل المحتوى -->
+      <section class="card">
         <h2>📝 Edit Site Content</h2>
-        <label>About Us:</label>
+        <label for="aboutText">About Us:</label>
         <textarea id="aboutText" rows="4"></textarea>
         <button id="saveAbout">Save About</button>
 
-        <label>Contact Intro:</label>
+        <label for="contactText">Contact Intro:</label>
         <textarea id="contactText" rows="3"></textarea>
         <button id="saveContact">Save Contact</button>
       </section>
 
       <!-- إدارة الأحداث -->
-      <section class="card card-events">
+      <section class="card">
         <h2>📅 Manage Events</h2>
         <form id="newEventForm">
           <input type="text" id="eventTitle" placeholder="Event Title" required />
@@ -51,7 +50,7 @@
       </section>
 
       <!-- الطلاب المسجلين -->
-      <section class="card card-students">
+      <section class="card">
         <h2>👨‍🎓 Registered Students</h2>
         <ul id="registeredList" class="data-list"></ul>
       </section>
