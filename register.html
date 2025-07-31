@@ -5,84 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register – KHOTWA</title>
   <link rel="stylesheet" href="styles.css" id="theme-link" />
-  <style>
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 1.2rem;
-      padding: 0;
-      margin: 0;
-    }
-
-    .nav-links li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .nav-links li a:hover {
-      color: var(--green);
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .navbar-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .form-wrapper {
-      max-width: 500px;
-      margin: 2rem auto;
-      background: var(--white);
-      color: var(--text);
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav-links {
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
-      }
-
-      .form-wrapper {
-        padding: 1rem;
-        margin: 1rem;
-      }
-    }
-  </style>
 </head>
 <body>
 
-  <!-- الهيدر -->
   <header class="navbar">
     <div class="logo">KHOTWA COUNCIL</div>
-    <div class="navbar-right">
+    <nav class="nav-container">
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#events">Events</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
         <li><a href="calendar.html">Calendar</a></li>
         <li><a href="register.html">Register</a></li>
         <li><a href="admin.html">Admin</a></li>
       </ul>
       <button id="darkToggle" class="dark-btn">🌙</button>
-    </div>
+    </nav>
   </header>
 
-  <!-- نموذج التسجيل -->
   <section class="section">
     <div class="form-wrapper">
       <h2>📝 Student Registration</h2>
@@ -102,7 +43,6 @@
     </div>
   </section>
 
-  <!-- الفوتر -->
   <footer class="footer">
     &copy; 2025 KHOTWA Student Council. All rights reserved.
   </footer>
