@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="styles.css" id="theme-link" />
 </head>
 <body>
+  <!-- 🔧 Dark Mode Initialization مبكرًا -->
+  <script>
+    const saved = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", saved);
+  </script>
 
   <header class="navbar">
     <div class="logo">KHOTWA COUNCIL</div>
@@ -74,16 +79,14 @@
       // Load events
       const events = JSON.parse(localStorage.getItem('events') || '[]');
       const container = document.getElementById('eventsContainer');
-      events
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-        .forEach(ev => {
-          const li = document.createElement('li');
-          const img = ev.image ? `<img src="${ev.image}" style="height:50px;border-radius:4px;margin-right:8px;" />` : '';
-          li.innerHTML = `<div class="card-event">${img}<div><h3>${ev.title}</h3><p>${ev.date}</p></div></div>`;
-          container.appendChild(li);
-        });
+      container.innerHTML = '';
+      events.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(ev => {
+        const img = ev.image ? `<img src="${ev.image}" style="height:50px;border-radius:4px;margin-right:8px;" />` : '';
+        const li = document.createElement('li');
+        li.innerHTML = `<div class="card-event">${img}<div><h3>${ev.title}</h3><p>${ev.date}</p></div></div>`;
+        container.appendChild(li);
+      });
 
-      // Contact form
       document.getElementById('contactForm').addEventListener('submit', function (e) {
         e.preventDefault();
         alert('Thanks for reaching out! ✔️');
