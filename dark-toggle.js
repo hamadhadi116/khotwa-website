@@ -2,10 +2,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("darkToggle");
   const themeLink = document.getElementById("theme-link");
 
-  // إذا ما فيه زر toggle (مثلاً في بعض الصفحات)، لا تكمل
   if (!toggle || !themeLink) return;
 
-  // حمل التفضيل المحفوظ
   const saved = localStorage.getItem("theme");
   const isSavedDark = saved === "dark";
 
@@ -18,7 +16,7 @@ window.addEventListener("DOMContentLoaded", () => {
     toggle.textContent = "🌙";
   }
 
-  // عند الضغط: تبديل الوضع
+  // تبديل عند الضغط
   toggle.addEventListener("click", () => {
     const isDark = themeLink.getAttribute("href") === "styles.css";
     themeLink.setAttribute("href", isDark ? "dark.css" : "styles.css");
