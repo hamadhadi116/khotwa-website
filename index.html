@@ -28,24 +28,24 @@
     <div class="hero-content">
       <h1>Welcome to KHOTWA Student Council</h1>
       <p>Empowering students, one step at a time.</p>
-      <a href="register.html" class="btn primary-btn">Join the Council</a>
+      <a href="#about" class="primary-btn">Learn More</a>
     </div>
   </section>
 
-  <section id="about" class="section about-section">
+  <section id="about" class="about-section">
     <div class="about-container">
       <div class="about-text">
-        <h2>📌 Who We Are</h2>
+        <h2>Who We Are</h2>
         <p id="aboutContent">Loading...</p>
       </div>
       <div class="about-image">
-        <img src="https://i.top4top.io/p_3497a12jc1.jpg" alt="Khotwa Team Photo"/>
+        <img src="https://i.top4top.io/p_3497a12jc1.jpg" alt="Khotwa Team Photo" />
       </div>
     </div>
   </section>
 
-  <section id="events" class="section">
-    <h2>📅 Upcoming Events</h2>
+  <section id="events" class="section bg-light">
+    <h2>Upcoming Events</h2>
     <ul id="eventsContainer" class="event-cards"></ul>
   </section>
 
@@ -67,39 +67,24 @@
   <script src="dark-toggle.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-      const themeLink = document.getElementById("theme-link");
-      const toggle = document.getElementById("darkToggle");
+      // Load admin-provided content
+      document.getElementById('aboutContent').textContent = localStorage.getItem('aboutText') || 'No content yet.';
+      document.getElementById('contactContent').textContent = localStorage.getItem('contactText') || 'Feel free to reach us.';
 
-      const saved = localStorage.getItem("theme") || "light";
-      themeLink.setAttribute("href", saved === "dark" ? "dark.css" : "styles.css");
-      toggle.textContent = saved === "dark" ? "☀️" : "🌙";
-
-      toggle.addEventListener("click", () => {
-        const isNowDark = themeLink.getAttribute("href") === "styles.css";
-        themeLink.setAttribute("href", isNowDark ? "dark.css" : "styles.css");
-        toggle.textContent = isNowDark ? "☀️" : "🌙";
-        localStorage.setItem("theme", isNowDark ? "dark" : "light");
-      });
-
-      document.getElementById('aboutContent').textContent =
-        localStorage.getItem('aboutText') || 'No content yet.';
-      document.getElementById('contactContent').textContent =
-        localStorage.getItem('contactText') || 'Feel free to reach us.';
-
+      // Load events
       const events = JSON.parse(localStorage.getItem('events') || '[]');
       const container = document.getElementById('eventsContainer');
-      container.innerHTML = '';
-      events.sort((a,b) => new Date(a.date) - new Date(b.date))
+      events
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
         .forEach(ev => {
           const li = document.createElement('li');
-          li.className = "card-event";
-          li.innerHTML = `
-            ${ev.image ? `<img src="${ev.image}" alt="Event">` : ""}
-            <div><h3>${ev.title}</h3><p>${ev.date}</p></div>`;
+          const img = ev.image ? `<img src="${ev.image}" style="height:50px;border-radius:4px;margin-right:8px;" />` : '';
+          li.innerHTML = `<div class="card-event">${img}<div><h3>${ev.title}</h3><p>${ev.date}</p></div></div>`;
           container.appendChild(li);
         });
 
-      document.getElementById('contactForm').addEventListener('submit', function(e) {
+      // Contact form
+      document.getElementById('contactForm').addEventListener('submit', function (e) {
         e.preventDefault();
         alert('Thanks for reaching out! ✔️');
         this.reset();
