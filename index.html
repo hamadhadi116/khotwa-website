@@ -7,57 +7,53 @@
   <link rel="stylesheet" href="styles.css" id="theme-link" />
 </head>
 <body>
+  <header class="navbar">
+    <div class="logo">KHOTWA COUNCIL</div>
+    <nav class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <button id="darkToggle" class="dark-btn">🌙</button>
+    </nav>
+  </header>
 
- <header class="navbar">
-  <div class="logo">KHOTWA COUNCIL</div>
-
-  <nav class="nav-container">
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="calendar.html">Calendar</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-    <button id="darkToggle" class="dark-btn">🌙</button>
-  </nav>
-</header>
-
-<section id="home" class="hero">
-  <div class="hero-content">
-    <h1>Welcome to KHOTWA Student Council</h1>
-    <p>Empowering students, one step at a time.</p>
-    <a href="register.html" class="btn primary-btn">Join the Council</a>
-  </div>
-</section>
-  
-
- <section id="about" class="section about-section">
-  <div class="about-container">
-    <div class="about-text">
-      <h2>📌 Who We Are</h2>
-      <p id="aboutContent">Loading...</p>
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Welcome to KHOTWA Student Council</h1>
+      <p>Empowering students, one step at a time.</p>
+      <a href="register.html" class="btn primary-btn">Join the Council</a>
     </div>
-    <div class="about-image">
-      <img src="https://i.top4top.io/p_3497a12jc1.jpg" alt="Khotwa Team Photo" />
-    </div>
-  </div>
-</section>
+  </section>
 
+  <section id="about" class="section about-section">
+    <div class="about-container">
+      <div class="about-text">
+        <h2>📌 Who We Are</h2>
+        <p id="aboutContent">Loading...</p>
+      </div>
+      <div class="about-image">
+        <img src="https://via.placeholder.com/400x250?text=Khotwa+Team" alt="Khotwa Team Photo"/>
+      </div>
+    </div>
+  </section>
 
   <section id="events" class="section">
-    <h2>Upcoming Events</h2>
-    <ul id="eventsContainer"></ul>
+    <h2>📅 Upcoming Events</h2>
+    <ul id="eventsContainer" class="event-cards"></ul>
   </section>
 
   <section id="contact" class="section">
     <h2>Contact Us</h2>
     <p id="contactContent">Loading...</p>
     <form id="contactForm">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
+      <input type="text" placeholder="Your Name" required/>
+      <input type="email" placeholder="Your Email" required/>
       <textarea placeholder="Your Message" required></textarea>
       <button type="submit">Send</button>
     </form>
@@ -67,53 +63,45 @@
     &copy; 2025 KHOTWA Student Council. All rights reserved.
   </footer>
 
+  <script src="dark-toggle.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
       const themeLink = document.getElementById("theme-link");
       const toggle = document.getElementById("darkToggle");
-
-      // تفعيل التيم من التخزين المحلي
-      const saved = localStorage.getItem("theme");
-      if (saved === "dark") {
-        themeLink.setAttribute("href", "dark.css");
-        toggle.textContent = "☀️";
-      } else {
-        themeLink.setAttribute("href", "styles.css");
-        toggle.textContent = "🌙";
-      }
-
-      toggle?.addEventListener("click", () => {
+      const saved = localStorage.getItem("theme") || "light";
+      themeLink.setAttribute("href", saved === "dark" ? "dark.css" : "styles.css");
+      toggle.textContent = saved === "dark" ? "☀️" : "🌙";
+      toggle.addEventListener("click", () => {
         const isDark = themeLink.getAttribute("href") === "styles.css";
         themeLink.setAttribute("href", isDark ? "dark.css" : "styles.css");
         toggle.textContent = isDark ? "☀️" : "🌙";
         localStorage.setItem("theme", isDark ? "dark" : "light");
       });
 
-      // تحميل محتوى الإدمن
       document.getElementById('aboutContent').textContent =
         localStorage.getItem('aboutText') || 'No content yet.';
       document.getElementById('contactContent').textContent =
         localStorage.getItem('contactText') || 'Feel free to reach us.';
 
-      // تحميل الأحداث
       const events = JSON.parse(localStorage.getItem('events') || '[]');
       const container = document.getElementById('eventsContainer');
-      events
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-        .forEach(ev => {
-          const li = document.createElement('li');
-          const img = ev.image
-            ? `<img src="${ev.image}" style="height:50px;border-radius:4px;margin-right:8px;" />`
-            : '';
-          li.innerHTML = `${img}${ev.date} – ${ev.title}`;
-          container.appendChild(li);
-        });
+      events.sort((a,b)=>new Date(a.date)-new Date(b.date)).forEach(ev => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <div class="card-event">
+            ${ev.image ? `<img src="${ev.image}" alt="Event">` : ''}
+            <div>
+              <h3>${ev.title}</h3>
+              <p>${ev.date}</p>
+            </div>
+          </div>`;
+        container.appendChild(li);
+      });
 
-      // إرسال الفورم
-      document.getElementById('contactForm').addEventListener('submit', function (e) {
+      document.getElementById('contactForm').addEventListener('submit', e => {
         e.preventDefault();
         alert('Thanks for reaching out! ✔️');
-        this.reset();
+        e.target.reset();
       });
     });
   </script>
