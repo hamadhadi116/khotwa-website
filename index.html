@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Khotwa Student Council</title>
-  <link rel="stylesheet" href="styles.css" id="theme-link">
+  <link rel="stylesheet" href="styles.css" id="theme-link" />
 </head>
 <body>
 
@@ -44,7 +44,6 @@
     </div>
   </section>
 
-  <!-- باقي الأقسام كما هي... -->
   <section id="events" class="section">
     <h2>📅 Upcoming Events</h2>
     <ul id="eventsContainer" class="event-cards"></ul>
@@ -65,23 +64,21 @@
     &copy; 2025 KHOTWA Student Council. All rights reserved.
   </footer>
 
+  <script src="dark-toggle.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
       const themeLink = document.getElementById("theme-link");
       const toggle = document.getElementById("darkToggle");
+
       const saved = localStorage.getItem("theme") || "light";
-
-      function applyTheme(mode) {
-        themeLink.setAttribute("href", mode === "dark" ? "dark.css" : "styles.css");
-        toggle.textContent = mode === "dark" ? "☀️" : "🌙";
-      }
-
-      applyTheme(saved);
+      themeLink.setAttribute("href", saved === "dark" ? "dark.css" : "styles.css");
+      toggle.textContent = saved === "dark" ? "☀️" : "🌙";
 
       toggle.addEventListener("click", () => {
-        const newMode = (themeLink.getAttribute("href") === "styles.css") ? "dark" : "light";
-        localStorage.setItem("theme", newMode);
-        applyTheme(newMode);
+        const isNowDark = themeLink.getAttribute("href") === "styles.css";
+        themeLink.setAttribute("href", isNowDark ? "dark.css" : "styles.css");
+        toggle.textContent = isNowDark ? "☀️" : "🌙";
+        localStorage.setItem("theme", isNowDark ? "dark" : "light");
       });
 
       document.getElementById('aboutContent').textContent =
@@ -92,15 +89,15 @@
       const events = JSON.parse(localStorage.getItem('events') || '[]');
       const container = document.getElementById('eventsContainer');
       container.innerHTML = '';
-      events.sort((a,b) => new Date(a.date) - new Date(b.date)).forEach(ev => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <div class="card-event">
-            ${ev.image ? `<img src="${ev.image}" alt="Event">` : ''}
-            <div><h3>${ev.title}</h3><p>${ev.date}</p></div>
-          </div>`;
-        container.appendChild(li);
-      });
+      events.sort((a,b) => new Date(a.date) - new Date(b.date))
+        .forEach(ev => {
+          const li = document.createElement('li');
+          li.className = "card-event";
+          li.innerHTML = `
+            ${ev.image ? `<img src="${ev.image}" alt="Event">` : ""}
+            <div><h3>${ev.title}</h3><p>${ev.date}</p></div>`;
+          container.appendChild(li);
+        });
 
       document.getElementById('contactForm').addEventListener('submit', function(e) {
         e.preventDefault();
