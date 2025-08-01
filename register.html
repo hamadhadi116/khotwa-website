@@ -2,65 +2,84 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register - Khotwa Council</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register – Khotwa</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
 </head>
 <body>
 
   <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">KHOTWA</div>
+  <header class="navbar" data-aos="fade-down">
+    <div class="logo">KHOTWA COUNCIL</div>
     <nav class="nav-container">
-     <ul class="nav-links">
-  <li><a href="index.html">Home</a></li>
-  <li><a href="calendar.html">Calendar</a></li>
-  <li><a href="register.html">Register</a></li>
-  <li><a href="admin.html">Admin</a></li>
-  <li><a href="contact.html">Contact</a></li> <!-- جديد -->
-  <li><a href="profile.html">Profile</a></li> <!-- جديد -->
-</ul>
-
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="admin.html">Admin</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
       <button id="darkToggle" class="dark-btn">🌓</button>
     </nav>
   </header>
 
-  <!-- Register Section -->
-  <section class="section">
-    <h2>Register New Account</h2>
-    <form id="registerForm">
-      <input type="text" name="name" placeholder="Full Name" required />
-      <input type="email" name="email" placeholder="Email Address" required />
-      <input type="password" name="password" id="password" placeholder="Password" required />
-      <input type="password" name="confirm" id="confirm" placeholder="Confirm Password" required />
-      <small id="message" style="color: red; display: none;">Passwords do not match</small>
-      <button type="submit">Register</button>
+  <!-- Registration Form -->
+  <section class="section" data-aos="fade-up">
+    <h2>Join the Council</h2>
+
+    <form class="register-form" onsubmit="return validateForm()">
+      <div class="input-group">
+        <input type="text" id="name" placeholder="👤 Full Name" required />
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" placeholder="📧 Email Address" required />
+      </div>
+      <div class="input-group">
+        <input type="text" id="studentId" placeholder="🆔 Student ID" required />
+      </div>
+      <div class="input-group">
+        <select id="department" required>
+          <option value="">🏛️ Select Department</option>
+          <option>Engineering</option>
+          <option>Business</option>
+          <option>IT</option>
+          <option>Science</option>
+        </select>
+      </div>
+      <button type="submit">Submit</button>
+      <p class="form-message" id="formMessage"></p>
     </form>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <p>© 2025 Khotwa Student Council</p>
+  <footer class="footer" data-aos="fade-up">
+    <p>© 2025 Khotwa Student Council. All rights reserved.</p>
   </footer>
 
-  <!-- Scripts -->
   <script src="dark-toggle.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
-    // تأكد من تطابق كلمتي المرور
-    const form = document.getElementById("registerForm");
-    const pass = document.getElementById("password");
-    const confirm = document.getElementById("confirm");
-    const message = document.getElementById("message");
+    AOS.init({ duration: 1000, once: true });
 
-    form.addEventListener("submit", function(e) {
-      if (pass.value !== confirm.value) {
-        e.preventDefault();
-        message.style.display = "block";
-      } else {
-        message.style.display = "none";
-        alert("تم التسجيل بنجاح!");
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const id = document.getElementById("studentId").value.trim();
+      const dept = document.getElementById("department").value;
+      const msg = document.getElementById("formMessage");
+
+      if (!name || !email || !id || !dept) {
+        msg.style.color = "red";
+        msg.innerText = "Please fill in all fields.";
+        return false;
       }
-    });
+
+      msg.style.color = "green";
+      msg.innerText = "Registration submitted successfully 🎉";
+      return false; // Prevent form reload (for demo)
+    }
   </script>
 </body>
 </html>
