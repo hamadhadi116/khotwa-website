@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
@@ -10,83 +10,140 @@
       position: fixed; bottom: 2rem; right: 2rem;
       background: var(--green); color: #fff;
       padding: 0.7rem 1.3rem; border-radius: 6px;
-      opacity: 0; pointer-events: none; transition: opacity .4s;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease;
       z-index: 999;
     }
-    .toast.show { opacity:1; pointer-events:auto; }
+    .toast.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
+
+<!-- حماية الصفحة -->
 <script>
-  if (localStorage.getItem('isLogged')!=='true' && localStorage.getItem('rememberMe')!=='true') {
-    alert('You must log in first!'); location.href='login.html';
+  if (
+    localStorage.getItem("isLogged") !== "true" &&
+    localStorage.getItem("rememberMe") !== "true"
+  ) {
+    alert("You must log in first!");
+    location.href = "login.html";
   }
 </script>
 
+<!-- Navbar -->
 <header class="navbar">
   <div class="logo">KHOTWA ADMIN</div>
   <nav class="nav-container">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
 
+<!-- لوحة التحكم -->
 <section class="section">
   <h2>لوحة التحكم</h2>
-  <div class="admin-controls"><button onclick="addRow()">➕ إضافة مستخدم</button></div>
+  <div class="admin-controls">
+    <button onclick="addRow()">➕ إضافة مستخدم</button>
+  </div>
   <div class="table-container">
     <table class="admin-table">
-      <thead><tr><th>#</th><th>الاسم</th><th>البريد</th><th>الدور</th><th>إجراءات</th></tr></thead>
+      <thead>
+        <tr>
+          <th>الرقم</th>
+          <th>الاسم</th>
+          <th>البريد الإلكتروني</th>
+          <th>الدور</th>
+          <th>إجراءات</th>
+        </tr>
+      </thead>
       <tbody id="adminTableBody"></tbody>
     </table>
   </div>
 </section>
 
-<footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 Khotwa Student Council</p>
+</footer>
+
+<!-- toast notification -->
 <div id="toast" class="toast"></div>
 
 <script src="main.js"></script>
 <script>
   const users = [
-    {name:'أحمد محمد',email:'ahmad@email.com',role:'عضو'},
-    {name:'سارة العتيبي',email:'sarah@email.com',role:'قائدة'}
+    { name: "أحمد محمد", email: "ahmad@mail.com", role: "عضو" },
+    { name: "سارة العتيبي", email: "sarah@mail.com", role: "قائدة" }
   ];
 
-  function refreshUI(){
-    const tb=document.getElementById('adminTableBody');
-    tb.innerHTML='';
-    users.forEach((u,i)=>{
-      tb.innerHTML+=`
-      <tr><td>${i+1}</td><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td>
-      <td><button onclick="editRow(${i})">✏️</button>
-          <button onclick="deleteRow(${i})">🗑️</button></td></tr>`;
+  function refreshUI() {
+    const tbody = document.getElementById("adminTableBody");
+    tbody.innerHTML = "";
+    users.forEach((user, i) => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>${user.role}</td>
+          <td>
+            <button onclick="editRow(${i})">✏️</button>
+            <button onclick="deleteRow(${i})">🗑️</button>
+          </td>
+        </tr>`;
     });
   }
 
-  function showToast(msg){
-    const t=document.getElementById('toast');
-    t.innerText=msg; t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'),3000);
+  function showToast(msg) {
+    const toast = document.getElementById("toast");
+    toast.innerText = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
   }
 
-  function addRow(){
-    const name=prompt('الاسم:'),email=prompt('البريد:'),role=prompt('الدور:');
-    if(name&&email&&role){ users.push({name,email,role}); refreshUI(); showToast('✅ تمت الإضافة'); }
+  function addRow() {
+    const name = prompt("الاسم:");
+    const email = prompt("البريد الإلكتروني:");
+    const role = prompt("الدور:");
+    if (name && email && role) {
+      users.push({ name, email, role });
+      refreshUI();
+      showToast("✅ تمت إضافة المستخدم");
+    }
   }
 
-  function deleteRow(i){
-    if(confirm('هل تريد الحذف؟')){ users.splice(i,1); refreshUI(); showToast('🗑️ تم الحذف'); }
+  function editRow(i) {
+    const user = users[i];
+    const name = prompt("الاسم الجديد:", user.name);
+    const email = prompt("البريد الجديد:", user.email);
+    const role = prompt("الدور الجديد:", user.role);
+    if (name && email && role) {
+      users[i] = { name, email, role };
+      refreshUI();
+      showToast("✏️ تم تحديث المستخدم");
+    }
   }
 
-  function editRow(i){
-    const u=users[i];
-    const name=prompt('الاسم الجديد:',u.name),
-        email=prompt('البريد الجديد:',u.email),
-        role=prompt('الدور الجديد:',u.role);
-    if(name&&email&&role){ users[i]={name,email,role}; refreshUI(); showToast('✏️ تم التحديث'); }
+  function deleteRow(i) {
+    if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
+      users.splice(i, 1);
+      refreshUI();
+      showToast("🗑️ تمت إزالة المستخدم");
+    }
   }
 
-  window.addEventListener('DOMContentLoaded',refreshUI);
+  window.addEventListener("DOMContentLoaded", refreshUI);
 </script>
 </body>
 </html>
