@@ -278,3 +278,58 @@ form button {
   max-width: 1000px;
   margin: 0 auto;
 }
+[data-theme="dark"] body {
+  background-color: #fff;
+  color: #000;
+}
+
+[data-theme="dark"] .navbar {
+  background-color: #000;
+  color: #fff;
+}
+
+[data-theme="dark"] .hero {
+  background: linear-gradient(to right, #d41c0f, #00703c);
+  color: white;
+}
+
+[data-theme="dark"] .section {
+  background-color: #f9f9f9;
+}
+
+[data-theme="dark"] .about-section,
+[data-theme="dark"] .about-container {
+  background-color: transparent;
+  color: #000;
+}
+
+[data-theme="dark"] .about-image img {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+[data-theme="dark"] .card-event {
+  background-color: #fff;
+  color: #000;
+}
+
+[data-theme="dark"] .card {
+  background-color: #fff;
+  color: #000;
+}
+
+[data-theme="dark"] .footer {
+  background-color: #000;
+  color: #fff;
+}
+
+[data-theme="dark"] .primary-btn {
+  background-color: #000;
+  color: #fff;
+}
+
+[data-theme="dark"] .primary-btn:hover {
+  background-color: #00703c;
+}
