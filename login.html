@@ -67,13 +67,14 @@
     e.preventDefault();
     const email = this.email.value.trim().toLowerCase();
     const pwd = this.password.value.trim();
-    // مثال مسبق لبريد وكلمة
-    if (email === 'user@example.com' && pwd === 'password123') {
+
+    // بيانات دخول تجريبية — يمكن تطويرها لاحقًا
+    if (email === 'admin@khotwa.com' && pwd === 'admin123') {
       localStorage.setItem('isLogged', 'true');
-      alert('Login successful! Redirecting...');
-      location.href = 'profile.html';
+      alert('Login successful!');
+      location.href = 'index.html';
     } else {
-      alert('Invalid credentials!');
+      alert('Invalid credentials ❌');
     }
   });
 </script>
