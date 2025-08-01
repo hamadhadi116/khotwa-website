@@ -257,3 +257,51 @@ form button:hover {
     width: 90%;
   }
 }
+.admin-controls {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.admin-controls button {
+  background-color: var(--green);
+  color: var(--white);
+  border: none;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.admin-controls button:hover {
+  background-color: #005f35;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.admin-table th {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+.admin-table button {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
