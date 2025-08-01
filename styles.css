@@ -344,3 +344,45 @@ form button:hover {
   transition: transform 0.3s ease;
 }
 .stat-card:hover { transform: translateY(-5px); }
+.register-form {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.register-form input,
+.register-form select {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.register-form button {
+  padding: 0.9rem;
+  font-weight: bold;
+  border: none;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border-radius: 6px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.register-form button:hover {
+  background-color: var(--green);
+}
+
+.form-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
