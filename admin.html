@@ -1,3 +1,10 @@
+<script>
+  if (localStorage.getItem('isLogged') !== 'true') {
+    alert('You must log in first!');
+    location.href = 'login.html';
+  }
+</script>
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
