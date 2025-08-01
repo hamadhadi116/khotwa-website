@@ -1,142 +1,84 @@
-<script>
-  if (localStorage.getItem('isLogged') !== 'true') {
-    alert('You must log in first!');
-    location.href = 'login.html';
-  }
-</script>
-
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>User Profile – Khotwa</title>
+  <title>Your Profile – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
     .profile-container {
-      max-width: 600px;
+      max-width: 500px;
       margin: 3rem auto;
-      background: var(--card-bg);
       padding: 2rem;
-      border-radius: 12px;
+      background-color: var(--card-bg);
+      border-radius: 10px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-      position: relative;
+    }
+    .profile-container h2 {
       text-align: center;
+      margin-bottom: 1.5rem;
     }
-    .avatar-wrapper {
-      position: relative;
-      display: inline-block;
+    .profile-info p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--text);
     }
-    .profile-container img {
-      width: 130px; height: 130px;
-      object-fit: cover; border-radius: 50%;
-      border: 3px solid var(--green);
+    .logout-btn {
+      display: block;
+      margin: 2rem auto 0;
+      padding: 0.8rem 2rem;
+      border: none;
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    .avatar-wrapper button {
-      position: absolute; bottom: 0; right: 0;
-      background: var(--btn-bg); color: var(--btn-text);
-      border: none; border-radius: 50%;
-      width: 32px; height: 32px;
-      cursor: pointer; transition: background .3s;
+    .logout-btn:hover {
+      background-color: var(--green);
     }
-    .avatar-wrapper button:hover {
-      background: var(--green);
-    }
-    .profile-container input {
-      width: 100%; padding: 0.8rem;
-      margin: 0.7rem 0; border-radius: 6px;
-      border: 1px solid #ccc;
-      background: var(--bg); color: var(--text);
-    }
-    .profile-container button.save-btn {
-      margin-top: 1rem; padding: 0.8rem 1.6rem;
-      background: var(--btn-bg); color: var(--btn-text);
-      border: none; border-radius: 6px; font-weight: bold;
-      cursor: pointer; transition: transform .2s, background .3s;
-    }
-    .profile-container button.save-btn:hover {
-      background: var(--green); transform: translateY(-2px);
-    }
-    .profile-container .msg {
-      color: green; margin-top: 1rem; display: none;
-    }
-    input[disabled] { opacity: 0.6; }
   </style>
 </head>
 <body>
 
-<header class="navbar" data-aos="fade-down">
-  <div class="logo">KHOTWA COUNCIL</div>
+<!-- ✅ حماية -->
+<script>
+  if (localStorage.getItem("isLogged") !== "true" && localStorage.getItem("rememberMe") !== "true") {
+    alert("You must log in first!");
+    location.href = "login.html";
+  }
+</script>
+
+<header class="navbar">
+  <div class="logo">KHOTWA</div>
   <nav class="nav-container">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="calendar.html">Calendar</a></li>
-      <li><a href="register.html">Register</a></li>
       <li><a href="admin.html">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="profile.html">Profile</a></li>
     </ul>
+    <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
 
-<section class="section" data-aos="fade-up">
-  <div class="profile-container">
-    <div class="avatar-wrapper">
-      <img src="https://i.pravatar.cc/150?u=student" id="avatarImg" alt="Avatar"/>
-      <button id="avatarBtn" title="Change Avatar">✏️</button>
-      <input type="file" id="avatarInput" accept="image/*" style="display:none"/>
-    </div>
-
-    <input type="text" id="fullName" value="Ali Mohammed" required disabled/>
-    <input type="email" id="email" value="ali@khotwa.edu.sa" required disabled/>
-    <input type="text" id="studentId" value="20240123" disabled/>
-    <input type="text" id="department" value="Computer Science" disabled/>
-
-    <button class="save-btn" id="editBtn">Edit Profile</button>
-    <div class="msg" id="successMsg">✅ Profile updated successfully!</div>
+<section class="profile-container">
+  <h2>Welcome Back 👋</h2>
+  <div class="profile-info">
+    <p><strong>Name:</strong> <span id="name">-</span></p>
+    <p><strong>Email:</strong> <span id="email">-</span></p>
+    <p><strong>Role:</strong> <span id="role">Admin</span></p>
   </div>
+  <button id="logoutBtn" class="logout-btn">Logout</button>
 </section>
 
-<footer class="footer" data-aos="fade-up">
+<footer class="footer">
   <p>© 2025 Khotwa Student Council</p>
 </footer>
 
 <script src="main.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init({ duration: 700, once: true });
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const editBtn = document.getElementById('editBtn');
-    const inputs = ['fullName','email','studentId','department'].map(id => document.getElementById(id));
-    const msg = document.getElementById('successMsg');
-
-    editBtn.addEventListener('click', () => {
-      const isDisabled = inputs[0].disabled;
-      inputs.forEach(i => i.disabled = !isDisabled);
-      editBtn.textContent = isDisabled ? 'Save Changes' : 'Edit Profile';
-      if (!isDisabled) {
-        msg.style.display = 'block';
-        setTimeout(() => msg.style.display='none', 3000);
-        inputs.forEach(i => i.disabled = true);
-      }
-    });
-
-    const avatarBtn = document.getElementById('avatarBtn');
-    const avatarInput = document.getElementById('avatarInput');
-    const avatarImg = document.getElementById('avatarImg');
-    avatarBtn.addEventListener('click', () => avatarInput.click());
-    avatarInput.addEventListener('change', () => {
-      const file = avatarInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => avatarImg.src = e.target.result;
-        reader.readAsDataURL(file);
-      }
-    });
-  });
+  document.getElementById("name").textContent = "Administrator";
+  document.getElementById("email").textContent = "admin@khotwa.com";
 </script>
 </body>
 </html>
