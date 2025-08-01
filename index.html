@@ -13,13 +13,15 @@
   <header class="navbar" data-aos="fade-down">
     <div class="logo">KHOTWA COUNCIL</div>
     <nav class="nav-container">
-      <ul class="nav-links">
+      <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="calendar.html">Calendar</a></li>
         <li><a href="register.html">Register</a></li>
         <li><a href="admin.html">Admin</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="profile.html">Profile</a></li>
+        <li id="loginItem"><a href="login.html">Login</a></li>
+        <li id="logoutItem" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
       </ul>
       <button id="darkToggle" class="dark-btn">🌓</button>
     </nav>
@@ -84,10 +86,23 @@
   </footer>
 
   <!-- Scripts -->
- <script src="main.js"></script>
+  <script src="main.js"></script>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 800, once: true });
+
+    // Login status check
+    window.addEventListener("DOMContentLoaded", () => {
+      const loggedIn = localStorage.getItem("isLogged") === "true";
+      document.getElementById("loginItem").style.display = loggedIn ? "none" : "inline-block";
+      document.getElementById("logoutItem").style.display = loggedIn ? "inline-block" : "none";
+    });
+
+    function logout() {
+      localStorage.removeItem("isLogged");
+      alert("Logged out successfully");
+      location.reload();
+    }
   </script>
 </body>
 </html>
