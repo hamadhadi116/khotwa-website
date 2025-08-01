@@ -3,16 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- تحميل الثيم مبكراً -->
+  <script>
+    document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "light");
+  </script>
   <title>Khotwa Student Council</title>
-  <link rel="stylesheet" href="styles.css" id="theme-link" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- 🔧 Dark Mode Initialization مبكرًا -->
-  <script>
-    const saved = localStorage.getItem("theme") || "light";
-    document.documentElement.setAttribute("data-theme", saved);
-  </script>
-
   <header class="navbar">
     <div class="logo">KHOTWA COUNCIL</div>
     <nav class="nav-container">
@@ -44,12 +42,12 @@
         <p id="aboutContent">Loading...</p>
       </div>
       <div class="about-image">
-        <img src="https://i.top4top.io/p_3497a12jc1.jpg" alt="Khotwa Team Photo" />
+        <img src="https://i.top4top.io/p_3497a12jc1.jpg" alt="Khotwa Team Photo">
       </div>
     </div>
   </section>
 
-  <section id="events" class="section bg-light">
+  <section id="events" class="section">
     <h2>Upcoming Events</h2>
     <ul id="eventsContainer" class="event-cards"></ul>
   </section>
@@ -58,39 +56,36 @@
     <h2>Contact Us</h2>
     <p id="contactContent">Loading...</p>
     <form id="contactForm">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
       <textarea placeholder="Your Message" required></textarea>
       <button type="submit">Send</button>
     </form>
   </section>
 
-  <footer class="footer">
-    &copy; 2025 KHOTWA Student Council. All rights reserved.
-  </footer>
+  <footer class="footer">&copy; 2025 KHOTWA Student Council</footer>
 
   <script src="dark-toggle.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-      // Load admin-provided content
       document.getElementById('aboutContent').textContent = localStorage.getItem('aboutText') || 'No content yet.';
       document.getElementById('contactContent').textContent = localStorage.getItem('contactText') || 'Feel free to reach us.';
 
-      // Load events
-      const events = JSON.parse(localStorage.getItem('events') || '[]');
+      const events = JSON.parse(localStorage.getItem('events')||'[]');
       const container = document.getElementById('eventsContainer');
       container.innerHTML = '';
-      events.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(ev => {
-        const img = ev.image ? `<img src="${ev.image}" style="height:50px;border-radius:4px;margin-right:8px;" />` : '';
+      events.sort((a,b)=>new Date(a.date)-new Date(b.date)).forEach(ev => {
         const li = document.createElement('li');
-        li.innerHTML = `<div class="card-event">${img}<div><h3>${ev.title}</h3><p>${ev.date}</p></div></div>`;
+        li.innerHTML = `<div class="card-event">${ev.image?`<img src="${ev.image}" alt="Event">`:``}
+          <div><h3>${ev.title}</h3><p>${ev.date}</p></div>
+        </div>`;
         container.appendChild(li);
       });
 
-      document.getElementById('contactForm').addEventListener('submit', function (e) {
+      document.getElementById('contactForm').addEventListener('submit', e=>{
         e.preventDefault();
         alert('Thanks for reaching out! ✔️');
-        this.reset();
+        e.target.reset();
       });
     });
   </script>
