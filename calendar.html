@@ -1,119 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Calendar – Khotwa Events</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events Calendar – Khotwa</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.css" rel="stylesheet" />
   <style>
-    .calendar-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 1rem; gap: 1rem;
-    }
-    .calendar-header button {
-      background: var(--btn-bg); color: var(--btn-text);
-      border: none; padding: 0.6rem 1.2rem; border-radius: 6px;
-      cursor: pointer; transition: background .3s;
-    }
-    .calendar-header button:hover { background: var(--green); }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.5rem;
-    }
-    .calendar-cell {
-      background: var(--card-bg); color: var(--text);
-      padding: 0.7rem; border-radius: 6px; position: relative;
-      transition: background 0.2s;
-    }
-    .calendar-cell:hover { background: var(--btn-bg); color: var(--btn-text); }
-
-    .calendar-cell.today {
-      border: 2px solid var(--green);
-    }
-    .event-mark {
-      position: absolute; bottom: 6px; right: 6px;
-      width: 8px; height: 8px; background: var(--red); border-radius: 100%;
-    }
-
-    #backToTop {
-      position: fixed; bottom: 1rem; right: 1rem;
-      background: var(--btn-bg); color: var(--btn-text);
-      padding: 0.7rem; border-radius: 50%; border: none;
-      cursor: pointer; display: none; font-size: 1.2rem;
+    .calendar-wrapper {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background-color: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
 
-<header class="navbar" data-aos="fade-down">
-  <div class="logo">KHOTWA</div>
-  <nav class="nav-container">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="admin.html">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="profile.html">Profile</a></li>
-    </ul>
-    <button id="darkToggle" class="dark-btn">🌓</button>
-  </nav>
-</header>
+  <header class="navbar">
+    <div class="logo">KHOTWA COUNCIL</div>
+    <nav class="nav-container">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="admin.html">Admin</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+      <button id="darkToggle" class="dark-btn">🌓</button>
+    </nav>
+  </header>
 
-<section class="section calendar" data-aos="fade-up">
-  <div class="calendar-header">
-    <button id="prevBtn">❮ Prev</button>
-    <h2 id="monthYear"></h2>
-    <button id="nextBtn">Next ❯</button>
-  </div>
-  <div class="calendar-grid" id="calendarGrid">
-    <div>Sun</div><div>Mon</div><div>Tue</div>
-    <div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-  </div>
-</section>
+  <section class="section">
+    <h2>Events Calendar</h2>
+    <div class="calendar-wrapper">
+      <div id="calendar"></div>
+    </div>
+  </section>
 
-<button id="backToTop" title="Back to Top">↑</button>
+  <footer class="footer">
+    <p>© 2025 Khotwa Student Council. All rights reserved.</p>
+  </footer>
 
-<footer class="footer" data-aos="fade-up">
-  <p>© 2025 Khotwa Student Council</p>
-</footer>
+  <script src="main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const calendarEl = document.getElementById("calendar");
 
-<script src="main.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-  AOS.init({ duration: 800, once: true });
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        themeSystem: "standard",
+        events: [
+          { title: "Orientation", start: "2025-08-10" },
+          { title: "Tech Workshop", start: "2025-08-18" },
+          { title: "Student Meeting", start: "2025-08-25" }
+        ]
+      });
 
-  const calendarGrid = document.getElementById('calendarGrid');
-  const monthYear = document.getElementById('monthYear');
-  const prevBtn = document.getElementById('prevBtn'), nextBtn = document.getElementById('nextBtn');
-  const events = { '2025-08-15': 'Orientation Day', '2025-08-22': 'Tech Talk', '2025-09-05': 'Workshop' };
-  let date = new Date();
-
-  function renderCalendar() {
-    calendarGrid.innerHTML = '<div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>';
-    const y = date.getFullYear(), m = date.getMonth();
-    monthYear.innerText = date.toLocaleString('en', { month: 'long', year: 'numeric' });
-    const firstDay = new Date(y, m, 1).getDay(), daysInMonth = new Date(y, m+1, 0).getDate();
-    for (let i=0;i<firstDay;i++) calendarGrid.appendChild(document.createElement('div'));
-    for (let d=1;d<=daysInMonth;d++) {
-      const cell = document.createElement('div'); cell.className='calendar-cell';
-      const dt = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-      cell.innerText = d;
-      if (events[dt]) { const mark = document.createElement('div'); mark.className='event-mark'; cell.appendChild(mark); cell.title=events[dt]; }
-      const today = new Date();
-      if (d===today.getDate() && m===today.getMonth() && y===today.getFullYear()) cell.classList.add('today');
-      calendarGrid.appendChild(cell);
-    }
-  }
-  renderCalendar();
-  prevBtn.addEventListener('click',()=>{ date.setMonth(date.getMonth()-1); renderCalendar(); });
-  nextBtn.addEventListener('click',()=>{ date.setMonth(date.getMonth()+1); renderCalendar(); });
-
-  const backToTop = document.getElementById('backToTop');
-  window.addEventListener('scroll',()=> window.scrollY>400? backToTop.style.display='block': backToTop.style.display='none');
-  backToTop.onclick = ()=> window.scrollTo({ top:0, behavior:'smooth' });
-</script>
+      calendar.render();
+    });
+  </script>
 </body>
 </html>
