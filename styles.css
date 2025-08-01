@@ -264,3 +264,17 @@ form button {
   background-color: var(--black);
   color: var(--white);
 }
+/* ضبط حجم صورة فريق "About" لتكون ثابتة ومتناسبة في جميع الأوضاع */
+.about-image img {
+  width: 100%;
+  max-width: 400px;
+  height: auto; /* يحافظ على النسبة الأصلية */
+  object-fit: cover;
+}
+
+/* ضمان أن البلوك لا يتغير حتى في الوضع الليلي */
+.about-section, .about-container {
+  /* عرض ثابت عند 1000px أو أقل، كما في التصميم النهاري */
+  max-width: 1000px;
+  margin: 0 auto;
+}
