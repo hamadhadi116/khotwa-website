@@ -3,8 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard</title>
+  <title>Admin Dashboard – Khotwa</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .filter-bar input {
+      flex: 1;
+      padding: 0.7rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .admin-controls button {
+      padding: 0.7rem 1.2rem;
+      border-radius: 5px;
+      background-color: var(--green);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .admin-controls button:hover {
+      background-color: #005f35;
+    }
+
+    .admin-table th {
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
+    }
+
+    .admin-table td,
+    .admin-table th {
+      text-align: center;
+    }
+
+    .action-btns button {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin: 0 4px;
+    }
+
+    @media (max-width: 600px) {
+      .filter-bar {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -13,31 +72,36 @@
     <div class="logo">KHOTWA ADMIN</div>
     <nav class="nav-container">
       <ul class="nav-links">
-  <li><a href="index.html">Home</a></li>
-  <li><a href="calendar.html">Calendar</a></li>
-  <li><a href="register.html">Register</a></li>
-  <li><a href="admin.html">Admin</a></li>
-  <li><a href="contact.html">Contact</a></li> <!-- جديد -->
-  <li><a href="profile.html">Profile</a></li> <!-- جديد -->
-</ul>
-
+        <li><a href="index.html">Home</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="admin.html">Admin</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
       <button id="darkToggle" class="dark-btn">🌓</button>
     </nav>
   </header>
 
   <!-- Admin Dashboard -->
   <section class="section">
-    <h2>لوحة التحكم</h2>
+    <div class="dashboard-header">
+      <h2>لوحة تحكم المسؤولين</h2>
+      <p>إدارة الأعضاء والمستخدمين في منصة خطوة</p>
+    </div>
 
-    <div class="admin-controls">
-      <button onclick="addRow()">➕ إضافة مستخدم</button>
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="🔍 ابحث عن اسم أو بريد..." onkeyup="searchTable()" />
+      <div class="admin-controls">
+        <button onclick="addRow()">➕ إضافة مستخدم</button>
+      </div>
     </div>
 
     <div class="table-container">
       <table class="admin-table">
         <thead>
           <tr>
-            <th>الرقم</th>
+            <th>#</th>
             <th>الاسم</th>
             <th>البريد الإلكتروني</th>
             <th>الدور</th>
@@ -50,7 +114,7 @@
             <td>أحمد محمد</td>
             <td>ahmad@email.com</td>
             <td>عضو</td>
-            <td>
+            <td class="action-btns">
               <button onclick="editRow(this)">✏️</button>
               <button onclick="deleteRow(this)">🗑️</button>
             </td>
@@ -65,6 +129,59 @@
   </footer>
 
   <script src="dark-toggle.js"></script>
-  <script src="admin.js"></script>
+  <script>
+    function deleteRow(btn) {
+      const row = btn.closest("tr");
+      row.remove();
+    }
+
+    function editRow(btn) {
+      const row = btn.closest("tr");
+      const name = prompt("أدخل الاسم الجديد:", row.children[1].innerText);
+      const email = prompt("أدخل البريد الجديد:", row.children[2].innerText);
+      const role = prompt("أدخل الدور الجديد:", row.children[3].innerText);
+
+      if (name && email && role) {
+        row.children[1].innerText = name;
+        row.children[2].innerText = email;
+        row.children[3].innerText = role;
+      }
+    }
+
+    function addRow() {
+      const tbody = document.getElementById("adminTableBody");
+      const row = document.createElement("tr");
+
+      const id = tbody.children.length + 1;
+      const name = prompt("الاسم:");
+      const email = prompt("البريد الإلكتروني:");
+      const role = prompt("الدور:");
+
+      if (name && email && role) {
+        row.innerHTML = `
+          <td>${id}</td>
+          <td>${name}</td>
+          <td>${email}</td>
+          <td>${role}</td>
+          <td class="action-btns">
+            <button onclick="editRow(this)">✏️</button>
+            <button onclick="deleteRow(this)">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      }
+    }
+
+    function searchTable() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#adminTableBody tr");
+
+      rows.forEach(row => {
+        const name = row.children[1].innerText.toLowerCase();
+        const email = row.children[2].innerText.toLowerCase();
+        row.style.display = name.includes(input) || email.includes(input) ? "" : "none";
+      });
+    }
+  </script>
 </body>
 </html>
