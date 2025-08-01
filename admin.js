@@ -1,48 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <script>document.documentElement.setAttribute("data-theme", localStorage.getItem("theme")||"light");</script>
-  <title>Admin Panel – Khotwa</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div id="loginScreen" class="login-screen">
-    <h2>🔒 Admin Login</h2>
-    <input type="password" id="adminPass" placeholder="Enter Admin Password">
-    <button onclick="checkLogin()">Login</button>
-  </div>
-  <div id="adminPanel" style="display:none;">
-    <header class="navbar"><div class="logo">KHOTWA ADMIN</div>
-      <div class="navbar-actions">
-        <button id="darkToggle" class="dark-btn">🌙</button>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
-      </div>
-    </header>
-    <main class="admin-panel">
-      <section class="card">
-        <h2>Edit Site Content</h2>
-        <textarea id="aboutText" rows="4"></textarea><button id="saveAbout">Save About</button>
-        <textarea id="contactText" rows="3"></textarea><button id="saveContact">Save Contact</button>
-      </section>
-      <section class="card">
-        <h2>Manage Events</h2>
-        <form id="newEventForm">
-          <input type="text" id="eventTitle" placeholder="Title" required>
-          <input type="date" id="eventDate" required>
-          <input type="file" id="eventImage" accept="image/*">
-          <button type="submit">Add</button>
-        </form>
-        <ul id="eventsList" class="data-list"></ul>
-      </section>
-      <section class="card">
-        <h2>Registered Students</h2>
-        <ul id="registeredList" class="data-list"></ul>
-      </section>
-    </main>
-    <footer class="footer">&copy; 2025 KHOTWA Student Council</footer>
-  </div>
-  <script src="dark-toggle.js"></script>
-  <script src="admin.js"></script>
-</body>
-</html>
+const ADMIN_PASSWORD = "khotwa123";
+
+window.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("darkToggle");
+  if (toggle) toggle.click?.(); // لمزامنة الثيم فور التحميل
+
+  if (localStorage.getItem("khotwa_admin") === "ok") {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+    initAdmin();
+  }
+});
+
+function checkLogin() {
+  if (document.getElementById("adminPass").value === ADMIN_PASSWORD) {
+    localStorage.setItem("khotwa_admin", "ok");
+    location.reload();
+  } else {
+    alert("❌ Incorrect password");
+  }
+}
+
+function initAdmin() {
+  document.getElementById("logoutBtn").onclick = () => {
+    localStorage.removeItem("khotwa_admin");
+    location.href = "index.html";
+  };
+
+  const about = document.getElementById("aboutText");
+  about.value = localStorage.getItem("aboutText") || "";
+  document.getElementById("saveAbout").onclick = () => {
+    localStorage.setItem("aboutText", about.value);
+    alert("📝 About updated");
+  };
+
+  const contact = document.getElementById("contactText");
+  contact.value = localStorage.getItem("contactText") || "";
+  document.getElementById("saveContact").onclick = () => {
+    localStorage.setItem("contactText", contact.value);
+    alert("📧 Contact updated");
+  };
+
+  loadEvents();
+  loadStudents();
+
+  document.getElementById("newEventForm").onsubmit = e => {
+    e.preventDefault();
+    const title = document.getElementById("eventTitle").value;
+    const date = document.getElementById("eventDate").value;
+    const file = document.getElementById("eventImage").files[0];
+
+    if (!title || !date) return alert("Title and date required");
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () =>
+        saveEvent(title, date, reader.result);
+      reader.readAsDataURL(file);
+    } else {
+      saveEvent(title, date, null);
+    }
+    e.target.reset();
+  };
+}
+
+function saveEvent(title, date, image) {
+  const arr = JSON.parse(localStorage.getItem("events") || "[]");
+  arr.push({ title, date, image });
+  localStorage.setItem("events", JSON.stringify(arr));
+  loadEvents();
+}
+
+function loadEvents() {
+  const list = JSON.parse(localStorage.getItem("events") || "[]");
+  const container = document.getElementById("eventsList");
+  container.innerHTML = "";
+  list.forEach((ev, idx) => {
+    const html = `<li>
+      ${ev.image ? `<img src="${ev.image}" class="event-image-thumb">` : ""}
+      <span><strong>${ev.title}</strong> (${ev.date})</span>
+      <button onclick="editEvent(${idx})">Edit</button>
+      <button onclick="removeEvent(${idx})">Delete</button>
+    </li>`;
+    container.insertAdjacentHTML("beforeend", html);
+  });
+}
+
+window.removeEvent = idx => {
+  const arr = JSON.parse(localStorage.getItem("events") || "[]");
+  arr.splice(idx, 1);
+  localStorage.setItem("events", JSON.stringify(arr));
+  loadEvents();
+};
+
+window.editEvent = idx => {
+  const arr = JSON.parse(localStorage.getItem("events") || "[]");
+  const ev = arr[idx];
+  const nt = prompt("New title", ev.title);
+  const nd = prompt("New date (YYYY-MM-DD)", ev.date);
+  if (nt && nd) {
+    ev.title = nt; ev.date = nd;
+    localStorage.setItem("events", JSON.stringify(arr));
+    loadEvents();
+  }
+};
+
+function loadStudents() {
+  const arr = JSON.parse(localStorage.getItem("registrations") || "[]");
+  const container = document.getElementById("registeredList");
+  container.innerHTML = "";
+  arr.forEach(s => {
+    const li = document.createElement("li");
+    li.textContent = `${s.name} – ${s.email} – ${s.major} – ${s.level}`;
+    container.appendChild(li);
+  });
+}
