@@ -5,46 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Profile – Khotwa</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <style>
     .profile-container {
       max-width: 600px;
-      margin: 2rem auto;
+      margin: 3rem auto;
       background-color: var(--card-bg);
       padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .profile-container h2 {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
       text-align: center;
-      margin-bottom: 1.5rem;
     }
 
-    .profile-container label {
-      display: block;
-      margin-top: 1rem;
-      font-weight: 500;
+    .profile-container img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 3px solid var(--green);
     }
 
     .profile-container input {
       width: 100%;
       padding: 0.75rem;
+      margin: 0.6rem 0;
       border-radius: 5px;
       border: 1px solid #ccc;
-      margin-top: 0.5rem;
       background-color: var(--bg);
       color: var(--text);
     }
 
     .profile-container button {
-      margin-top: 2rem;
-      padding: 0.8rem 1.5rem;
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
       background-color: var(--btn-bg);
       color: var(--btn-text);
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
       font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
       transition: background 0.3s;
     }
 
@@ -52,61 +52,59 @@
       background-color: var(--green);
     }
 
-    .update-msg {
-      text-align: center;
-      margin-top: 1rem;
-      color: green;
+    .msg-success {
       display: none;
+      color: green;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">KHOTWA</div>
-    <nav class="nav-container">
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <button id="darkToggle" class="dark-btn">🌓</button>
-    </nav>
-  </header>
+<header class="navbar" data-aos="fade-down">
+  <div class="logo">KHOTWA COUNCIL</div>
+  <nav class="nav-container">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <button id="darkToggle" class="dark-btn">🌓</button>
+  </nav>
+</header>
 
-  <!-- Profile Form -->
-  <section class="profile-container">
-    <h2>My Profile</h2>
-    <form id="profileForm">
-      <label for="username">Full Name</label>
-      <input type="text" id="username" value="Ahmad Al-Khotwa" required />
+<section class="section" data-aos="fade-up">
+  <div class="profile-container">
+    <img src="https://i.pravatar.cc/150?u=student" alt="User Avatar" />
 
-      <label for="email">Email</label>
-      <input type="email" id="email" value="ahmad@example.com" required />
+    <input type="text" placeholder="Full Name" value="Ali Mohammed" />
+    <input type="email" placeholder="Email" value="ali@khotwa.edu.sa" />
+    <input type="text" placeholder="Student ID" value="20240123" />
+    <input type="text" placeholder="Department" value="Computer Science" />
 
-      <label for="role">Role</label>
-      <input type="text" id="role" value="Council Member" readonly />
+    <button onclick="saveProfile()">Save Changes</button>
+    <div class="msg-success" id="successMsg">✅ Profile updated successfully!</div>
+  </div>
+</section>
 
-      <button type="submit">Update Profile</button>
-      <div class="update-msg" id="updateMsg">✅ Profile updated successfully!</div>
-    </form>
-  </section>
+<footer class="footer" data-aos="fade-up">
+  <p>© 2025 Khotwa Student Council</p>
+</footer>
 
-  <footer class="footer">
-    <p>© 2025 Khotwa Student Council</p>
-  </footer>
+<script src="dark-toggle.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 700 });
 
-  <script src="dark-toggle.js"></script>
-  <script>
-    document.getElementById("profileForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const msg = document.getElementById("updateMsg");
-      msg.style.display = "block";
-      setTimeout(() => {
-        msg.style.display = "none";
-      }, 3000);
-    });
-  </script>
+  function saveProfile() {
+    document.getElementById("successMsg").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("successMsg").style.display = "none";
+    }, 3000);
+  }
+</script>
 </body>
 </html>
