@@ -5,24 +5,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Khotwa Student Council</title>
   <link rel="stylesheet" href="styles.css"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
 </head>
 <body>
-<header class="navbar">
+
+<!-- Navbar -->
+<header class="navbar" data-aos="fade-down">
   <div class="logo">KHOTWA COUNCIL</div>
   <nav class="nav-container">
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li><li><a href="calendar.html">Calendar</a></li>
-      <li><a href="register.html">Register</a></li><li><a href="admin.html">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li><li><a href="profile.html">Profile</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
     </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
 
-<!-- باقي المحتوى نفس الأصل -->
-<!-- Hero, About, Stats, Events, Contact preview, Footer -->
+<!-- Hero -->
+<section id="home" class="hero" data-aos="fade-up">
+  <div class="hero-content">
+    <h1>Welcome to <span class="text-green">Khotwa</span></h1>
+    <p>Empowering student voice. Leading with impact.</p>
+    <a href="#about" class="primary-btn">Explore Khotwa</a>
+  </div>
+</section>
 
+<!-- About -->
+<section id="about" class="section about-section" data-aos="fade-right">
+  <div class="about-text">
+    <h2>Who Are We?</h2>
+    <p>Khotwa bridges students and leadership. We empower, represent, connect.</p>
+  </div>
+  <div class="about-image">
+    <img src="https://i.top4top.io/p_3497a12jc1.jpg" alt="Team Photo"/>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="section stats" data-aos="zoom-in">
+  <h2>Our Impact</h2>
+  <div class="stats-grid">
+    <div class="stat-card"><h3>👥 150+</h3><p>Members</p></div>
+    <div class="stat-card"><h3>📚 25+</h3><p>Events</p></div>
+    <div class="stat-card"><h3>📈 4 Years</h3><p>Growth</p></div>
+  </div>
+</section>
+
+<!-- Events -->
+<section id="events" class="section" data-aos="fade-up">
+  <h2>Upcoming Events</h2>
+  <ul class="event-cards">
+    <li class="card-event">
+      <img src="images/event1.jpg" alt="Orientation"/>
+      <h3>Orientation Week</h3>
+      <p>Welcome new students to the journey.</p>
+    </li>
+    <li class="card-event">
+      <img src="images/event2.jpg" alt="Tech Talk"/>
+      <h3>Tech Talk</h3>
+      <p>AI, Web & Innovation session.</p>
+    </li>
+  </ul>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section" data-aos="fade-up">
+  <h2>Contact Us</h2>
+  <a href="contact.html" class="primary-btn">Get In Touch</a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 Khotwa Student Council. All rights reserved.</p>
+</footer>
+
+<!-- Scripts -->
 <script src="main.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true });
+</script>
+
 </body>
 </html>
