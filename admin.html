@@ -27,8 +27,8 @@
 </head>
 <body>
 
+<!-- ✅ الحماية -->
 <script>
-  // حماية الصفحة
   if (localStorage.getItem("isLogged") !== "true" && localStorage.getItem("rememberMe") !== "true") {
     alert("You must log in first!");
     location.href = "login.html";
@@ -39,18 +39,14 @@
 <header class="navbar">
   <div class="logo">KHOTWA ADMIN</div>
   <nav class="nav-container">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="calendar.html">Calendar</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="admin.html">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="profile.html">Profile</a></li>
+    <ul class="nav-links" id="authLinks">
+      <!-- login/logout dynamic -->
     </ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
 
+<!-- Dashboard -->
 <section class="section">
   <h2>لوحة التحكم</h2>
 
@@ -81,6 +77,7 @@
 <!-- Toast -->
 <div id="toast" class="toast"></div>
 
+<script src="main.js"></script>
 <script>
   const users = [
     { name: "أحمد محمد", email: "ahmad@email.com", role: "عضو" },
@@ -110,44 +107,41 @@
     const toast = document.getElementById("toast");
     toast.innerText = msg;
     toast.classList.add("show");
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 3000);
+    setTimeout(() => toast.classList.remove("show"), 3000);
   }
 
   function addRow() {
-    const name = prompt("Name:");
-    const email = prompt("Email:");
-    const role = prompt("Role:");
+    const name = prompt("الاسم:");
+    const email = prompt("البريد الإلكتروني:");
+    const role = prompt("الدور:");
     if (name && email && role) {
       users.push({ name, email, role });
       refreshUI();
-      showToast("✅ User added");
+      showToast("✅ تمت إضافة المستخدم");
     }
   }
 
   function deleteRow(i) {
-    if (confirm("Are you sure you want to delete this user?")) {
+    if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
       users.splice(i, 1);
       refreshUI();
-      showToast("🗑️ User deleted");
+      showToast("🗑️ تم حذف المستخدم");
     }
   }
 
   function editRow(i) {
     const user = users[i];
-    const name = prompt("New name:", user.name);
-    const email = prompt("New email:", user.email);
-    const role = prompt("New role:", user.role);
+    const name = prompt("الاسم الجديد:", user.name);
+    const email = prompt("البريد الجديد:", user.email);
+    const role = prompt("الدور الجديد:", user.role);
     if (name && email && role) {
       users[i] = { name, email, role };
       refreshUI();
-      showToast("✏️ User updated");
+      showToast("✏️ تم تحديث المستخدم");
     }
   }
 
   window.addEventListener("DOMContentLoaded", refreshUI);
 </script>
-<script src="dark-toggle.js"></script>
 </body>
 </html>
