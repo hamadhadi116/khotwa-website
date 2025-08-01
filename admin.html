@@ -1,63 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Panel – Khotwa Council</title>
-  <link rel="stylesheet" href="styles.css" id="theme-link" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- شاشة تسجيل الدخول -->
-  <div id="loginScreen" class="login-screen">
-    <h2>🔒 Admin Login</h2>
-    <input type="password" id="adminPass" placeholder="Enter Admin Password" />
-    <button onclick="checkLogin()">Login</button>
-  </div>
 
-  <!-- لوحة تحكم الأدمن -->
-  <div id="adminPanel" class="admin-panel-wrapper" style="display: none;">
-    <header class="navbar">
-      <div class="logo">KHOTWA ADMIN</div>
-      <div class="navbar-actions">
-        <button id="darkToggle" class="dark-btn">🌙</button>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
-      </div>
-    </header>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">KHOTWA ADMIN</div>
+    <nav class="nav-container">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+      <button id="darkToggle" class="dark-btn">🌓</button>
+    </nav>
+  </header>
 
-    <main class="admin-panel">
-      <!-- تعديل المحتوى -->
-      <section class="card">
-        <h2>📝 Edit Site Content</h2>
-        <label for="aboutText">About Us:</label>
-        <textarea id="aboutText" rows="4"></textarea>
-        <button id="saveAbout">Save About</button>
+  <!-- Admin Dashboard -->
+  <section class="section">
+    <h2>لوحة التحكم</h2>
 
-        <label for="contactText">Contact Intro:</label>
-        <textarea id="contactText" rows="3"></textarea>
-        <button id="saveContact">Save Contact</button>
-      </section>
+    <div class="admin-controls">
+      <button onclick="addRow()">➕ إضافة مستخدم</button>
+    </div>
 
-      <!-- إدارة الأحداث -->
-      <section class="card">
-        <h2>📅 Manage Events</h2>
-        <form id="newEventForm">
-          <input type="text" id="eventTitle" placeholder="Event Title" required />
-          <input type="date" id="eventDate" required />
-          <input type="file" id="eventImage" accept="image/*" />
-          <button type="submit">Add Event</button>
-        </form>
-        <ul id="eventsList" class="data-list"></ul>
-      </section>
+    <div class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>الرقم</th>
+            <th>الاسم</th>
+            <th>البريد الإلكتروني</th>
+            <th>الدور</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody">
+          <tr>
+            <td>1</td>
+            <td>أحمد محمد</td>
+            <td>ahmad@email.com</td>
+            <td>عضو</td>
+            <td>
+              <button onclick="editRow(this)">✏️</button>
+              <button onclick="deleteRow(this)">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-      <!-- الطلاب المسجلين -->
-      <section class="card">
-        <h2>👨‍🎓 Registered Students</h2>
-        <ul id="registeredList" class="data-list"></ul>
-      </section>
-    </main>
-
-    <footer class="footer">&copy; 2025 KHOTWA Student Council</footer>
-  </div>
+  <footer class="footer">
+    <p>© 2025 Khotwa Student Council</p>
+  </footer>
 
   <script src="dark-toggle.js"></script>
   <script src="admin.js"></script>
