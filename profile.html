@@ -1,62 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>User Profile – Khotwa</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
     .profile-container {
       max-width: 600px;
       margin: 3rem auto;
-      background-color: var(--card-bg);
+      background: var(--card-bg);
       padding: 2rem;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      position: relative;
       text-align: center;
     }
-
+    .avatar-wrapper {
+      position: relative;
+      display: inline-block;
+    }
     .profile-container img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 1rem;
+      width: 130px; height: 130px;
+      object-fit: cover; border-radius: 50%;
       border: 3px solid var(--green);
     }
-
+    .avatar-wrapper button {
+      position: absolute; bottom: 0; right: 0;
+      background: var(--btn-bg); color: var(--btn-text);
+      border: none; border-radius: 50%;
+      width: 32px; height: 32px;
+      cursor: pointer; transition: background .3s;
+    }
+    .avatar-wrapper button:hover {
+      background: var(--green);
+    }
     .profile-container input {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 0.6rem 0;
-      border-radius: 5px;
+      width: 100%; padding: 0.8rem;
+      margin: 0.7rem 0; border-radius: 6px;
       border: 1px solid #ccc;
-      background-color: var(--bg);
-      color: var(--text);
+      background: var(--bg); color: var(--text);
     }
-
-    .profile-container button {
-      margin-top: 1.5rem;
-      padding: 0.8rem 2rem;
-      background-color: var(--btn-bg);
-      color: var(--btn-text);
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
+    .profile-container button.save-btn {
+      margin-top: 1rem; padding: 0.8rem 1.6rem;
+      background: var(--btn-bg); color: var(--btn-text);
+      border: none; border-radius: 6px; font-weight: bold;
+      cursor: pointer; transition: transform .2s, background .3s;
     }
-
-    .profile-container button:hover {
-      background-color: var(--green);
+    .profile-container button.save-btn:hover {
+      background: var(--green); transform: translateY(-2px);
     }
-
-    .msg-success {
-      display: none;
-      color: green;
-      margin-top: 1rem;
+    .profile-container .msg {
+      color: green; margin-top: 1rem; display: none;
     }
+    input[disabled] { opacity: 0.6; }
   </style>
 </head>
 <body>
@@ -78,15 +76,19 @@
 
 <section class="section" data-aos="fade-up">
   <div class="profile-container">
-    <img src="https://i.pravatar.cc/150?u=student" alt="User Avatar" />
+    <div class="avatar-wrapper">
+      <img src="https://i.pravatar.cc/150?u=student" id="avatarImg" alt="Avatar"/>
+      <button id="avatarBtn" title="Change Avatar">✏️</button>
+      <input type="file" id="avatarInput" accept="image/*" style="display:none"/>
+    </div>
 
-    <input type="text" placeholder="Full Name" value="Ali Mohammed" />
-    <input type="email" placeholder="Email" value="ali@khotwa.edu.sa" />
-    <input type="text" placeholder="Student ID" value="20240123" />
-    <input type="text" placeholder="Department" value="Computer Science" />
+    <input type="text" id="fullName" value="Ali Mohammed" required disabled/>
+    <input type="email" id="email" value="ali@khotwa.edu.sa" required disabled/>
+    <input type="text" id="studentId" value="20240123" disabled/>
+    <input type="text" id="department" value="Computer Science" disabled/>
 
-    <button onclick="saveProfile()">Save Changes</button>
-    <div class="msg-success" id="successMsg">✅ Profile updated successfully!</div>
+    <button class="save-btn" id="editBtn">Edit Profile</button>
+    <div class="msg" id="successMsg">✅ Profile updated successfully!</div>
   </div>
 </section>
 
@@ -97,14 +99,37 @@
 <script src="main.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init({ duration: 700 });
+  AOS.init({ duration: 700, once: true });
 
-  function saveProfile() {
-    document.getElementById("successMsg").style.display = "block";
-    setTimeout(() => {
-      document.getElementById("successMsg").style.display = "none";
-    }, 3000);
-  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const editBtn = document.getElementById('editBtn');
+    const inputs = ['fullName','email','studentId','department'].map(id => document.getElementById(id));
+    const msg = document.getElementById('successMsg');
+
+    editBtn.addEventListener('click', () => {
+      const isDisabled = inputs[0].disabled;
+      inputs.forEach(i => i.disabled = !isDisabled);
+      editBtn.textContent = isDisabled ? 'Save Changes' : 'Edit Profile';
+      if (!isDisabled) {
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display='none', 3000);
+        inputs.forEach(i => i.disabled = true);
+      }
+    });
+
+    const avatarBtn = document.getElementById('avatarBtn');
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarImg = document.getElementById('avatarImg');
+    avatarBtn.addEventListener('click', () => avatarInput.click());
+    avatarInput.addEventListener('change', () => {
+      const file = avatarInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => avatarImg.src = e.target.result;
+        reader.readAsDataURL(file);
+      }
+    });
+  });
 </script>
 </body>
 </html>
