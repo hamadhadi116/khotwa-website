@@ -333,3 +333,64 @@ form button {
 [data-theme="dark"] .primary-btn:hover {
   background-color: #00703c;
 }
+/* 📐 التصميم الثابت — اعتماد الأحجام والتنسيق كما في النهاري */
+.hero { padding: 6rem 1rem; }
+.hero-content { max-width: 600px; }
+
+/* ضمان نفس حجم الصورة ومكانها */
+.about-image img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* تصميم نفس الأعمدة للـ Events */
+.event-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+/* بطاقات بنفس البادينغ */
+.card-event div {
+  padding: 0.8rem;
+}
+
+/* --- الآن نطابق ألوان الوضع النهاري داخل الـ dark mode --- */
+[data-theme="dark"] body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+[data-theme="dark"] .navbar { background-color: #000000 !important; color: #ffffff !important; }
+[data-theme="dark"] .hero {
+  background: linear-gradient(to right, #d41c0f, #00703c) !important;
+  color: #ffffff !important;
+}
+[data-theme="dark"] .primary-btn {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+[data-theme="dark"] .primary-btn:hover { background-color: #00703c !important; }
+
+[data-theme="dark"] .section,
+[data-theme="dark"] .bg-light {
+  background-color: #f9f9f9 !important;
+}
+[data-theme="dark"] .about-text h2,
+[data-theme="dark"] .card-event h3,
+[data-theme="dark"] .card-event p {
+  color: #000000 !important;
+}
+[data-theme="dark"] .card-event {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+[data-theme="dark"] .card {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+[data-theme="dark"] .footer {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
