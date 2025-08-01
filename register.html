@@ -2,15 +2,78 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register – Khotwa</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <style>
+    .register-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+      padding: 2rem;
+    }
+
+    .register-card {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+
+    .register-card h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.3rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.8rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .form-group .material-symbols-outlined {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.3rem;
+      color: #888;
+    }
+
+    .register-card button {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      font-weight: bold;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .register-card button:hover {
+      background-color: var(--green);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <header class="navbar" data-aos="fade-down">
+  <header class="navbar">
     <div class="logo">KHOTWA COUNCIL</div>
     <nav class="nav-container">
       <ul class="nav-links">
@@ -25,61 +88,41 @@
     </nav>
   </header>
 
-  <!-- Registration Form -->
-  <section class="section" data-aos="fade-up">
-    <h2>Join the Council</h2>
-
-    <form class="register-form" onsubmit="return validateForm()">
-      <div class="input-group">
-        <input type="text" id="name" placeholder="👤 Full Name" required />
-      </div>
-      <div class="input-group">
-        <input type="email" id="email" placeholder="📧 Email Address" required />
-      </div>
-      <div class="input-group">
-        <input type="text" id="studentId" placeholder="🆔 Student ID" required />
-      </div>
-      <div class="input-group">
-        <select id="department" required>
-          <option value="">🏛️ Select Department</option>
-          <option>Engineering</option>
-          <option>Business</option>
-          <option>IT</option>
-          <option>Science</option>
-        </select>
-      </div>
-      <button type="submit">Submit</button>
-      <p class="form-message" id="formMessage"></p>
-    </form>
+  <section class="register-section">
+    <div class="register-card">
+      <h2>Join the Council</h2>
+      <form id="regForm">
+        <div class="form-group">
+          <span class="material-symbols-outlined">person</span>
+          <input type="text" name="name" placeholder="Full Name" required />
+        </div>
+        <div class="form-group">
+          <span class="material-symbols-outlined">mail</span>
+          <input type="email" name="email" placeholder="Email Address" required />
+        </div>
+        <div class="form-group">
+          <span class="material-symbols-outlined">badge</span>
+          <input type="text" name="major" placeholder="Student Major" required />
+        </div>
+        <div class="form-group">
+          <span class="material-symbols-outlined">school</span>
+          <select name="level" required>
+            <option value="" disabled selected>Select Level</option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+          </select>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer" data-aos="fade-up">
+  <footer class="footer">
     <p>© 2025 Khotwa Student Council. All rights reserved.</p>
   </footer>
 
- <script src="main.js"></script>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 1000, once: true });
-
-    function validateForm() {
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const id = document.getElementById("studentId").value.trim();
-      const dept = document.getElementById("department").value;
-      const msg = document.getElementById("formMessage");
-
-      if (!name || !email || !id || !dept) {
-        msg.style.color = "red";
-        msg.innerText = "Please fill in all fields.";
-        return false;
-      }
-
-      msg.style.color = "green";
-      msg.innerText = "Registration submitted successfully 🎉";
-      return false; // Prevent form reload (for demo)
-    }
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>
