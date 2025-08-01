@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Events Calendar – Khotwa</title>
+  <title>Advanced Events Calendar – Khotwa</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <style>
     .calendar-wrapper {
       max-width: 1000px;
@@ -15,54 +16,128 @@
       border-radius: 12px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     }
+    #addEventBtn {
+      margin-bottom: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #addEventBtn:hover { background: #005f35; }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: none; align-items: center; justify-content: center;
+    }
+    .modal-content {
+      background: var(--bg);
+      padding: 1.6rem;
+      border-radius: 8px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .modal-content h3 { margin-top: 0; }
+    .modal-content input {
+      width: 100%; padding: 0.7rem; margin: 0.6rem 0;
+      border: 1px solid #ccc; border-radius: 5px;
+      background: var(--card-bg); color: var(--text);
+    }
+    .modal-content button {
+      padding: 0.7rem 1.3rem;
+      background: var(--btn-bg); color: var(--btn-text);
+      border: none; border-radius: 6px; cursor: pointer;
+      margin-right: 0.5rem;
+    }
+    .modal-content button:hover { background: var(--green); }
   </style>
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="logo">KHOTWA COUNCIL</div>
-    <nav class="nav-container">
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="admin.html">Admin</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="profile.html">Profile</a></li>
-      </ul>
-      <button id="darkToggle" class="dark-btn">🌓</button>
-    </nav>
-  </header>
+<header class="navbar" data-aos="fade-down">
+  <div class="logo">KHOTWA COUNCIL</div>
+  <nav class="nav-container">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+    </ul>
+    <button id="darkToggle" class="dark-btn">🌓</button>
+  </nav>
+</header>
 
-  <section class="section">
-    <h2>Events Calendar</h2>
-    <div class="calendar-wrapper">
-      <div id="calendar"></div>
+<section class="section calendar-wrapper" data-aos="fade-up">
+  <button id="addEventBtn">+ Add Event</button>
+  <div id="calendar"></div>
+</section>
+
+<!-- Modal Dialog -->
+<div id="eventModal" class="modal">
+  <div class="modal-content">
+    <h3>Add Event</h3>
+    <input type="text" id="evtTitle" placeholder="Event Title" />
+    <input type="date" id="evtDate" />
+    <div>
+      <button id="saveEvtBtn">Save</button>
+      <button id="cancelEvtBtn">Cancel</button>
     </div>
-  </section>
+  </div>
+</div>
 
-  <footer class="footer">
-    <p>© 2025 Khotwa Student Council. All rights reserved.</p>
-  </footer>
+<footer class="footer" data-aos="fade-up">
+  <p>© 2025 Khotwa Student Council</p>
+</footer>
 
-  <script src="main.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const calendarEl = document.getElementById("calendar");
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="main.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true });
 
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        themeSystem: "standard",
-        events: [
-          { title: "Orientation", start: "2025-08-10" },
-          { title: "Tech Workshop", start: "2025-08-18" },
-          { title: "Student Meeting", start: "2025-08-25" }
-        ]
-      });
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('eventModal');
+    const saveBtn = document.getElementById('saveEvtBtn');
+    const cancelBtn = document.getElementById('cancelEvtBtn');
+    const addBtn = document.getElementById('addEventBtn');
+    const calendarEl = document.getElementById('calendar');
 
-      calendar.render();
+    let eventsData = [
+      { title: 'Orientation', start: '2025-08-10' },
+      { title: 'Tech Workshop', start: '2025-08-18' }
+    ];
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: eventsData,
+      dateClick: info => {
+        const detail = eventsData.find(e => e.start === info.dateStr);
+        if (detail) alert(detail.title);
+      }
     });
-  </script>
+    calendar.render();
+
+    addBtn.addEventListener('click', () => modal.style.display = 'flex');
+    cancelBtn.addEventListener('click', () => modal.style.display = 'none');
+
+    saveBtn.addEventListener('click', () => {
+      const title = document.getElementById('evtTitle').value.trim();
+      const date = document.getElementById('evtDate').value;
+      if (!title || !date) return alert('Please add title and date');
+      eventsData.push({ title, start: date });
+      calendar.addEvent({ title, start: date });
+      modal.style.display = 'none';
+    });
+  });
+</script>
+
 </body>
 </html>
