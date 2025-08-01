@@ -1,26 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <script>document.documentElement.setAttribute("data-theme", localStorage.getItem("theme")||"light");</script>
-  <title>Calendar – Khotwa</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar – Khotwa Events</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* تقويم */
+    .calendar {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .calendar-header button {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+    .calendar-cell {
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 0.7rem;
+      border-radius: 5px;
+      text-align: center;
+      position: relative;
+    }
+    .calendar-cell.today {
+      border: 2px solid var(--green);
+    }
+    .event-mark {
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+    }
+  </style>
 </head>
 <body>
-  <header class="navbar"><div class="logo">KHOTWA COUNCIL</div><button id="darkToggle">🌙</button></header>
-  <section class="section"><h2>Event Calendar</h2><div id="calendar"></div></section>
-  <footer class="footer">&copy; 2025 KHOTWA Student Council</footer>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">KHOTWA</div>
+    <nav class="nav-container">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <button id="darkToggle" class="dark-btn">🌓</button>
+    </nav>
+  </header>
+
+  <!-- Calendar Section -->
+  <section class="calendar">
+    <div class="calendar-header">
+      <button id="prevBtn">❮</button>
+      <h2 id="monthYear"></h2>
+      <button id="nextBtn">❯</button>
+    </div>
+    <div class="calendar-grid" id="calendarGrid">
+      <!-- أيام الأسبوع -->
+      <div>Sun</div><div>Mon</div><div>Tue</div>
+      <div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Khotwa Student Council</p>
+  </footer>
+
+  <!-- سكربت التبديل الليلي + تقويم -->
   <script src="dark-toggle.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const events = JSON.parse(localStorage.getItem("events")||'[]');
-      const calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
-        initialView: "dayGridMonth", events: events.map(ev=>({title:ev.title, start:ev.date}))
-      });
-      calendar.render();
+    const calendarGrid = document.getElementById('calendarGrid');
+    const monthYear = document.getElementById('monthYear');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    const events = {
+      // يوم: "عنوان الفعالية"
+      '2025-08-15': 'Orientation Day',
+      '2025-08-22': 'Tech Talk',
+      '2025-09-05': 'Workshop'
+    };
+
+    let date = new Date();
+
+    function renderCalendar() {
+      calendarGrid.innerHTML = `
+        <div>Sun</div><div>Mon</div><div>Tue</div>
+        <div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+      `;
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      monthYear.innerText = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('div');
+        calendarGrid.appendChild(empty);
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement('div');
+        cell.classList.add('calendar-cell');
+        const cellDate = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        cell.innerText = d;
+
+        if (events[cellDate]) {
+          const mark = document.createElement('div');
+          mark.classList.add('event-mark');
+          cell.appendChild(mark);
+          cell.title = events[cellDate];
+        }
+
+        const today = new Date();
+        if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+          cell.classList.add('today');
+        }
+
+        calendarGrid.appendChild(cell);
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      date.setMonth(date.getMonth() - 1);
+      renderCalendar();
     });
+    nextBtn.addEventListener('click', () => {
+      date.setMonth(date.getMonth() + 1);
+      renderCalendar();
+    });
+
+    renderCalendar();
   </script>
 </body>
 </html>
