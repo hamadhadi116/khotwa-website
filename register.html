@@ -1,49 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register – KHOTWA</title>
-  <link rel="stylesheet" href="styles.css" id="theme-link" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>document.documentElement.setAttribute("data-theme", localStorage.getItem("theme")||"light");</script>
+  <title>Register – Khotwa</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="navbar">
     <div class="logo">KHOTWA COUNCIL</div>
     <nav class="nav-container">
-      <ul class="nav-links">
-        <li><a href="index.html#home">Home</a></li>
-        <li><a href="index.html#about">About</a></li>
-        <li><a href="index.html#events">Events</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="admin.html">Admin</a></li>
-      </ul>
+      <!-- nav-links -->
       <button id="darkToggle" class="dark-btn">🌙</button>
     </nav>
   </header>
-
   <section class="section">
-    <h2>📝 Student Registration</h2>
+    <h2>Student Registration</h2>
     <form id="regForm">
-      <input type="text" id="name" placeholder="Your Name" required />
-      <input type="email" id="email" placeholder="Your Email" required />
-      <input type="text" id="major" placeholder="Your Major" required />
-      <select id="level" required>
-        <option value="">Select Your Level</option>
-        <option value="1st Year">1st Year</option>
-        <option value="2nd Year">2nd Year</option>
-        <option value="3rd Year">3rd Year</option>
-        <option value="4th Year">4th Year</option>
-      </select>
+      <input type="text" id="name" placeholder="Name" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="text" id="major" placeholder="Major" required>
+      <select id="level" required><option value="">Level</option><option>1st Year</option>…</select>
       <button type="submit">Register</button>
     </form>
   </section>
-
-  <footer class="footer">
-    &copy; 2025 KHOTWA Student Council.
-  </footer>
-
+  <footer class="footer">&copy; 2025 KHOTWA Student Council</footer>
   <script src="dark-toggle.js"></script>
   <script src="script.js"></script>
 </body>
