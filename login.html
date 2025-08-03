@@ -5,8 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .login-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      padding: 2rem;
+    }
+    .login-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+    .login-card h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .login-card input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 1rem 0 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .login-card label {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .login-card button {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .login-card button:hover {
+      background: var(--green);
+    }
+  </style>
 </head>
 <body>
+
 <header class="navbar">
   <div class="logo">KHOTWA</div>
   <nav class="nav-container">
@@ -38,13 +88,16 @@
     const email = this.email.value.trim().toLowerCase();
     const pwd = this.password.value.trim();
     const remember = this.remember.checked;
-    if (email === 'admin@khotwa.com' && pwd === 'admin123') {
+
+    const isValid = email === 'admin@khotwa.com' && pwd === 'admin123';
+    if (isValid) {
       localStorage.setItem('isLogged', 'true');
-      if (remember) localStorage.setItem('rememberMe','true');
-      else localStorage.removeItem('rememberMe');
-      alert('Login successful!');
+      remember ? localStorage.setItem('rememberMe','true') : localStorage.removeItem('rememberMe');
+      alert('✅ Login successful!');
       location.href = 'admin.html';
-    } else alert('Invalid credentials');
+    } else {
+      alert('❌ Invalid credentials');
+    }
   });
 </script>
 </body>
