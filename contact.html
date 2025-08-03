@@ -9,7 +9,7 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
     .contact-section {
-      max-width: 800px;
+      max-width: 900px;
       margin: 2rem auto;
       padding: 1rem;
       display: grid;
@@ -17,36 +17,77 @@
       gap: 2rem;
     }
     @media(min-width: 768px) {
-      .contact-section { grid-template-columns: 1fr 1fr; }
+      .contact-section {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
     }
-    .info { padding: 1rem; }
-    .contact-form { background: var(--card-bg); padding: 1.8rem; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);}
-    .contact-form .form-group { position: relative; margin-bottom: 1.2rem; }
-    .contact-form input, .contact-form textarea {
-      width: 100%; padding: 0.85rem 1rem 0.85rem 2.8rem;
-      font-size: 1rem; border-radius: 6px; border: 1px solid #ccc;
-      background: var(--bg); color: var(--text);
+    .info {
+      padding: 1rem;
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .contact-form {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+    .contact-form .form-group {
+      position: relative;
+      margin-bottom: 1.2rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.8rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: var(--bg);
+      color: var(--text);
     }
     .contact-form .material-symbols-outlined {
-      position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1.3rem;
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 1.3rem;
     }
     .contact-form button {
-      width: 100%; padding: 0.9rem;
-      background: var(--btn-bg); color: var(--btn-text);
-      border: none; border-radius: 6px; cursor: pointer;
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
     .contact-form button:hover {
       background: var(--green);
     }
     .toast {
-      position: fixed; top: 1rem; right: 1rem;
-      background: var(--green); color: var(--white);
-      padding: 0.8rem 1.4rem; border-radius: 5px;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--green);
+      color: var(--white);
+      padding: 0.8rem 1.4rem;
+      border-radius: 5px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      opacity: 0; pointer-events: none;
+      opacity: 0;
+      pointer-events: none;
       transition: opacity 0.4s ease;
+      z-index: 999;
     }
-    .toast.show { opacity: 1; pointer-events: auto; }
+    .toast.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
@@ -59,7 +100,7 @@
       <li><a href="calendar.html">Calendar</a></li>
       <li><a href="register.html">Register</a></li>
       <li><a href="admin.html">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
       <li><a href="profile.html">Profile</a></li>
     </ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
@@ -103,6 +144,7 @@
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 700, once: true });
+
   const form = document.getElementById('contactForm');
   const toast = document.getElementById('toast');
   form.addEventListener('submit', function(e){
@@ -113,7 +155,7 @@
       message: form.message.value.trim(),
       date: new Date().toISOString()
     };
-    const arr = JSON.parse(localStorage.getItem('contacts')|| '[]');
+    const arr = JSON.parse(localStorage.getItem('contacts') || '[]');
     arr.push(data);
     localStorage.setItem('contacts', JSON.stringify(arr));
     form.reset();
