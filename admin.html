@@ -14,10 +14,21 @@
       transition: opacity 0.4s ease;
       z-index: 999;
     }
-    .toast.show {
-      opacity: 1;
-      pointer-events: auto;
+    .toast.show { opacity: 1; pointer-events: auto; }
+
+    .logout-btn {
+      background-color: var(--red);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-left: 1rem;
     }
+
+    .logout-btn:hover { background-color: #a00; }
   </style>
 </head>
 <body>
@@ -41,11 +52,12 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="calendar.html">Calendar</a></li>
       <li><a href="register.html">Register</a></li>
-      <li><a href="admin.html">Admin</a></li>
+      <li><a href="admin.html" class="active">Admin</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="profile.html">Profile</a></li>
     </ul>
     <ul class="nav-links" id="authLinks"></ul>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
@@ -77,7 +89,7 @@
   <p>© 2025 Khotwa Student Council</p>
 </footer>
 
-<!-- toast notification -->
+<!-- Toast -->
 <div id="toast" class="toast"></div>
 
 <script src="main.js"></script>
@@ -87,32 +99,32 @@
     { name: "سارة العتيبي", email: "sarah@mail.com", role: "قائدة" }
   ];
 
-  function refreshUI() {
+  const refreshUI = () => {
     const tbody = document.getElementById("adminTableBody");
     tbody.innerHTML = "";
     users.forEach((user, i) => {
-      tbody.innerHTML += `
-        <tr>
-          <td>${i + 1}</td>
-          <td>${user.name}</td>
-          <td>${user.email}</td>
-          <td>${user.role}</td>
-          <td>
-            <button onclick="editRow(${i})">✏️</button>
-            <button onclick="deleteRow(${i})">🗑️</button>
-          </td>
-        </tr>`;
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${i + 1}</td>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td>
+          <button onclick="editRow(${i})">✏️</button>
+          <button onclick="deleteRow(${i})">🗑️</button>
+        </td>`;
+      tbody.appendChild(row);
     });
-  }
+  };
 
-  function showToast(msg) {
+  const showToast = (msg) => {
     const toast = document.getElementById("toast");
     toast.innerText = msg;
     toast.classList.add("show");
     setTimeout(() => toast.classList.remove("show"), 3000);
-  }
+  };
 
-  function addRow() {
+  const addRow = () => {
     const name = prompt("الاسم:");
     const email = prompt("البريد الإلكتروني:");
     const role = prompt("الدور:");
@@ -121,9 +133,9 @@
       refreshUI();
       showToast("✅ تمت إضافة المستخدم");
     }
-  }
+  };
 
-  function editRow(i) {
+  const editRow = (i) => {
     const user = users[i];
     const name = prompt("الاسم الجديد:", user.name);
     const email = prompt("البريد الجديد:", user.email);
@@ -133,15 +145,22 @@
       refreshUI();
       showToast("✏️ تم تحديث المستخدم");
     }
-  }
+  };
 
-  function deleteRow(i) {
+  const deleteRow = (i) => {
     if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
       users.splice(i, 1);
       refreshUI();
       showToast("🗑️ تمت إزالة المستخدم");
     }
-  }
+  };
+
+  // logout functionality
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("isLogged");
+    localStorage.removeItem("rememberMe");
+    location.href = "login.html";
+  });
 
   window.addEventListener("DOMContentLoaded", refreshUI);
 </script>
