@@ -8,8 +8,7 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
 </head>
 <body>
-
-<header class="navbar" id="mainNavbar" data-aos="fade-down">
+<header class="navbar" data-aos="fade-down" id="mainNavbar">
   <div class="logo">KHOTWA COUNCIL</div>
   <nav class="nav-container">
     <ul class="nav-links">
@@ -24,25 +23,17 @@
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
-
-<section id="home" class="hero" data-aos="fade-up">
+<section class="hero" id="home" data-aos="fade-up">
   <div class="hero-content">
     <h1>Welcome to <span class="text-green">Khotwa</span></h1>
     <p>Empowering <strong>student voice</strong>. Leading with impact.</p>
     <a href="#about" class="primary-btn" id="ctaBtn">Explore Khotwa</a>
   </div>
 </section>
-
 <section id="about" class="section about-section" data-aos="fade-right">
-  <div class="about-text">
-    <h2>Who Are We?</h2>
-    <p>Khotwa bridges students and leadership. We empower, represent, connect.</p>
-  </div>
-  <div class="about-image">
-    <img src="https://i.top4top.io/p_3497a12jc1.jpg" alt="Team Photo" loading="lazy"/>
-  </div>
+  <div class="about-text"><h2>Who Are We?</h2><p>Khotwa bridges students and leadership...</p></div>
+  <div class="about-image"><img src="https://i.top4top.io/p_3497a12jc1.jpg" alt="Team Photo" loading="lazy"/></div>
 </section>
-
 <section class="section stats" data-aos="zoom-in">
   <h2>Our Impact</h2>
   <div class="stats-grid">
@@ -51,48 +42,26 @@
     <div class="stat-card"><h3 id="countMessages">0</h3><p>Messages</p></div>
   </div>
 </section>
-
 <section id="events" class="section" data-aos="fade-up">
   <h2>Upcoming Events</h2>
   <ul class="event-cards">
-    <li class="card-event" data-aos="fade-up" data-aos-delay="100">
-      <img src="images/event1.jpg" alt="Orientation" loading="lazy"/>
-      <h3>Orientation Week</h3>
-      <p>Welcome new students to the journey.</p>
-    </li>
-    <li class="card-event" data-aos="fade-up" data-aos-delay="200">
-      <img src="images/event2.jpg" alt="Tech Talk" loading="lazy"/>
-      <h3>Tech Talk</h3>
-      <p>AI, Web & Innovation session.</p>
-    </li>
+    <li class="card-event" data-aos="fade-up" data-aos-delay="100"><img src="images/event1.jpg" alt="Orientation"/><h3>Orientation Week</h3><p>Welcome new students</p></li>
+    <li class="card-event" data-aos="fade-up" data-aos-delay="200"><img src="images/event2.jpg" alt="Tech Talk"/><h3>Tech Talk</h3><p>AI, Web & Innovation session.</p></li>
   </ul>
 </section>
-
-<section id="contact" class="section" data-aos="fade-up">
-  <h2>Contact Us</h2>
-  <a href="contact.html" class="primary-btn">Get In Touch</a>
-</section>
-
-<footer class="footer" data-aos="fade-up">
-  <p>© 2025 Khotwa Student Council. All rights reserved.</p>
-</footer>
-
-<script src="main.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<section id="contact" class="section" data-aos="fade-up"><h2>Contact Us</h2><a href="contact.html" class="primary-btn">Get In Touch</a></section>
+<footer class="footer" data-aos="fade-up"><p>© 2025 Khotwa Student Council. All rights reserved.</p></footer>
+<script src="main.js" defer></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 <script>
-  AOS.init({ duration: 800, once: true });
-  document.getElementById('ctaBtn').addEventListener('mouseenter', e => e.target.style.transform = 'scale(1.05)');
-  document.getElementById('ctaBtn').addEventListener('mouseleave', e => e.target.style.transform = '');
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainNavbar').classList.toggle('navbar-scrolled', window.scrollY > 50);
-  });
+  AOS.init({ duration:800, once:true });
+  document.getElementById('ctaBtn').addEventListener('mouseenter', e => e.target.style.transform='scale(1.05)');
+  document.getElementById('ctaBtn').addEventListener('mouseleave', e => e.target.style.transform='');
+  window.addEventListener('scroll', () => document.getElementById('mainNavbar').classList.toggle('navbar-scrolled', window.scrollY > 50));
   document.addEventListener('DOMContentLoaded', () => {
-    const members = JSON.parse(localStorage.getItem('registrations') || '[]').length;
-    const events = JSON.parse(localStorage.getItem('events') || '[]').length;
-    const messages = JSON.parse(localStorage.getItem('contacts') || '[]').length;
-    document.getElementById('countMembers').textContent = members;
-    document.getElementById('countEvents').textContent = events;
-    document.getElementById('countMessages').textContent = messages;
+    document.getElementById('countMembers').textContent = JSON.parse(localStorage.getItem('registrations') || '[]').length;
+    document.getElementById('countEvents').textContent = JSON.parse(localStorage.getItem('events') || '[]').length;
+    document.getElementById('countMessages').textContent = JSON.parse(localStorage.getItem('contacts') || '[]').length;
   });
 </script>
 </body>
