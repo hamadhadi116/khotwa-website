@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF‑8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Khotwa Student Council</title>
   <link rel="stylesheet" href="styles.css"/>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
@@ -67,12 +68,12 @@
   </ul>
 </section>
 
-<section id="contact" class="section" data-aos="fade-up" data-aos-delay="300">
+<section id="contact" class="section" data-aos="fade-up">
   <h2>Contact Us</h2>
   <a href="contact.html" class="primary-btn">Get In Touch</a>
 </section>
 
-<footer class="footer" data-aos="fade-up" data-aos-delay="400">
+<footer class="footer" data-aos="fade-up">
   <p>© 2025 Khotwa Student Council. All rights reserved.</p>
 </footer>
 
@@ -80,15 +81,11 @@
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 800, once: true });
-
   document.getElementById('ctaBtn').addEventListener('mouseenter', e => e.target.style.transform = 'scale(1.05)');
   document.getElementById('ctaBtn').addEventListener('mouseleave', e => e.target.style.transform = '');
-
   window.addEventListener('scroll', () => {
-    const nav = document.getElementById('mainNavbar');
-    nav.classList.toggle('navbar-scrolled', window.scrollY > 50);
+    document.getElementById('mainNavbar').classList.toggle('navbar-scrolled', window.scrollY > 50);
   });
-
   document.addEventListener('DOMContentLoaded', () => {
     const members = JSON.parse(localStorage.getItem('registrations') || '[]').length;
     const events = JSON.parse(localStorage.getItem('events') || '[]').length;
