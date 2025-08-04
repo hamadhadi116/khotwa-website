@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .toast { position: fixed; bottom:2rem; right:2rem; background: var(--green); color:#fff;
-      padding:.7rem 1.3rem; border-radius:6px; opacity:0; pointer-events:none;
-      transition:opacity .4s; z-index:999; }
-    .toast.show { opacity:1; pointer-events:auto; }
-  </style>
 </head>
 <body>
 <script>
@@ -22,7 +17,8 @@
 
 <header class="navbar">
   <div class="logo">KHOTWA ADMIN</div>
-  <nav class="nav-container">
+  <button class="hamburger" id="hamburgerBtn">☰</button>
+  <nav class="nav-container" id="navMenu">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="calendar.html">Calendar</a></li>
@@ -36,7 +32,7 @@
   </nav>
 </header>
 
-<section class="section dashboard">
+<section class="section dashboard" data-aos="zoom-in">
   <h2>Dashboard Statistics</h2>
   <div class="stats-grid">
     <div class="stat-card"><h3 id="countUsers">0</h3><p>Users</p></div>
@@ -45,32 +41,44 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" data-aos="fade-up">
   <h2>Users Management</h2>
   <div class="admin-controls"><button onclick="addUser()">➕ Add User</button></div>
   <div class="table-container">
     <table class="admin-table">
-      <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
+      <thead>
+        <tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+      </thead>
       <tbody id="usersBody"></tbody>
     </table>
   </div>
 </section>
 
-<section class="section">
+<section class="section" data-aos="fade-up">
   <h2>Event Management</h2>
   <div class="admin-controls"><button onclick="addEvent()">➕ Add Event</button></div>
   <div class="table-container">
     <table class="admin-table">
-      <thead><tr><th>#</th><th>Title</th><th>Date</th><th>Actions</th></tr></thead>
+      <thead>
+        <tr><th>#</th><th>Title</th><th>Date</th><th>Actions</th></tr>
+      </thead>
       <tbody id="eventsBody"></tbody>
     </table>
   </div>
 </section>
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
+
 <div id="toast" class="toast"></div>
 
-<script src="main.js" defer></script>
 <script src="admin_advanced.js" defer></script>
+<script src="main.js" defer></script>
+<script defer>
+window.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
+  hamburger?.addEventListener('click', () => navMenu.classList.toggle('nav-open'));
+});
+</script>
 </body>
 </html>
