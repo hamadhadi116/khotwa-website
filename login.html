@@ -5,100 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
-  <style>
-    .login-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 80vh;
-      padding: 2rem;
-    }
-    .login-card {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 10px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    }
-    .login-card h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    .login-card input {
-      width: 100%;
-      padding: 0.8rem;
-      margin: 1rem 0 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: var(--bg);
-      color: var(--text);
-    }
-    .login-card label {
-      display: flex;
-      align-items: center;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    .login-card button {
-      width: 100%;
-      padding: 0.9rem;
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .login-card button:hover {
-      background: var(--green);
-    }
-  </style>
 </head>
 <body>
 
 <header class="navbar">
   <div class="logo">KHOTWA</div>
-  <nav class="nav-container">
+  <button class="hamburger" id="hamburgerBtn">☰</button>
+  <nav class="nav-container" id="navMenu">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="login.html" class="active">Login</a></li>
+    </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
 
-<section class="login-section">
+<section class="login-section" data-aos="fade-up">
   <div class="login-card">
-    <h2>Login to Your Account</h2>
+    <h2>Sign In to Khotwa</h2>
     <form id="loginForm">
-      <input type="email" name="email" placeholder="Email Address" required />
-      <input type="password" name="password" placeholder="Password" required />
+      <input name="email" type="email" placeholder="Email" required />
+      <input name="password" type="password" placeholder="Password" required />
       <label><input type="checkbox" name="remember"/> Remember Me</label>
-      <button type="submit">Sign In</button>
+      <button type="submit">Login</button>
     </form>
   </div>
 </section>
 
-<footer class="footer">
-  <p>© 2025 Khotwa Student Council</p>
-</footer>
+<footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 
-<script src="main.js"></script>
+<script src="main.js" defer></script>
 <script>
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const email = this.email.value.trim().toLowerCase();
-    const pwd = this.password.value.trim();
-    const remember = this.remember.checked;
+window.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("loginForm");
+  const hamburger = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
 
-    const isValid = email === 'admin@khotwa.com' && pwd === 'admin123';
-    if (isValid) {
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const email = form.email.value.trim().toLowerCase();
+    const pwd = form.password.value.trim();
+    const remember = form.remember.checked;
+    if (email === 'admin@khotwa.com' && pwd === 'admin123') {
       localStorage.setItem('isLogged', 'true');
-      remember ? localStorage.setItem('rememberMe','true') : localStorage.removeItem('rememberMe');
-      alert('✅ Login successful!');
+      if (remember) localStorage.setItem('rememberMe','true');
+      alert("Login successful!");
       location.href = 'admin.html';
     } else {
-      alert('❌ Invalid credentials');
+      alert("Invalid credentials");
     }
   });
+
+  hamburger?.addEventListener('click', () => navMenu.classList.toggle('nav-open'));
+});
 </script>
 </body>
 </html>
