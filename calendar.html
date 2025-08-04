@@ -1,93 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calendar – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
-    .calendar-wrapper {
-      max-width: 1000px;
-      margin: 2rem auto;
-      background: var(--card-bg);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    }
-    #addEventBtn {
-      background: var(--green);
-      color: var(--white);
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      transition: background 0.3s ease;
-    }
-    #addEventBtn:hover { background: #005f35; }
-
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-    .modal-content {
-      background: var(--bg);
-      padding: 1.6rem;
-      border-radius: 8px;
-      width: 90%; max-width: 400px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    .modal-content h3 {
-      margin-top: 0;
-    }
-    .modal-content input {
-      width: 100%;
-      padding: 0.7rem;
-      margin: 0.6rem 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      background: var(--card-bg);
-      color: var(--text);
-    }
-    .modal-content button {
-      padding: 0.7rem 1.3rem;
-      margin-right: 0.5rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .modal-content .save {
-      background: var(--btn-bg);
-      color: var(--btn-text);
-    }
-    .modal-content .save:hover {
-      background: var(--green);
-    }
-    .modal-content .cancel {
-      background: #ccc;
-    }
+    .calendar-wrapper { max-width:1000px; margin:2rem auto; background:var(--card-bg);
+      padding:1.5rem; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.1); }
+    #addEventBtn { display:none; }
+    .modal{ display:none; }
   </style>
 </head>
 <body>
-
 <header class="navbar" data-aos="fade-down">
   <div class="logo">KHOTWA COUNCIL</div>
   <nav class="nav-container">
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="calendar.html" class="active">Calendar</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="admin.html">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="profile.html">Profile</a></li>
+      <li><a href="index.html">Home</a></li><li><a href="calendar.html" class="active">Calendar</a></li>
+      <li><a href="register.html">Register</a></li><li><a href="admin.html">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li><li><a href="profile.html">Profile</a></li>
     </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
@@ -95,65 +27,26 @@
 </header>
 
 <section class="calendar-wrapper" data-aos="fade-up">
-  <button id="addEventBtn">+ Add Event</button>
   <div id="calendar"></div>
 </section>
 
-<div id="eventModal" class="modal">
-  <div class="modal-content">
-    <h3>Add New Event</h3>
-    <input type="text" id="evtTitle" placeholder="Event Title"/>
-    <input type="date" id="evtDate"/>
-    <div style="margin-top:1rem;">
-      <button class="save" id="saveEvtBtn">Save</button>
-      <button class="cancel" id="cancelEvtBtn">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<footer class="footer" data-aos="fade-up">
-  <p>© 2025 Khotwa Student Council</p>
-</footer>
+<footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
 <script src="main.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 800, once: true });
-
   document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('eventModal');
-    const addBtn = document.getElementById('addEventBtn');
-    const saveBtn = document.getElementById('saveEvtBtn');
-    const cancelBtn = document.getElementById('cancelEvtBtn');
-    const calendarEl = document.getElementById('calendar');
-    let events = [
-      { title: 'Orientation', start: '2025-08-10' },
-      { title: 'Tech Workshop', start: '2025-08-18' }
-    ];
-
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      events,
+    const events = JSON.parse(localStorage.getItem('events')) || [];
+    const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+      initialView: 'dayGridMonth', events,
       dateClick: info => {
-        const ev = events.find(e => e.start === info.dateStr);
-        if (ev) alert(`Event: ${ev.title}`);
+        const ev = events.find(e=> e.date === info.dateStr);
+        if (ev) alert('Event: '+ev.title);
       }
     });
     calendar.render();
-
-    addBtn.addEventListener('click', () => modal.style.display = 'flex');
-    cancelBtn.addEventListener('click', () => modal.style.display = 'none');
-
-    saveBtn.addEventListener('click', () => {
-      const t = document.getElementById('evtTitle').value.trim();
-      const d = document.getElementById('evtDate').value;
-      if (!t || !d) return alert('Please enter both title & date');
-      const newEv = { title: t, start: d };
-      events.push(newEv);
-      calendar.addEvent(newEv);
-      modal.style.display = 'none';
-    });
   });
 </script>
 </body>
