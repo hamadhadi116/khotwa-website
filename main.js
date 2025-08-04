@@ -36,7 +36,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Navbar Scroll Shadow
   const navbar = document.getElementById("mainNavbar");
-  window.addEventListener("scroll", () => {
+  navbar && window.addEventListener("scroll", () => {
     navbar.classList.toggle("navbar-scrolled", window.scrollY > 50);
   });
 
@@ -46,7 +46,7 @@ window.addEventListener("DOMContentLoaded", () => {
   ctaBtn?.addEventListener("mouseleave", () => ctaBtn.style.transform = "");
 
   // Update counter stats on index
-  const statMembers = document.getElementById("countElements");
+  const statMembers = document.getElementById("countMembers");
   const statEvents = document.getElementById("countEvents");
   const statMessages = document.getElementById("countMessages");
   statMembers && (statMembers.textContent =

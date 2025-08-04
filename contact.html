@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 </head>
 <body>
-<header class="navbar">
+<header class="navbar" id="mainNavbar">
   <div class="logo">KHOTWA COUNCIL</div>
   <button class="hamburger" id="hamburgerBtn">☰</button>
   <nav class="nav-container" id="navMenu">
@@ -55,13 +56,12 @@
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 <script src="main.js" defer></script>
 <script>
 window.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contactForm");
   const toast = document.getElementById("toast");
-  const hamburger = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
 
   form.addEventListener("submit", e => {
     e.preventDefault();
@@ -78,8 +78,6 @@ window.addEventListener("DOMContentLoaded", () => {
     toast.classList.add("show");
     setTimeout(() => toast.classList.remove("show"), 3000);
   });
-
-  hamburger?.addEventListener("click", () => navMenu.classList.toggle('nav-open'));
 });
 </script>
 </body>
