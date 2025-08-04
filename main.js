@@ -1,10 +1,11 @@
 window.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("darkToggle");
   const html = document.documentElement;
+  const toggle = document.getElementById("darkToggle");
 
-  const saved = localStorage.getItem("theme") || "light";
-  html.setAttribute("data-theme", saved);
-  if (toggle) toggle.textContent = saved === "dark" ? "☀️" : "🌙";
+  // ✅ تفعيل الوضع المظلم/النهاري
+  const savedTheme = localStorage.getItem("theme") || "light";
+  html.setAttribute("data-theme", savedTheme);
+  if (toggle) toggle.textContent = savedTheme === "dark" ? "☀️" : "🌙";
 
   toggle?.addEventListener("click", () => {
     const current = html.getAttribute("data-theme");
@@ -14,7 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
     toggle.textContent = next === "dark" ? "☀️" : "🌙";
   });
 
-  // ✅ Login Navigation (if available)
+  // ✅ روابط تسجيل الدخول/الخروج + البروفايل
   const authLinks = document.getElementById("authLinks");
   if (authLinks) {
     const isLogged = localStorage.getItem("isLogged") === "true" || localStorage.getItem("rememberMe") === "true";
@@ -24,10 +25,11 @@ window.addEventListener("DOMContentLoaded", () => {
         <li><a href="#" id="logoutLink">Logout</a></li>
       `;
       const logoutLink = document.getElementById("logoutLink");
-      logoutLink.addEventListener("click", () => {
+      logoutLink?.addEventListener("click", (e) => {
+        e.preventDefault();
         localStorage.removeItem("isLogged");
         localStorage.removeItem("rememberMe");
-        alert("تم تسجيل الخروج بنجاح");
+        alert("✅ تم تسجيل الخروج بنجاح");
         location.href = "login.html";
       });
     } else {
@@ -35,10 +37,10 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ✅ التسجيل (إن وُجد)
+  // ✅ التحقق من صفحة التسجيل وتشغيلها إذا وُجدت
   const form = document.getElementById("regForm");
   if (form) {
-    form.addEventListener("submit", e => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
 
       const name = form.name.value.trim();
@@ -47,17 +49,17 @@ window.addEventListener("DOMContentLoaded", () => {
       const level = form.level.value;
 
       if (!name || !email || !major || !level) {
-        return alert("All fields are required");
+        return alert("❗ All fields are required.");
       }
 
-      const arr = JSON.parse(localStorage.getItem("registrations") || "[]");
-      if (arr.some(s => s.email === email)) {
-        return alert("Email already registered");
+      const registrations = JSON.parse(localStorage.getItem("registrations") || "[]");
+      if (registrations.some(r => r.email === email)) {
+        return alert("⚠️ This email is already registered.");
       }
 
-      arr.push({ name, email, major, level });
-      localStorage.setItem("registrations", JSON.stringify(arr));
-      alert("Registration successful! ✔️");
+      registrations.push({ name, email, major, level });
+      localStorage.setItem("registrations", JSON.stringify(registrations));
+      alert("✔️ Registration successful!");
       form.reset();
     });
   }
