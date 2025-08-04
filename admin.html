@@ -5,23 +5,19 @@
   <title>Admin Dashboard – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <style>
-    .toast {
-      position: fixed; bottom: 2rem; right: 2rem;
-      background: var(--green); color: #fff;
-      padding: 0.7rem 1.3rem; border-radius: 6px;
-      opacity: 0; pointer-events: none; transition: opacity 0.4s;
-      z-index: 999;
-    }
-    .toast.show { opacity: 1; pointer-events: auto; }
-    .section.dashboard small { color: #555; margin-top: .5rem; }
+    .toast { position: fixed; bottom:2rem; right:2rem; background: var(--green); color:#fff;
+      padding:.7rem 1.3rem; border-radius:6px; opacity:0; pointer-events:none;
+      transition:opacity .4s; z-index:999; }
+    .toast.show { opacity:1; pointer-events:auto; }
+    .dashboard-stats .stat-card { min-width: 150px; }
   </style>
 </head>
 <body>
 <script>
-  if (localStorage.getItem('isLogged') !== 'true' &&
-      localStorage.getItem('rememberMe') !== 'true') {
-    alert('يجب تسجيل الدخول أولًا');
-    location.href = 'login.html';
+  if (localStorage.getItem("isLogged")!=="true" &&
+      localStorage.getItem("rememberMe")!=="true") {
+    alert("يجب تسجيل الدخول أولًا");
+    location.href = "login.html";
   }
 </script>
 
@@ -29,9 +25,12 @@
   <div class="logo">KHOTWA ADMIN</div>
   <nav class="nav-container">
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li><li><a href="calendar.html">Calendar</a></li>
-      <li><a href="register.html">Register</a></li><li><a href="admin.html" class="active">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li><li><a href="profile.html">Profile</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="admin.html" class="active">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
     </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
@@ -41,20 +40,20 @@
 <section class="section dashboard" data-aos="zoom-in">
   <h2>Dashboard Statistics</h2>
   <div class="stats-grid">
-    <div class="stat-card"><h3 id="statUsers">0</h3><p>Users</p></div>
-    <div class="stat-card"><h3 id="statEvents">0</h3><p>Events</p></div>
-    <div class="stat-card"><h3 id="statMessages">0</h3><p>Messages</p></div>
+    <div class="stat-card"><h3 id="countUsers">0</h3><p>Users</p></div>
+    <div class="stat-card"><h3 id="countEvents">0</h3><p>Events</p></div>
+    <div class="stat-card"><h3 id="countMessages">0</h3><p>Messages</p></div>
   </div>
-  <small>البيانات تتجدّد تلقائيًا عند أي تحديث</small>
+  <small>البيانات تتجدّد تلقائيًا عند التعديل</small>
 </section>
 
 <section class="section" data-aos="fade-up">
   <h2>🧑‍💼 Users Management</h2>
-  <div class="admin-controls"><button onclick="addRow()">➕ Add User</button></div>
+  <div class="admin-controls"><button onclick="addUser()">➕ Add User</button></div>
   <div class="table-container">
     <table class="admin-table">
       <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
-      <tbody id="adminTableBody"></tbody>
+      <tbody id="usersBody"></tbody>
     </table>
   </div>
 </section>
@@ -72,58 +71,8 @@
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 <div id="toast" class="toast"></div>
+
 <script src="main.js"></script>
-<script>
-  /* بيانات أولية للتجريب */
-  const users = [
-    { name: "أحمد محمد", email: "ahmad@mail.com", role: "عضو" },
-    { name: "سارة العتيبي", email: "sarah@mail.com", role: "قائدة" }
-  ];
-  let events = JSON.parse(localStorage.getItem('events') || '[]');
-
-  function showToast(msg) {
-    const t = document.getElementById("toast");
-    t.innerText = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
-
-  function refreshUsers() {
-    const tbody = document.getElementById('adminTableBody');
-    tbody.innerHTML = '';
-    users.forEach((u,i) => {
-      tbody.innerHTML += `<tr><td>${i+1}</td><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td><td>
-        <button onclick="editUser(${i})">✏️</button>
-        <button onclick="deleteUser(${i})">🗑️</button></td></tr>`;
-    });
-  }
-  function addRow() { /* ... */ }
-  function editUser(i) { /* ... */ }
-  function deleteUser(i) { /* ... */ }
-
-  function refreshEventsUI() {
-    const tbody = document.getElementById('eventsBody');
-    tbody.innerHTML = '';
-    events.forEach((ev,i) => {
-      tbody.innerHTML += `<tr><td>${i+1}</td><td>${ev.title}</td><td>${ev.date}</td><td>
-        <button onclick="editEvent(${i})">✏️</button>
-        <button onclick="deleteEvent(${i})">🗑️</button></td></tr>`;
-    });
-    localStorage.setItem('events', JSON.stringify(events));
-  }
-  function addEvent() { /* ... */ }
-  function editEvent(i) { /* ... */ }
-  function deleteEvent(i) { /* ... */ }
-
-  function updateDashboard() {
-    const msgs = JSON.parse(localStorage.getItem('contacts') || '[]').length;
-    document.getElementById('statUsers').textContent = users.length;
-    document.getElementById('statEvents').textContent = events.length;
-    document.getElementById('statMessages').textContent = msgs;
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    refreshUsers(); refreshEventsUI(); updateDashboard();
-  });
-</script>
+<script src="admin_advanced.js"></script>
 </body>
 </html>
