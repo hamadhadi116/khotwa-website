@@ -19,7 +19,6 @@ window.addEventListener("DOMContentLoaded", () => {
     authLinks.innerHTML = isLogged
       ? `<li><a href="profile.html">Profile</a></li><li><a href="#" id="logoutLink">Logout</a></li>`
       : `<li><a href="login.html">Login</a></li>`;
-
     document.getElementById("logoutLink")?.addEventListener("click", e => {
       e.preventDefault();
       localStorage.removeItem("isLogged");
