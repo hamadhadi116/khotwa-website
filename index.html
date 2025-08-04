@@ -80,25 +80,5 @@
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 <script src="main.js" defer></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  AOS.init({ duration: 800, once: true });
-
-  document.getElementById('ctaBtn').addEventListener('mouseenter', e => e.target.style.transform = 'scale(1.05)');
-  document.getElementById('ctaBtn').addEventListener('mouseleave', e => e.target.style.transform = '');
-
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainNavbar').classList.toggle('navbar-scrolled', window.scrollY > 50);
-  });
-
-  document.getElementById('countMembers').textContent = JSON.parse(localStorage.getItem('registrations') || '[]').length;
-  document.getElementById('countEvents').textContent = JSON.parse(localStorage.getItem('events') || '[]').length;
-  document.getElementById('countMessages').textContent = JSON.parse(localStorage.getItem('contacts') || '[]').length;
-
-  const hamburger = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
-  hamburger.addEventListener('click', () => navMenu.classList.toggle('nav-open'));
-});
-</script>
 </body>
 </html>

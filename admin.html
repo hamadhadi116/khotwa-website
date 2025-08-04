@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -18,7 +19,7 @@
   }
 </script>
 
-<header class="navbar">
+<header class="navbar" id="mainNavbar">
   <div class="logo">KHOTWA ADMIN</div>
   <button class="hamburger" id="hamburgerBtn">☰</button>
   <nav class="nav-container" id="navMenu">
@@ -73,14 +74,8 @@
 
 <div id="toast" class="toast"></div>
 
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 <script src="admin_advanced.js" defer></script>
 <script src="main.js" defer></script>
-<script defer>
-window.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
-  hamburger?.addEventListener('click', () => navMenu.classList.toggle('nav-open'));
-});
-</script>
 </body>
 </html>

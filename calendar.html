@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<header class="navbar">
+<header class="navbar" id="mainNavbar">
   <div class="logo">KHOTWA</div>
   <button class="hamburger" id="hamburgerBtn">☰</button>
   <nav class="nav-container" id="navMenu">
@@ -46,13 +46,5 @@
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 <script src="main.js" defer></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  AOS.init({ duration: 800, once: true });
-  const hamburger = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
-  hamburger?.addEventListener('click', () => navMenu.classList.toggle('nav-open'));
-});
-</script>
 </body>
 </html>

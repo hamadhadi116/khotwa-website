@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Profile – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
 </head>
 <body>
 <script>
@@ -14,7 +15,7 @@
   }
 </script>
 
-<header class="navbar">
+<header class="navbar" id="mainNavbar">
   <div class="logo">KHOTWA</div>
   <button class="hamburger" id="hamburgerBtn">☰</button>
   <nav class="nav-container" id="navMenu">
@@ -39,12 +40,11 @@
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 <script src="main.js" defer></script>
 <script defer>
 window.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
-  const hamburger = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
 
   logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("isLogged");
@@ -52,8 +52,6 @@ window.addEventListener("DOMContentLoaded", () => {
     alert("✅ تم تسجيل الخروج");
     location.href = "login.html";
   });
-
-  hamburger?.addEventListener("click", () => navMenu.classList.toggle('nav-open'));
 });
 </script>
 </body>
