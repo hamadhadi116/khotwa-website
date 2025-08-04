@@ -16,8 +16,7 @@ function refreshUsers() {
   users.forEach((u, i) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `<td>${i+1}</td><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td>
-      <td><button onclick="editUser(${i})">✏️</button>
-      <button onclick="deleteUser(${i})">🗑️</button></td>`;
+      <td><button onclick="editUser(${i})">✏️</button> <button onclick="deleteUser(${i})">🗑️</button></td>`;
     tbody.appendChild(tr);
   });
   localStorage.setItem("users", JSON.stringify(users));
@@ -29,9 +28,7 @@ function addUser() {
   const role = prompt("Role:");
   if (name && email && role) {
     users.push({ name, email, role });
-    refreshUsers();
-    updateDashboard();
-    showToast("✅ User added");
+    refreshUsers(); updateDashboard(); showToast("✅ User added");
   }
 }
 
@@ -42,18 +39,14 @@ function editUser(i) {
   const role = prompt("New Role:", u.role);
   if (name && email && role) {
     users[i] = { name, email, role };
-    refreshUsers();
-    updateDashboard();
-    showToast("✏️ Updated");
+    refreshUsers(); updateDashboard(); showToast("✏️ Updated");
   }
 }
 
 function deleteUser(i) {
   if (confirm("Delete this user?")) {
     users.splice(i, 1);
-    refreshUsers();
-    updateDashboard();
-    showToast("🗑️ Deleted");
+    refreshUsers(); updateDashboard(); showToast("🗑️ Deleted");
   }
 }
 
@@ -63,8 +56,7 @@ function refreshEvents() {
   events.forEach((ev, i) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `<td>${i+1}</td><td>${ev.title}</td><td>${ev.date}</td>
-      <td><button onclick="editEvent(${i})">✏️</button>
-      <button onclick="deleteEvent(${i})">🗑️</button></td>`;
+      <td><button onclick="editEvent(${i})">✏️</button> <button onclick="deleteEvent(${i})">🗑️</button></td>`;
     tbody.appendChild(tr);
   });
   localStorage.setItem("events", JSON.stringify(events));
@@ -75,9 +67,7 @@ function addEvent() {
   const date = prompt("Date (YYYY-MM-DD):");
   if (title && date) {
     events.push({ title, date });
-    refreshEvents();
-    updateDashboard();
-    showToast("✅ Event added");
+    refreshEvents(); updateDashboard(); showToast("✅ Event added");
   }
 }
 
@@ -87,18 +77,14 @@ function editEvent(i) {
   const date = prompt("New Date:", ev.date);
   if (title && date) {
     events[i] = { title, date };
-    refreshEvents();
-    updateDashboard();
-    showToast("✏️ Updated event");
+    refreshEvents(); updateDashboard(); showToast("✏️ Updated event");
   }
 }
 
 function deleteEvent(i) {
   if (confirm("Delete event?")) {
     events.splice(i, 1);
-    refreshEvents();
-    updateDashboard();
-    showToast("🗑️ Deleted");
+    refreshEvents(); updateDashboard(); showToast("🗑️ Deleted");
   }
 }
 
@@ -110,7 +96,5 @@ function updateDashboard() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  refreshUsers();
-  refreshEvents();
-  updateDashboard();
+  refreshUsers(); refreshEvents(); updateDashboard();
 });
