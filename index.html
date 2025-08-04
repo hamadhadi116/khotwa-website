@@ -9,9 +9,10 @@
 </head>
 <body>
 
-<header class="navbar" id="mainNavbar" data-aos="fade-down">
+<header class="navbar" id="mainNavbar">
   <div class="logo">KHOTWA COUNCIL</div>
-  <nav class="nav-container">
+  <button class="hamburger" id="hamburgerBtn">☰</button>
+  <nav class="nav-container" id="navMenu">
     <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="calendar.html">Calendar</a></li>
@@ -77,35 +78,32 @@
   <p>© 2025 Khotwa Student Council. All rights reserved.</p>
 </footer>
 
-<!-- ✅ الترتيب الصحيح للسكريبتات -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 <script src="main.js" defer></script>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  AOS.init({ duration: 800, once: true });
 
-<!-- ✅ AOS Init بعد تحميل المكتبة -->
-<script defer>
-  window.addEventListener("DOMContentLoaded", () => {
-    AOS.init({ duration: 800, once: true });
+  document.getElementById('ctaBtn').addEventListener('mouseenter', e => e.target.style.transform = 'scale(1.05)');
+  document.getElementById('ctaBtn').addEventListener('mouseleave', e => e.target.style.transform = '');
 
-    document.getElementById('ctaBtn').addEventListener('mouseenter', e => {
-      e.target.style.transform = 'scale(1.05)';
-    });
-
-    document.getElementById('ctaBtn').addEventListener('mouseleave', e => {
-      e.target.style.transform = '';
-    });
-
-    window.addEventListener('scroll', () => {
-      document.getElementById('mainNavbar').classList.toggle('navbar-scrolled', window.scrollY > 50);
-    });
-
-    const members = JSON.parse(localStorage.getItem('registrations') || '[]').length;
-    const events = JSON.parse(localStorage.getItem('events') || '[]').length;
-    const messages = JSON.parse(localStorage.getItem('contacts') || '[]').length;
-    document.getElementById('countMembers').textContent = members;
-    document.getElementById('countEvents').textContent = events;
-    document.getElementById('countMessages').textContent = messages;
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNavbar').classList.toggle('navbar-scrolled', window.scrollY > 50);
   });
-</script>
 
+  const members = JSON.parse(localStorage.getItem('registrations') || '[]').length;
+  const events = JSON.parse(localStorage.getItem('events') || '[]').length;
+  const messages = JSON.parse(localStorage.getItem('contacts') || '[]').length;
+  document.getElementById('countMembers').textContent = members;
+  document.getElementById('countEvents').textContent = events;
+  document.getElementById('countMessages').textContent = messages;
+
+  const hamburger = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('nav-open');
+  });
+});
+</script>
 </body>
 </html>
