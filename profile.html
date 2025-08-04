@@ -1,36 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Profile – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
-  <style>
-    .profile-container {
-      max-width:500px; margin:3rem auto; padding:2rem;
-      background:var(--card-bg); border-radius:10px;
-      box-shadow:0 2px 12px rgba(0,0,0,0.1);
-    }
-    .logout-btn {
-      display:block; margin:2rem auto; padding:0.8rem 2rem;
-      background: var(--btn-bg); color: var(--btn-text);
-      border:none; border-radius:5px; font-weight:bold;
-      cursor:pointer;
-    }
-    .logout-btn:hover { background-color: var(--green); }
-  </style>
 </head>
 <body>
-
 <script>
   if (!localStorage.getItem("isLogged") && !localStorage.getItem("rememberMe")) {
-    alert("Login required");
+    alert("نرجو تسجيل الدخول أولاً");
     location.href = "login.html";
   }
 </script>
 
 <header class="navbar">
   <div class="logo">KHOTWA</div>
-  <nav class="nav-container">
+  <button class="hamburger" id="hamburgerBtn">☰</button>
+  <nav class="nav-container" id="navMenu">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="admin.html">Admin</a></li>
@@ -40,24 +27,34 @@
   </nav>
 </header>
 
-<section class="profile-container">
+<section class="profile-container" data-aos="fade-up">
   <h2>Welcome Back 👋</h2>
-  <p><strong>Name:</strong> Administrator</p>
-  <p><strong>Email:</strong> admin@khotwa.com</p>
-  <p><strong>Role:</strong> Admin</p>
+  <div class="profile-info">
+    <p><strong>Name:</strong> Administrator</p>
+    <p><strong>Email:</strong> admin@khotwa.com</p>
+    <p><strong>Role:</strong> Admin</p>
+  </div>
   <button id="logoutBtn" class="logout-btn">Logout</button>
 </section>
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 
-<script src="main.js"></script>
-<script>
-  document.getElementById("logoutBtn").onclick = () => {
+<script src="main.js" defer></script>
+<script defer>
+window.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutBtn");
+  const hamburger = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
+
+  logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("isLogged");
     localStorage.removeItem("rememberMe");
-    alert("✅ Logged out");
+    alert("✅ تم تسجيل الخروج");
     location.href = "login.html";
-  };
+  });
+
+  hamburger?.addEventListener("click", () => navMenu.classList.toggle('nav-open'));
+});
 </script>
 </body>
 </html>
