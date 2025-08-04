@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
   <style>
     .toast {
-      position: fixed; top: 1rem; right: 1rem;
-      background: var(--green); color: var(--white);
-      padding: 0.8rem 1.4rem; border-radius: 5px;
-      opacity: 0; pointer-events: none; transition: opacity .4s;
+      position: fixed; top:1rem; right:1rem;
+      background: var(--green); color: #fff;
+      padding:.8rem 1.4rem; border-radius:5px;
+      opacity:0; pointer-events:none; transition: opacity .4s;
+      z-index: 999;
     }
-    .toast.show { opacity: 1; pointer-events: auto; }
+    .toast.show { opacity:1; pointer-events:auto; }
   </style>
 </head>
 <body>
@@ -29,7 +30,17 @@
   <div class="register-card">
     <h2>Join the Council</h2>
     <form id="regForm">
-      <!-- حقول التسجيل -->
+      <div class="form-group"><span class="material-symbols-outlined">person</span>
+        <input name="name" type="text" placeholder="Full Name" required/></div>
+      <div class="form-group"><span class="material-symbols-outlined">mail</span>
+        <input name="email" type="email" placeholder="Email Address" required/></div>
+      <div class="form-group"><span class="material-symbols-outlined">badge</span>
+        <input name="major" type="text" placeholder="Student Major" required/></div>
+      <div class="form-group"><span class="material-symbols-outlined">school</span>
+        <select name="level" required><option value="" disabled selected>Select Level</option>
+          <option>1st Year</option><option>2nd Year</option>
+          <option>3rd Year</option><option>4th Year</option>
+        </select></div>
       <button type="submit">Submit</button>
     </form>
     <div id="toastReg" class="toast">✔️ Registration successful!</div>
@@ -37,15 +48,26 @@
 </section>
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
+
 <script src="main.js"></script>
 <script>
   const form = document.getElementById("regForm");
   const toast = document.getElementById("toastReg");
   form.addEventListener("submit", e => {
     e.preventDefault();
-    // حفظ التسجيل
-    toast.classList.add('show');
-    setTimeout(()=> toast.classList.remove('show'), 3000);
+    const name = form.name.value.trim();
+    const email = form.email.value.trim().toLowerCase();
+    const major = form.major.value.trim();
+    const level = form.level.value;
+    if (!name || !email || !major || !level)
+      return alert("All fields are required");
+    const arr = JSON.parse(localStorage.getItem("registrations") || "[]");
+    if (arr.some(r => r.email === email)) return alert("Email already registered");
+    arr.push({name, email, major, level});
+    localStorage.setItem("registrations", JSON.stringify(arr));
+    form.reset();
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
   });
 </script>
 </body>
