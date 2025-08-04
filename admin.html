@@ -9,13 +9,13 @@
 </head>
 <body>
 <script>
-  if (!localStorage.getItem("isLogged") && !localStorage.getItem("rememberMe")) {
+  if (localStorage.getItem("isLogged") !== "true" && localStorage.getItem("rememberMe") !== "true") {
     alert("You must log in first!");
     location.href = "login.html";
   }
 </script>
 
-<header class="navbar">
+<header class="navbar" id="mainNavbar">
   <div class="logo">KHOTWA ADMIN</div>
   <button class="hamburger" id="hamburgerBtn">☰</button>
   <nav class="nav-container" id="navMenu">
@@ -73,12 +73,5 @@
 
 <script src="admin_advanced.js" defer></script>
 <script src="main.js" defer></script>
-<script defer>
-window.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
-  hamburger?.addEventListener('click', () => navMenu.classList.toggle('nav-open'));
-});
-</script>
 </body>
 </html>
