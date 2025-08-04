@@ -69,6 +69,25 @@
     .register-card button:hover {
       background-color: var(--green);
     }
+
+    .toast {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--green);
+      color: var(--white);
+      padding: 0.8rem 1.4rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
@@ -84,6 +103,7 @@
         <li><a href="contact.html">Contact</a></li>
         <li><a href="profile.html">Profile</a></li>
       </ul>
+      <ul class="nav-links" id="authLinks"></ul>
       <button id="darkToggle" class="dark-btn">🌓</button>
     </nav>
   </header>
@@ -119,10 +139,40 @@
     </div>
   </section>
 
+  <div id="toast" class="toast">✔️ Registration successful!</div>
+
   <footer class="footer">
     <p>© 2025 Khotwa Student Council. All rights reserved.</p>
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    const form = document.getElementById("regForm");
+    const toast = document.getElementById("toast");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = form.name.value.trim();
+      const email = form.email.value.trim().toLowerCase();
+      const major = form.major.value.trim();
+      const level = form.level.value;
+
+      if (!name || !email || !major || !level) {
+        return alert("All fields are required");
+      }
+
+      const arr = JSON.parse(localStorage.getItem("registrations") || "[]");
+      if (arr.some(s => s.email === email)) {
+        return alert("Email already registered");
+      }
+
+      arr.push({ name, email, major, level });
+      localStorage.setItem("registrations", JSON.stringify(arr));
+      form.reset();
+
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
+    });
+  </script>
 </body>
 </html>
