@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <style>
@@ -15,154 +14,100 @@
       z-index: 999;
     }
     .toast.show { opacity: 1; pointer-events: auto; }
-
-    .logout-btn {
-      background-color: var(--red);
-      color: #fff;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      margin-left: 1rem;
-    }
-
-    .logout-btn:hover { background-color: #a00; }
   </style>
 </head>
 <body>
-
-<!-- حماية الصفحة -->
 <script>
-  if (
-    localStorage.getItem("isLogged") !== "true" &&
-    localStorage.getItem("rememberMe") !== "true"
-  ) {
-    alert("You must log in first!");
-    location.href = "login.html";
+  if (localStorage.getItem('isLogged')!=='true' && localStorage.getItem('rememberMe')!=='true') {
+    alert('يجب تسجيل الدخول أولاً'); location.href='login.html';
   }
 </script>
 
-<!-- Navbar -->
 <header class="navbar">
   <div class="logo">KHOTWA ADMIN</div>
   <nav class="nav-container">
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="calendar.html">Calendar</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="admin.html" class="active">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="profile.html">Profile</a></li>
+      <li><a href="index.html">Home</a></li><li><a href="calendar.html">Calendar</a></li>
+      <li><a href="register.html">Register</a></li><li><a href="admin.html" class="active">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li><li><a href="profile.html">Profile</a></li>
     </ul>
     <ul class="nav-links" id="authLinks"></ul>
-    <button id="logoutBtn" class="logout-btn">Logout</button>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
 
-<!-- لوحة التحكم -->
 <section class="section">
   <h2>لوحة التحكم</h2>
-  <div class="admin-controls">
-    <button onclick="addRow()">➕ إضافة مستخدم</button>
-  </div>
+  <div class="admin-controls"><button onclick="addRow()">➕ إضافة مستخدم</button></div>
   <div class="table-container">
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>الرقم</th>
-          <th>الاسم</th>
-          <th>البريد الإلكتروني</th>
-          <th>الدور</th>
-          <th>إجراءات</th>
-        </tr>
-      </thead>
-      <tbody id="adminTableBody"></tbody>
+    <table class="admin-table"><thead>
+      <tr><th>#</th><th>الاسم</th><th>البريد</th><th>الدور</th><th>إجراءات</th></tr>
+    </thead><tbody id="adminTableBody"></tbody></table>
+  </div>
+</section>
+
+<section class="section">
+  <h2>🗓️ إدارة الأحداث</h2>
+  <div class="admin-controls"><button onclick="addEvent()">➕ إضافة حدث</button></div>
+  <div class="table-container">
+    <table id="eventsTable" class="admin-table">
+      <thead><tr><th>#</th><th>العنوان</th><th>التاريخ</th><th>إجراءات</th></tr></thead>
+      <tbody id="eventsBody"></tbody>
     </table>
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="footer">
-  <p>© 2025 Khotwa Student Council</p>
-</footer>
-
-<!-- Toast -->
+<footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 <div id="toast" class="toast"></div>
-
 <script src="main.js"></script>
 <script>
   const users = [
     { name: "أحمد محمد", email: "ahmad@mail.com", role: "عضو" },
     { name: "سارة العتيبي", email: "sarah@mail.com", role: "قائدة" }
   ];
-
-  const refreshUI = () => {
-    const tbody = document.getElementById("adminTableBody");
-    tbody.innerHTML = "";
-    users.forEach((user, i) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${i + 1}</td>
-        <td>${user.name}</td>
-        <td>${user.email}</td>
-        <td>${user.role}</td>
-        <td>
-          <button onclick="editRow(${i})">✏️</button>
-          <button onclick="deleteRow(${i})">🗑️</button>
-        </td>`;
-      tbody.appendChild(row);
+  let events = JSON.parse(localStorage.getItem('events')) || [];
+  function showToast(msg){
+    const t = document.getElementById("toast");
+    t.innerText = msg; t.classList.add('show');
+    setTimeout(()=> t.classList.remove('show'), 3000);
+  }
+  function refreshUsers(){
+    const tbody = document.getElementById('adminTableBody'); tbody.innerHTML = '';
+    users.forEach((u,i)=> {
+      tbody.innerHTML += `<tr><td>${i+1}</td><td>${u.name}</td><td>${u.email}</td>
+        <td>${u.role}</td><td><button onclick="editUser(${i})">✏️</button>
+        <button onclick="deleteUser(${i})">🗑️</button></td></tr>`;
     });
-  };
-
-  const showToast = (msg) => {
-    const toast = document.getElementById("toast");
-    toast.innerText = msg;
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 3000);
-  };
-
-  const addRow = () => {
-    const name = prompt("الاسم:");
-    const email = prompt("البريد الإلكتروني:");
-    const role = prompt("الدور:");
-    if (name && email && role) {
-      users.push({ name, email, role });
-      refreshUI();
-      showToast("✅ تمت إضافة المستخدم");
-    }
-  };
-
-  const editRow = (i) => {
-    const user = users[i];
-    const name = prompt("الاسم الجديد:", user.name);
-    const email = prompt("البريد الجديد:", user.email);
-    const role = prompt("الدور الجديد:", user.role);
-    if (name && email && role) {
-      users[i] = { name, email, role };
-      refreshUI();
-      showToast("✏️ تم تحديث المستخدم");
-    }
-  };
-
-  const deleteRow = (i) => {
-    if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
-      users.splice(i, 1);
-      refreshUI();
-      showToast("🗑️ تمت إزالة المستخدم");
-    }
-  };
-
-  // logout functionality
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    localStorage.removeItem("isLogged");
-    localStorage.removeItem("rememberMe");
-    location.href = "login.html";
-  });
-
-  window.addEventListener("DOMContentLoaded", refreshUI);
+  }
+  function addRow(){ const name=prompt('اسم:'),email=prompt('بريد:'),role=prompt('دور:');
+    if(name&&email&&role){ users.push({name,email,role}); refreshUsers(); showToast('✅ مستخدم جديد'); }}
+  function editUser(i){ const u=users[i], name=prompt('الاسم الجديد:',u.name),
+    email=prompt('البريد الجديد:',u.email), role=prompt('الدور الجديد:',u.role);
+    if(name&&email&&role){ users[i]={name,email,role}; refreshUsers(); showToast('✏️ تم التعديل'); }}
+  function deleteUser(i){
+    if(confirm('هل تريد حذف المستخدم؟')){ users.splice(i,1); refreshUsers(); showToast('🗑️ تم الحذف'); }}
+  // الأحداث:
+  function refreshEventsUI(){
+    const tbody = document.getElementById('eventsBody'); tbody.innerHTML = '';
+    events.forEach((ev,i)=> {
+      tbody.innerHTML += `<tr><td>${i+1}</td><td>${ev.title}</td><td>${ev.date}</td>
+        <td><button onclick="editEvent(${i})">✏️</button>
+        <button onclick="deleteEvent(${i})">🗑️</button></td></tr>`;
+    });
+    localStorage.setItem('events', JSON.stringify(events));
+  }
+  function addEvent(){
+    const title=prompt('عنوان:'), date=prompt('التاريخ (YYYY-MM-DD):');
+    if(title&&date){ events.push({title,date}); showToast('✅ حدث جديد'); refreshEventsUI(); }
+  }
+  function editEvent(i){
+    const e = events[i], title=prompt('عنوان جديد:',e.title), date=prompt('تاريخ جديد:',e.date);
+    if(title&&date){ events[i]={title,date}; refreshEventsUI(); showToast('✏️ تم تعديل الحدث'); }
+  }
+  function deleteEvent(i){
+    if(confirm('تاكد من الحذف؟')){ events.splice(i,1); refreshEventsUI(); showToast('🗑️ تم الحذف'); }
+  }
+  window.addEventListener('DOMContentLoaded',()=>{ refreshUsers(); refreshEventsUI(); });
 </script>
 </body>
 </html>
