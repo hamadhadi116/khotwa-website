@@ -1,178 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register – Khotwa</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
   <style>
-    .register-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 80vh;
-      padding: 2rem;
-    }
-
-    .register-card {
-      background-color: var(--card-bg);
-      padding: 2rem;
-      border-radius: 10px;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    }
-
-    .register-card h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group {
-      position: relative;
-      margin-bottom: 1.3rem;
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 0.8rem 1rem 0.8rem 2.8rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background-color: var(--bg);
-      color: var(--text);
-      font-size: 1rem;
-    }
-
-    .form-group .material-symbols-outlined {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.3rem;
-      color: #888;
-    }
-
-    .register-card button {
-      width: 100%;
-      padding: 0.9rem;
-      background-color: var(--btn-bg);
-      color: var(--btn-text);
-      border: none;
-      font-weight: bold;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    .register-card button:hover {
-      background-color: var(--green);
-    }
-
     .toast {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: var(--green);
-      color: var(--white);
-      padding: 0.8rem 1.4rem;
-      border-radius: 5px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
+      position: fixed; top: 1rem; right: 1rem;
+      background: var(--green); color: var(--white);
+      padding: 0.8rem 1.4rem; border-radius: 5px;
+      opacity: 0; pointer-events: none; transition: opacity .4s;
     }
-
-    .toast.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .toast.show { opacity: 1; pointer-events: auto; }
   </style>
 </head>
 <body>
+<header class="navbar">
+  <div class="logo">KHOTWA COUNCIL</div>
+  <nav class="nav-container">
+    <ul class="nav-links">…</ul>
+    <ul class="nav-links" id="authLinks"></ul>
+    <button id="darkToggle" class="dark-btn">🌓</button>
+  </nav>
+</header>
 
-  <header class="navbar">
-    <div class="logo">KHOTWA COUNCIL</div>
-    <nav class="nav-container">
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="admin.html">Admin</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="profile.html">Profile</a></li>
-      </ul>
-      <ul class="nav-links" id="authLinks"></ul>
-      <button id="darkToggle" class="dark-btn">🌓</button>
-    </nav>
-  </header>
+<section class="register-section" data-aos="fade-up">
+  <div class="register-card">
+    <h2>Join the Council</h2>
+    <form id="regForm">
+      <!-- حقول التسجيل -->
+      <button type="submit">Submit</button>
+    </form>
+    <div id="toastReg" class="toast">✔️ Registration successful!</div>
+  </div>
+</section>
 
-  <section class="register-section">
-    <div class="register-card">
-      <h2>Join the Council</h2>
-      <form id="regForm">
-        <div class="form-group">
-          <span class="material-symbols-outlined">person</span>
-          <input type="text" name="name" placeholder="Full Name" required />
-        </div>
-        <div class="form-group">
-          <span class="material-symbols-outlined">mail</span>
-          <input type="email" name="email" placeholder="Email Address" required />
-        </div>
-        <div class="form-group">
-          <span class="material-symbols-outlined">badge</span>
-          <input type="text" name="major" placeholder="Student Major" required />
-        </div>
-        <div class="form-group">
-          <span class="material-symbols-outlined">school</span>
-          <select name="level" required>
-            <option value="" disabled selected>Select Level</option>
-            <option>1st Year</option>
-            <option>2nd Year</option>
-            <option>3rd Year</option>
-            <option>4th Year</option>
-          </select>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </section>
-
-  <div id="toast" class="toast">✔️ Registration successful!</div>
-
-  <footer class="footer">
-    <p>© 2025 Khotwa Student Council. All rights reserved.</p>
-  </footer>
-
-  <script src="main.js"></script>
-  <script>
-    const form = document.getElementById("regForm");
-    const toast = document.getElementById("toast");
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const name = form.name.value.trim();
-      const email = form.email.value.trim().toLowerCase();
-      const major = form.major.value.trim();
-      const level = form.level.value;
-
-      if (!name || !email || !major || !level) {
-        return alert("All fields are required");
-      }
-
-      const arr = JSON.parse(localStorage.getItem("registrations") || "[]");
-      if (arr.some(s => s.email === email)) {
-        return alert("Email already registered");
-      }
-
-      arr.push({ name, email, major, level });
-      localStorage.setItem("registrations", JSON.stringify(arr));
-      form.reset();
-
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 3000);
-    });
-  </script>
+<footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
+<script src="main.js"></script>
+<script>
+  const form = document.getElementById("regForm");
+  const toast = document.getElementById("toastReg");
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    // حفظ التسجيل
+    toast.classList.add('show');
+    setTimeout(()=> toast.classList.remove('show'), 3000);
+  });
+</script>
 </body>
 </html>
