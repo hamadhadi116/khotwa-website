@@ -14,15 +14,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const authLinks = document.getElementById("authLinks");
   if (authLinks) {
-    const isLogged = localStorage.getItem("isLogged") === "true" ||
-                     localStorage.getItem("rememberMe") === "true";
+    const isLogged =
+      sessionStorage.getItem("isLogged") === "true" ||
+      localStorage.getItem("isLogged") === "true";
+    const page = location.pathname.split("/").pop();
     authLinks.innerHTML = isLogged
-      ? `<li><a href="profile.html">Profile</a></li><li><a href="#" id="logoutLink">Logout</a></li>`
-      : `<li><a href="login.html">Login</a></li>`;
+      ? `<li><a href="profile.html"${page === "profile.html" ? ' class="active"' : ''}>Profile</a></li><li><a href="#" id="logoutLink">Logout</a></li>`
+      : `<li><a href="login.html"${page === "login.html" ? ' class="active"' : ''}>Login</a></li>`;
     document.getElementById("logoutLink")?.addEventListener("click", e => {
       e.preventDefault();
+      sessionStorage.removeItem("isLogged");
       localStorage.removeItem("isLogged");
-      localStorage.removeItem("rememberMe");
       alert("Logged out");
       location.href = "login.html";
     });

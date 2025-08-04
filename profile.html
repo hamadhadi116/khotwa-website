@@ -8,7 +8,10 @@
 </head>
 <body>
 <script>
-  if (!localStorage.getItem("isLogged") && !localStorage.getItem("rememberMe")) {
+  const isLogged =
+    sessionStorage.getItem("isLogged") === "true" ||
+    localStorage.getItem("isLogged") === "true";
+  if (!isLogged) {
     alert("نرجو تسجيل الدخول أولاً");
     location.href = "login.html";
   }
@@ -47,8 +50,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const navMenu = document.getElementById('navMenu');
 
   logoutBtn.addEventListener("click", () => {
+    sessionStorage.removeItem("isLogged");
     localStorage.removeItem("isLogged");
-    localStorage.removeItem("rememberMe");
     alert("✅ تم تسجيل الخروج");
     location.href = "login.html";
   });

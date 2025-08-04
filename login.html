@@ -15,7 +15,6 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="register.html">Register</a></li>
-      <li><a href="login.html" class="active">Login</a></li>
     </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
@@ -49,8 +48,13 @@ window.addEventListener("DOMContentLoaded", () => {
     const pwd = form.password.value.trim();
     const remember = form.remember.checked;
     if (email === 'admin@khotwa.com' && pwd === 'admin123') {
-      localStorage.setItem('isLogged', 'true');
-      if (remember) localStorage.setItem('rememberMe','true');
+      if (remember) {
+        localStorage.setItem('isLogged', 'true');
+        sessionStorage.removeItem('isLogged');
+      } else {
+        sessionStorage.setItem('isLogged', 'true');
+        localStorage.removeItem('isLogged');
+      }
       alert("Login successful!");
       location.href = 'admin.html';
     } else {
