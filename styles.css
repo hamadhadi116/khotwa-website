@@ -1,4 +1,4 @@
-/* ----------------- ROOT VARIABLES ----------------- */
+/* ROOT VARIABLES */
 :root {
   --red: #d41c0f;
   --green: #00703c;
@@ -20,13 +20,12 @@
   --card-bg: #1e1e1e;
 }
 
-/* ----------------- RESET ----------------- */
+/* GENERIC RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: 'Segoe UI', sans-serif;
   background-color: var(--bg);
@@ -35,7 +34,7 @@ body {
   line-height: 1.6;
 }
 
-/* ----------------- NAVBAR ----------------- */
+/* NAVBAR */
 .navbar {
   position: sticky;
   top: 0;
@@ -47,35 +46,27 @@ body {
   padding: 1rem 2rem;
   z-index: 100;
 }
-
+.navbar.navbar-scrolled {
+  background-color: rgba(0, 0, 0, 0.9);
+}
 .logo {
   font-weight: bold;
   font-size: 1.3rem;
 }
-
-.nav-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 1.2rem;
+  gap: 1rem;
 }
-
 .nav-links a {
   color: var(--white);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
 }
-
 .nav-links a:hover {
   color: var(--green);
 }
-
 .dark-btn {
   background: none;
   border: none;
@@ -84,7 +75,7 @@ body {
   cursor: pointer;
 }
 
-/* ----------------- HERO ----------------- */
+/* HERO */
 .hero {
   background: linear-gradient(to right, var(--red), var(--green));
   color: var(--white);
@@ -94,98 +85,48 @@ body {
   padding: 6rem 1rem;
   text-align: center;
 }
-
 .hero-content h1 {
   font-size: 2.4rem;
   margin-bottom: 1rem;
 }
-
-.hero-content p {
-  font-size: 1.1rem;
-}
-
 .primary-btn {
-  display: inline-block;
   margin-top: 1rem;
   padding: 0.8rem 2rem;
   background-color: var(--black);
   color: var(--white);
   border-radius: 5px;
   text-decoration: none;
-  transition: background 0.3s ease;
+  transition: transform 0.2s ease;
 }
-
 .primary-btn:hover {
-  background-color: var(--green);
+  transform: scale(1.05);
 }
 
-/* ----------------- SECTIONS ----------------- */
+/* SECTION STYLES */
 .section {
   padding: 3rem 1.5rem;
   text-align: center;
 }
-
-.about-section {
+.about-section,
+.calendar-wrapper,
+.register-section {
   max-width: 1000px;
   margin: 0 auto;
+}
+.about-section {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: 2rem;
-  justify-content: center;
+  align-items: center;
 }
-
-.about-text {
-  flex: 1;
-  min-width: 260px;
-}
-
 .about-image img {
   max-width: 400px;
   width: 100%;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* ----------------- EVENTS ----------------- */
-.event-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  list-style: none;
-  padding: 0;
-}
-
-.card-event {
-  background-color: var(--card-bg);
-  color: var(--text);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-}
-
-.card-event:hover {
-  transform: translateY(-4px);
-}
-
-.card-event img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-
-.card-event h3 {
-  margin: 1rem 0 0.4rem;
-  font-size: 1.2rem;
-}
-
-.card-event p {
-  margin: 0 1rem 1rem;
-  font-size: 0.9rem;
-}
-
-/* ----------------- STATS ----------------- */
+/* STATS GRID */
 .stats-grid {
   display: flex;
   justify-content: center;
@@ -193,7 +134,6 @@ body {
   flex-wrap: wrap;
   margin-top: 2rem;
 }
-
 .stat-card {
   background-color: var(--card-bg);
   padding: 1.5rem;
@@ -203,100 +143,97 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   transition: transform 0.3s ease;
 }
-
 .stat-card:hover {
   transform: translateY(-5px);
 }
-
 .text-green {
   color: var(--green);
 }
 
-/* ----------------- FORMS ----------------- */
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  max-width: 480px;
-  margin: 0 auto;
+/* EVENT CARDS */
+.event-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+}
+.card-event {
+  background-color: var(--card-bg);
+  color: var(--text);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+.card-event:hover {
+  transform: translateY(-4px);
 }
 
+/* FORMS */
+form {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.form-group {
+  position: relative;
+}
+.form-group span {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1.3rem;
+}
 form input,
 form textarea,
 form select {
   width: 100%;
-  padding: 0.75rem;
-  border-radius: 5px;
-  font-size: 1rem;
+  padding: 0.8rem 1rem 0.8rem 2.8rem;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--text);
+  font-size: 1rem;
 }
-
 form button {
-  padding: 0.8rem 1.5rem;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 0.9rem;
   background-color: var(--btn-bg);
   color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
   transition: background 0.3s ease;
 }
-
 form button:hover {
   background-color: var(--green);
 }
 
-.form-message {
-  text-align: center;
-  margin-top: 1rem;
-  font-weight: bold;
-}
-
-/* ----------------- ADMIN TABLE ----------------- */
+/* ADMIN TABLES */
 .admin-controls {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 }
-
-.admin-controls button {
-  background-color: var(--green);
-  color: var(--white);
-  border: none;
-  padding: 0.7rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.admin-controls button:hover {
-  background-color: #005f35;
-}
-
-.table-container {
-  overflow-x: auto;
-}
-
 .admin-table {
   width: 100%;
   border-collapse: collapse;
   background-color: var(--card-bg);
 }
-
 .admin-table th,
 .admin-table td {
   padding: 0.8rem;
   border: 1px solid #ccc;
   text-align: center;
 }
-
 .admin-table th {
-  background-color: var(--btn-bg);
+  background: var(--btn-bg);
   color: var(--btn-text);
 }
-
 .admin-table button {
   background: none;
   border: none;
@@ -304,32 +241,19 @@ form button:hover {
   cursor: pointer;
 }
 
-/* ----------------- RESPONSIVE ----------------- */
-@media (max-width: 768px) {
+/* RESPONSIVE */
+@media(max-width:768px) {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .nav-links {
     flex-direction: column;
     width: 100%;
     margin-top: 1rem;
   }
-
-  .hero-content h1 {
-    font-size: 1.8rem;
-  }
-
-  .about-section {
-    flex-direction: column;
-  }
-
-  .event-cards {
-    grid-template-columns: 1fr;
-  }
-
-  form {
-    width: 90%;
+  .form-group input,
+  .form-group select {
+    padding-left: 1rem;
   }
 }
