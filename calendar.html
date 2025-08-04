@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF‑8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calendar – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
   <style>
-    .calendar-wrapper { max-width:1000px; margin:2rem auto; background:var(--card-bg);
-      padding:1.5rem; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.1); }
-    #addEventBtn { display:none; }
-    .modal{ display:none; }
+    .calendar-wrapper {
+      max-width: 1000px; margin: 2rem auto;
+      background: var(--card-bg); padding: 1.5rem;
+      border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
@@ -17,9 +18,12 @@
   <div class="logo">KHOTWA COUNCIL</div>
   <nav class="nav-container">
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li><li><a href="calendar.html" class="active">Calendar</a></li>
-      <li><a href="register.html">Register</a></li><li><a href="admin.html">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li><li><a href="profile.html">Profile</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html" class="active">Calendar</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
     </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
@@ -36,14 +40,15 @@
 <script src="main.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init({ duration: 800, once: true });
+  AOS.init({ duration:800, once:true });
   document.addEventListener('DOMContentLoaded', () => {
-    const events = JSON.parse(localStorage.getItem('events')) || [];
+    const events = JSON.parse(localStorage.getItem('events') || '[]');
     const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
-      initialView: 'dayGridMonth', events,
+      initialView: 'dayGridMonth',
+      events,
       dateClick: info => {
-        const ev = events.find(e=> e.date === info.dateStr);
-        if (ev) alert('Event: '+ev.title);
+        const ev = events.find(e => e.date === info.dateStr);
+        if (ev) alert(`Event: ${ev.title}`);
       }
     });
     calendar.render();
