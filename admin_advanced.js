@@ -1,108 +1,103 @@
-// بيانات أولية
-const stats = { users: 2, events: 7, messages: 12 };
-const users = [
-  { name: "أحمد", email: "ahmad@example.com", role: "عضو" },
-  { name: "سارة", email: "sara@example.com", role: "مشرف" }
+// نفترض users بدلًا من data من localStorage، يمكنك لاحقًا ربطه لو أردت
+let users = JSON.parse(localStorage.getItem('users')) || [
+  { name: "أحمد محمد", email: "ahmad@mail.com", role: "عضو" }
 ];
+let events = JSON.parse(localStorage.getItem('events')) || [];
 
-// تحديث عناصر الإحصائيات
-function updateStats() {
-  document.getElementById("countUsers").textContent = stats.users;
-  document.getElementById("countEvents").textContent = stats.events;
-  document.getElementById("countMessages").textContent = stats.messages;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// إنشاء الرسم البياني للمستخدمين
-function createChart() {
-  const ctx = document.getElementById("userGrowthChart").getContext("2d");
-  new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: ["May", "Jun", "Jul", "Aug"],
-      datasets: [{
-        label: "New Users",
-        data: [5, 12, 9, stats.users],
-        borderColor: "#00703c",
-        backgroundColor: "#00703c33",
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false }
-      }
-    }
-  });
-}
-
-// تعبئة الجدول
-function populateTable() {
-  const tbody = document.getElementById("adminTableBody");
-  tbody.innerHTML = "";
+function refreshUsers() {
+  const tbody = document.getElementById('usersBody');
+  tbody.innerHTML = '';
   users.forEach((u, i) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${i + 1}</td>
-      <td>${u.name}</td>
-      <td>${u.email}</td>
-      <td>${u.role}</td>
-      <td class="action-btns">
-        <button onclick="editRow(${i})">✏️</button>
-        <button onclick="deleteRow(${i})">🗑️</button>
-      </td>`;
-    tbody.appendChild(row);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td>
+      <td><button onclick="editUser(${i})">✏️</button>
+      <button onclick="deleteUser(${i})">🗑️</button></td>`;
+    tbody.appendChild(tr);
   });
+  localStorage.setItem('users', JSON.stringify(users));
 }
 
-// التحكم بالجدول
-function addRow() {
-  const name = prompt("الاسم:");
-  const email = prompt("البريد الإلكتروني:");
-  const role = prompt("الدور:");
+function addUser() {
+  const name = prompt('Name:');
+  const email = prompt('Email:');
+  const role = prompt('Role:');
   if (name && email && role) {
     users.push({ name, email, role });
-    stats.users++;
-    refreshUI();
+    refreshUsers(); updateDashboard(); showToast('✅ User added');
   }
 }
-function editRow(i) {
-  const user = users[i];
-  const name = prompt("الاسم الجديد:", user.name);
-  const email = prompt("البريد الجديد:", user.email);
-  const role = prompt("الدور الجديد:", user.role);
+
+function editUser(i) {
+  const u = users[i];
+  const name = prompt('New Name:', u.name);
+  const email = prompt('New Email:', u.email);
+  const role = prompt('New Role:', u.role);
   if (name && email && role) {
     users[i] = { name, email, role };
-    refreshUI();
+    refreshUsers(); updateDashboard(); showToast('✏️ Updated');
   }
 }
-function deleteRow(i) {
-  if (confirm("هل أنت متأكد من حذف المستخدم؟")) {
+
+function deleteUser(i) {
+  if (confirm('Delete this user?')) {
     users.splice(i, 1);
-    stats.users--;
-    refreshUI();
+    refreshUsers(); updateDashboard(); showToast('🗑️ Deleted');
   }
 }
 
-// البحث في الجدول
-function searchTable() {
-  const q = document.getElementById("searchInput").value.toLowerCase();
-  const trs = document.querySelectorAll("#adminTableBody tr");
-  users.forEach((u, i) => {
-    const match = u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q);
-    trs[i].style.display = match ? "" : "none";
+function refreshEvents() {
+  const tbody = document.getElementById('eventsBody');
+  tbody.innerHTML = '';
+  events.forEach((ev, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${ev.title}</td><td>${ev.date}</td>
+      <td><button onclick="editEvent(${i})">✏️</button>
+      <button onclick="deleteEvent(${i})">🗑️</button></td>`;
+    tbody.appendChild(tr);
   });
+  localStorage.setItem('events', JSON.stringify(events));
 }
 
-// تحديث شامل للواجهة
-function refreshUI() {
-  updateStats();
-  populateTable();
+function addEvent() {
+  const title = prompt('Event title:');
+  const date = prompt('Date (YYYY-MM-DD):');
+  if (title && date) {
+    events.push({ title, date });
+    refreshEvents(); updateDashboard(); showToast('✅ Event added');
+  }
 }
 
-// بدء التهيئة بعد تحميل الصفحة
-window.addEventListener("DOMContentLoaded", () => {
-  updateStats();
-  populateTable();
-  createChart();
+function editEvent(i) {
+  const ev = events[i];
+  const title = prompt('New Title:', ev.title);
+  const date = prompt('New Date:', ev.date);
+  if (title && date) {
+    events[i] = { title, date };
+    refreshEvents(); updateDashboard(); showToast('✏️ Updated event');
+  }
+}
+
+function deleteEvent(i) {
+  if (confirm('Delete event?')) {
+    events.splice(i, 1);
+    refreshEvents(); updateDashboard(); showToast('🗑️ Deleted');
+  }
+}
+
+function updateDashboard() {
+  const msgs = JSON.parse(localStorage.getItem('contacts') || '[]').length;
+  document.getElementById('countUsers').textContent = users.length;
+  document.getElementById('countEvents').textContent = events.length;
+  document.getElementById('countMessages').textContent = msgs;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  refreshUsers(); refreshEvents(); updateDashboard();
 });
