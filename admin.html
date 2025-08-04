@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     .toast { position: fixed; bottom:2rem; right:2rem; background: var(--green); color:#fff;
       padding:.7rem 1.3rem; border-radius:6px; opacity:0; pointer-events:none;
       transition:opacity .4s; z-index:999; }
     .toast.show { opacity:1; pointer-events:auto; }
-    .dashboard-stats .stat-card { min-width: 150px; }
   </style>
 </head>
 <body>
 <script>
-  if (localStorage.getItem("isLogged")!=="true" &&
-      localStorage.getItem("rememberMe")!=="true") {
-    alert("يجب تسجيل الدخول أولًا");
+  if (!localStorage.getItem("isLogged") && !localStorage.getItem("rememberMe")) {
+    alert("You must log in first!");
     location.href = "login.html";
   }
 </script>
@@ -37,18 +36,17 @@
   </nav>
 </header>
 
-<section class="section dashboard" data-aos="zoom-in">
+<section class="section dashboard">
   <h2>Dashboard Statistics</h2>
   <div class="stats-grid">
     <div class="stat-card"><h3 id="countUsers">0</h3><p>Users</p></div>
     <div class="stat-card"><h3 id="countEvents">0</h3><p>Events</p></div>
     <div class="stat-card"><h3 id="countMessages">0</h3><p>Messages</p></div>
   </div>
-  <small>البيانات تتجدّد تلقائيًا عند التعديل</small>
 </section>
 
-<section class="section" data-aos="fade-up">
-  <h2>🧑‍💼 Users Management</h2>
+<section class="section">
+  <h2>Users Management</h2>
   <div class="admin-controls"><button onclick="addUser()">➕ Add User</button></div>
   <div class="table-container">
     <table class="admin-table">
@@ -58,8 +56,8 @@
   </div>
 </section>
 
-<section class="section" data-aos="fade-up">
-  <h2>🗓️ Event Management</h2>
+<section class="section">
+  <h2>Event Management</h2>
   <div class="admin-controls"><button onclick="addEvent()">➕ Add Event</button></div>
   <div class="table-container">
     <table class="admin-table">
@@ -72,7 +70,7 @@
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 <div id="toast" class="toast"></div>
 
-<script src="main.js"></script>
-<script src="admin_advanced.js"></script>
+<script src="main.js" defer></script>
+<script src="admin_advanced.js" defer></script>
 </body>
 </html>
