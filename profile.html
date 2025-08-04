@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Profile – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <style>
-    .profile-container { max-width:500px; margin:3rem auto; padding:2rem;
-      background:var(--card-bg); border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.1); }
-    .logout-btn { background: var(--btn-bg); padding:0.7rem 1.5rem; border:none; 
-      border-radius:5px; color:var(--btn-text); font-weight:bold; cursor:pointer; }
+    .profile-container {
+      max-width:500px; margin:3rem auto; padding:2rem;
+      background:var(--card-bg); border-radius:10px;
+      box-shadow:0 2px 12px rgba(0,0,0,0.1);
+    }
+    .logout-btn {
+      display:block; margin:2rem auto; padding:0.8rem 2rem;
+      background-color: var(--btn-bg); color: var(--btn-text);
+      border:none; border-radius:5px; font-weight:bold;
+      cursor:pointer;
+    }
   </style>
 </head>
 <body>
 <script>
-  if (localStorage.getItem('isLogged')!=='true' && localStorage.getItem('rememberMe')!=='true') {
-    alert('Login required'); location.href = 'login.html';
+  if (localStorage.getItem('isLogged')!=='true' &&
+      localStorage.getItem('rememberMe')!=='true') {
+    alert("Login required");
+    location.href = "login.html";
   }
 </script>
 
-<header class="navbar">…</header>
+<header class="navbar">
+  <div class="logo">KHOTWA</div>
+  <nav class="nav-container">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+    <ul class="nav-links" id="authLinks"></ul>
+    <button id="darkToggle" class="dark-btn">🌓</button>
+  </nav>
+</header>
 
 <section class="profile-container" data-aos="fade-up">
   <h2>Welcome Back 👋</h2>
@@ -29,14 +48,15 @@
 </section>
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
+
 <script src="main.js"></script>
 <script>
-  document.getElementById("logoutBtn").onclick = e => {
+  document.getElementById("logoutBtn").onclick = () => {
     localStorage.removeItem("isLogged");
     localStorage.removeItem("rememberMe");
     alert("✅ Logged out");
-    location.href = 'login.html';
-  }
+    location.href = "login.html";
+  };
 </script>
 </body>
 </html>
