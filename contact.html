@@ -1,53 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF‑8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
-  <style>
-    .toast { position: fixed; top:1rem; right:1rem; background:var(--green); color:#fff;
-      padding:.8rem 1.4rem; border-radius:5px; opacity:0; pointer-events:none;
-      transition: opacity .4s; z-index:999; }
-    .toast.show { opacity:1; pointer-events:auto; }
-  </style>
 </head>
 <body>
-<header class="navbar" data-aos="fade-down">
+<header class="navbar">
   <div class="logo">KHOTWA COUNCIL</div>
-  <nav class="nav-container">
-    <ul class="nav-links">…</ul>
+  <button class="hamburger" id="hamburgerBtn">☰</button>
+  <nav class="nav-container" id="navMenu">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
 
 <section class="section contact-section" data-aos="fade-up">
+  <div class="info">
+    <h2>Contact Information</h2>
+    <p><strong>Email:</strong> support@khotwa.edu</p>
+    <p><strong>Phone:</strong> +966 555 123 456</p>
+    <p><strong>Location:</strong> University Campus, Bldg. B</p>
+  </div>
   <div class="contact-form">
     <h2>Send a Message</h2>
     <form id="contactForm">
-      <div class="form-group"><span class="material-symbols-outlined">person</span>
-        <input name="name" type="text" placeholder="Your Name" required /></div>
-      <div class="form-group"><span class="material-symbols-outlined">mail</span>
-        <input name="email" type="email" placeholder="Email Address" required /></div>
-      <div class="form-group"><span class="material-symbols-outlined">message</span>
-        <textarea name="message" rows="5" placeholder="Your Message" required></textarea></div>
+      <div class="form-group">
+        <span class="material-symbols-outlined">person</span>
+        <input name="name" type="text" placeholder="Your Name" required/>
+      </div>
+      <div class="form-group">
+        <span class="material-symbols-outlined">mail</span>
+        <input name="email" type="email" placeholder="Email Address" required/>
+      </div>
+      <div class="form-group">
+        <span class="material-symbols-outlined">message</span>
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      </div>
       <button type="submit">Send Message</button>
     </form>
-    <div id="toastContact" class="toast">✅ Message sent successfully!</div>
+    <div id="toast" class="toast">✅ Message sent successfully!</div>
   </div>
 </section>
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 
-<script src="main.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="main.js" defer></script>
 <script>
-  AOS.init({ duration:700, once:true });
-  const form = document.getElementById('contactForm');
-  const toast = document.getElementById('toastContact');
-  form.addEventListener('submit', e => {
+window.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("contactForm");
+  const toast = document.getElementById("toast");
+  const hamburger = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
+
+  form.addEventListener("submit", e => {
     e.preventDefault();
     const data = {
       name: form.name.value.trim(),
@@ -59,9 +75,12 @@
     arr.push(data);
     localStorage.setItem('contacts', JSON.stringify(arr));
     form.reset();
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
   });
+
+  hamburger?.addEventListener("click", () => navMenu.classList.toggle('nav-open'));
+});
 </script>
 </body>
 </html>
