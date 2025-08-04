@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Khotwa Student Council</title>
   <link rel="stylesheet" href="styles.css"/>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
@@ -46,9 +45,9 @@
 <section class="section stats" data-aos="zoom-in">
   <h2>Our Impact</h2>
   <div class="stats-grid">
-    <div class="stat-card"><h3>👥 150+</h3><p>Members</p></div>
-    <div class="stat-card"><h3>📚 25+</h3><p>Events</p></div>
-    <div class="stat-card"><h3>📈 4 Years</h3><p>Growth</p></div>
+    <div class="stat-card"><h3 id="countMembers">0</h3><p>Members</p></div>
+    <div class="stat-card"><h3 id="countEvents">0</h3><p>Events</p></div>
+    <div class="stat-card"><h3 id="countMessages">0</h3><p>Messages</p></div>
   </div>
 </section>
 
@@ -82,18 +81,21 @@
 <script>
   AOS.init({ duration: 800, once: true });
 
-  // زر CTA حركة صغيرة لجذب الانتباه
-  document.getElementById('ctaBtn').addEventListener('mouseenter', e => {
-    e.target.style.transform = 'scale(1.05)';
-  });
-  document.getElementById('ctaBtn').addEventListener('mouseleave', e => {
-    e.target.style.transform = '';
-  });
+  document.getElementById('ctaBtn').addEventListener('mouseenter', e => e.target.style.transform = 'scale(1.05)');
+  document.getElementById('ctaBtn').addEventListener('mouseleave', e => e.target.style.transform = '');
 
-  // navbar تأثير عند scroll
   window.addEventListener('scroll', () => {
     const nav = document.getElementById('mainNavbar');
     nav.classList.toggle('navbar-scrolled', window.scrollY > 50);
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const members = JSON.parse(localStorage.getItem('registrations') || '[]').length;
+    const events = JSON.parse(localStorage.getItem('events') || '[]').length;
+    const messages = JSON.parse(localStorage.getItem('contacts') || '[]').length;
+    document.getElementById('countMembers').textContent = members;
+    document.getElementById('countEvents').textContent = events;
+    document.getElementById('countMessages').textContent = messages;
   });
 </script>
 </body>
