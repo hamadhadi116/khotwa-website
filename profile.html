@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Profile – Khotwa</title>
   <link rel="stylesheet" href="styles.css"/>
   <style>
@@ -12,16 +12,17 @@
     }
     .logout-btn {
       display:block; margin:2rem auto; padding:0.8rem 2rem;
-      background-color: var(--btn-bg); color: var(--btn-text);
+      background: var(--btn-bg); color: var(--btn-text);
       border:none; border-radius:5px; font-weight:bold;
       cursor:pointer;
     }
+    .logout-btn:hover { background-color: var(--green); }
   </style>
 </head>
 <body>
+
 <script>
-  if (localStorage.getItem('isLogged')!=='true' &&
-      localStorage.getItem('rememberMe')!=='true') {
+  if (!localStorage.getItem("isLogged") && !localStorage.getItem("rememberMe")) {
     alert("Login required");
     location.href = "login.html";
   }
@@ -39,7 +40,7 @@
   </nav>
 </header>
 
-<section class="profile-container" data-aos="fade-up">
+<section class="profile-container">
   <h2>Welcome Back 👋</h2>
   <p><strong>Name:</strong> Administrator</p>
   <p><strong>Email:</strong> admin@khotwa.com</p>
