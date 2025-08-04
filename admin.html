@@ -10,8 +10,7 @@
       background: var(--green); color: #fff;
       padding: 0.7rem 1.3rem; border-radius: 6px;
       opacity: 0; pointer-events: none;
-      transition: opacity 0.4s ease;
-      z-index: 999;
+      transition: opacity 0.4s ease; z-index: 999;
     }
     .toast.show { opacity: 1; pointer-events: auto; }
   </style>
@@ -27,14 +26,26 @@
   <div class="logo">KHOTWA ADMIN</div>
   <nav class="nav-container">
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li><li><a href="calendar.html">Calendar</a></li>
-      <li><a href="register.html">Register</a></li><li><a href="admin.html" class="active">Admin</a></li>
-      <li><a href="contact.html">Contact</a></li><li><a href="profile.html">Profile</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="admin.html" class="active">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
     </ul>
     <ul class="nav-links" id="authLinks"></ul>
     <button id="darkToggle" class="dark-btn">🌓</button>
   </nav>
 </header>
+
+<section class="section stats" data-aos="zoom-in">
+  <h2>Dashboard Statistics</h2>
+  <div class="stats-grid">
+    <div class="stat-card"><h3 id="statUsers">0</h3><p>Users</p></div>
+    <div class="stat-card"><h3 id="statEvents">0</h3><p>Events</p></div>
+    <div class="stat-card"><h3 id="statMessages">0</h3><p>Messages</p></div>
+  </div>
+</section>
 
 <section class="section">
   <h2>لوحة التحكم</h2>
@@ -42,8 +53,9 @@
   <div class="table-container">
     <table class="admin-table"><thead>
       <tr><th>#</th><th>الاسم</th><th>البريد</th><th>الدور</th><th>إجراءات</th></tr>
-    </thead><tbody id="adminTableBody"></tbody></table>
-  </div>
+    </thead>
+    <tbody id="adminTableBody"></tbody>
+  </table></div>
 </section>
 
 <section class="section">
@@ -59,34 +71,34 @@
 
 <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
 <div id="toast" class="toast"></div>
+
 <script src="main.js"></script>
 <script>
   const users = [
     { name: "أحمد محمد", email: "ahmad@mail.com", role: "عضو" },
     { name: "سارة العتيبي", email: "sarah@mail.com", role: "قائدة" }
   ];
-  let events = JSON.parse(localStorage.getItem('events')) || [];
+  let events = JSON.parse(localStorage.getItem('events') || '[]');
+
   function showToast(msg){
-    const t = document.getElementById("toast");
-    t.innerText = msg; t.classList.add('show');
+    const t = document.getElementById("toast"); t.innerText = msg; t.classList.add('show');
     setTimeout(()=> t.classList.remove('show'), 3000);
   }
+
   function refreshUsers(){
     const tbody = document.getElementById('adminTableBody'); tbody.innerHTML = '';
     users.forEach((u,i)=> {
-      tbody.innerHTML += `<tr><td>${i+1}</td><td>${u.name}</td><td>${u.email}</td>
-        <td>${u.role}</td><td><button onclick="editUser(${i})">✏️</button>
+      tbody.innerHTML += `<tr><td>${i+1}</td><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td>
+        <td><button onclick="editUser(${i})">✏️</button>
         <button onclick="deleteUser(${i})">🗑️</button></td></tr>`;
     });
   }
   function addRow(){ const name=prompt('اسم:'),email=prompt('بريد:'),role=prompt('دور:');
-    if(name&&email&&role){ users.push({name,email,role}); refreshUsers(); showToast('✅ مستخدم جديد'); }}
-  function editUser(i){ const u=users[i], name=prompt('الاسم الجديد:',u.name),
-    email=prompt('البريد الجديد:',u.email), role=prompt('الدور الجديد:',u.role);
-    if(name&&email&&role){ users[i]={name,email,role}; refreshUsers(); showToast('✏️ تم التعديل'); }}
-  function deleteUser(i){
-    if(confirm('هل تريد حذف المستخدم؟')){ users.splice(i,1); refreshUsers(); showToast('🗑️ تم الحذف'); }}
-  // الأحداث:
+    if(name&&email&&role){ users.push({name,email,role}); refreshUsers(); updateDashboard(); showToast('✅ مستخدم جديد'); }}
+  function editUser(i){ const u=users[i], name=prompt('الاسم الجديد:',u.name), email=prompt('البريد الجديد:',u.email), role=prompt('الدور الجديد:',u.role);
+    if(name&&email&&role){ users[i]={name,email,role}; refreshUsers(); updateDashboard(); showToast('✏️ تم التعديل'); }}
+  function deleteUser(i){ if(confirm('هل تريد حذف المستخدم؟')){ users.splice(i,1); refreshUsers(); updateDashboard(); showToast('🗑️ تم الحذف'); }}
+
   function refreshEventsUI(){
     const tbody = document.getElementById('eventsBody'); tbody.innerHTML = '';
     events.forEach((ev,i)=> {
@@ -96,18 +108,20 @@
     });
     localStorage.setItem('events', JSON.stringify(events));
   }
-  function addEvent(){
-    const title=prompt('عنوان:'), date=prompt('التاريخ (YYYY-MM-DD):');
-    if(title&&date){ events.push({title,date}); showToast('✅ حدث جديد'); refreshEventsUI(); }
+  function addEvent(){ const title=prompt('عنوان:'), date=prompt('التاريخ (YYYY-MM-DD):');
+    if(title&&date){ events.push({title,date}); refreshEventsUI(); updateDashboard(); showToast('✅ حدث جديد'); }}
+  function editEvent(i){ const e = events[i], title=prompt('عنوان جديد:',e.title), date=prompt('تاريخ جديد:',e.date);
+    if(title&&date){ events[i]={title,date}; refreshEventsUI(); updateDashboard(); showToast('✏️ تم تعديل الحدث'); }}
+  function deleteEvent(i){ if(confirm('تاكد من الحذف؟')){ events.splice(i,1); refreshEventsUI(); updateDashboard(); showToast('🗑️ تم الحذف'); }}
+
+  function updateDashboard(){
+    const msgs = JSON.parse(localStorage.getItem('contacts') || '[]').length;
+    document.getElementById('statUsers').textContent = users.length;
+    document.getElementById('statEvents').textContent = events.length;
+    document.getElementById('statMessages').textContent = msgs;
   }
-  function editEvent(i){
-    const e = events[i], title=prompt('عنوان جديد:',e.title), date=prompt('تاريخ جديد:',e.date);
-    if(title&&date){ events[i]={title,date}; refreshEventsUI(); showToast('✏️ تم تعديل الحدث'); }
-  }
-  function deleteEvent(i){
-    if(confirm('تاكد من الحذف؟')){ events.splice(i,1); refreshEventsUI(); showToast('🗑️ تم الحذف'); }
-  }
-  window.addEventListener('DOMContentLoaded',()=>{ refreshUsers(); refreshEventsUI(); });
+
+  window.addEventListener('DOMContentLoaded',()=>{ refreshUsers(); refreshEventsUI(); updateDashboard(); });
 </script>
 </body>
 </html>
