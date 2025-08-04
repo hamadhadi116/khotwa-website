@@ -1,80 +1,99 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register – Khotwa</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo">KHOTWA COUNCIL</div>
-    <nav class="nav-container">
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="register.html" class="active">Register</a></li>
-        <li><a href="admin.html">Admin</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="profile.html">Profile</a></li>
-      </ul>
-      <ul class="nav-links" id="authLinks"></ul>
-      <button id="darkToggle" class="dark-btn">🌓</button>
-    </nav>
-  </header>
+<header class="navbar">
+  <div class="logo">KHOTWA COUNCIL</div>
+  <button class="hamburger" id="hamburgerBtn">☰</button>
+  <nav class="nav-container" id="navMenu">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="register.html" class="active">Register</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <ul class="nav-links" id="authLinks"></ul>
+    <button id="darkToggle" class="dark-btn">🌓</button>
+  </nav>
+</header>
 
-  <section class="register-section">
-    <div class="register-card">
-      <h2>Join the Council</h2>
-      <form id="regForm">
-        <div class="form-group">
-          <span class="material-symbols-outlined">person</span>
-          <input name="name" type="text" placeholder="Full Name" required/>
-        </div>
-        <div class="form-group">
-          <span class="material-symbols-outlined">mail</span>
-          <input name="email" type="email" placeholder="Email Address" required/>
-        </div>
-        <div class="form-group">
-          <span class="material-symbols-outlined">badge</span>
-          <input name="major" type="text" placeholder="Student Major" required/>
-        </div>
-        <div class="form-group">
-          <span class="material-symbols-outlined">school</span>
-          <select name="level" required>
-            <option value="" disabled selected>Select Level</option>
-            <option>1st Year</option>
-            <option>2nd Year</option>
-            <option>3rd Year</option>
-            <option>4th Year</option>
-          </select>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-      <div id="toastReg" class="toast">✔️ Registration successful!</div>
-    </div>
-  </section>
+<section class="register-section" data-aos="fade-up">
+  <div class="register-card">
+    <h2>Join the Council</h2>
+    <form id="regForm">
+      <div class="form-group">
+        <span class="material-symbols-outlined">person</span>
+        <input name="name" type="text" placeholder="Full Name" required />
+      </div>
+      <div class="form-group">
+        <span class="material-symbols-outlined">mail</span>
+        <input name="email" type="email" placeholder="Email Address" required />
+      </div>
+      <div class="form-group">
+        <span class="material-symbols-outlined">badge</span>
+        <input name="major" type="text" placeholder="Student Major" required />
+      </div>
+      <div class="form-group">
+        <span class="material-symbols-outlined">school</span>
+        <select name="level" required>
+          <option value="" disabled selected>Select Level</option>
+          <option>1st Year</option>
+          <option>2nd Year</option>
+          <option>3rd Year</option>
+          <option>4th Year</option>
+        </select>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="toastReg" class="toast">✔️ Registration successful!</div>
+  </div>
+</section>
 
-  <footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
+<footer class="footer">
+  <p>© 2025 Khotwa Student Council</p>
+</footer>
 
-  <script src="main.js"></script>
-  <script>
-    document.getElementById("regForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = this.name.value.trim();
-      const email = this.email.value.trim().toLowerCase();
-      const major = this.major.value.trim();
-      const level = this.level.value;
-      if (!name || !email || !major || !level) return alert("All fields are required");
-      const arr = JSON.parse(localStorage.getItem("registrations") || "[]");
-      if (arr.some(r => r.email === email)) return alert("Email already registered");
-      arr.push({ name, email, major, level });
-      localStorage.setItem("registrations", JSON.stringify(arr));
-      this.reset();
-      const toast = document.getElementById("toastReg");
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 3000);
-    });
-  </script>
+<script src="main.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("regForm");
+  const toast = document.getElementById("toastReg");
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const email = form.email.value.trim().toLowerCase();
+    const major = form.major.value.trim();
+    const level = form.level.value;
+
+    if (!name || !email || !major || !level) return alert("All fields are required");
+
+    const arr = JSON.parse(localStorage.getItem("registrations") || "[]");
+    if (arr.some(r => r.email === email)) return alert("Email already registered");
+
+    arr.push({ name, email, major, level });
+    localStorage.setItem("registrations", JSON.stringify(arr));
+    form.reset();
+
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+  });
+
+  // Navbar hamburger
+  const hamburger = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
+  hamburger?.addEventListener('click', () => {
+    navMenu.classList.toggle('nav-open');
+  });
+});
+</script>
 </body>
 </html>
