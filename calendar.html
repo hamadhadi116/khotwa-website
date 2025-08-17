@@ -5,15 +5,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>التقويم – Khotwa</title>
   <style>
-    :root{--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
-    *{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text)}
+    :root{--primary:#1e40af;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
+    a{color:inherit;text-decoration:none}
+    a:visited{color:inherit}
+    a:hover{text-decoration:none}
+
     .container{width:min(1120px,92%);margin-inline:auto}
-    .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring)}
+    .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-    .brand .logo{width:28px;height:28px;object-fit:cover;border-radius:6px}
-    .nav-links{display:flex;gap:1rem}.nav-links a{padding:.5rem .75rem;border-radius:10px}.nav-links a:hover{background:var(--card)}
-    section{padding:2rem 0}.card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
+    .nav-links{display:flex;gap:1rem}
+    .nav-links a{padding:.5rem .75rem;border-radius:10px}
+    .nav-links a:hover{background:var(--card)}
+
+    section{padding:2rem 0}
+    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
     .muted{color:var(--muted)}
     footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
   </style>
@@ -21,16 +30,16 @@
 <body>
   <nav class="navbar">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html">
-        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="28" height="28">
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="40" height="40">
         <span>مجلس طلاب خطوة – La Trobe</span>
       </a>
-      <div class="nav-links">
-        <a href="/about.html">من نحن</a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/calendar.html">التقويم</a>
-        <a href="/contact.html">تواصل</a>
+      <div class="nav-links" role="menubar">
+        <a href="/about.html" role="menuitem">من نحن</a>
+        <a href="/news.html" role="menuitem">الأخبار</a>
+        <a href="/events.html" role="menuitem">الفعاليات</a>
+        <a href="/calendar.html" role="menuitem" aria-current="page">التقويم</a>
+        <a href="/contact.html" role="menuitem">تواصل</a>
       </div>
     </div>
   </nav>
