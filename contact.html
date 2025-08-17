@@ -2,15 +2,20 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>تواصل معنا – Khotwa</title>
   <style>
     :root{--primary:#1e40af;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
-    a{color:inherit;text-decoration:none} a:visited{color:inherit}
+    body{margin:0;font-family:"Segoe UI", system-ui, -apple-system, Tahoma, Arial, sans-serif;color:var(--text);background:#fff}
+    a{color:inherit;text-decoration:none}
+    a:visited{color:inherit}
     .container{width:min(1120px,92%);margin-inline:auto}
+    [hidden]{display:none !important}
+
+    /* Focus styles */
+    :focus-visible{outline:3px solid color-mix(in oklab, var(--primary), #fff 40%);outline-offset:2px;border-radius:8px}
 
     /* Navbar (متجاوب) */
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
@@ -20,24 +25,25 @@
     .nav-links{display:flex;gap:1rem;align-items:center}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
-    .menu-toggle{display:none;border:1px solid var(--ring);padding:.5rem .7rem;border-radius:10px;background:#fff}
+    .menu-toggle{display:none;border:1px solid var(--ring);padding:.5rem .7rem;border-radius:10px;background:#fff;cursor:pointer}
 
-    @media(max-width:860px){
+    @media (max-width:860px){
       .menu-toggle{display:inline-flex}
       .nav-links{
-        display:none;position:absolute;right:4%;left:4%;top:64px;flex-direction:column;
+        position:absolute;right:4%;left:4%;top:64px;flex-direction:column;
         padding:.75rem;background:#fff;border:1px solid var(--ring);border-radius:14px;
         box-shadow:0 10px 30px rgba(0,0,0,.06)
       }
-      .nav-links.open{display:flex}
       .nav-links a{width:100%}
     }
 
     /* Page */
     section{padding:2rem 0}
     .muted{color:var(--muted)}
-    form{display:grid;gap:.7rem;background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+    form{display:grid;gap:.9rem;background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+    label{font-size:.95rem}
     input,textarea{width:100%;padding:.7rem;border:1px solid var(--ring);border-radius:10px;font:inherit}
+    input:focus-visible, textarea:focus-visible{outline:3px solid color-mix(in oklab, var(--primary), #fff 40%);outline-offset:2px}
     button{padding:.7rem 1rem;border-radius:10px;border:1px solid var(--ring);background:var(--primary);color:#fff;cursor:pointer}
     .grid{display:grid;gap:1rem;grid-template-columns:1fr 1fr}
     @media(max-width:980px){.grid{grid-template-columns:1fr}}
@@ -45,22 +51,36 @@
 
     /* Footer */
     footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
+
+    /* حركة أقل للي يفضلوا ذلك */
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto}
+    }
   </style>
 </head>
 <body>
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
       <a class="brand" href="/index.html">
-        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo">
+        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" loading="eager" fetchpriority="high" decoding="async">
         <span>مجلس طلاب خطوة – La Trobe</span>
       </a>
-      <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-controls="primary-menu">القائمة</button>
-      <div id="primary-menu" class="nav-links" role="menubar">
-        <a href="/about.html" role="menuitem">من نحن</a>
-        <a href="/news.html" role="menuitem">الأخبار</a>
-        <a href="/events.html" role="menuitem">الفعاليات</a>
-        <a href="/calendar.html" role="menuitem">التقويم</a>
-        <a href="/contact.html" role="menuitem" aria-current="page">تواصل</a>
+
+      <!-- زر القائمة للجوال -->
+      <button id="menuBtn" class="menu-toggle" type="button"
+              aria-expanded="false" aria-controls="primary-menu" aria-label="فتح القائمة">
+        القائمة
+      </button>
+
+      <!-- روابط التنقل بدلالات HTML طبيعية -->
+      <div id="primary-menu" class="nav-links" hidden aria-hidden="true">
+        <ul style="list-style:none;display:contents;margin:0;padding:0">
+          <li><a href="/about.html">من نحن</a></li>
+          <li><a href="/news.html">الأخبار</a></li>
+          <li><a href="/events.html">الفعاليات</a></li>
+          <li><a href="/calendar.html">التقويم</a></li>
+          <li><a href="/contact.html" aria-current="page">تواصل</a></li>
+        </ul>
       </div>
     </div>
   </nav>
@@ -70,19 +90,44 @@
       <div>
         <h1>راسلنا</h1>
         <p class="muted">يسعدنا استقبال أسئلتك واقتراحاتك.</p>
-        <form action="https://formspree.io/f/mblkegbr" method="POST">
-          <input type="text" name="name" placeholder="الاسم الكامل" required>
-          <input type="email" name="email" placeholder="البريد الإلكتروني" required>
-          <textarea name="message" rows="6" placeholder="رسالتك" required></textarea>
+
+        <!-- نموذج Formspree مع تسميات وخصائص إكمال تلقائي -->
+        <form action="https://formspree.io/f/mblkegbr" method="POST" novalidate>
+          <div>
+            <label for="name">الاسم الكامل</label>
+            <input id="name" name="name" type="text" placeholder="الاسم الكامل" autocomplete="name" required>
+          </div>
+
+          <div>
+            <label for="email">البريد الإلكتروني</label>
+            <input id="email" name="email" type="email" placeholder="example@email.com" autocomplete="email" required>
+          </div>
+
+          <div>
+            <label for="message">رسالتك</label>
+            <textarea id="message" name="message" rows="6" placeholder="اكتب رسالتك هنا" required></textarea>
+          </div>
+
+          <!-- موضوع افتراضي + مصيدة سبام بسيطة -->
           <input type="hidden" name="_subject" value="رسالة جديدة من موقع المجلس">
+          <div hidden aria-hidden="true">
+            <label for="website">اترك هذا الحقل فارغًا</label>
+            <input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
           <button type="submit">إرسال</button>
         </form>
       </div>
+
       <div>
         <h2>موقعنا – Bundoora</h2>
         <p class="muted">La Trobe University – Bundoora Campus</p>
-        <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?hl=ar&q=La+Trobe+University,+Bundoora&output=embed&t=m&z=15"></iframe>
+        <iframe
+          title="خريطة موقع La Trobe University – Bundoora"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?hl=ar&q=La+Trobe+University,+Bundoora&output=embed&t=m&z=15">
+        </iframe>
       </div>
     </section>
   </main>
@@ -90,14 +135,72 @@
   <footer>
     <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </footer>
 
   <script>
-    document.getElementById('year').textContent=new Date().getFullYear();
-    const btn=document.getElementById('menuBtn'),menu=document.getElementById('primary-menu');
-    btn?.addEventListener('click',()=>{const open=menu.classList.toggle('open');btn.setAttribute('aria-expanded',String(open));});
+    // سنة الحقوق
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // قائمة الجوال: إدارة الحالة والوصولية
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('primary-menu');
+
+    function setMenuState(open){
+      btn.setAttribute('aria-expanded', String(open));
+      menu.toggleAttribute('hidden', !open);
+      menu.setAttribute('aria-hidden', String(!open));
+      // تعطيل التبويب عند الإغلاق
+      menu.querySelectorAll('a').forEach(a => {
+        if(!open){ a.setAttribute('tabindex','-1'); }
+        else{ a.removeAttribute('tabindex'); }
+      });
+      // تغيير تسمية الزر
+      btn.setAttribute('aria-label', open ? 'إغلاق القائمة' : 'فتح القائمة');
+    }
+
+    // الحالة الابتدائية (مغلق على الشاشات الصغيرة)
+    setMenuState(false);
+
+    // فتح/إغلاق بالزر
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      setMenuState(!open);
+    });
+
+    // إغلاق بالضغط خارج القائمة
+    document.addEventListener('click', (e) => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      if(open && !menu.contains(e.target) && !btn.contains(e.target)){
+        setMenuState(false);
+      }
+    });
+
+    // إغلاق بمفتاح Escape
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape'){
+        setMenuState(false);
+        btn.focus();
+      }
+    });
+
+    // عند توسيع الشاشة فوق 860px: أظهر القائمة وثبّت التبويب
+    const mq = window.matchMedia('(min-width: 861px)');
+    function handleMQ(ev){
+      if(ev.matches){
+        // شاشة كبيرة: أظهرها دائمًا دون hidden/aria-hidden
+        menu.removeAttribute('hidden');
+        menu.setAttribute('aria-hidden','false');
+        btn.setAttribute('aria-expanded','true');
+        menu.querySelectorAll('a').forEach(a => a.removeAttribute('tabindex'));
+      }else{
+        // شاشة صغيرة: أعِدها للحالة المغلقة
+        setMenuState(false);
+      }
+    }
+    handleMQ(mq);
+    mq.addEventListener('change', handleMQ);
   </script>
 </body>
 </html>
