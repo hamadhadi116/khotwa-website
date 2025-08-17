@@ -12,11 +12,15 @@
     a:visited{color:inherit}
     a:hover{text-decoration:none}
 
+    /* تركيز محسّن للوصولية */
+    :focus-visible{outline:3px solid color-mix(in oklab, var(--primary), #fff 40%);outline-offset:2px;border-radius:8px}
+
     .container{width:min(1120px,92%);margin-inline:auto}
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
+    /* توحيد القياس مع سمات الصورة (60×60) */
+    .brand .logo{width:60px;height:60px;object-fit:cover;border-radius:8px}
     .nav-links{display:flex;gap:1rem}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
@@ -40,12 +44,13 @@
         <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="60" height="60">
         <span>مجلس طلاب خطوة – La Trobe</span>
       </a>
-      <div class="nav-links" role="menubar">
-        <a href="/about.html" role="menuitem">من نحن</a>
-        <a href="/news.html" role="menuitem">الأخبار</a>
-        <a href="/events.html" role="menuitem" aria-current="page">الفعاليات</a>
-        <a href="/calendar.html" role="menuitem">التقويم</a>
-        <a href="/contact.html" role="menuitem">تواصل</a>
+      <!-- إزالة أدوار ARIA غير الضرورية مع الحفاظ على نفس البنية -->
+      <div class="nav-links">
+        <a href="/about.html">من نحن</a>
+        <a href="/news.html">الأخبار</a>
+        <a href="/events.html" aria-current="page">الفعاليات</a>
+        <a href="/calendar.html">التقويم</a>
+        <a href="/contact.html">تواصل</a>
       </div>
     </div>
   </nav>
@@ -58,26 +63,32 @@
       <div class="grid grid-3">
         <!-- Workshop -->
         <article class="card">
-          <span class="chip">10 سبتمبر – 5:00م</span>
+          <span class="chip">
+            <time datetime="2025-09-10T17:00">10 سبتمبر – 5:00م</time>
+          </span>
           <h3>ورشة تخصصات خطوة</h3>
           <p class="muted">IT، الأمن السيبراني، العلوم الحيوية، وإدارة الأعمال – Bundoora.</p>
-          <a class="btn" href="/contact.html?event=workshop" rel="noopener">سجّل الآن</a>
+          <a class="btn" href="/contact.html?event=workshop">سجّل الآن</a>
         </article>
 
         <!-- Padel -->
         <article class="card">
-          <span class="chip">24 سبتمبر – 4:00م</span>
+          <span class="chip">
+            <time datetime="2025-09-24T16:00">24 سبتمبر – 4:00م</time>
+          </span>
           <h3>بطولة البادل</h3>
           <p class="muted">تنظيم رياضي طلابي – La Trobe Sports Centre.</p>
-          <a class="btn" href="/contact.html?event=padel" rel="noopener">التفاصيل</a>
+          <a class="btn" href="/contact.html?event=padel">التفاصيل</a>
         </article>
 
         <!-- Marathon -->
         <article class="card">
-          <span class="chip">1 أكتوبر – 9:00ص</span>
+          <span class="chip">
+            <time datetime="2025-10-01T09:00">1 أكتوبر – 9:00ص</time>
+          </span>
           <h3>ماراثون داخل الحرم</h3>
           <p class="muted">مسارات 1K و2.5K و10K مع نقاط مياه وخدمات دعم.</p>
-          <a class="btn" href="/contact.html?event=marathon" rel="noopener">سجّل الآن</a>
+          <a class="btn" href="/contact.html?event=marathon">سجّل الآن</a>
         </article>
       </div>
     </section>
@@ -86,9 +97,11 @@
   <footer>
     <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </footer>
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
