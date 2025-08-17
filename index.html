@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Khotwa Student Council</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>مجلس طلاب خطوة – Khotwa</title>
   <style>
     :root {
       --primary:#1e40af;
@@ -16,6 +16,7 @@
     *{box-sizing:border-box}
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
     a{color:inherit;text-decoration:none}
+    a:visited{color:inherit}
     .container{width:min(1120px,92%);margin-inline:auto}
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
@@ -24,7 +25,8 @@
     .nav-links{display:flex;gap:1rem;align-items:center}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
-    .lang-toggle{padding:.5rem .75rem;border-radius:10px;background:var(--primary);color:#fff;cursor:pointer;border:none}
+    .nav-cta{padding:.55rem .9rem;border-radius:12px;background:var(--primary);color:#fff;box-shadow:0 4px 18px rgba(29,78,216,.18)}
+    .nav-cta:hover{background:var(--primary-600)}
     header.hero{background:linear-gradient(180deg,#fff 0,#f5f7ff 100%);border-bottom:1px solid var(--ring)}
     .hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;padding:3rem 0;align-items:center}
     .hero h1{margin:0 0 .5rem;font-size:clamp(1.6rem,2.6vw + 1rem,2.4rem)}
@@ -34,33 +36,30 @@
     .btn-primary{background:var(--primary);color:#fff;box-shadow:0 10px 28px rgba(29,78,216,.22)}
     .btn-primary:hover{background:var(--primary-600)}
     .btn-outline{background:#fff;border-color:var(--ring)}
+    .hero-img img{width:100%;height:100%;object-fit:cover;border-radius:16px}
     footer{border-top:1px solid var(--ring);background:#fff}
     .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
+    /* إخفاء النصوص الإنجليزية بشكل افتراضي */
+    [lang="en"] { display: none; }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar">
+  <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
       <a class="brand" href="/index.html">
         <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40">
-        <span class="lang" data-lang="ar">مجلس طلاب خطوة – La Trobe</span>
-        <span class="lang" data-lang="en" style="display:none">Khotwa Student Council – La Trobe</span>
+        <span lang="ar">مجلس طلاب خطوة – La Trobe</span>
+        <span lang="en">Khotwa Student Council – La Trobe</span>
       </a>
       <div class="nav-links">
-        <a href="/about.html" class="lang" data-lang="ar">من نحن</a>
-        <a href="/about.html" class="lang" data-lang="en" style="display:none">About Us</a>
-        <a href="/news.html" class="lang" data-lang="ar">الأخبار</a>
-        <a href="/news.html" class="lang" data-lang="en" style="display:none">News</a>
-        <a href="/events.html" class="lang" data-lang="ar">الفعاليات</a>
-        <a href="/events.html" class="lang" data-lang="en" style="display:none">Events</a>
-        <a href="/calendar.html" class="lang" data-lang="ar">التقويم</a>
-        <a href="/calendar.html" class="lang" data-lang="en" style="display:none">Calendar</a>
-        <a href="/resources.html" class="lang" data-lang="ar">الموارد</a>
-        <a href="/resources.html" class="lang" data-lang="en" style="display:none">Resources</a>
-        <a href="/contact.html" class="lang" data-lang="ar">تواصل</a>
-        <a href="/contact.html" class="lang" data-lang="en" style="display:none">Contact</a>
-        <button class="lang-toggle" onclick="toggleLang()">English</button>
+        <a href="/about.html"><span lang="ar">من نحن</span><span lang="en">About Us</span></a>
+        <a href="/news.html"><span lang="ar">الأخبار</span><span lang="en">News</span></a>
+        <a href="/events.html"><span lang="ar">الفعاليات</span><span lang="en">Events</span></a>
+        <a href="/calendar.html"><span lang="ar">التقويم</span><span lang="en">Calendar</span></a>
+        <a href="/resources.html"><span lang="ar">الموارد</span><span lang="en">Resources</span></a>
+        <a href="/contact.html" class="nav-cta"><span lang="ar">تواصل</span><span lang="en">Contact</span></a>
+        <button id="lang-toggle" class="btn btn-outline" style="padding:.4rem .8rem;font-size:.85rem">English</button>
       </div>
     </div>
   </nav>
@@ -69,22 +68,17 @@
   <header class="hero">
     <div class="container hero-inner">
       <div>
-        <h1 class="lang" data-lang="ar">مجلس طلاب خطوة – صوت الطلاب وشريك الجامعة</h1>
-        <h1 class="lang" data-lang="en" style="display:none">Khotwa Student Council – Students’ Voice and University Partner</h1>
-        <p class="lang" data-lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا.</p>
-        <p class="lang" data-lang="en" style="display:none">We empower Khotwa students academically, socially, and culturally.</p>
+        <h1 lang="ar">مجلس طلاب خطوة – صوت الطلاب وشريك الجامعة</h1>
+        <h1 lang="en">Khotwa Student Council – Students’ Voice and University Partner</h1>
+        <p lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا.</p>
+        <p lang="en">We empower Khotwa program students academically, socially, and culturally.</p>
         <div class="cta-row">
-          <a href="/contact.html" class="btn btn-primary lang" data-lang="ar">قدّم للعضوية</a>
-          <a href="/contact.html" class="btn btn-primary lang" data-lang="en" style="display:none">Join Us</a>
-          <a href="/events.html" class="btn btn-outline lang" data-lang="ar">شاهد أقرب الفعاليات</a>
-          <a href="/events.html" class="btn btn-outline lang" data-lang="en" style="display:none">See Upcoming Events</a>
+          <a href="/contact.html" class="btn btn-primary"><span lang="ar">قدّم للعضوية</span><span lang="en">Apply for Membership</span></a>
+          <a href="/events.html" class="btn btn-outline"><span lang="ar">شاهد أقرب الفعاليات</span><span lang="en">See Upcoming Events</span></a>
         </div>
       </div>
-      <div class="card">
-        <strong class="lang" data-lang="ar">إطلاق المجلس – ملبورن</strong>
-        <strong class="lang" data-lang="en" style="display:none">Council Launch – Melbourne</strong>
-        <p class="muted lang" data-lang="ar">تابع الأخبار والفعاليات القادمة هنا.</p>
-        <p class="muted lang" data-lang="en" style="display:none">Follow the latest news and upcoming events here.</p>
+      <div class="hero-img">
+        <img src="https://b.top4top.io/p_35166f7hr1.jpg" alt="مجموعة طلاب مجلس خطوة – La Trobe" loading="eager" decoding="async">
       </div>
     </div>
   </header>
@@ -99,16 +93,28 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    let currentLang = 'ar';
-    function toggleLang() {
-      currentLang = (currentLang === 'ar') ? 'en' : 'ar';
-      document.querySelectorAll('.lang').forEach(el=>{
-        el.style.display = (el.dataset.lang === currentLang) ? '' : 'none';
-      });
-      document.querySelector('.lang-toggle').textContent = currentLang === 'ar' ? 'English' : 'العربية';
-      document.documentElement.lang = currentLang;
-      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-    }
+
+    // زر تبديل اللغة
+    const toggle = document.getElementById("lang-toggle");
+    let currentLang = "ar";
+
+    toggle.addEventListener("click", () => {
+      if (currentLang === "ar") {
+        document.querySelectorAll("[lang='ar']").forEach(el => el.style.display = "none");
+        document.querySelectorAll("[lang='en']").forEach(el => el.style.display = "inline");
+        document.documentElement.lang = "en";
+        document.documentElement.dir = "ltr";
+        toggle.textContent = "العربية";
+        currentLang = "en";
+      } else {
+        document.querySelectorAll("[lang='en']").forEach(el => el.style.display = "none");
+        document.querySelectorAll("[lang='ar']").forEach(el => el.style.display = "inline");
+        document.documentElement.lang = "ar";
+        document.documentElement.dir = "rtl";
+        toggle.textContent = "English";
+        currentLang = "ar";
+      }
+    });
   </script>
 </body>
 </html>
