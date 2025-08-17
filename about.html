@@ -19,11 +19,36 @@
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
     section{padding:2rem 0}
-    .grid{display:grid;gap:1rem}
+    .grid{display:grid;gap:1.5rem}
     .grid-2{grid-template-columns:repeat(2,1fr)}
-    @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
-    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
-    .muted{color:var(--muted)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    @media(max-width:980px){.grid-2,.grid-3{grid-template-columns:1fr}}
+    .card{
+      background:#fff;
+      border:1px solid var(--ring);
+      border-radius:16px;
+      padding:1rem;
+      text-align:center;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .card:hover{
+      transform:translateY(-6px) scale(1.03);
+      box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    }
+    .card img{
+      width:120px;
+      height:120px;
+      object-fit:cover;
+      border-radius:50%;
+      border:2px solid var(--ring);
+      margin-bottom:.8rem;
+      transition:transform .3s ease;
+    }
+    .card:hover img{
+      transform:scale(1.08);
+    }
+    .card h3{margin:.3rem 0 0}
+    .card p{margin:.2rem 0 0;color:var(--muted)}
     footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
   </style>
 </head>
@@ -49,11 +74,56 @@
     <section>
       <h1>من نحن</h1>
       <p class="muted">مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن.</p>
-      <div class="grid grid-2">
-        <article class="card"><h3>الرؤية</h3><p>مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده أكاديميًا ومهنيًا.</p></article>
-        <article class="card"><h3>الرسالة</h3><p>توفير فرص وأنشطة وخدمات فعّالة تعزز تجربة الطالب وتواصله مع الجامعة.</p></article>
-        <article class="card"><h3>القيم</h3><p>العمل الجماعي، الشفافية، التطوع، الابتكار، والمسؤولية.</p></article>
-        <article class="card"><h3>التنظيم</h3><p>رئيس ونائب رئيس، قادة فرق (الفعاليات، الإعلام، العلاقات)، ومنسقون متخصصون.</p></article>
+
+      <div class="grid grid-3">
+        <!-- الرئيس -->
+        <article class="card">
+          <img src="https://f.top4top.io/p_35166op0u4.jpg" alt="حمد الهاجري – الرئيس">
+          <h3>حمد الهاجري</h3>
+          <p>الرئيس</p>
+        </article>
+
+        <!-- نائب الرئيس -->
+        <article class="card">
+          <img src="https://c.top4top.io/p_3516ojbq71.jpg" alt="عبدالله الجابري – نائب الرئيس">
+          <h3>عبدالله الجابري</h3>
+          <p>نائب الرئيس</p>
+        </article>
+
+        <!-- قائد المجموعة -->
+        <article class="card">
+          <img src="https://d.top4top.io/p_3516sprel2.jpg" alt="عبدالهادي المري – قائد المجموعة">
+          <h3>عبدالهادي المري</h3>
+          <p>قائد المجموعة</p>
+        </article>
+
+        <!-- المنسق العام للفعاليات -->
+        <article class="card">
+          <img src="https://h.top4top.io/p_3516xcf386.jpg" alt="حسن الصيعري – المنسق العام للفعاليات">
+          <h3>حسن الصيعري</h3>
+          <p>المنسق العام للفعاليات</p>
+        </article>
+
+        <!-- منسق الاتصال والإعلام -->
+        <article class="card">
+          <img src="https://g.top4top.io/p_3516zrfo75.jpg" alt="حمد المري – منسق الاتصال والإعلام">
+          <h3>حمد المري</h3>
+          <p>منسق الاتصال والإعلام</p>
+        </article>
+
+        <!-- عضو -->
+        <article class="card">
+          <img src="https://e.top4top.io/p_35164gg6m3.jpg" alt="محمد الكثيري – عضو">
+          <h3>محمد الكثيري</h3>
+          <p>عضو</p>
+        </article>
+
+        <!-- عضو -->
+        <article class="card">
+          <img src="https://i.top4top.io/p_35168rtso7.jpg" alt="موزة العلي – عضو">
+          <h3>موزة العلي</h3>
+          <p>عضو</p>
+        </article>
       </div>
     </section>
   </main>
@@ -64,6 +134,7 @@
       <a href="https://www.instagram.com/khotwa.sc/" target="_blank">Instagram</a>
     </div>
   </footer>
+
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>
