@@ -11,15 +11,12 @@
     a{color:inherit;text-decoration:none}
     a:visited{color:inherit}
     a:hover{text-decoration:none}
-
-    /* تركيز محسّن للوصولية */
     :focus-visible{outline:3px solid color-mix(in oklab, var(--primary), #fff 40%);outline-offset:2px;border-radius:8px}
 
     .container{width:min(1120px,92%);margin-inline:auto}
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-    /* توحيد القياس مع سمات الصورة (60×60) */
     .brand .logo{width:60px;height:60px;object-fit:cover;border-radius:8px}
     .nav-links{display:flex;gap:1rem}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
@@ -34,6 +31,8 @@
     .chip{display:inline-block;font-size:.78rem;padding:.25rem .55rem;border-radius:999px;background:var(--card);border:1px solid var(--ring)}
     .btn{display:inline-block;padding:.6rem .9rem;border-radius:10px;background:var(--primary);color:#fff}
     .btn:hover{background:var(--primary-600)}
+    .controls{display:flex;gap:.6rem;align-items:center;margin:.4rem 0 1rem;flex-wrap:wrap}
+    .controls input[type="file"]{font:inherit;border:1px solid var(--ring);border-radius:10px;padding:.35rem .5rem;background:#fff}
     footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
   </style>
 </head>
@@ -44,7 +43,6 @@
         <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="60" height="60">
         <span>مجلس طلاب خطوة – La Trobe</span>
       </a>
-      <!-- إزالة أدوار ARIA غير الضرورية مع الحفاظ على نفس البنية -->
       <div class="nav-links">
         <a href="/about.html">من نحن</a>
         <a href="/news.html">الأخبار</a>
@@ -58,39 +56,16 @@
   <main class="container">
     <section>
       <h1 style="margin:0 0 .4rem">الفعاليات القادمة</h1>
-      <p class="muted">تابع كل جديد هنا.</p>
-
-      <div class="grid grid-3">
-        <!-- Workshop -->
-        <article class="card">
-          <span class="chip">
-            <time datetime="2025-09-10T17:00">10 سبتمبر – 5:00م</time>
-          </span>
-          <h3>ورشة تخصصات خطوة</h3>
-          <p class="muted">IT، الأمن السيبراني، العلوم الحيوية، وإدارة الأعمال – Bundoora.</p>
-          <a class="btn" href="/contact.html?event=workshop">سجّل الآن</a>
-        </article>
-
-        <!-- Padel -->
-        <article class="card">
-          <span class="chip">
-            <time datetime="2025-09-24T16:00">24 سبتمبر – 4:00م</time>
-          </span>
-          <h3>بطولة البادل</h3>
-          <p class="muted">تنظيم رياضي طلابي – La Trobe Sports Centre.</p>
-          <a class="btn" href="/contact.html?event=padel">التفاصيل</a>
-        </article>
-
-        <!-- Marathon -->
-        <article class="card">
-          <span class="chip">
-            <time datetime="2025-10-01T09:00">1 أكتوبر – 9:00ص</time>
-          </span>
-          <h3>ماراثون داخل الحرم</h3>
-          <p class="muted">مسارات 1K و2.5K و10K مع نقاط مياه وخدمات دعم.</p>
-          <a class="btn" href="/contact.html?event=marathon">سجّل الآن</a>
-        </article>
+      <p class="muted">ارفع ملف Excel/CSV ليتم عرض الفعاليات هنا (لن يُرفع للسيرفر).</p>
+      <div class="controls">
+        <label>رفع ملف: <input id="fileInput" type="file" accept=".xlsx,.xls,.csv"></label>
       </div>
+
+      <div class="grid grid-3" id="eventsGrid">
+        <!-- سيتم ملؤه تلقائيًا من ملف الإكسل -->
+      </div>
+
+      <div id="emptyMsg" class="muted" style="margin-top:.6rem;display:none">لا توجد فعاليات لعرضها.</div>
     </section>
   </main>
 
@@ -100,8 +75,108 @@
       <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </footer>
+
+  <!-- SheetJS لقراءة Excel/CSV محليًا -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.20.2/dist/xlsx.full.min.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const fileInput = document.getElementById('fileInput');
+    const grid = document.getElementById('eventsGrid');
+    const emptyMsg = document.getElementById('emptyMsg');
+
+    const monthsAr = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+
+    function parseISO(d){ const [y,m,day]=d.split("-").map(Number); return new Date(y, m-1, day); }
+    function pad(n){ return String(n).padStart(2,"0"); }
+    function toArabicTime(hhmm){
+      if(!hhmm) return "";
+      const [H,M]=hhmm.split(":").map(Number);
+      const suffix = H>=12 ? "م" : "ص";
+      const h12 = ((H+11)%12)+1;
+      return `${h12}:${pad(M)}${suffix}`;
+    }
+    function formatChip(date, time_start){
+      const d = parseISO(date);
+      return `${d.getDate()} ${monthsAr[d.getMonth()]}${time_start? " – "+toArabicTime(time_start):""}`;
+    }
+
+    function normalizeRow(row){
+      const title=(row.title||"").toString().trim();
+      const date=(row.date||"").toString().trim(); // YYYY-MM-DD
+      if(!title || !date) return null;
+      const time_start=(row.time_start||"").toString().trim();
+      const location=(row.location||"").toString().trim();
+      const excerpt=(row.excerpt||"").toString().trim();
+      const cta_label=((row.cta_label||"").toString().trim()) || "التفاصيل";
+      const cta_href=((row.cta_href||"").toString().trim()) || `/contact.html?event=${encodeURIComponent(title)}`;
+      return {title,date,time_start,location,excerpt,cta_label,cta_href};
+    }
+
+    async function readFileAsArrayBuffer(file){
+      return new Promise((res,rej)=>{
+        const fr = new FileReader();
+        fr.onload = () => res(fr.result);
+        fr.onerror = rej;
+        fr.readAsArrayBuffer(file);
+      });
+    }
+
+    function render(events){
+      grid.innerHTML = '';
+      if(!events.length){ emptyMsg.style.display='block'; return; }
+      emptyMsg.style.display='none';
+
+      for(const e of events){
+        const card = document.createElement('article');
+        card.className = 'card';
+
+        const chip = document.createElement('span');
+        chip.className='chip';
+        const t = document.createElement('time');
+        t.setAttribute('datetime', e.date + (e.time_start? 'T'+e.time_start:''));
+        t.textContent = formatChip(e.date, e.time_start);
+        chip.appendChild(t);
+
+        const h3 = document.createElement('h3');
+        h3.textContent = e.title;
+
+        const p = document.createElement('p');
+        p.className='muted';
+        p.textContent = e.excerpt || (e.location ? e.location : '');
+
+        const a = document.createElement('a');
+        a.className='btn';
+        a.href = e.cta_href;
+        a.textContent = e.cta_label;
+
+        card.append(chip, h3, p, a);
+        grid.appendChild(card);
+      }
+    }
+
+    async function handleFile(file){
+      try{
+        const ab = await readFileAsArrayBuffer(file);
+        const wb = XLSX.read(ab, {type:'array'});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+        const events = rows.map(normalizeRow).filter(Boolean)
+                          .sort((a,b)=> parseISO(a.date) - parseISO(b.date));
+        render(events);
+      }catch(err){
+        console.error(err);
+        alert('تعذّر قراءة الملف. تأكد من أنه CSV/Excel وأن أسماء الأعمدة صحيحة.');
+      }
+    }
+
+    fileInput.addEventListener('change', (e)=>{
+      const f=e.target.files?.[0];
+      if(f) handleFile(f);
+    });
+
+    // عرض افتراضي (فارغ) لحين رفع ملف
+    render([]);
   </script>
 </body>
 </html>
