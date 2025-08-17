@@ -6,15 +6,11 @@
   <title>مجلس طلاب خطوة – La Trobe</title>
   <meta name="description" content="مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن. فعاليات، أخبار، موارد، وانضمام للمجلس.">
   <style>
-    :root{
-      --primary:#1e40af;--primary-600:#1d4ed8;
-      --ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280
-    }
+    :root{--primary:#1e40af;--primary-600:#1d4ed8;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
     a{color:inherit;text-decoration:none} a:visited{color:inherit}
-    img{max-width:100%;display:block}
     .container{width:min(1120px,92%);margin-inline:auto}
 
     /* Navbar */
@@ -29,7 +25,7 @@
     .nav-cta:hover{background:var(--primary-600)}
     :focus-visible{outline:3px solid color-mix(in oklab,var(--primary),#fff 40%);outline-offset:2px;border-radius:8px}
 
-    /* Hero (نفس المكان بالهيكل، لكن بستايل أقرب لموقعك: صورة + نص قصير) */
+    /* Hero */
     header.hero{border-bottom:1px solid var(--ring);background:linear-gradient(180deg,#fff 0,#f6f8ff 100%)}
     .hero-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:2rem;padding:2.6rem 0;align-items:center}
     .hero h1{margin:0 0 .5rem;font-size:clamp(1.6rem,2.2vw + 1rem,2.4rem)}
@@ -39,11 +35,8 @@
     .btn-primary{background:var(--primary);color:#fff;box-shadow:0 10px 28px rgba(29,78,216,.22)}
     .btn-primary:hover{background:var(--primary-600)}
     .btn-outline{background:#fff;border-color:var(--ring)}
-    .hero-img{
-      border-radius:16px;border:1px solid var(--ring);
-      background:#fff url('/assets/hero.jpg') center/cover no-repeat;
-      min-height:260px
-    }
+    .hero-img{border-radius:16px;border:1px solid var(--ring);min-height:260px;overflow:hidden}
+    .hero-img img{width:100%;height:100%;object-fit:cover}
 
     /* Sections */
     section{padding:2rem 0}
@@ -54,16 +47,13 @@
     .grid-3{grid-template-columns:repeat(3,1fr)}
     .grid-2{grid-template-columns:repeat(2,1fr)}
     @media (max-width:980px){.hero-inner{grid-template-columns:1fr}.grid-3,.grid-2{grid-template-columns:1fr}}
-    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
-    .card img{border-radius:12px;border:1px solid var(--ring)}
+    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;display:flex;flex-direction:column;gap:.6rem}
+    .icon{width:32px;height:32px;color:var(--primary)}
+
     .chip{display:inline-block;font-size:.78rem;padding:.25rem .55rem;border-radius:999px;background:var(--card);border:1px solid var(--ring)}
     .list-clean{margin:0;padding:0;list-style:none}
     .list-clean li{display:flex;gap:.5rem;align-items:flex-start;padding:.35rem 0}
     .list-clean li::before{content:"•";color:var(--primary);font-weight:700;display:inline-block;margin-top:.1rem}
-
-    /* CTA strip */
-    .strip{background:var(--card);border-top:1px solid var(--ring);border-bottom:1px solid var(--ring)}
-    .strip .call{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
 
     /* Footer */
     footer{border-top:1px solid var(--ring);background:#fff}
@@ -92,6 +82,12 @@
   <!-- Hero -->
   <header class="hero">
     <div class="container hero-inner">
+      <!-- صورة الهيرو -->
+      <div class="hero-img">
+        <img src="https://b.top4top.io/p_35166f7hr1.jpg"
+             alt="مجموعة طلاب مجلس خطوة – La Trobe" loading="eager" decoding="async">
+      </div>
+
       <div>
         <h1>مجلس طلاب خطوة – مجتمع طلابي حيّ يقود ويُلهم</h1>
         <p>نصنع فرصًا للطلاب عبر فعاليات نوعية، دعم أكاديمي، وشراكات مجتمعية. انضم إلينا وشارك بصوتك وأفكارك.</p>
@@ -100,26 +96,25 @@
           <a href="/events.html" class="btn btn-outline">شاهد أقرب الفعاليات</a>
         </div>
       </div>
-      <div class="hero-img" role="img" aria-label="طلاب في فعالية بجامعة لا تروب"></div>
     </div>
   </header>
 
   <main>
-    <!-- About quick -->
-    <section aria-labelledby="about-h">
+    <!-- About -->
+    <section>
       <div class="container">
         <div class="section-head">
-          <h2 id="about-h">من نحن</h2>
+          <h2>من نحن</h2>
           <a class="muted" href="/about.html">المزيد</a>
         </div>
         <div class="grid grid-2">
           <article class="card">
-            <img src="/assets/about-1.jpg" alt="جلسة تعريفية للطلاب">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l9 21H3L12 2z"/></svg>
             <h3>رؤيتنا</h3>
             <p class="muted">مجتمع طلابي مبادر يدعم نجاح الطالب أكاديميًا ومهنيًا، ويعزّز الانتماء للحرم الجامعي.</p>
           </article>
           <article class="card">
-            <img src="/assets/about-2.jpg" alt="ورش عمل طلابية">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6v12m6-6H6"/></svg>
             <h3>ماذا نفعل؟</h3>
             <ul class="list-clean muted">
               <li>تنظيم فعاليات وورش تخصصية.</li>
@@ -132,28 +127,28 @@
       </div>
     </section>
 
-    <!-- News preview (صور + نص قصير مثل موقعك) -->
-    <section aria-labelledby="news-h">
+    <!-- News -->
+    <section>
       <div class="container">
         <div class="section-head">
-          <h2 id="news-h">آخر الأخبار</h2>
+          <h2>آخر الأخبار</h2>
           <a class="muted" href="/news.html">جميع الأخبار</a>
         </div>
         <div class="grid grid-3">
           <article class="card">
-            <img src="/assets/news-join.jpg" alt="ملصق فتح باب الانضمام">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l7-3 7 3z"/></svg>
             <h3>فتح باب الانضمام</h3>
             <p class="muted">استقبال طلبات العضوية للفصل القادم. <time datetime="2025-08-01">1 أغسطس 2025</time></p>
             <a href="/contact.html">قدّم الآن</a>
           </article>
           <article class="card">
-            <img src="/assets/news-partner.jpg" alt="اجتماع شراكة">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 12H8m0 0l-4-4m4 4l-4 4m16-4h-8"/></svg>
             <h3>تعاون أكاديمي جديد</h3>
             <p class="muted">ورش متخصصة بالتعاون مع جهة أكاديمية. <time datetime="2025-07-20">20 يوليو 2025</time></p>
             <a href="/news.html">اقرأ التفاصيل</a>
           </article>
           <article class="card">
-            <img src="/assets/news-gallery.jpg" alt="صور فعالية سابقة">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h3l2-2h6l2 2h3a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"/></svg>
             <h3>ملف الصور</h3>
             <p class="muted">لقطات من آخر ملتقى تعريفي. <time datetime="2025-07-05">5 يوليو 2025</time></p>
             <a href="/news.html">شاهد الصور</a>
@@ -162,78 +157,35 @@
       </div>
     </section>
 
-    <!-- Events preview -->
-    <section aria-labelledby="events-h">
+    <!-- Events -->
+    <section>
       <div class="container">
         <div class="section-head">
-          <h2 id="events-h">الفعاليات القادمة</h2>
+          <h2>الفعاليات القادمة</h2>
           <a class="muted" href="/events.html">تقويم الفعاليات</a>
         </div>
         <div class="grid grid-3">
           <article class="card">
-            <img src="/assets/event-workshop.jpg" alt="ورشة تخصصات خطوة">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3"/></svg>
             <span class="chip"><time datetime="2025-09-10T17:00">10 سبتمبر – 5:00م</time></span>
             <h3>ورشة تخصصات خطوة</h3>
             <p class="muted">IT، الأمن السيبراني، العلوم الحيوية، والأعمال – Bundoora.</p>
             <a href="/contact.html?event=workshop">سجّل الآن</a>
           </article>
           <article class="card">
-            <img src="/assets/event-padel.jpg" alt="بطولة بادل طلابية">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
             <span class="chip"><time datetime="2025-09-24T16:00">24 سبتمبر – 4:00م</time></span>
             <h3>بطولة البادل</h3>
             <p class="muted">تنظيم رياضي طلابي – La Trobe Sports Centre.</p>
             <a href="/contact.html?event=padel">التفاصيل</a>
           </article>
           <article class="card">
-            <img src="/assets/event-run.jpg" alt="سباق داخل الحرم">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 20l-1-4-3-3 1-4 4-1 3 3-1 4z"/></svg>
             <span class="chip"><time datetime="2025-10-01T09:00">1 أكتوبر – 9:00ص</time></span>
             <h3>ماراثون داخل الحرم</h3>
             <p class="muted">مسارات 1K و2.5K و10K مع نقاط مياه وخدمات دعم.</p>
             <a href="/contact.html?event=marathon">سجّل الآن</a>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Resources quick (روابط مختصرة بأسلوب بطاقات خفيفة) -->
-    <section aria-labelledby="res-h">
-      <div class="container">
-        <div class="section-head">
-          <h2 id="res-h">روابط سريعة</h2>
-          <a class="muted" href="/resources.html">كل الموارد</a>
-        </div>
-        <div class="grid grid-3">
-          <article class="card">
-            <h3>🌐 مواقع الجامعة</h3>
-            <p class="muted">روابط أساسية: الموقع الرسمي، بوابة الطلاب، المكتبة.</p>
-            <a href="/resources.html">اذهب للموارد</a>
-          </article>
-          <article class="card">
-            <h3>📅 الجداول والدليل</h3>
-            <p class="muted">جداول المحاضرات ودليل المواد.</p>
-            <a href="/resources.html">اذهب للموارد</a>
-          </article>
-          <article class="card">
-            <h3>🏫 La Trobe College</h3>
-            <p class="muted">روابط الكلية: البوابة، الدعم، الحياة الطلابية.</p>
-            <a href="/resources.html">اذهب للموارد</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Final CTA strip -->
-    <section class="strip" aria-labelledby="cta-h">
-      <div class="container">
-        <div class="call card">
-          <div>
-            <h2 id="cta-h" style="margin:.2rem 0 .4rem">جاهز تشارك وتترك أثر؟</h2>
-            <p class="muted" style="margin:0">انضم للمجلس أو سجّل حضورك في أقرب فعالية.</p>
-          </div>
-          <div style="display:flex;gap:.6rem;flex-wrap:wrap">
-            <a class="btn btn-primary" href="/contact.html">قدّم كعضو</a>
-            <a class="btn btn-outline" href="/events.html">استعرض الفعاليات</a>
-          </div>
         </div>
       </div>
     </section>
