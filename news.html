@@ -10,11 +10,6 @@
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
     a{color:inherit;text-decoration:none}
     a:visited{color:inherit}
-    a:hover{text-decoration:none}
-
-    /* تركيز محسّن للوصولية */
-    :focus-visible{outline:3px solid color-mix(in oklab, var(--primary), #fff 40%);outline-offset:2px;border-radius:8px}
-
     .container{width:min(1120px,92%);margin-inline:auto}
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
@@ -23,7 +18,6 @@
     .nav-links{display:flex;gap:1rem}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
-
     section{padding:2rem 0}
     .grid{display:grid;gap:1rem}
     .grid-3{grid-template-columns:repeat(3,1fr)}
@@ -36,8 +30,8 @@
 <body>
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="40" height="40">
+      <a class="brand" href="/index.html">
+        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo">
         <span>مجلس طلاب خطوة – La Trobe</span>
       </a>
       <div class="nav-links">
@@ -45,6 +39,7 @@
         <a href="/news.html" aria-current="page">الأخبار</a>
         <a href="/events.html">الفعاليات</a>
         <a href="/calendar.html">التقويم</a>
+        <a href="/resources.html">الموارد</a>
         <a href="/contact.html">تواصل</a>
       </div>
     </div>
@@ -54,19 +49,9 @@
     <section>
       <h1>الأخبار</h1>
       <div class="grid grid-3">
-        <article class="card">
-          <h3>فتح باب الانضمام</h3>
-          <p class="muted">استقبال طلبات العضوية للفصل القادم.</p>
-          <a href="/contact.html">قدّم الآن</a>
-        </article>
-        <article class="card">
-          <h3>تعاون جديد</h3>
-          <p class="muted">شراكة مع جهة أكاديمية لتقديم ورش متخصصة.</p>
-        </article>
-        <article class="card">
-          <h3>ملف الصور</h3>
-          <p class="muted">رفعنا لقطات من آخر ملتقى تعريفي.</p>
-        </article>
+        <article class="card"><h3>فتح باب الانضمام</h3><p class="muted">استقبال طلبات العضوية للفصل القادم.</p></article>
+        <article class="card"><h3>تعاون جديد</h3><p class="muted">شراكة مع جهة أكاديمية لتقديم ورش متخصصة.</p></article>
+        <article class="card"><h3>ملف الصور</h3><p class="muted">رفعنا لقطات من آخر ملتقى تعريفي.</p></article>
       </div>
     </section>
   </main>
@@ -74,11 +59,9 @@
   <footer>
     <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank">Instagram</a>
     </div>
   </footer>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>
