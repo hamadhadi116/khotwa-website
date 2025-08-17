@@ -1,33 +1,73 @@
 <!doctype html>
 <html lang="ar" dir="rtl" data-theme="light">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>الفعاليات – مجلس طلاب خطوة</title>
-  <meta name="description" content="فعاليات مجلس طلاب خطوة في ملبورن: ورش، بطولات، ملتقيات."/>
+  <meta name="description" content="فعاليات مجلس طلاب خطوة في ملبورن: ورش، بطولات، ملتقيات. سجّل الآن."/>
   <meta name="theme-color" content="#1e40af"/>
   <style>
     :root{--primary:#1e40af;--primary-600:#1d4ed8;--bg:#fff;--text:#0f172a;--muted:#6b7280;--ring:#e5e7eb;--card:#f8fafc;--accent-red:#d41c0f;--accent-green:#00703c}
-    *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-    a{color:inherit;text-decoration:none}img{max-width:100%;height:auto;display:block}.container{width:min(1120px,92%);margin-inline:auto}
+    *{box-sizing:border-box}html,body{height:100%}
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    a{color:inherit;text-decoration:none} img{max-width:100%;height:auto;display:block}
+    .container{width:min(1120px,92%);margin-inline:auto}
+
+    /* Navbar */
     .navbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--ring)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
-    .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}.brand .flag{width:18px;height:18px;border-radius:4px;overflow:hidden;display:inline-grid;grid-template-columns:1fr 1fr 1fr;border:2px solid #000;box-shadow:0 0 0 1px #000 inset}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0}
+    .brand{display:flex;align-items:center;gap:.8rem;font-weight:700;font-size:1.05rem}
+    .brand .flag{width:18px;height:18px;border-radius:4px;overflow:hidden;display:inline-grid;grid-template-columns:1fr 1fr 1fr;border:2px solid #000;box-shadow:0 0 0 1px #000 inset}
     .flag .red{background:var(--accent-red)} .flag .green{background:var(--accent-green)} .flag .black{background:#000}
-    .nav-links{display:flex;gap:1rem;align-items:center}.nav-links a{padding:.5rem .75rem;border-radius:10px;font-weight:600}.nav-links a:hover{background:var(--card)}
-    .nav-cta{padding:.55rem .9rem;border-radius:12px;background:var(--primary);color:#fff!important}
+    .nav-links{display:flex;gap:1rem;align-items:center}
+    .nav-links a{padding:.5rem .75rem;border-radius:10px;font-weight:600}
+    .nav-links a:hover{background:var(--card)}
+    .nav-cta{padding:.55rem .9rem;border-radius:12px;background:var(--primary);color:#fff !important}
     .menu-toggle{display:none;border:1px solid var(--ring);padding:.5rem .7rem;border-radius:10px;background:#fff}
-    @media(max-width:860px){.menu-toggle{display:inline-flex}.nav-links{display:none;position:absolute;right:4%;left:4%;top:64px;flex-direction:column;padding:.75rem;background:#fff;border:1px solid var(--ring);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.06)}.nav-links.open{display:flex}.nav-links a{width:100%}}
-    header.hero{background:linear-gradient(180deg,#ffffff 0%,#f5f7ff 100%);border-bottom:1px solid var(--ring)}.hero-inner{padding:2.6rem 0}
-    .hero h1{margin:0 0 .4rem;font-size:clamp(1.5rem,2vw + 1rem,2.2rem)}.muted{color:var(--muted)}
-    section{padding:2rem 0}.grid{display:grid;gap:1rem}.grid-3{grid-template-columns:repeat(3,1fr)}@media(max-width:980px){.grid-3{grid-template-columns:1fr}}
+    @media(max-width:860px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{display:none;position:absolute;right:4%;left:4%;top:64px;flex-direction:column;padding:.75rem;background:#fff;border:1px solid var(--ring);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+      .nav-links.open{display:flex}
+      .nav-links a{width:100%}
+    }
+
+    /* Header */
+    header.hero{background:linear-gradient(180deg,#ffffff 0%,#f5f7ff 100%);border-bottom:1px solid var(--ring)}
+    .hero-inner{padding:2.6rem 0}
+    .hero h1{margin:0 0 .4rem;font-size:clamp(1.5rem,2vw + 1rem,2.2rem)}
+    .muted{color:var(--muted)}
+
+    /* Sections */
+    section{padding:2rem 0}
+    .grid{display:grid;gap:1rem}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
     .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;display:grid;gap:.5rem}
-    footer{border-top:1px solid var(--ring);background:#fff}.foot{display:grid;grid-template-columns:1.2fr 1fr;gap:1rem;padding:1.4rem 0}@media(max-width:860px){.foot{grid-template-columns:1fr}}
+
+    /* Form */
+    .form{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+    .row{display:grid;gap:.8rem;grid-template-columns:1fr 1fr}
+    @media(max-width:720px){.row{grid-template-columns:1fr}}
+    .input,.select,.textarea{width:100%;border:1px solid var(--ring);border-radius:12px;padding:.75rem .9rem}
+    .textarea{min-height:120px;resize:vertical}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.1rem;border-radius:12px;border:1px solid var(--ring);background:#fff;cursor:pointer}
+    .btn-primary{background:var(--primary);border-color:transparent;color:#fff}
+    .ok{color:#0a7a3d}.err{color:#b00020}
+
+    /* Footer */
+    footer{border-top:1px solid var(--ring);background:#fff}
+    .foot{display:grid;grid-template-columns:1.2fr 1fr;gap:1rem;padding:1.4rem 0}
+    @media(max-width:860px){.foot{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html"><span class="flag" aria-hidden="true"><span class="red"></span><span class="green"></span><span class="black"></span></span><span>مجلس طلاب خطوة – La Trobe</span></a>
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+        <span class="flag" aria-hidden="true"><span class="red"></span><span class="green"></span><span class="black"></span></span>
+        <span>مجلس طلاب خطوة – La Trobe</span>
+      </a>
       <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-controls="primary-menu">القائمة</button>
       <div id="primary-menu" class="nav-links" role="menubar">
         <a href="/about.html" role="menuitem">من نحن</a>
@@ -39,33 +79,150 @@
     </div>
   </nav>
 
+  <!-- Header -->
   <header class="hero">
-    <div class="container hero-inner"><h1>الفعاليات</h1><p class="muted">قائمة الفعاليات القادمة، وسيُضاف التسجيل لاحقًا.</p></div>
+    <div class="container hero-inner">
+      <div>
+        <h1>الفعاليات</h1>
+        <p class="muted">اختر فعالية وسجّل حضورك. بنرسل لك التفاصيل على بريدك.</p>
+      </div>
+    </div>
   </header>
 
   <main>
-    <section>
+    <!-- قائمة الفعاليات -->
+    <section aria-labelledby="list-h">
       <div class="container">
+        <h2 id="list-h" style="margin:0 0 1rem">أحدث الفعاليات</h2>
         <div class="grid grid-3">
-          <article class="card"><span class="muted">رياضة • 20 أغسطس 2025</span><h3>بطولة البادل</h3><p class="muted">تنظيم رياضي طلابي. تفاصيل التسجيل قريبًا.</p></article>
-          <article class="card"><span class="muted">اجتماعي • 28 أغسطس 2025</span><h3>ملتقى تعريفي</h3><p class="muted">تعريف بالمجلس وخطة الفصل وفقرة أسئلة وأجوبة.</p></article>
-          <article class="card"><span class="muted">أكاديمي • 25 أغسطس 2025</span><h3>ورشة تخصصات خطوة</h3><p class="muted">IT، الأمن السيبراني، العلوم الحيوية، وإدارة الأعمال.</p></article>
+          <article class="card">
+            <span class="muted">أكاديمي • 25 أغسطس 2025</span>
+            <h3>ورشة تخصصات خطوة</h3>
+            <p class="muted">IT، الأمن السيبراني، العلوم الحيوية، وإدارة الأعمال.</p>
+            <a href="#register" class="btn btn-primary reg-btn" data-event="ورشة تخصصات خطوة">سجّل الآن</a>
+          </article>
+          <article class="card">
+            <span class="muted">رياضة • 20 أغسطس 2025</span>
+            <h3>بطولة البادل</h3>
+            <p class="muted">تنظيم رياضي طلابي — تفاصيل التسجيل تُنشر قريبًا.</p>
+            <a href="#register" class="btn btn-primary reg-btn" data-event="بطولة البادل">سجّل الآن</a>
+          </article>
+          <article class="card">
+            <span class="muted">اجتماعي • 28 أغسطس 2025</span>
+            <h3>ملتقى تعريفي بالمجلس</h3>
+            <p class="muted">تعريف بالمجلس وخطة الفصل، مع فقرة أسئلة وأجوبة.</p>
+            <a href="#register" class="btn btn-primary reg-btn" data-event="ملتقى تعريفي بالمجلس">سجّل الآن</a>
+          </article>
         </div>
+      </div>
+    </section>
+
+    <!-- فورم التسجيل -->
+    <section id="register" aria-labelledby="reg-h">
+      <div class="container">
+        <h2 id="reg-h" style="margin:0 0 1rem">تسجيل الفعالية</h2>
+        <form id="eventForm" class="form"
+              action="https://formspree.io/f/mblkegbr"
+              method="POST" novalidate>
+          <!-- نوع النموذج للتمييز في الإيميل -->
+          <input type="hidden" name="form_type" value="event_registration">
+          <input type="hidden" name="page" value="events.html">
+
+          <div class="row">
+            <div>
+              <label for="event_name">اختر الفعالية</label>
+              <select id="event_name" name="event_name" class="select" required>
+                <option value="" selected disabled>— اختر —</option>
+                <option>ورشة تخصصات خطوة</option>
+                <option>بطولة البادل</option>
+                <option>ملتقى تعريفي بالمجلس</option>
+              </select>
+            </div>
+            <div>
+              <label for="full_name">الاسم الكامل</label>
+              <input id="full_name" name="full_name" class="input" type="text" required autocomplete="name">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="email">البريد الإلكتروني</label>
+              <input id="email" name="email" class="input" type="email" required autocomplete="email">
+            </div>
+            <div>
+              <label for="phone">رقم الجوال (اختياري)</label>
+              <input id="phone" name="phone" class="input" type="tel" inputmode="tel" placeholder="+61… أو 05…">
+            </div>
+          </div>
+
+          <div>
+            <label for="notes">ملاحظات (اختياري)</label>
+            <textarea id="notes" name="notes" class="textarea" placeholder="أي تفضيلات أو أسئلة؟"></textarea>
+          </div>
+
+          <!-- honeypot لمكافحة السبام -->
+          <input type="text" name="_honey" style="display:none">
+
+          <!-- إعادة توجيه بعد النجاح (اختياري) -->
+          <input type="hidden" name="_redirect" value="/events.html?sent=1">
+
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem">
+            <button class="btn btn-primary" type="submit">تأكيد التسجيل</button>
+            <button class="btn" type="reset">مسح</button>
+          </div>
+
+          <p id="formNote" class="muted" aria-live="polite" style="margin:.6rem 0 0"></p>
+        </form>
       </div>
     </section>
   </main>
 
   <footer aria-label="تذييل الموقع">
     <div class="container foot">
-      <div><strong>مجلس طلاب خطوة – La Trobe</strong><p class="muted" style="margin:.4rem 0 0">© <span id="year"></span> جميع الحقوق محفوظة</p></div>
+      <div>
+        <strong>مجلس طلاب خطوة – La Trobe</strong>
+        <p class="muted" style="margin:.4rem 0 0">© <span id="year"></span> جميع الحقوق محفوظة</p>
+      </div>
       <div class="muted" style="align-self:end;text-align:end">بريد: khotwaaustralia@gmail.com</div>
     </div>
   </footer>
 
   <script>
-    const btn=document.getElementById('menuBtn'),menu=document.getElementById('primary-menu');
+    // Navbar toggle + السنة
+    const btn=document.getElementById('menuBtn');
+    const menu=document.getElementById('primary-menu');
     btn?.addEventListener('click',()=>{const o=menu.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});
     document.getElementById('year').textContent=new Date().getFullYear();
+
+    // زر "سجّل الآن" يملأ اسم الفعالية + ينقلك للفورم
+    document.querySelectorAll('.reg-btn').forEach((btn)=>{
+      btn.addEventListener('click',(e)=>{
+        const name = btn.getAttribute('data-event');
+        const select = document.getElementById('event_name');
+        if(name && select){
+          // لو العنصر موجود بالقائمة نختاره
+          [...select.options].forEach(opt=>{ if(opt.textContent===name) select.value = opt.textContent; });
+        }
+      });
+    });
+
+    // إرسال AJAX إلى Formspree مع عرض رسالة نجاح
+    const form=document.getElementById('eventForm');
+    const note=document.getElementById('formNote');
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(!form.checkValidity()){ note.textContent='تأكد من تعبئة الحقول المطلوبة.'; return; }
+      try{
+        const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+        if(res.ok){ note.innerHTML='<span class="ok">تم تسجيلك بنجاح. بنرسل لك التفاصيل على بريدك.</span>'; form.reset(); }
+        else{ note.innerHTML='<span class="err">تعذّر الإرسال. حاول مرة أخرى.</span>'; }
+      }catch(_){ note.innerHTML='<span class="err">مشكلة اتصال. حاول لاحقًا.</span>'; }
+    });
+
+    // دعم حالة إعادة التوجيه (?sent=1)
+    if(new URLSearchParams(location.search).get('sent')==='1'){
+      document.getElementById('formNote').innerHTML='<span class="ok">تم استلام تسجيلك. شكرًا!</span>';
+    }
   </script>
 </body>
 </html>
