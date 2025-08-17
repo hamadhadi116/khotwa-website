@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>من نحن – مجلس طلاب خطوة</title>
+  <meta name="description" content="تعرف على رؤية ورسالة مجلس طلاب خطوة وهيكله وأهدافه."/>
+  <meta name="theme-color" content="#1e40af"/>
+  <style>
+    :root{--primary:#1e40af;--primary-600:#1d4ed8;--bg:#fff;--text:#0f172a;--muted:#6b7280;--ring:#e5e7eb;--card:#f8fafc;--accent-red:#d41c0f;--accent-green:#00703c}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    a{color:inherit;text-decoration:none}.container{width:min(1120px,92%);margin-inline:auto}
+    .navbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--ring)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
+    .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}.brand .flag{width:18px;height:18px;border-radius:4px;overflow:hidden;display:inline-grid;grid-template-columns:1fr 1fr 1fr;border:2px solid #000;box-shadow:0 0 0 1px #000 inset}
+    .flag .red{background:var(--accent-red)} .flag .green{background:var(--accent-green)} .flag .black{background:#000}
+    .nav-links{display:flex;gap:1rem;align-items:center}.nav-links a{padding:.5rem .75rem;border-radius:10px;font-weight:600}.nav-links a:hover{background:var(--card)}
+    .nav-cta{padding:.55rem .9rem;border-radius:12px;background:var(--primary);color:#fff!important}
+    .menu-toggle{display:none;border:1px solid var(--ring);padding:.5rem .7rem;border-radius:10px;background:#fff}
+    @media(max-width:860px){.menu-toggle{display:inline-flex}.nav-links{display:none;position:absolute;right:4%;left:4%;top:64px;flex-direction:column;padding:.75rem;background:#fff;border:1px solid var(--ring);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.06)}.nav-links.open{display:flex}.nav-links a{width:100%}}
+    header.hero{background:linear-gradient(180deg,#ffffff 0%,#f5f7ff 100%);border-bottom:1px solid var(--ring)}
+    .hero-inner{padding:2.6rem 0}.hero h1{margin:0 0 .4rem;font-size:clamp(1.5rem,2vw + 1rem,2.2rem)}.muted{color:var(--muted)}
+    section{padding:2rem 0}.grid{display:grid;gap:1rem}.grid-2{grid-template-columns:repeat(2,1fr)}@media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+    footer{border-top:1px solid var(--ring);background:#fff}.foot{display:grid;grid-template-columns:1.2fr 1fr;gap:1rem;padding:1.4rem 0}@media(max-width:860px){.foot{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav class="navbar" aria-label="الشريط العلوي">
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html"><span class="flag" aria-hidden="true"><span class="red"></span><span class="green"></span><span class="black"></span></span><span>مجلس طلاب خطوة – La Trobe</span></a>
+      <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-controls="primary-menu">القائمة</button>
+      <div id="primary-menu" class="nav-links" role="menubar">
+        <a href="/about.html" aria-current="page" role="menuitem">من نحن</a>
+        <a href="/news.html" role="menuitem">الأخبار</a>
+        <a href="/events.html" role="menuitem">الفعاليات</a>
+        <a href="/contact.html" role="menuitem">تواصل</a>
+        <a href="/index.html#join" class="nav-cta" role="menuitem">انضم للمجلس</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-inner">
+      <h1>من نحن</h1>
+      <p class="muted">رؤيتنا ورسالتنا وأهدافنا وهيكلنا التنظيمي.</p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container grid grid-2">
+        <article class="card"><h3>الرؤية</h3><p>أن يكون المجلس منصة قيادية للطلبة تدعم نجاحهم الأكاديمي والمهني والمجتمعي.</p></article>
+        <article class="card"><h3>الرسالة</h3><p>تمكين طلبة خطوة عبر البرامج والفعاليات وشراكات الجامعة والمجتمع.</p></article>
+        <article class="card"><h3>الأهداف</h3><p>التمثيل – القيادة – الخدمة – التأثير. نقيس أثرنا بمؤشرات أداء واضحة.</p></article>
+        <article class="card"><h3>الهيكل</h3><p>رئيس ونائب، قادة فرق (فعاليات، علاقات طلابية، إعلام)، ومنسقو مبادرات.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer aria-label="تذييل الموقع">
+    <div class="container foot">
+      <div><strong>مجلس طلاب خطوة – La Trobe</strong><p class="muted" style="margin:.4rem 0 0">© <span id="year"></span> جميع الحقوق محفوظة</p></div>
+      <div class="muted" style="align-self:end;text-align:end">بريد: khotwaaustralia@gmail.com</div>
+    </div>
+  </footer>
+
+  <script>
+    const btn=document.getElementById('menuBtn'),menu=document.getElementById('primary-menu');
+    btn?.addEventListener('click',()=>{const o=menu.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
