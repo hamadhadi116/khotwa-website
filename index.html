@@ -11,18 +11,12 @@
   <meta property="og:description" content="فعاليات وأخبار المجلس وانضمام الأعضاء.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://khotwastudentcouncil.com/">
-  
   <style>
-    :root {
-      --primary:#1e40af; --primary-600:#1d4ed8;
-      --bg:#fff; --text:#0f172a; --muted:#6b7280; --ring:#e5e7eb; --card:#f8fafc;
-      --accent-red:#d41c0f; --accent-green:#00703c;
-    }
+    :root { --primary:#1e40af; --primary-600:#1d4ed8; --bg:#fff; --text:#0f172a; --muted:#6b7280; --ring:#e5e7eb; --card:#f8fafc; --accent-red:#d41c0f; --accent-green:#00703c }
     *{box-sizing:border-box} html,body{height:100%}
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
     a{color:inherit;text-decoration:none} img{max-width:100%;height:auto;display:block}
     .container{width:min(1120px,92%);margin-inline:auto}
-
     /* Navbar */
     .navbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--ring)}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0}
@@ -30,7 +24,7 @@
     .brand .flag{width:18px;height:18px;border-radius:4px;overflow:hidden;display:inline-grid;grid-template-columns:1fr 1fr 1fr;border:2px solid #000;box-shadow:0 0 0 1px #000 inset}
     .flag .red{background:var(--accent-red)} .flag .green{background:var(--accent-green)} .flag .black{background:#000}
     .nav-links{display:flex;gap:1rem;align-items:center}
-    .nav-links a{padding:.5rem .75rem;border-radius:10px;font-weight:600;color:#0f172a}
+    .nav-links a{padding:.5rem .75rem;border-radius:10px;font-weight:600}
     .nav-links a:hover{background:var(--card)}
     .nav-cta{padding:.55rem .9rem;border-radius:12px;background:var(--primary);color:#fff !important;box-shadow:0 4px 18px rgba(29,78,216,.18)}
     .nav-cta:hover{background:var(--primary-600)}
@@ -41,11 +35,8 @@
       .nav-links.open{display:flex}
       .nav-links a{width:100%}
     }
-
     /* Hero */
-    .hero{background:
-      radial-gradient(1200px 400px at 80% -20%, rgba(29,78,216,.10), transparent 60%),
-      linear-gradient(180deg, #ffffff 0%, #f5f7ff 100%); border-bottom:1px solid var(--ring)}
+    .hero{background: radial-gradient(1200px 400px at 80% -20%, rgba(29,78,216,.10), transparent 60%), linear-gradient(180deg,#fff 0%,#f5f7ff 100%); border-bottom:1px solid var(--ring)}
     .hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;padding:3.2rem 0;align-items:center}
     .hero h1{font-size:clamp(1.6rem,2.6vw + 1rem,2.4rem);margin:0 0 .6rem}
     .hero p{color:var(--muted);margin:0 0 1.2rem}
@@ -55,9 +46,8 @@
     .btn-primary:hover{background:var(--primary-600)}
     .btn-outline{background:#fff;border-color:var(--ring)}
     .hero-card{background:#fff;border:1px solid var(--ring);border-radius:18px;padding:1rem;display:grid;grid-template-columns:64px 1fr;gap:.9rem;box-shadow:0 12px 30px rgba(2,6,23,.06)}
-    .hero-card .badge{font-weight:800;font-size:.78rem;color:#fff;background:linear-gradient(135deg, var(--accent-green), var(--accent-red));padding:.45rem .6rem;border-radius:10px;text-align:center;display:grid;place-items:center}
+    .hero-card .badge{font-weight:800;font-size:.78rem;color:#fff;background:linear-gradient(135deg,var(--accent-green),var(--accent-red));padding:.45rem .6rem;border-radius:10px;text-align:center;display:grid;place-items:center}
     @media (max-width:980px){.hero-inner{grid-template-columns:1fr}}
-
     /* Sections */
     section{padding:2.6rem 0}
     .section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
@@ -69,7 +59,6 @@
     @media (max-width:980px){.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
     .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;display:grid;gap:.6rem}
     .chip{display:inline-block;font-size:.78rem;padding:.25rem .55rem;border-radius:999px;background:var(--card);border:1px solid var(--ring)}
-
     /* Footer */
     footer{border-top:1px solid var(--ring);background:#fff}
     .foot{display:grid;grid-template-columns:1.2fr 1fr;gap:1rem;padding:1.4rem 0}
@@ -86,11 +75,10 @@
         <span class="flag" aria-hidden="true"><span class="red"></span><span class="green"></span><span class="black"></span></span>
         <span>مجلس طلاب خطوة – La Trobe</span>
       </a>
-
       <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-controls="primary-menu">القائمة</button>
       <div id="primary-menu" class="nav-links" role="menubar">
-        <a href="/index.html#about" role="menuitem">من نحن</a>
-        <a href="/index.html#news" role="menuitem">الأخبار</a>
+        <a href="/about.html" role="menuitem">من نحن</a>
+        <a href="/news.html" role="menuitem">الأخبار</a>
         <a href="/events.html" role="menuitem">الفعاليات</a>
         <a href="/contact.html" role="menuitem">تواصل</a>
         <a href="/index.html#join" class="nav-cta" role="menuitem">انضم للمجلس</a>
@@ -111,42 +99,33 @@
       </div>
       <div class="hero-card" aria-label="نبذة سريعة">
         <div class="badge">جديد</div>
-        <div>
-          <strong>إطلاق المجلس – ملبورن</strong>
-          <p class="muted" style="margin:.2rem 0 0">نرتّب أول ملتقى رسمي لطلاب خطوة. تابع الأخبار والفعاليات القادمة هنا.</p>
-        </div>
+        <div><strong>إطلاق المجلس – ملبورن</strong><p class="muted" style="margin:.2rem 0 0">نرتّب أول ملتقى رسمي لطلاب خطوة. تابع الأخبار والفعاليات القادمة هنا.</p></div>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- About -->
+    <!-- About (مختصر) -->
     <section id="about" aria-labelledby="about-h">
       <div class="container">
-        <div class="section-head">
-          <h2 id="about-h">من نحن</h2>
-          <span class="muted">تعريف مختصر بالمجلس</span>
-        </div>
+        <div class="section-head"><h2 id="about-h">من نحن</h2><span class="muted">تعريف مختصر بالمجلس</span></div>
         <div class="grid grid-2">
           <article class="card"><h3>الرؤية</h3><p>أن يكون المجلس فعّالًا في دعم العملية التعليمية والمساهمة في خدمة المجتمع الجامعي.</p></article>
           <article class="card"><h3>الرسالة</h3><p>دعم الطلاب في الأنشطة التعليمية وغير التعليمية وتعزيز العلاقة بين الطلاب والإدارة الجامعية.</p></article>
-          <article class="card"><h3>الأهداف</h3><p>التمثيل، تطوير القيادة، التفاعل المجتمعي، والدعوة. نعمل على مبادرات ملموسة تُثري تجربة الطالب.</p></article>
-          <article class="card"><h3>التنظيم</h3><p>رئيس ونائب رئيس، قائد فريق، منسقو الأنشطة والإعلام. نُسيّر العمل عبر خطط تشغيلية ومؤشرات أداء.</p></article>
+          <article class="card"><h3>الأهداف</h3><p>التمثيل، تطوير القيادة، التفاعل المجتمعي، والدعوة.</p></article>
+          <article class="card"><h3>التنظيم</h3><p>رئيس ونائب رئيس، قائد فريق، منسقو الأنشطة والإعلام.</p></article>
         </div>
       </div>
     </section>
 
-    <!-- News -->
+    <!-- News (مختصر مع زر) -->
     <section id="news" aria-labelledby="news-h">
       <div class="container">
-        <div class="section-head">
-          <h2 id="news-h">الأخبار</h2>
-          <a class="muted" href="#">كل الأخبار</a>
-        </div>
+        <div class="section-head"><h2 id="news-h">الأخبار</h2><a class="muted" href="/news.html">كل الأخبار</a></div>
         <div class="grid grid-3">
-          <article class="card"><span class="chip">إعلان</span><h3>فتح باب الانضمام لدفعة الأعضاء الأولى</h3><p class="muted">املأ النموذج وانضم للفِرق التنظيمية والفعاليات القادمة.</p></article>
-          <article class="card"><span class="chip">فعاليات</span><h3>ملتقى تعريفي – الأسبوع القادم</h3><p class="muted">لقاء تعريفي بالمجلس وخطة الفصل، مع فقرة أسئلة وأجوبة.</p></article>
-          <article class="card"><span class="chip">شراكات</span><h3>تعاونات أكاديمية ومجتمعية</h3><p class="muted">نعمل على شراكات لدعم الطلاب بالورش والأنشطة النوعية.</p></article>
+          <article class="card"><span class="chip">إعلان</span><h3>فتح باب الانضمام</h3><p class="muted">انضم للفِرق التنظيمية القادمة.</p></article>
+          <article class="card"><span class="chip">فعاليات</span><h3>ملتقى تعريفي</h3><p class="muted">لقاء وخطة الفصل مع أسئلة وأجوبة.</p></article>
+          <article class="card"><span class="chip">شراكات</span><h3>تعاونات أكاديمية</h3><p class="muted">ورش وأنشطة نوعية.</p></article>
         </div>
       </div>
     </section>
@@ -154,14 +133,11 @@
     <!-- Events preview -->
     <section id="events" aria-labelledby="events-h">
       <div class="container">
-        <div class="section-head">
-          <h2 id="events-h">الفعاليات القادمة</h2>
-          <a class="muted" href="/events.html">تقويم الفعاليات</a>
-        </div>
+        <div class="section-head"><h2 id="events-h">الفعاليات القادمة</h2><a class="muted" href="/events.html">تقويم الفعاليات</a></div>
         <div class="grid grid-3">
-          <article class="card"><h3>ورشة تخصصات خطوة</h3><p class="muted">محاور: IT، الأمن السيبراني، العلوم الحيوية، وإدارة الأعمال.</p></article>
-          <article class="card"><h3>بطولة البادل</h3><p class="muted">تنظيم رياضي طلابي – تفاصيل التسجيل تُنشر قريبًا.</p></article>
-          <article class="card"><h3>ماراثون داخل الحرم</h3><p class="muted">مسارات 1K و2.5K و10K مع نقاط مياه وخدمات دعم.</p></article>
+          <article class="card"><h3>ورشة تخصصات خطوة</h3><p class="muted">IT، الأمن السيبراني، العلوم الحيوية، وإدارة الأعمال.</p></article>
+          <article class="card"><h3>بطولة البادل</h3><p class="muted">تفاصيل التسجيل قريبًا.</p></article>
+          <article class="card"><h3>ماراثون داخل الحرم</h3><p class="muted">مسارات 1K و2.5K و10K.</p></article>
         </div>
       </div>
     </section>
@@ -169,15 +145,12 @@
     <!-- Join -->
     <section id="join" aria-labelledby="join-h">
       <div class="container">
-        <div class="section-head">
-          <h2 id="join-h">انضم للمجلس</h2>
-          <span class="muted">نرحّب بالطلبة الراغبين بالمبادرة والقيادة</span>
-        </div>
+        <div class="section-head"><h2 id="join-h">انضم للمجلس</h2><span class="muted">نرحّب بالطلبة المبادرين</span></div>
         <div class="card">
-          <p>املأ النموذج للانضمام إلى أحد المسارات: تنظيم الفعاليات، الإعلام والاتصال، العلاقات الطلابية. بعد الإرسال سيتواصل معك فريقنا خلال أيام.</p>
+          <p>اختر أحد المسارات: تنظيم الفعاليات، الإعلام والاتصال، العلاقات الطلابية. سنعاود التواصل بعد الإرسال.</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="#">فتح نموذج الانضمام</a>
-            <a class="btn btn-outline" href="#contact">تواصل قبل الانضمام</a>
+            <a class="btn btn-primary" href="/contact.html">فتح نموذج الانضمام</a>
+            <a class="btn btn-outline" href="/contact.html">تواصل قبل الانضمام</a>
           </div>
         </div>
       </div>
@@ -185,47 +158,22 @@
   </main>
 
   <!-- Footer -->
-  <footer id="contact" aria-label="تذييل الموقع">
+  <footer aria-label="تذييل الموقع" id="contact">
     <div class="container foot">
       <div>
         <strong>مجلس طلاب خطوة – La Trobe</strong>
-        <p class="muted" style="margin:.4rem 0 0">بريد رسمي:
-          <a href="mailto:khotwaaustralia@gmail.com">khotwaaustralia@gmail.com</a></p>
-        <div class="social" style="margin-top:.6rem">
-          <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener" aria-label="Instagram المجلس">khotwa.sc</a>
-        </div>
+        <p class="muted" style="margin:.4rem 0 0">بريد: <a href="mailto:khotwaaustralia@gmail.com">khotwaaustralia@gmail.com</a></p>
+        <div class="social" style="margin-top:.6rem"><a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">khotwa.sc</a></div>
       </div>
-      <div class="muted" style="align-self:end; text-align:end">
-        <span>© <span id="year"></span> Khotwa Student Council </span>
-      </div>
+      <div class="muted" style="align-self:end;text-align:end">© <span id="year"></span> Khotwa Student Council</div>
     </div>
   </footer>
 
   <script>
-    // سنة ديناميكية
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // فتح/إغلاق قائمة الجوال
-    const btn = document.getElementById('menuBtn');
-    const menu = document.getElementById('primary-menu');
-    btn?.addEventListener('click', () => {
-      const open = menu.classList.toggle('open');
-      btn.setAttribute('aria-expanded', String(open));
-    });
-
-    // سكرول سلس
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const id = a.getAttribute('href');
-        if (!id || id === '#') return;
-        const el = document.querySelector(id);
-        if (!el) return;
-        e.preventDefault();
-        window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
-        menu.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-      });
-    });
+    const btn=document.getElementById('menuBtn'),menu=document.getElementById('primary-menu');
+    btn?.addEventListener('click',()=>{const o=menu.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const el=document.querySelector(a.getAttribute('href'));if(!el)return;e.preventDefault();window.scrollTo({top:el.offsetTop-70,behavior:'smooth'});menu.classList.remove('open');btn.setAttribute('aria-expanded','false');});});
   </script>
 </body>
 </html>
