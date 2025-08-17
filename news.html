@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الأخبار – Khotwa</title>
   <style>
-    :root{--primary:#1e40af;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
+    :root{
+      --primary:#1e40af;--primary-600:#1d4ed8;
+      --ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280
+    }
     *{box-sizing:border-box}
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
-    a{color:inherit;text-decoration:none}
-    a:visited{color:inherit}
+    a{color:inherit;text-decoration:none} a:visited{color:inherit}
     .container{width:min(1120px,92%);margin-inline:auto}
+
+    /* Navbar */
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
@@ -18,16 +22,34 @@
     .nav-links{display:flex;gap:1rem}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
+
+    /* Page */
     section{padding:2rem 0}
+    h1{margin:0 0 .8rem}
+    .muted{color:var(--muted)}
+
     .grid{display:grid;gap:1rem}
     .grid-3{grid-template-columns:repeat(3,1fr)}
     @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
-    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
-    .muted{color:var(--muted)}
-    footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
+
+    /* Card */
+    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;display:flex;flex-direction:column;gap:.6rem}
+    .news-icon{
+      width:40px;height:40px;flex:none;
+      color:var(--primary);background:var(--card);
+      border:1px solid var(--ring);border-radius:12px;
+      display:grid;place-items:center
+    }
+    .news-title{margin:.2rem 0 0}
+    .news-meta{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-top:.2rem}
+    .chip{display:inline-block;font-size:.78rem;padding:.25rem .55rem;border-radius:999px;background:var(--card);border:1px solid var(--ring)}
+    .btn-link{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .7rem;border:1px solid var(--ring);border-radius:10px;background:#fff}
+    .btn-link:hover{background:var(--card)}
+    .icon-16{width:16px;height:16px}
   </style>
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
       <a class="brand" href="/index.html">
@@ -45,21 +67,86 @@
     </div>
   </nav>
 
+  <!-- Main Content -->
   <main class="container">
     <section>
       <h1>الأخبار</h1>
+      <p class="muted" style="margin:0 0 1.2rem">آخر المستجدات والإعلانات من مجلس طلاب خطوة.</p>
+
       <div class="grid grid-3">
-        <article class="card"><h3>فتح باب الانضمام</h3><p class="muted">استقبال طلبات العضوية للفصل القادم.</p></article>
-        <article class="card"><h3>تعاون جديد</h3><p class="muted">شراكة مع جهة أكاديمية لتقديم ورش متخصصة.</p></article>
-        <article class="card"><h3>ملف الصور</h3><p class="muted">رفعنا لقطات من آخر ملتقى تعريفي.</p></article>
+        <!-- خبر 1 -->
+        <article class="card">
+          <div class="news-icon" aria-hidden="true">
+            <!-- ميغافون -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+              <path d="M3 11v2a4 4 0 004 4h1"/>
+              <path d="M21 8v8"/>
+              <path d="M7 15V9l11-5v16l-11-5z"/>
+            </svg>
+          </div>
+          <h3 class="news-title">فتح باب الانضمام</h3>
+          <p class="muted">استقبال طلبات العضوية للفصل القادم. يسرّنا انضمام الطلاب المهتمين بالعمل التطوعي والقيادة الطلابية.</p>
+          <div class="news-meta">
+            <span class="chip"><time datetime="2025-08-01">1 أغسطس 2025</time></span>
+            <a class="btn-link" href="/contact.html">
+              قدّم الآن
+              <svg class="icon-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- خبر 2 -->
+        <article class="card">
+          <div class="news-icon" aria-hidden="true">
+            <!-- مصافحة -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+              <path d="M12 12l2 2a3 3 0 004-4l-4-4a3 3 0 00-4 4l1 1"/>
+              <path d="M8 13l-3 3"/>
+              <path d="M16 11l3-3"/>
+              <path d="M3 8l3-3"/>
+              <path d="M21 16l-3 3"/>
+            </svg>
+          </div>
+          <h3 class="news-title">تعاون أكاديمي جديد</h3>
+          <p class="muted">إطلاق سلسلة ورش متخصصة بالشراكة مع جهة أكاديمية لتعزيز مهارات الطلبة في المجالات التقنية والإدارية.</p>
+          <div class="news-meta">
+            <span class="chip"><time datetime="2025-07-20">20 يوليو 2025</time></span>
+            <a class="btn-link" href="/news.html#partner-workshops">
+              اقرأ التفاصيل
+              <svg class="icon-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- خبر 3 -->
+        <article class="card">
+          <div class="news-icon" aria-hidden="true">
+            <!-- كاميرا -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+              <rect x="3" y="6" width="18" height="14" rx="2"/>
+              <circle cx="12" cy="13" r="4"/>
+              <path d="M9 6l2-3h2l2 3"/>
+            </svg>
+          </div>
+          <h3 class="news-title">ملف الصور</h3>
+          <p class="muted">رفعنا لقطات من آخر ملتقى تعريفي وأنشطة المجلس داخل الحرم. نشوفكم في الفعالية القادمة!</p>
+          <div class="news-meta">
+            <span class="chip"><time datetime="2025-07-05">5 يوليو 2025</time></span>
+            <a class="btn-link" href="/news.html#gallery">
+              شاهد الصور
+              <svg class="icon-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
       </div>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer>
     <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank">Instagram</a>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
     </div>
   </footer>
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
