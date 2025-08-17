@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>الموارد – Khotwa</title>
+  <style>
+    :root {
+      --primary:#1e40af;
+      --primary-600:#1d4ed8;
+      --ring:#e5e7eb;
+      --card:#f8fafc;
+      --text:#0f172a;
+      --muted:#6b7280;
+    }
+    *{box-sizing:border-box}
+    body {
+      margin:0;
+      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
+      color:var(--text);
+      background:#fff;
+    }
+    a{color:inherit;text-decoration:none}
+    a:visited{color:inherit}
+    a:hover{text-decoration:none}
+
+    .container{width:min(1120px,92%);margin-inline:auto}
+    .navbar {
+      position:sticky;top:0;background:#fff;
+      border-bottom:1px solid var(--ring);z-index:40;
+    }
+    .nav-inner {
+      display:flex;justify-content:space-between;
+      align-items:center;padding:.8rem 0
+    }
+    .brand {
+      display:flex;align-items:center;gap:.8rem;font-weight:700
+    }
+    .brand .logo {
+      width:40px;height:40px;object-fit:cover;border-radius:8px
+    }
+    .nav-links {display:flex;gap:1rem}
+    .nav-links a {
+      padding:.5rem .75rem;border-radius:10px
+    }
+    .nav-links a:hover {background:var(--card)}
+
+    section {padding:2rem 0}
+    h1{margin:0 0 1rem}
+    .grid{display:grid;gap:1rem}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+    .card{
+      background:#fff;border:1px solid var(--ring);
+      border-radius:16px;padding:1rem
+    }
+    .card h3{margin-top:0}
+    .muted{color:var(--muted)}
+
+    footer{
+      border-top:1px solid var(--ring);
+      padding:1rem 0;margin-top:1rem
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" aria-label="الشريط العلوي">
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+        <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40">
+        <span>مجلس طلاب خطوة – La Trobe</span>
+      </a>
+      <div class="nav-links">
+        <a href="/about.html">من نحن</a>
+        <a href="/news.html">الأخبار</a>
+        <a href="/events.html">الفعاليات</a>
+        <a href="/calendar.html">التقويم</a>
+        <a href="/resources.html" aria-current="page">الموارد</a>
+        <a href="/contact.html">تواصل</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Resources Section -->
+  <main class="container">
+    <section>
+      <h1>موارد للطلاب</h1>
+      <p class="muted">روابط مفيدة لمساعدتك خلال فترة دراستك في جامعة لا تروب وكلية لا تروب.</p>
+
+      <div class="grid grid-2">
+        <article class="card">
+          <h3>🌐 مواقع الجامعة</h3>
+          <ul>
+            <li><a href="https://www.latrobe.edu.au/" target="_blank" rel="noopener">الموقع الرسمي لجامعة لا تروب</a></li>
+            <li><a href="https://www.latrobe.edu.au/students" target="_blank" rel="noopener">بوابة الطلاب</a></li>
+            <li><a href="https://www.latrobe.edu.au/library" target="_blank" rel="noopener">المكتبة الرقمية</a></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>📅 جداول المحاضرات</h3>
+          <ul>
+            <li><a href="https://www.latrobe.edu.au/students/timetable" target="_blank" rel="noopener">الجدول الدراسي</a></li>
+            <li><a href="https://www.latrobe.edu.au/handbook" target="_blank" rel="noopener">دليل المواد</a></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>🎓 خدمات الدعم الأكاديمي</h3>
+          <ul>
+            <li><a href="https://www.latrobe.edu.au/students/learning" target="_blank" rel="noopener">مركز الدعم الأكاديمي</a></li>
+            <li><a href="https://www.latrobe.edu.au/students/it" target="_blank" rel="noopener">خدمات تقنية المعلومات</a></li>
+            <li><a href="https://www.latrobe.edu.au/students/wellbeing" target="_blank" rel="noopener">الدعم النفسي والصحي</a></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>💡 موارد إضافية</h3>
+          <ul>
+            <li><a href="https://www.latrobe.edu.au/international" target="_blank" rel="noopener">خدمات الطلاب الدوليين</a></li>
+            <li><a href="https://www.latrobe.edu.au/careers" target="_blank" rel="noopener">مركز الإرشاد الوظيفي</a></li>
+          </ul>
+        </article>
+
+        <!-- La Trobe College -->
+        <article class="card">
+          <h3>🏫 La Trobe College Australia</h3>
+          <ul>
+            <li><a href="https://www.latrobecollegeaustralia.edu.au/" target="_blank" rel="noopener">الموقع الرسمي للكلية</a></li>
+            <li><a href="https://www.latrobecollegeaustralia.edu.au/student-portal" target="_blank" rel="noopener">بوابة الطلاب</a></li>
+            <li><a href="https://www.latrobecollegeaustralia.edu.au/student-life" target="_blank" rel="noopener">خدمات ودعم الطلاب</a></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
+      <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
