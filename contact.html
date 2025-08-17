@@ -1,84 +1,170 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact – Khotwa</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>تواصل معنا – مجلس طلاب خطوة</title>
+  <meta name="description" content="تواصل مع مجلس طلاب خطوة: استفسارات، شراكات، تطوع."/>
+  <meta name="theme-color" content="#1e40af"/>
+  <style>
+    :root{--primary:#1e40af;--primary-600:#1d4ed8;--bg:#fff;--text:#0f172a;--muted:#6b7280;--ring:#e5e7eb;--card:#f8fafc}
+    *{box-sizing:border-box}html,body{height:100%}
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    a{color:inherit;text-decoration:none}.container{width:min(1120px,92%);margin-inline:auto}
+
+    /* Navbar */
+    .navbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--ring)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
+    .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
+    .nav-links{display:flex;gap:1rem;align-items:center}
+    .nav-links a{padding:.5rem .75rem;border-radius:10px;font-weight:600}
+    .nav-links a:hover{background:var(--card)}
+    .nav-cta{padding:.55rem .9rem;border-radius:12px;background:var(--primary);color:#fff!important}
+    .menu-toggle{display:none;border:1px solid var(--ring);padding:.5rem .7rem;border-radius:10px;background:#fff}
+    @media(max-width:860px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{display:none;position:absolute;right:4%;left:4%;top:64px;flex-direction:column;padding:.75rem;background:#fff;border:1px solid var(--ring);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+      .nav-links.open{display:flex}
+      .nav-links a{width:100%}
+    }
+
+    /* Header */
+    header.hero{background:linear-gradient(180deg,#ffffff 0%,#f5f7ff 100%);border-bottom:1px solid var(--ring)}
+    .hero-inner{padding:2.6rem 0}
+    .hero h1{margin:0 0 .4rem;font-size:clamp(1.5rem,2vw + 1rem,2.2rem)}
+    .muted{color:var(--muted)}
+
+    /* Layout */
+    section{padding:2rem 0}
+    .grid{display:grid;gap:1rem}
+    .grid-2{grid-template-columns:1.2fr .8fr}
+    @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+
+    /* Elements */
+    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+    .input,.textarea{width:100%;border:1px solid var(--ring);border-radius:12px;padding:.75rem .9rem}
+    .textarea{min-height:130px;resize:vertical}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1rem;border-radius:12px;border:1px solid var(--ring);background:#fff;cursor:pointer}
+    .btn-primary{background:var(--primary);border-color:transparent;color:#fff}
+    .ok{color:#0a7a3d}.err{color:#b00020}
+
+    /* Footer */
+    footer{border-top:1px solid var(--ring);background:#fff}
+    .foot{display:grid;grid-template-columns:1.2fr 1fr;gap:1rem;padding:1.4rem 0}
+    @media(max-width:860px){.foot{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-<header class="navbar" id="mainNavbar">
-  <div class="logo">KHOTWA COUNCIL</div>
-  <button class="hamburger" id="hamburgerBtn">☰</button>
-  <nav class="nav-container" id="navMenu">
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="calendar.html">Calendar</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="admin.html">Admin</a></li>
-      <li><a href="contact.html" class="active">Contact</a></li>
-      <li><a href="profile.html">Profile</a></li>
-    </ul>
-    <ul class="nav-links" id="authLinks"></ul>
-    <button id="darkToggle" class="dark-btn">🌓</button>
+  <!-- Navbar -->
+  <nav class="navbar" aria-label="الشريط العلوي">
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">مجلس طلاب خطوة – La Trobe</a>
+      <button id="menuBtn" class="menu-toggle" aria-expanded="false" aria-controls="primary-menu">القائمة</button>
+      <div id="primary-menu" class="nav-links" role="menubar">
+        <a href="/index.html#about" role="menuitem">من نحن</a>
+        <a href="/events.html" role="menuitem">الفعاليات</a>
+        <a href="/contact.html" aria-current="page" role="menuitem">تواصل</a>
+        <a href="/index.html#join" class="nav-cta" role="menuitem">انضم للمجلس</a>
+      </div>
+    </div>
   </nav>
-</header>
 
-<section class="section contact-section" data-aos="fade-up">
-  <div class="info">
-    <h2>Contact Information</h2>
-    <p><strong>Email:</strong> support@khotwa.edu</p>
-    <p><strong>Phone:</strong> +966 555 123 456</p>
-    <p><strong>Location:</strong> University Campus, Bldg. B</p>
-  </div>
-  <div class="contact-form">
-    <h2>Send a Message</h2>
-    <form id="contactForm">
-      <div class="form-group">
-        <span class="material-symbols-outlined">person</span>
-        <input name="name" type="text" placeholder="Your Name" required/>
+  <!-- Header -->
+  <header class="hero">
+    <div class="container hero-inner">
+      <h1>تواصل معنا</h1>
+      <p class="muted">أرسل لنا استفسارك أو اقتراحك، وسنعود إليك بأقرب وقت.</p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container grid grid-2">
+        <!-- Contact form (Formspree) -->
+        <form id="contactForm" class="card"
+              action="https://formspree.io/f/mblkegbr"
+              method="POST" novalidate>
+          <div>
+            <label for="name">الاسم الكامل</label>
+            <input class="input" id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="email">البريد الإلكتروني</label>
+            <input class="input" id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div>
+            <label for="subject">الموضوع</label>
+            <input class="input" id="subject" name="subject" type="text" required>
+          </div>
+          <div>
+            <label for="message">رسالتك</label>
+            <textarea class="textarea" id="message" name="message" required></textarea>
+          </div>
+
+          <!-- honeypot لمكافحة السبام -->
+          <input type="text" name="_honey" style="display:none">
+
+          <!-- إعادة توجيه بعد النجاح (اختياري) -->
+          <input type="hidden" name="_redirect" value="/contact.html?sent=1">
+
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+            <button class="btn btn-primary" type="submit">إرسال</button>
+            <button class="btn" type="reset">مسح</button>
+          </div>
+          <p id="formNote" class="muted" aria-live="polite" style="margin:.6rem 0 0"></p>
+        </form>
+
+        <!-- Sidebar -->
+        <aside class="card" aria-label="معلومات التواصل">
+          <h3 style="margin-top:0">معلومات</h3>
+          <p class="muted">البريد: <a href="mailto:khotwaaustralia@gmail.com">khotwaaustralia@gmail.com</a></p>
+          <p class="muted">إنستغرام: <a target="_blank" rel="noopener" href="https://www.instagram.com/khotwa.sc/">@khotwa.sc</a></p>
+          <hr style="border:none;border-top:1px solid var(--ring)"/>
+          <h4>خريطة الحرم (La Trobe – Melbourne)</h4>
+          <div style="aspect-ratio:16/9;border:1px solid var(--ring);border-radius:12px;overflow:hidden">
+            <iframe title="خريطة La Trobe" width="100%" height="100%" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=La%20Trobe%20University%20Melbourne&output=embed"></iframe>
+          </div>
+        </aside>
       </div>
-      <div class="form-group">
-        <span class="material-symbols-outlined">mail</span>
-        <input name="email" type="email" placeholder="Email Address" required/>
+    </section>
+  </main>
+
+  <footer aria-label="تذييل الموقع">
+    <div class="container foot">
+      <div>
+        <strong>مجلس طلاب خطوة – La Trobe</strong>
+        <p class="muted" style="margin:.4rem 0 0">© <span id="year"></span> جميع الحقوق محفوظة</p>
       </div>
-      <div class="form-group">
-        <span class="material-symbols-outlined">message</span>
-        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      </div>
-      <button type="submit">Send Message</button>
-    </form>
-    <div id="toast" class="toast">✅ Message sent successfully!</div>
-  </div>
-</section>
+      <div class="muted" style="align-self:end;text-align:end">بريد: khotwaaustralia@gmail.com</div>
+    </div>
+  </footer>
 
-<footer class="footer"><p>© 2025 Khotwa Student Council</p></footer>
+  <script>
+    // Navbar toggle + السنة
+    const btn=document.getElementById('menuBtn');
+    const menu=document.getElementById('primary-menu');
+    btn?.addEventListener('click',()=>{const o=menu.classList.toggle('open');btn.setAttribute('aria-expanded',String(o));});
+    document.getElementById('year').textContent=new Date().getFullYear();
 
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-<script src="main.js" defer></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("contactForm");
-  const toast = document.getElementById("toast");
+    // إرسال AJAX لطيف لعرض رسالة نجاح بدون مغادرة الصفحة
+    const form=document.getElementById('contactForm');
+    const note=document.getElementById('formNote');
 
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    const data = {
-      name: form.name.value.trim(),
-      email: form.email.value.trim(),
-      message: form.message.value.trim(),
-      date: new Date().toISOString()
-    };
-    const arr = JSON.parse(localStorage.getItem('contacts') || '[]');
-    arr.push(data);
-    localStorage.setItem('contacts', JSON.stringify(arr));
-    form.reset();
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 3000);
-  });
-});
-</script>
+    form.addEventListener('submit',async (e)=>{
+      e.preventDefault();
+      if(!form.checkValidity()){ note.textContent='تأكد من تعبئة جميع الحقول بشكل صحيح.'; return; }
+
+      try{
+        const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+        if(res.ok){ note.innerHTML='<span class="ok">تم الإرسال بنجاح. شكرًا لتواصلك!</span>'; form.reset(); }
+        else{ note.innerHTML='<span class="err">تعذّر الإرسال. حاول مرة أخرى.</span>'; }
+      }catch(_){ note.innerHTML='<span class="err">خطأ في الاتصال. حاول لاحقًا.</span>'; }
+    });
+
+    // دعم حالة إعادة التوجيه (?sent=1)
+    if(new URLSearchParams(location.search).get('sent')==='1'){
+      document.getElementById('formNote').innerHTML='<span class="ok">تم إرسال رسالتك. سنعاودك قريبًا.</span>';
+    }
+  </script>
 </body>
 </html>
