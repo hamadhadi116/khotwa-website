@@ -5,62 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>الموارد – Khotwa</title>
   <style>
-    :root {
-      --primary:#1e40af;
-      --primary-600:#1d4ed8;
-      --ring:#e5e7eb;
-      --card:#f8fafc;
-      --text:#0f172a;
-      --muted:#6b7280;
+    :root{
+      --primary:#1e40af;--primary-600:#1d4ed8;
+      --ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280
     }
     *{box-sizing:border-box}
-    body {
-      margin:0;
-      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
-      color:var(--text);
-      background:#fff;
-    }
-    a{color:inherit;text-decoration:none}
-    a:visited{color:inherit}
-    a:hover{text-decoration:none}
-
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
+    a{color:inherit;text-decoration:none} a:visited{color:inherit}
     .container{width:min(1120px,92%);margin-inline:auto}
-    .navbar {
-      position:sticky;top:0;background:#fff;
-      border-bottom:1px solid var(--ring);z-index:40;
-    }
-    .nav-inner {
-      display:flex;justify-content:space-between;
-      align-items:center;padding:.8rem 0
-    }
-    .brand {
-      display:flex;align-items:center;gap:.8rem;font-weight:700
-    }
-    .brand .logo {
-      width:40px;height:40px;object-fit:cover;border-radius:8px
-    }
-    .nav-links {display:flex;gap:1rem}
-    .nav-links a {
-      padding:.5rem .75rem;border-radius:10px
-    }
-    .nav-links a:hover {background:var(--card)}
 
-    section {padding:2rem 0}
+    /* Navbar */
+    .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
+    .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
+    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
+    .nav-links{display:flex;gap:1rem}
+    .nav-links a{padding:.5rem .75rem;border-radius:10px}
+    .nav-links a:hover{background:var(--card)}
+
+    /* Page */
+    section{padding:2rem 0}
     h1{margin:0 0 1rem}
     .grid{display:grid;gap:1rem}
     .grid-2{grid-template-columns:repeat(2,1fr)}
     @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
-    .card{
-      background:#fff;border:1px solid var(--ring);
-      border-radius:16px;padding:1rem
-    }
-    .card h3{margin-top:0}
+    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+    .card h3{margin:.2rem 0 .6rem;display:flex;align-items:center;gap:.5rem}
     .muted{color:var(--muted)}
+    .icon{width:22px;height:22px;color:var(--primary);flex:none}
 
-    footer{
-      border-top:1px solid var(--ring);
-      padding:1rem 0;margin-top:1rem
-    }
+    footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
   </style>
 </head>
 <body>
@@ -82,54 +56,73 @@
     </div>
   </nav>
 
-  <!-- Resources Section -->
+  <!-- Resources -->
   <main class="container">
     <section>
       <h1>موارد للطلاب</h1>
       <p class="muted">روابط مفيدة لمساعدتك خلال فترة دراستك في جامعة لا تروب وكلية لا تروب.</p>
 
       <div class="grid grid-2">
+        <!-- مواقع الجامعة -->
         <article class="card">
-          <h3>🌐 مواقع الجامعة</h3>
+          <h3>
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M9 21V9h6v12"/></svg>
+            مواقع الجامعة
+          </h3>
           <ul>
-            <li><a href="https://www.latrobe.edu.au/" target="_blank" rel="noopener">الموقع الرسمي لجامعة لا تروب</a></li>
-            <li><a href="https://www.latrobe.edu.au/students" target="_blank" rel="noopener">بوابة الطلاب</a></li>
-            <li><a href="https://www.latrobe.edu.au/library" target="_blank" rel="noopener">المكتبة الرقمية</a></li>
+            <li><a href="https://www.latrobe.edu.au/" target="_blank" rel="noopener noreferrer">الموقع الرسمي لجامعة لا تروب</a></li>
+            <li><a href="https://www.latrobe.edu.au/students" target="_blank" rel="noopener noreferrer">بوابة الطلاب</a></li>
+            <li><a href="https://www.latrobe.edu.au/library/home" target="_blank" rel="noopener noreferrer">المكتبة الرقمية</a></li>
           </ul>
         </article>
 
+        <!-- الجداول والدليل -->
         <article class="card">
-          <h3>📅 جداول المحاضرات</h3>
+          <h3>
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            جداول المحاضرات
+          </h3>
           <ul>
-            <li><a href="https://www.latrobe.edu.au/students/timetable" target="_blank" rel="noopener">الجدول الدراسي</a></li>
-            <li><a href="https://www.latrobe.edu.au/handbook" target="_blank" rel="noopener">دليل المواد</a></li>
+            <li><a href="https://www.latrobe.edu.au/students/your-course/timetables/view-timetables" target="_blank" rel="noopener noreferrer">الجدول الدراسي (Allocate+)</a></li>
+            <li><a href="https://www.latrobe.edu.au/handbook" target="_blank" rel="noopener noreferrer">دليل المواد</a></li>
           </ul>
         </article>
 
+        <!-- دعم أكاديمي / تعلم -->
         <article class="card">
-          <h3>🎓 خدمات الدعم الأكاديمي</h3>
+          <h3>
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>
+            خدمات الدعم الأكاديمي
+          </h3>
           <ul>
-            <li><a href="https://www.latrobe.edu.au/students/learning" target="_blank" rel="noopener">مركز الدعم الأكاديمي</a></li>
-            <li><a href="https://www.latrobe.edu.au/students/it" target="_blank" rel="noopener">خدمات تقنية المعلومات</a></li>
-            <li><a href="https://www.latrobe.edu.au/students/wellbeing" target="_blank" rel="noopener">الدعم النفسي والصحي</a></li>
+            <li><a href="https://www.latrobe.edu.au/students/study-resources" target="_blank" rel="noopener noreferrer">Study support & resources</a></li>
+            <li><a href="https://www.latrobe.edu.au/students/support/it" target="_blank" rel="noopener noreferrer">خدمات تقنية المعلومات (Student IT)</a></li>
+            <li><a href="https://www.latrobe.edu.au/students/support/wellbeing" target="_blank" rel="noopener noreferrer">الصحة والرفاه (Wellbeing)</a></li>
           </ul>
         </article>
 
+        <!-- موارد إضافية -->
         <article class="card">
-          <h3>💡 موارد إضافية</h3>
+          <h3>
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6v12M6 12h12"/></svg>
+            موارد إضافية
+          </h3>
           <ul>
-            <li><a href="https://www.latrobe.edu.au/international" target="_blank" rel="noopener">خدمات الطلاب الدوليين</a></li>
-            <li><a href="https://www.latrobe.edu.au/careers" target="_blank" rel="noopener">مركز الإرشاد الوظيفي</a></li>
+            <li><a href="https://www.latrobe.edu.au/students/international" target="_blank" rel="noopener noreferrer">خدمات الطلاب الدوليين</a></li>
+            <li><a href="https://www.latrobe.edu.au/careers" target="_blank" rel="noopener noreferrer">الإرشاد الوظيفي (Careers)</a></li>
           </ul>
         </article>
 
         <!-- La Trobe College -->
         <article class="card">
-          <h3>🏫 La Trobe College Australia</h3>
+          <h3>
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M7 10h10v4H7z"/></svg>
+            La Trobe College Australia
+          </h3>
           <ul>
-            <li><a href="https://www.latrobecollegeaustralia.edu.au/" target="_blank" rel="noopener">الموقع الرسمي للكلية</a></li>
-            <li><a href="https://www.latrobecollegeaustralia.edu.au/student-portal" target="_blank" rel="noopener">بوابة الطلاب</a></li>
-            <li><a href="https://www.latrobecollegeaustralia.edu.au/student-life" target="_blank" rel="noopener">خدمات ودعم الطلاب</a></li>
+            <li><a href="https://www.latrobecollegeaustralia.edu.au/" target="_blank" rel="noopener noreferrer">الموقع الرسمي للكلية</a></li>
+            <li><a href="https://www.latrobecollegeaustralia.edu.au/student-portal" target="_blank" rel="noopener noreferrer">بوابة الطلاب</a></li>
+            <li><a href="https://www.latrobecollegeaustralia.edu.au/student-life/" target="_blank" rel="noopener noreferrer">الحياة والدعم الطلابي</a></li>
           </ul>
         </article>
       </div>
