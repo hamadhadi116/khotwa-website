@@ -1,23 +1,22 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="no-js">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>مجلس طلاب خطوة – Khotwa</title>
+  <meta name="description" content="مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن. فعاليات، أخبار، وانضمام للمجلس.">
   <style>
-    :root {
-      --primary:#1e40af;
-      --primary-600:#1d4ed8;
-      --ring:#e5e7eb;
-      --card:#f8fafc;
-      --text:#0f172a;
-      --muted:#6b7280;
+    :root{
+      --primary:#1e40af;--primary-600:#1d4ed8;--ring:#e5e7eb;
+      --card:#f8fafc;--text:#0f172a;--muted:#6b7280
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
-    a{color:inherit;text-decoration:none}
-    a:visited{color:inherit}
+    a{color:inherit;text-decoration:none} a:visited{color:inherit}
     .container{width:min(1120px,92%);margin-inline:auto}
+
+    /* Navbar */
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
@@ -25,8 +24,9 @@
     .nav-links{display:flex;gap:1rem;align-items:center}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
-    .nav-cta{padding:.55rem .9rem;border-radius:12px;background:var(--primary);color:#fff;box-shadow:0 4px 18px rgba(29,78,216,.18)}
-    .nav-cta:hover{background:var(--primary-600)}
+    .lang-toggle{padding:.5rem .75rem;border-radius:10px;background:var(--primary);color:#fff;border:1px solid var(--ring);cursor:pointer}
+
+    /* Hero */
     header.hero{background:linear-gradient(180deg,#fff 0,#f5f7ff 100%);border-bottom:1px solid var(--ring)}
     .hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;padding:3rem 0;align-items:center}
     .hero h1{margin:0 0 .5rem;font-size:clamp(1.6rem,2.6vw + 1rem,2.4rem)}
@@ -36,30 +36,55 @@
     .btn-primary{background:var(--primary);color:#fff;box-shadow:0 10px 28px rgba(29,78,216,.22)}
     .btn-primary:hover{background:var(--primary-600)}
     .btn-outline{background:#fff;border-color:var(--ring)}
+    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
     .hero-img img{width:100%;height:100%;object-fit:cover;border-radius:16px}
+
+    /* Sections */
+    section{padding:2rem 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
+    .section-head h2{margin:0;font-size:1.4rem}
+    .muted{color:var(--muted)}
+    .grid{display:grid;gap:1rem}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:980px){.hero-inner{grid-template-columns:1fr}.grid-3,.grid-2{grid-template-columns:1fr}}
+
+    /* Footer */
     footer{border-top:1px solid var(--ring);background:#fff}
     .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
-    /* إخفاء النصوص الإنجليزية بشكل افتراضي */
-    [lang="en"] { display: none; }
+
+    /* ===== i18n (ثنائي اللغة) =====
+       افتراضياً نعرض العربي ونخفي الإنجليزي.
+       عند إضافة الكلاس .en إلى <html>:
+       - نعرض الإنجليزي
+       - ونخفي العربي
+       نستخدم display:revert; عشان العنصر يرجع نوع عرضه الطبيعي (block/inline). */
+    [lang="en"]{display:none}
+    .en [lang="en"]{display:revert}
+    .en [lang="ar"]{display:none}
+
+    /* لو كان الجافاسكربت مطفّى، نخلي الإنجليزي مخفي وعادي. */
+    .no-js [lang="en"]{display:none}
   </style>
 </head>
 <body>
   <!-- Navbar -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html">
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
         <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40">
         <span lang="ar">مجلس طلاب خطوة – La Trobe</span>
         <span lang="en">Khotwa Student Council – La Trobe</span>
       </a>
+
       <div class="nav-links">
-        <a href="/about.html"><span lang="ar">من نحن</span><span lang="en">About Us</span></a>
+        <a href="/about.html"><span lang="ar">من نحن</span><span lang="en">About</span></a>
         <a href="/news.html"><span lang="ar">الأخبار</span><span lang="en">News</span></a>
         <a href="/events.html"><span lang="ar">الفعاليات</span><span lang="en">Events</span></a>
         <a href="/calendar.html"><span lang="ar">التقويم</span><span lang="en">Calendar</span></a>
         <a href="/resources.html"><span lang="ar">الموارد</span><span lang="en">Resources</span></a>
         <a href="/contact.html" class="nav-cta"><span lang="ar">تواصل</span><span lang="en">Contact</span></a>
-        <button id="lang-toggle" class="btn btn-outline" style="padding:.4rem .8rem;font-size:.85rem">English</button>
+        <button id="lang-toggle" class="lang-toggle" type="button">English</button>
       </div>
     </div>
   </nav>
@@ -70,50 +95,138 @@
       <div>
         <h1 lang="ar">مجلس طلاب خطوة – صوت الطلاب وشريك الجامعة</h1>
         <h1 lang="en">Khotwa Student Council – Students’ Voice and University Partner</h1>
-        <p lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا.</p>
-        <p lang="en">We empower Khotwa program students academically, socially, and culturally.</p>
+
+        <p lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا، ونبني الجسر بين الطلاب وإدارة الجامعة بفعاليات نوعية وخدمات موجهة.</p>
+        <p lang="en">We empower Khotwa students academically, socially, and culturally, building bridges with the university through quality events and tailored services.</p>
+
         <div class="cta-row">
-          <a href="/contact.html" class="btn btn-primary"><span lang="ar">قدّم للعضوية</span><span lang="en">Apply for Membership</span></a>
-          <a href="/events.html" class="btn btn-outline"><span lang="ar">شاهد أقرب الفعاليات</span><span lang="en">See Upcoming Events</span></a>
+          <a href="/contact.html" class="btn btn-primary">
+            <span lang="ar">قدّم للعضوية</span>
+            <span lang="en">Apply for Membership</span>
+          </a>
+          <a href="/events.html" class="btn btn-outline">
+            <span lang="ar">شاهد أقرب الفعاليات</span>
+            <span lang="en">See Upcoming Events</span>
+          </a>
         </div>
       </div>
+
+      <!-- صورة الشباب -->
       <div class="hero-img">
-        <img src="https://b.top4top.io/p_35166f7hr1.jpg" alt="مجموعة طلاب مجلس خطوة – La Trobe" loading="eager" decoding="async">
+        <img src="https://b.top4top.io/p_35166f7hr1.jpg"
+             alt="مجموعة طلاب مجلس خطوة – La Trobe" loading="eager" decoding="async">
       </div>
     </div>
   </header>
 
+  <!-- About quick -->
+  <section aria-labelledby="about-h">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="about-h" lang="ar">من نحن</h2>
+        <h2 id="about-h" lang="en">About Us</h2>
+        <a class="muted" href="/about.html">
+          <span lang="ar">المزيد</span>
+          <span lang="en">Learn more</span>
+        </a>
+      </div>
+
+      <div class="grid grid-2">
+        <article class="card">
+          <h3 lang="ar">الرؤية</h3>
+          <h3 lang="en">Vision</h3>
+          <p lang="ar">دعم العملية التعليمية وخدمة المجتمع الجامعي.</p>
+          <p lang="en">Support the learning journey and serve our university community.</p>
+        </article>
+
+        <article class="card">
+          <h3 lang="ar">الرسالة</h3>
+          <h3 lang="en">Mission</h3>
+          <p lang="ar">تمكين الطلاب وتعزيز علاقتهم بالإدارة الجامعية.</p>
+          <p lang="en">Empower students and strengthen ties with university administration.</p>
+        </article>
+
+        <article class="card">
+          <h3 lang="ar">الأهداف</h3>
+          <h3 lang="en">Goals</h3>
+          <p lang="ar">التمثيل، القيادة، التفاعل المجتمعي، والدعوة.</p>
+          <p lang="en">Representation, leadership, community engagement, and advocacy.</p>
+        </article>
+
+        <article class="card">
+          <h3 lang="ar">التنظيم</h3>
+          <h3 lang="en">Structure</h3>
+          <p lang="ar">رئيس ونائب وقادة فرق ومنسقو الأنشطة والإعلام.</p>
+          <p lang="en">President, Vice President, team leads, and activity/media coordinators.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events preview -->
+  <section aria-labelledby="events-h">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="events-h" lang="ar">الفعاليات القادمة</h2>
+        <h2 id="events-h" lang="en">Upcoming Events</h2>
+        <a class="muted" href="/events.html">
+          <span lang="ar">تقويم الفعاليات</span>
+          <span lang="en">All events</span>
+        </a>
+      </div>
+
+      <div class="grid grid-3">
+        <article class="card">
+          <h3 lang="ar">ورشة تخصصات خطوة</h3>
+          <h3 lang="en">Khotwa Majors Workshop</h3>
+          <p class="muted" lang="ar">IT، الأمن السيبراني، العلوم الحيوية، الأعمال.</p>
+          <p class="muted" lang="en">IT, Cybersecurity, Biosciences, Business.</p>
+        </article>
+
+        <article class="card">
+          <h3 lang="ar">بطولة البادل</h3>
+          <h3 lang="en">Padel Championship</h3>
+          <p class="muted" lang="ar">تنظيم رياضي طلابي – La Trobe Sports Centre.</p>
+          <p class="muted" lang="en">Student sports event – La Trobe Sports Centre.</p>
+        </article>
+
+        <article class="card">
+          <h3 lang="ar">ماراثون داخل الحرم</h3>
+          <h3 lang="en">On-Campus Marathon</h3>
+          <p class="muted" lang="ar">مسارات 1K و2.5K و10K.</p>
+          <p class="muted" lang="en">1K, 2.5K, and 10K routes.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
-  <footer>
+  <footer aria-label="تذييل الموقع">
     <div class="container foot">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank">Instagram</a>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
     </div>
   </footer>
 
   <script>
+    // إزالة no-js + سنة
+    document.documentElement.classList.remove('no-js');
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // زر تبديل اللغة
-    const toggle = document.getElementById("lang-toggle");
-    let currentLang = "ar";
-
-    toggle.addEventListener("click", () => {
-      if (currentLang === "ar") {
-        document.querySelectorAll("[lang='ar']").forEach(el => el.style.display = "none");
-        document.querySelectorAll("[lang='en']").forEach(el => el.style.display = "inline");
-        document.documentElement.lang = "en";
-        document.documentElement.dir = "ltr";
-        toggle.textContent = "العربية";
-        currentLang = "en";
-      } else {
-        document.querySelectorAll("[lang='en']").forEach(el => el.style.display = "none");
-        document.querySelectorAll("[lang='ar']").forEach(el => el.style.display = "inline");
-        document.documentElement.lang = "ar";
-        document.documentElement.dir = "rtl";
-        toggle.textContent = "English";
-        currentLang = "ar";
-      }
+    // تبديل اللغة via .en على <html> + تحديث dir/lang + نص الزر
+    const btn = document.getElementById('lang-toggle');
+    function setLang(lang){
+      const isEn = lang === 'en';
+      document.documentElement.classList.toggle('en', isEn);
+      document.documentElement.lang = isEn ? 'en' : 'ar';
+      document.documentElement.dir  = isEn ? 'ltr' : 'rtl';
+      btn.textContent = isEn ? 'العربية' : 'English';
+    }
+    // الحالة الافتراضية عربي
+    setLang('ar');
+    btn.addEventListener('click', ()=>{
+      const now = document.documentElement.classList.contains('en') ? 'ar' : 'en';
+      setLang(now);
     });
   </script>
 </body>
