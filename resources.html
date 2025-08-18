@@ -1,144 +1,141 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>الموارد – Khotwa</title>
-  <style>
-    :root{
-      --primary:#1e40af;--primary-600:#1d4ed8;
-      --ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
-    a{color:inherit;text-decoration:none} a:visited{color:inherit}
-    .container{width:min(1120px,92%);margin-inline:auto}
-
-    /* Navbar */
-    .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
-    .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
-    .nav-links{display:flex;gap:1rem}
-    .nav-links a{padding:.5rem .75rem;border-radius:10px}
-    .nav-links a:hover{background:var(--card)}
-
-    /* Page */
-    section{padding:2rem 0}
-    h1{margin:0 0 1rem}
-    .grid{display:grid;gap:1rem}
-    .grid-2{grid-template-columns:repeat(2,1fr)}
-    @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
-    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
-    .card h3{margin:.2rem 0 .6rem;display:flex;align-items:center;gap:.5rem}
-    .muted{color:var(--muted)}
-    .icon{width:22px;height:22px;color:var(--primary);flex:none}
-
-    footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>الموارد – Khotwa</title>
+<style>
+:root{--primary:#1e40af;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
+*{box-sizing:border-box} body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text)}
+a{color:inherit;text-decoration:none} a:visited{color:inherit}
+.container{width:min(1120px,92%);margin-inline:auto}
+.navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
+.brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
+.brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
+.nav-links{display:flex;gap:1rem;align-items:center}
+.nav-links a{padding:.5rem .75rem;border-radius:10px}
+.nav-links a:hover{background:var(--card)}
+.lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+section{padding:2rem 0}
+.grid{display:grid;gap:1rem}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+.card h3{display:flex;align-items:center;gap:.5rem;margin-top:0}
+.card svg{width:20px;height:20px;color:var(--primary)}
+.muted{color:var(--muted)}
+footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
+</style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar" aria-label="الشريط العلوي">
-    <div class="container nav-inner">
-      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40">
-        <span>مجلس طلاب خطوة – La Trobe</span>
-      </a>
-      <div class="nav-links">
-        <a href="/about.html">من نحن</a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/calendar.html">التقويم</a>
-        <a href="/resources.html" aria-current="page">الموارد</a>
-        <a href="/contact.html">تواصل</a>
-      </div>
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a class="brand" href="/index.html">
+      <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="">
+      <span data-lang="ar">مجلس طلاب خطوة – La Trobe</span>
+      <span data-lang="en" hidden>Khotwa Student Council – La Trobe</span>
+    </a>
+    <div class="nav-links">
+      <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
+      <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+      <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+      <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
+      <a href="/resources.html" aria-current="page"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
+      <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
+      <button id="lang-toggle" class="lang-toggle" type="button">English</button>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!-- Resources -->
-  <main class="container">
-    <section>
-      <h1>موارد للطلاب</h1>
-      <p class="muted">روابط مفيدة لمساعدتك خلال فترة دراستك في جامعة لا تروب وكلية لا تروب.</p>
+<main class="container">
+  <section>
+    <h1 data-lang="ar">موارد للطلاب</h1>
+    <h1 data-lang="en" hidden>Student Resources</h1>
+    <p class="muted" data-lang="ar">روابط مفيدة لجامعة لا تروب وكلية لا تروب.</p>
+    <p class="muted" data-lang="en" hidden>Useful links for La Trobe University and La Trobe College.</p>
 
-      <div class="grid grid-2">
-        <!-- مواقع الجامعة -->
-        <article class="card">
-          <h3>
-            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M9 21V9h6v12"/></svg>
-            مواقع الجامعة
-          </h3>
-          <ul>
-            <li><a href="https://www.latrobe.edu.au/" target="_blank" rel="noopener noreferrer">الموقع الرسمي لجامعة لا تروب</a></li>
-            <li><a href="https://www.latrobe.edu.au/students" target="_blank" rel="noopener noreferrer">بوابة الطلاب</a></li>
-            <li><a href="https://www.latrobe.edu.au/library/home" target="_blank" rel="noopener noreferrer">المكتبة الرقمية</a></li>
-          </ul>
-        </article>
+    <div class="grid grid-2">
+      <article class="card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+          <span data-lang="ar">مواقع الجامعة</span><span data-lang="en" hidden>University Sites</span>
+        </h3>
+        <ul>
+          <li><a href="https://www.latrobe.edu.au/" target="_blank" rel="noopener">La Trobe University</a></li>
+          <li><a href="https://www.latrobe.edu.au/students" target="_blank" rel="noopener" data-lang="ar">بوابة الطلاب</a><a href="https://www.latrobe.edu.au/students" target="_blank" rel="noopener" data-lang="en" hidden>Students Portal</a></li>
+          <li><a href="https://www.latrobe.edu.au/library" target="_blank" rel="noopener" data-lang="ar">المكتبة</a><a href="https://www.latrobe.edu.au/library" target="_blank" rel="noopener" data-lang="en" hidden>Library</a></li>
+        </ul>
+      </article>
 
-        <!-- الجداول والدليل -->
-        <article class="card">
-          <h3>
-            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            جداول المحاضرات
-          </h3>
-          <ul>
-            <li><a href="https://www.latrobe.edu.au/students/your-course/timetables/view-timetables" target="_blank" rel="noopener noreferrer">الجدول الدراسي (Allocate+)</a></li>
-            <li><a href="https://www.latrobe.edu.au/handbook" target="_blank" rel="noopener noreferrer">دليل المواد</a></li>
-          </ul>
-        </article>
+      <article class="card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4"/></svg>
+          <span data-lang="ar">جداول المحاضرات</span><span data-lang="en" hidden>Timetable</span>
+        </h3>
+        <ul>
+          <li><a href="https://www.latrobe.edu.au/students/timetable" target="_blank" rel="noopener">Timetable</a></li>
+          <li><a href="https://www.latrobe.edu.au/handbook" target="_blank" rel="noopener">Handbook</a></li>
+        </ul>
+      </article>
 
-        <!-- دعم أكاديمي / تعلم -->
-        <article class="card">
-          <h3>
-            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>
-            خدمات الدعم الأكاديمي
-          </h3>
-          <ul>
-            <li><a href="https://www.latrobe.edu.au/students/study-resources" target="_blank" rel="noopener noreferrer">Study support & resources</a></li>
-            <li><a href="https://www.latrobe.edu.au/students/support/it" target="_blank" rel="noopener noreferrer">خدمات تقنية المعلومات (Student IT)</a></li>
-            <li><a href="https://www.latrobe.edu.au/students/support/wellbeing" target="_blank" rel="noopener noreferrer">الصحة والرفاه (Wellbeing)</a></li>
-          </ul>
-        </article>
+      <article class="card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+          <span data-lang="ar">الدعم الأكاديمي</span><span data-lang="en" hidden>Academic Support</span>
+        </h3>
+        <ul>
+          <li><a href="https://www.latrobe.edu.au/students/learning" target="_blank" rel="noopener" data-lang="ar">مركز التعلم</a><a href="https://www.latrobe.edu.au/students/learning" target="_blank" rel="noopener" data-lang="en" hidden>Learning Support</a></li>
+          <li><a href="https://www.latrobe.edu.au/students/it" target="_blank" rel="noopener">IT Services</a></li>
+          <li><a href="https://www.latrobe.edu.au/students/wellbeing" target="_blank" rel="noopener" data-lang="ar">الدعم النفسي</a><a href="https://www.latrobe.edu.au/students/wellbeing" target="_blank" rel="noopener" data-lang="en" hidden>Wellbeing</a></li>
+        </ul>
+      </article>
 
-        <!-- موارد إضافية -->
-        <article class="card">
-          <h3>
-            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6v12M6 12h12"/></svg>
-            موارد إضافية
-          </h3>
-          <ul>
-            <li><a href="https://www.latrobe.edu.au/students/international" target="_blank" rel="noopener noreferrer">خدمات الطلاب الدوليين</a></li>
-            <li><a href="https://www.latrobe.edu.au/careers" target="_blank" rel="noopener noreferrer">الإرشاد الوظيفي (Careers)</a></li>
-          </ul>
-        </article>
+      <article class="card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5L12 17l-6 4.5L8.5 14 2 9.5h7.5z"/></svg>
+          <span data-lang="ar">موارد إضافية</span><span data-lang="en" hidden>Extras</span>
+        </h3>
+        <ul>
+          <li><a href="https://www.latrobe.edu.au/international" target="_blank" rel="noopener">International</a></li>
+          <li><a href="https://www.latrobe.edu.au/careers" target="_blank" rel="noopener">Careers</a></li>
+        </ul>
+      </article>
 
-        <!-- La Trobe College -->
-        <article class="card">
-          <h3>
-            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M7 10h10v4H7z"/></svg>
-            La Trobe College Australia
-          </h3>
-          <ul>
-            <li><a href="https://www.latrobecollegeaustralia.edu.au/" target="_blank" rel="noopener noreferrer">الموقع الرسمي للكلية</a></li>
-            <li><a href="https://www.latrobecollegeaustralia.edu.au/student-portal" target="_blank" rel="noopener noreferrer">بوابة الطلاب</a></li>
-            <li><a href="https://www.latrobecollegeaustralia.edu.au/student-life/" target="_blank" rel="noopener noreferrer">الحياة والدعم الطلابي</a></li>
-          </ul>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
-      <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+      <article class="card">
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 15h10M7 11h10"/></svg>
+          <span data-lang="ar">La Trobe College Australia</span>
+          <span data-lang="en" hidden>La Trobe College Australia</span>
+        </h3>
+        <ul>
+          <li><a href="https://www.latrobecollegeaustralia.edu.au/" target="_blank" rel="noopener">Official Site</a></li>
+          <li><a href="https://www.latrobecollegeaustralia.edu.au/student-portal" target="_blank" rel="noopener">Student Portal</a></li>
+          <li><a href="https://www.latrobecollegeaustralia.edu.au/student-life" target="_blank" rel="noopener">Student Life & Support</a></li>
+        </ul>
+      </article>
     </div>
-  </footer>
+  </section>
+</main>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
+    <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
+    <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const t=document.getElementById('lang-toggle');let en=false;
+function setLang(v){en=v;
+  document.querySelectorAll('[data-lang="ar"]').forEach(el=>el.hidden=en);
+  document.querySelectorAll('[data-lang="en"]').forEach(el=>el.hidden=!en);
+  document.documentElement.lang=en?'en':'ar';
+  document.documentElement.dir=en?'ltr':'rtl';
+  t.textContent=en?'العربية':'English';
+}
+t.addEventListener('click',()=>setLang(!en)); setLang(false);
+</script>
 </body>
 </html>
