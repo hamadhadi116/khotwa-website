@@ -8,133 +8,157 @@
     :root{--primary:#1e40af;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
     *{box-sizing:border-box}
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
-    a{color:inherit;text-decoration:none}
-    a:visited{color:inherit}
+    a{color:inherit;text-decoration:none} a:visited{color:inherit}
     .container{width:min(1120px,92%);margin-inline:auto}
+
+    /* Navbar */
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
     .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
-    .nav-links{display:flex;gap:1rem}
+    .nav-links{display:flex;gap:1rem;align-items:center}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
+    .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+
+    /* Sections */
     section{padding:2rem 0}
-    .grid{display:grid;gap:1.5rem}
+    .grid{display:grid;gap:1rem}
     .grid-2{grid-template-columns:repeat(2,1fr)}
-    .grid-3{grid-template-columns:repeat(3,1fr)}
-    @media(max-width:980px){.grid-2,.grid-3{grid-template-columns:1fr}}
-    .card{
-      background:#fff;
-      border:1px solid var(--ring);
-      border-radius:16px;
-      padding:1rem;
-      text-align:center;
-      transition:transform .25s ease, box-shadow .25s ease;
-    }
-    .card:hover{
-      transform:translateY(-6px) scale(1.03);
-      box-shadow:0 8px 20px rgba(0,0,0,0.08);
-    }
-    .card img{
-      width:120px;
-      height:120px;
-      object-fit:cover;
-      border-radius:50%;
-      border:2px solid var(--ring);
-      margin-bottom:.8rem;
-      transition:transform .3s ease;
-    }
-    .card:hover img{
-      transform:scale(1.08);
-    }
-    .card h3{margin:.3rem 0 0}
-    .card p{margin:.2rem 0 0;color:var(--muted)}
+    @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
+    .muted{color:var(--muted)}
+
+    /* Members */
+    .members{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem}
+    .member-card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;text-align:center}
+    .member-card img{width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:.6rem}
+
+    /* Footer */
     footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
+    .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center}
   </style>
 </head>
 <body>
-  <nav class="navbar" aria-label="الشريط العلوي">
+  <!-- Navbar -->
+  <nav class="navbar">
     <div class="container nav-inner">
       <a class="brand" href="/index.html">
         <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo">
-        <span>مجلس طلاب خطوة – La Trobe</span>
+        <span data-lang="ar">مجلس طلاب خطوة – La Trobe</span>
+        <span data-lang="en" hidden>Khotwa Student Council – La Trobe</span>
       </a>
       <div class="nav-links">
-        <a href="/about.html" aria-current="page">من نحن</a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/calendar.html">التقويم</a>
-        <a href="/resources.html">الموارد</a>
-        <a href="/contact.html">تواصل</a>
+        <a href="/about.html" aria-current="page">
+          <span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span>
+        </a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
+        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
+        <button id="lang-toggle" class="lang-toggle" type="button">English</button>
       </div>
     </div>
   </nav>
 
+  <!-- About Section -->
   <main class="container">
     <section>
-      <h1>من نحن</h1>
-      <p class="muted">مجلس طلاب خطوة يمثل طلاب برنامج خطوة في أستراليا.</p>
+      <h1 data-lang="ar">من نحن</h1>
+      <h1 data-lang="en" hidden>About Us</h1>
+      <p class="muted" data-lang="ar">مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن.</p>
+      <p class="muted" data-lang="en" hidden>The Khotwa Student Council represents students of the Khotwa program at La Trobe University – Melbourne.</p>
 
-      <div class="grid grid-3">
-        <!-- الرئيس -->
+      <div class="grid grid-2">
         <article class="card">
+          <h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3>
+          <p data-lang="ar">مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده.</p>
+          <p data-lang="en" hidden>A supportive and proactive student community contributing to members’ success.</p>
+        </article>
+        <article class="card">
+          <h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3>
+          <p data-lang="ar">توفير فرص وأنشطة وخدمات تعزز تجربة الطالب.</p>
+          <p data-lang="en" hidden>Providing opportunities, activities, and services that enhance the student experience.</p>
+        </article>
+        <article class="card">
+          <h3 data-lang="ar">القيم</h3><h3 data-lang="en" hidden>Values</h3>
+          <p data-lang="ar">العمل الجماعي، الشفافية، التطوع، الابتكار، المسؤولية.</p>
+          <p data-lang="en" hidden>Teamwork, transparency, volunteering, innovation, and responsibility.</p>
+        </article>
+        <article class="card">
+          <h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden>Structure</h3>
+          <p data-lang="ar">رئيس ونائب رئيس، قادة فرق (الفعاليات، الإعلام، العلاقات)، ومنسقون.</p>
+          <p data-lang="en" hidden>President, Vice President, team leaders (events, media, relations), and coordinators.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Members -->
+    <section>
+      <h2 data-lang="ar">أعضاء المجلس</h2>
+      <h2 data-lang="en" hidden>Council Members</h2>
+      <div class="members">
+        <div class="member-card">
           <img src="https://f.top4top.io/p_35166op0u4.jpg" alt="حمد الهاجري – الرئيس">
-          <h3>حمد الهاجري</h3>
-          <p>الرئيس</p>
-        </article>
-
-        <!-- نائب الرئيس -->
-        <article class="card">
+          <h3 data-lang="ar">حمد الهاجري</h3><h3 data-lang="en" hidden>Hamad Al-Hajeri</h3>
+          <p class="muted" data-lang="ar">الرئيس</p><p class="muted" data-lang="en" hidden>President</p>
+        </div>
+        <div class="member-card">
           <img src="https://c.top4top.io/p_3516ojbq71.jpg" alt="عبدالله الجابري – نائب الرئيس">
-          <h3>عبدالله الجابري</h3>
-          <p>نائب الرئيس</p>
-        </article>
-
-        <!-- قائد المجموعة -->
-        <article class="card">
+          <h3 data-lang="ar">عبدالله الجابري</h3><h3 data-lang="en" hidden>Abdullah Al-Jaberi</h3>
+          <p class="muted" data-lang="ar">نائب الرئيس</p><p class="muted" data-lang="en" hidden>Vice President</p>
+        </div>
+        <div class="member-card">
           <img src="https://d.top4top.io/p_3516sprel2.jpg" alt="عبدالهادي المري – قائد المجموعة">
-          <h3>عبدالهادي المري</h3>
-          <p>قائد المجموعة</p>
-        </article>
-
-        <!-- المنسق العام للفعاليات -->
-        <article class="card">
-          <img src="https://h.top4top.io/p_3516xcf386.jpg" alt="حسن الصيعري – المنسق العام للفعاليات">
-          <h3>حسن الصيعري</h3>
-          <p>المنسق العام للفعاليات</p>
-        </article>
-
-        <!-- منسق الاتصال والإعلام -->
-        <article class="card">
-          <img src="https://g.top4top.io/p_3516zrfo75.jpg" alt="حمد المري – منسق الاتصال والإعلام">
-          <h3>حمد المري</h3>
-          <p>منسق الاتصال والإعلام</p>
-        </article>
-
-        <!-- عضو -->
-        <article class="card">
+          <h3 data-lang="ar">عبدالهادي المري</h3><h3 data-lang="en" hidden>Abdulhadi Al-Marri</h3>
+          <p class="muted" data-lang="ar">قائد المجموعة</p><p class="muted" data-lang="en" hidden>Team Leader</p>
+        </div>
+        <div class="member-card">
+          <img src="https://h.top4top.io/p_3516xcf386.jpg" alt="حسن الصيعري – منسق الفعاليات">
+          <h3 data-lang="ar">حسن الصيعري</h3><h3 data-lang="en" hidden>Hassan Al-Sieari</h3>
+          <p class="muted" data-lang="ar">منسق الفعاليات</p><p class="muted" data-lang="en" hidden>Events Coordinator</p>
+        </div>
+        <div class="member-card">
+          <img src="https://g.top4top.io/p_3516zrfo75.jpg" alt="حمد المري – منسق الإعلام">
+          <h3 data-lang="ar">حمد المري</h3><h3 data-lang="en" hidden>Hamad Al-Marri</h3>
+          <p class="muted" data-lang="ar">منسق الإعلام</p><p class="muted" data-lang="en" hidden>Media Coordinator</p>
+        </div>
+        <div class="member-card">
           <img src="https://e.top4top.io/p_35164gg6m3.jpg" alt="محمد الكثيري – عضو">
-          <h3>محمد الكثيري</h3>
-          <p>عضو</p>
-        </article>
-
-        <!-- عضو -->
-        <article class="card">
+          <h3 data-lang="ar">محمد الكثيري</h3><h3 data-lang="en" hidden>Mohamed Al-Katheeri</h3>
+          <p class="muted" data-lang="ar">عضو</p><p class="muted" data-lang="en" hidden>Member</p>
+        </div>
+        <div class="member-card">
           <img src="https://i.top4top.io/p_35168rtso7.jpg" alt="موزة العلي – عضو">
-          <h3>موزة العلي</h3>
-          <p>عضو</p>
-        </article>
+          <h3 data-lang="ar">موزة العلي</h3><h3 data-lang="en" hidden>Mouza Al-Ali</h3>
+          <p class="muted" data-lang="ar">عضو</p><p class="muted" data-lang="en" hidden>Member</p>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer>
-    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
+    <div class="container foot">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
       <a href="https://www.instagram.com/khotwa.sc/" target="_blank">Instagram</a>
     </div>
   </footer>
 
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent=new Date().getFullYear();
+    const toggleBtn=document.getElementById('lang-toggle');let isEn=false;
+    function setLang(en){
+      isEn=en;
+      document.querySelectorAll('[data-lang="ar"]').forEach(el=>el.hidden=en);
+      document.querySelectorAll('[data-lang="en"]').forEach(el=>el.hidden=!en);
+      document.documentElement.lang=en?'en':'ar';
+      document.documentElement.dir=en?'ltr':'rtl';
+      toggleBtn.textContent=en?'العربية':'English';
+    }
+    toggleBtn.addEventListener('click',()=>setLang(!isEn));
+    setLang(false);
+  </script>
 </body>
 </html>
