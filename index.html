@@ -8,6 +8,10 @@
   <link rel="canonical" href="https://khotwastudentcouncil.com/"/>
   <meta name="robots" content="index,follow"/>
 
+  <!-- Theme color (light/dark) -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
+
   <!-- OG/Twitter -->
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Khotwa Student Council"/>
@@ -76,11 +80,11 @@
         background:#fff; border:1px solid var(--ring); border-radius:12px;
         display:grid; gap:.2rem; padding:.4rem;
         box-shadow:0 12px 30px rgba(2,6,23,.10);
-        max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
+        max-height:80vh; overflow:auto; opacity:1; transform:scale(1);
         transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
       }
-      .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
-      .nav-links a,.lang-toggle{padding:.7rem .9rem}
+      /* عند الإغلاق نخفيها دلاليًا بعنصر hidden (لا حاجة لستايل إضافي) */
+      .nav-links[data-open="false"]{transform:scale(.98);opacity:.0}
     }
 
     /* Hero + أقسام */
@@ -109,7 +113,7 @@
     footer{border-top:1px solid var(--ring);background:#fff}
     .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
 
-    /* وضع ليلي تلقائي حسب تفضيل النظام */
+    /* وضع ليلي */
     @media (prefers-color-scheme: dark){
       :root{
         --card:#0b1220; --ring:#1f2937;
@@ -122,7 +126,7 @@
       .btn-outline{ background:transparent; border-color:var(--ring); color:var(--text); }
     }
 
-    /* تقليل الحركة لمن يفضّل ذلك */
+    /* تقليل الحركة */
     @media (prefers-reduced-motion: reduce){
       *{
         animation-duration:.01ms !important; animation-iteration-count:1 !important;
@@ -137,12 +141,12 @@
   <!-- Navbar -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+      <a class="brand" href="/" aria-label="العودة للرئيسية">
         <img
           src="https://g.top4top.io/p_3516rfttb1.jpg"
           class="logo"
           alt="شعار مجلس طلاب خطوة"
-          width="80" height="80"
+          width="40" height="40"
           decoding="async" loading="lazy"
         >
         <span data-lang="ar">مجلس طلاب خطوة</span>
@@ -162,7 +166,7 @@
         <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
         <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
         <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
-        <button id="lang-toggle" class="lang-toggle" type="button">English</button>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
       </div>
     </div>
   </nav>
@@ -228,7 +232,7 @@
   <footer aria-label="تذييل الموقع">
     <div class="container foot">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </footer>
 
@@ -239,22 +243,53 @@
     // عناصر القائمة
     const menuBtn = document.getElementById('menu-toggle');
     const primaryNav = document.getElementById('primary-nav');
+    const mq = matchMedia('(min-width:901px)'); // >= 901px = ديسكتوب
 
     function setMenu(open){
       primaryNav.setAttribute('data-open', String(open));
       menuBtn.setAttribute('aria-expanded', String(open));
-      if(open){ primaryNav.querySelector('a,button')?.focus(); }
+
+      if (open){
+        // عند الفتح في الموبايل نُظهر القائمة ونحوّل التركيز لأول رابط
+        primaryNav.hidden = false;
+        const firstFocusable = primaryNav.querySelector('a,button');
+        if (firstFocusable) firstFocusable.focus();
+      } else {
+        // عند الإغلاق نخفيها دلاليًا في الموبايل، ونعيد التركيز لزر القائمة
+        if (!mq.matches) primaryNav.hidden = true;
+        menuBtn.focus();
+      }
     }
 
+    // تبديل بالنقر على زر القائمة
     menuBtn.addEventListener('click', () => {
       const open = primaryNav.getAttribute('data-open') === 'true';
       setMenu(!open);
     });
 
-    // إغلاق عند توسيع الشاشة
-    matchMedia('(min-width:901px)').addEventListener('change', e=>{
-      if(e.matches) setMenu(false);
+    // مزامنة الحالة مع التغيير بين موبايل/ديسكتوب
+    mq.addEventListener('change', e=>{
+      if (e.matches){
+        // على الديسكتوب: القائمة دائماً ظاهرة، مع حالة "غير مفتوحة" للمؤشر فقط
+        primaryNav.hidden = false;
+        primaryNav.setAttribute('data-open','false');
+        menuBtn.setAttribute('aria-expanded','false');
+      } else {
+        // على الموبايل: تبدأ مغلقة ومخفية
+        primaryNav.hidden = true;
+        primaryNav.setAttribute('data-open','false');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
     });
+
+    // تهيئة أولية عند التحميل
+    if (mq.matches){
+      primaryNav.hidden = false;
+      primaryNav.setAttribute('data-open','false');
+    } else {
+      primaryNav.hidden = true;
+      primaryNav.setAttribute('data-open','false');
+    }
 
     // إغلاق بالنقر خارج
     document.addEventListener('click', (e)=>{
@@ -266,12 +301,16 @@
 
     // إغلاق بـ ESC
     document.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape') setMenu(false);
+      if(e.key === 'Escape'){
+        const open = primaryNav.getAttribute('data-open') === 'true';
+        if (open) setMenu(false);
+      }
     });
 
     // تبديل اللغة + حفظ التفضيل
     const toggleBtn = document.getElementById('lang-toggle');
     let isEn = localStorage.getItem('khotwa_lang') === 'en';
+
     function setLang(en){
       isEn = en;
       document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
@@ -279,8 +318,10 @@
       document.documentElement.lang = en ? 'en' : 'ar';
       document.documentElement.dir  = en ? 'ltr' : 'rtl';
       toggleBtn.textContent = en ? 'العربية' : 'English';
+      toggleBtn.setAttribute('aria-pressed', en ? 'true' : 'false');
       localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
     }
+
     toggleBtn.addEventListener('click',()=> setLang(!isEn));
     setLang(isEn);
   </script>
