@@ -7,6 +7,7 @@
 <meta name="description" content="الفعاليات القادمة لمجلس طلاب خطوة في جامعة لا تروب: ورش، بطولات، وماراثون داخل الحرم.">
 <link rel="canonical" href="https://khotwastudentcouncil.com/events.html"/>
 <meta name="robots" content="index,follow"/>
+<meta name="color-scheme" content="light dark"/>
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -22,59 +23,144 @@
 <meta name="twitter:description" content="تابع كل جديد من فعاليات مجلس طلاب خطوة.">
 <meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
 
-<style>
-:root{--primary:#1e40af;--primary-600:#1d4ed8;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
-a{color:inherit;text-decoration:none} a:visited{color:inherit}
-.container{width:min(1120px,92%);margin-inline:auto}
-
-/* وصولية */
-:where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
-.skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000}
-.skip-link:focus{inset-block-start:1rem}
-
-/* Navbar (موحّد مثل الصفحات السابقة) */
-.navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
-.brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-.brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
-.nav-links{display:flex;gap:1rem;align-items:center}
-.nav-links a{padding:.5rem .75rem;border-radius:10px}
-.nav-links a:hover{background:var(--card)}
-.lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-.menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-.menu-toggle svg{width:20px;height:20px}
-
-/* عند الموبايل تصير القائمة منسدلة */
-@media (max-width:900px){
-  .menu-toggle{display:inline-flex}
-  .nav-links{
-    position:absolute; inset-inline:0; top:calc(100% + 8px);
-    background:#fff; border:1px solid var(--ring); border-radius:12px;
-    display:grid; gap:.2rem; padding:.4rem;
-    box-shadow:0 12px 30px rgba(2,6,23,.10);
-    max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
-    transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
-  }
-  .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
-  .nav-links a,.lang-toggle{padding:.7rem .9rem}
+<!-- JSON-LD: Events list (لتحسين الظهور بمحركات البحث) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"Event",
+      "name":"ورشة تخصصات خطوة",
+      "startDate":"2025-09-10T17:00:00+10:00",
+      "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus":"https://schema.org/EventScheduled",
+      "location":{"@type":"Place","name":"La Trobe – Bundoora"},
+      "url":"https://khotwastudentcouncil.com/events.html#e1",
+      "organizer":{"@type":"Organization","name":"Khotwa Student Council"}
+    },
+    {
+      "@type":"Event",
+      "name":"بطولة البادل",
+      "startDate":"2025-09-24T16:00:00+10:00",
+      "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus":"https://schema.org/EventScheduled",
+      "location":{"@type":"Place","name":"La Trobe Sports Centre"},
+      "url":"https://khotwastudentcouncil.com/events.html#e2",
+      "organizer":{"@type":"Organization","name":"Khotwa Student Council"}
+    },
+    {
+      "@type":"Event",
+      "name":"ماراثون داخل الحرم",
+      "startDate":"2025-10-01T09:00:00+10:00",
+      "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus":"https://schema.org/EventScheduled",
+      "location":{"@type":"Place","name":"La Trobe – Bundoora"},
+      "url":"https://khotwastudentcouncil.com/events.html#e3",
+      "organizer":{"@type":"Organization","name":"Khotwa Student Council"}
+    }
+  ]
 }
+</script>
 
-/* Sections */
-section{padding:2rem 0}
-.muted{color:var(--muted)}
-.grid{display:grid;gap:1rem}
-.grid-3{grid-template-columns:repeat(3,1fr)}
-@media(max-width:980px){.grid-3{grid-template-columns:1fr}}
-.card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;display:grid;gap:.6rem}
-.chip{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;padding:.25rem .55rem;border-radius:999px;background:var(--card);border:1px solid var(--ring)}
-.chip svg{width:16px;height:16px;color:var(--primary)}
-.btn{display:inline-block;padding:.6rem .9rem;border-radius:10px;background:var(--primary);color:#fff}
-.btn:hover{background:var(--primary-600)}
+<style>
+  :root{
+    --primary:#1e40af;--primary-600:#1d4ed8;
+    --ring:#e5e7eb;--card:#f8fafc;
+    --text:#0f172a;--muted:#6b7280;
+    --shadow:0 10px 26px rgba(2,6,23,.08)
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
+  a{color:inherit;text-decoration:none} a:visited{color:inherit}
+  .container{width:min(1120px,92%);margin-inline:auto}
 
-/* Footer */
-footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
+  /* وصولية */
+  :where(a,button,[role="button"],input,select,textarea):focus-visible{
+    outline:3px solid #2563eb;outline-offset:3px;border-radius:8px
+  }
+  .skip-link{
+    position:absolute;inset-inline-start:1rem;inset-block-start:-100px;
+    background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000
+  }
+  .skip-link:focus{inset-block-start:1rem}
+
+  /* Navbar (موحّد) */
+  .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
+  .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
+  .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
+  .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
+  .nav-links{display:flex;gap:1rem;align-items:center}
+  .nav-links a{padding:.5rem .75rem;border-radius:10px}
+  .nav-links a:hover{background:var(--card)}
+  .nav-links a[aria-current="page"]{background:var(--card)}
+  .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+  .menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+  .menu-toggle svg{width:20px;height:20px}
+
+  /* قائمة منسدلة بالموبايل */
+  @media (max-width:900px){
+    .menu-toggle{display:inline-flex}
+    .nav-links{
+      position:absolute; inset-inline:0; top:calc(100% + 8px);
+      background:#fff; border:1px solid var(--ring); border-radius:12px;
+      display:grid; gap:.2rem; padding:.4rem;
+      box-shadow:0 12px 30px rgba(2,6,23,.10);
+      max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
+      transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
+    }
+    .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
+    .nav-links a,.lang-toggle{padding:.7rem .9rem}
+  }
+
+  /* أقسام/شبكات */
+  section{padding:2rem 0}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
+  .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
+  .muted{color:var(--muted)}
+
+  .grid{display:grid;gap:1rem}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
+
+  .card{
+    background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;
+    display:grid;gap:.6rem;box-shadow:var(--shadow);min-height:180px
+  }
+  .card h3{margin:.2rem 0 .3rem;font-size:1.15rem}
+  .card p{margin:0}
+
+  .chip{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;
+        padding:.25rem .6rem;border-radius:999px;background:var(--card);border:1px solid var(--ring)}
+  .chip svg{width:16px;height:16px;color:var(--primary)}
+
+  .btn{display:inline-block;padding:.6rem .9rem;border-radius:12px;background:var(--primary);color:#fff;border:1px solid transparent}
+  .btn:hover{background:var(--primary-600)}
+
+  /* Footer */
+  footer{border-top:1px solid var(--ring);background:#fff}
+  .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
+
+  /* ثيم ليلي مطابق لبقية الصفحات */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --card:#0b1220; --ring:#1f2937;
+      --text:#e5e7eb; --muted:#9ca3af;
+      --shadow:0 10px 26px rgba(2,6,23,.3)
+    }
+    body{ background:#0a0f1a; }
+    .navbar, footer{ background:#0c1220; border-color:var(--ring); }
+    .card{ background:#0f172a; border-color:var(--ring); }
+    .nav-links a:hover, .nav-links a[aria-current="page"]{ background:#0f172a; }
+    .lang-toggle,.menu-toggle{ background:transparent; color:var(--text); }
+    .chip{ background:#0f172a; }
+  }
+
+  /* تقليل الحركة */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+  }
 </style>
 </head>
 <body>
@@ -82,9 +168,8 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 
 <nav class="navbar" aria-label="الشريط العلوي">
   <div class="container nav-inner">
-    <a class="brand" href="/index.html">
-      <!-- تثبيت أبعاد الشعار لتقليل اهتزاز التخطيط -->
-      <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80" decoding="async">
+    <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+      <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80" decoding="async" loading="lazy">
       <span data-lang="ar">مجلس طلاب خطوة</span>
       <span data-lang="en" hidden>Khotwa Student Council</span>
     </a>
@@ -109,13 +194,15 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 
 <main class="container" id="main">
   <section>
-    <h1 data-lang="ar" style="margin:0 0 .4rem">الفعاليات القادمة</h1>
-    <h1 data-lang="en" hidden style="margin:0 0 .4rem">Upcoming Events</h1>
+    <div class="section-head">
+      <h1 data-lang="ar">الفعاليات القادمة</h1>
+      <h1 data-lang="en" hidden>Upcoming Events</h1>
+    </div>
     <p class="muted" data-lang="ar">تابع كل جديد هنا.</p>
     <p class="muted" data-lang="en" hidden>Follow all updates here.</p>
 
     <div class="grid grid-3">
-      <article class="card">
+      <article class="card" id="e1">
         <span class="chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" focusable="false" stroke-width="2"><path d="M8 7h8M7 3h10v18H7z"/></svg>
           <time datetime="2025-09-10T17:00" data-lang="ar">10 سبتمبر – 5:00م</time>
@@ -128,7 +215,7 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
         <a class="btn" href="/contact.html?event=workshop"><span data-lang="ar">سجّل الآن</span><span data-lang="en" hidden>Register</span></a>
       </article>
 
-      <article class="card">
+      <article class="card" id="e2">
         <span class="chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" focusable="false" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
           <time datetime="2025-09-24T16:00" data-lang="ar">24 سبتمبر – 4:00م</time>
@@ -141,7 +228,7 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
         <a class="btn" href="/contact.html?event=padel"><span data-lang="ar">التفاصيل</span><span data-lang="en" hidden>Details</span></a>
       </article>
 
-      <article class="card">
+      <article class="card" id="e3">
         <span class="chip">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" focusable="false" stroke-width="2"><path d="M3 12h18"/><path d="M12 3v18"/></svg>
           <time datetime="2025-10-01T09:00" data-lang="ar">1 أكتوبر – 9:00ص</time>
@@ -157,47 +244,47 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
   </section>
 </main>
 
-<footer>
-  <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
+<footer aria-label="تذييل الموقع">
+  <div class="container foot">
     <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
     <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
   </div>
 </footer>
 
-<!-- JSON-LD للأحداث (غير مرئي لكنه مفيد لمحركات البحث) -->
-<script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[
-  {"@type":"Event","name":"ورشة تخصصات خطوة","startDate":"2025-09-10T17:00"},
-  {"@type":"Event","name":"بطولة البادل","startDate":"2025-09-24T16:00"},
-  {"@type":"Event","name":"ماراثون داخل الحرم","startDate":"2025-10-01T09:00"}
-]}
-</script>
-
 <script>
-document.getElementById('year').textContent=new Date().getFullYear();
+  // سنة الحقوق
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-// منيو الموبايل
-const menuBtn=document.getElementById('menu-toggle');
-const primaryNav=document.getElementById('primary-nav');
-menuBtn.addEventListener('click',()=>{
-  const open=primaryNav.getAttribute('data-open')==='true';
-  primaryNav.setAttribute('data-open', String(!open));
-  menuBtn.setAttribute('aria-expanded', String(!open));
-});
-matchMedia('(min-width:901px)').addEventListener('change',e=>{
-  if(e.matches){primaryNav.setAttribute('data-open','false'); menuBtn.setAttribute('aria-expanded','false');}
-});
+  // منيو الموبايل + وصولية
+  const menuBtn = document.getElementById('menu-toggle');
+  const primaryNav = document.getElementById('primary-nav');
+  function setMenu(open){
+    primaryNav.setAttribute('data-open', String(open));
+    menuBtn.setAttribute('aria-expanded', String(open));
+    if(open){ primaryNav.querySelector('a,button')?.focus(); }
+  }
+  menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+  matchMedia('(min-width:901px)').addEventListener('change', e=>{ if(e.matches) setMenu(false); });
+  document.addEventListener('click', (e)=>{
+    const open = primaryNav.getAttribute('data-open')==='true';
+    if(open && !primaryNav.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
+  });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
 
-// اللغة
-const t=document.getElementById('lang-toggle');let en=false;
-function setLang(v){en=v;
-  document.querySelectorAll('[data-lang="ar"]').forEach(el=>el.hidden=en);
-  document.querySelectorAll('[data-lang="en"]').forEach(el=>el.hidden=!en);
-  document.documentElement.lang=en?'en':'ar';
-  document.documentElement.dir=en?'ltr':'rtl';
-  t.textContent=en?'العربية':'English';
-}
-t.addEventListener('click',()=>setLang(!en)); setLang(false);
+  // اللغة + حفظ التفضيل
+  const toggleBtn = document.getElementById('lang-toggle');
+  let isEn = localStorage.getItem('khotwa_lang') === 'en';
+  function setLang(en){
+    isEn = en;
+    document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
+    document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
+    document.documentElement.lang = en ? 'en' : 'ar';
+    document.documentElement.dir  = en ? 'ltr' : 'rtl';
+    toggleBtn.textContent = en ? 'العربية' : 'English';
+    localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
+  }
+  toggleBtn.addEventListener('click',()=> setLang(!isEn));
+  setLang(isEn);
 </script>
 </body>
 </html>
