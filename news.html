@@ -4,19 +4,17 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>الأخبار – Khotwa</title>
-<meta name="description" content="آخر أخبار مجلس طلاب خطوة في جامعة لا تروب: إعلانات، شراكات، وملفات صور.">
+<meta name="description" content="آخر أخبار مجلس طلاب خطوة: إعلانات، شراكات، وملفات صور.">
 <link rel="canonical" href="https://khotwastudentcouncil.com/news.html"/>
 <meta name="robots" content="index,follow"/>
 
-<!-- Open Graph -->
+<!-- OG/Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Khotwa Student Council">
 <meta property="og:title" content="الأخبار – Khotwa">
 <meta property="og:description" content="إعلانات المجلس، الشراكات، وملف الصور.">
 <meta property="og:url" content="https://khotwastudentcouncil.com/news.html">
 <meta property="og:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
-
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="الأخبار – Khotwa">
 <meta name="twitter:description" content="إعلانات المجلس، الشراكات، وملف الصور.">
@@ -34,15 +32,30 @@ a{color:inherit;text-decoration:none} a:visited{color:inherit}
 .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000}
 .skip-link:focus{inset-block-start:1rem}
 
-/* Navbar */
+/* Navbar (مشترك) */
 .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
 .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
 .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
 .nav-links{display:flex;gap:1rem;align-items:center}
 .nav-links a{padding:.5rem .75rem;border-radius:10px}
 .nav-links a:hover{background:var(--card)}
 .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+.menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+.menu-toggle svg{width:20px;height:20px}
+@media (max-width:900px){
+  .menu-toggle{display:inline-flex}
+  .nav-links{
+    position:absolute; inset-inline:0; top:calc(100% + 8px);
+    background:#fff; border:1px solid var(--ring); border-radius:12px;
+    display:grid; gap:.2rem; padding:.4rem;
+    box-shadow:0 12px 30px rgba(2,6,23,.10);
+    max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
+    transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
+  }
+  .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
+  .nav-links a,.lang-toggle{padding:.7rem .9rem}
+}
 
 /* Sections */
 section{padding:2rem 0}
@@ -53,8 +66,6 @@ section{padding:2rem 0}
 .badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;background:var(--card);border:1px solid var(--ring);padding:.25rem .5rem;border-radius:999px;color:#111}
 .badge svg{width:16px;height:16px;color:var(--primary)}
 .muted{color:var(--muted)}
-
-/* Footer */
 footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 </style>
 </head>
@@ -64,17 +75,23 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 <nav class="navbar" aria-label="الشريط العلوي">
   <div class="container nav-inner">
     <a class="brand" href="/index.html">
-      <!-- أبعاد مثبتة لتقليل CLS -->
       <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="80" height="80" decoding="async">
       <span data-lang="ar">مجلس طلاب خطوة – La Trobe</span>
       <span data-lang="en" hidden>Khotwa Student Council – La Trobe</span>
     </a>
-    <div class="nav-links">
+
+    <button id="menu-toggle" class="menu-toggle" type="button"
+            aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      القائمة
+    </button>
+
+    <div class="nav-links" id="primary-nav" data-open="false">
       <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
       <a href="/news.html" aria-current="page"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
       <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
       <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-      <a href="/resources.html"><span data-lang="ار">الموارد</span><span data-lang="en" hidden>Resources</span></a>
+      <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
       <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
       <button id="lang-toggle" class="lang-toggle" type="button">English</button>
     </div>
@@ -133,6 +150,14 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
+
+// منيو الموبايل
+const menuBtn=document.getElementById('menu-toggle');
+const primaryNav=document.getElementById('primary-nav');
+menuBtn.addEventListener('click',()=>{const open=primaryNav.getAttribute('data-open')==='true';primaryNav.setAttribute('data-open',String(!open));menuBtn.setAttribute('aria-expanded',String(!open));});
+matchMedia('(min-width:901px)').addEventListener('change',e=>{if(e.matches){primaryNav.setAttribute('data-open','false');menuBtn.setAttribute('aria-expanded','false');}});
+
+// اللغة
 const t=document.getElementById('lang-toggle');let en=false;
 function setLang(v){en=v;
   document.querySelectorAll('[data-lang="ar"]').forEach(el=>el.hidden=en);
