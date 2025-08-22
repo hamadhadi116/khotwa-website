@@ -4,19 +4,64 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>الفعاليات – Khotwa</title>
+<meta name="description" content="الفعاليات القادمة لمجلس طلاب خطوة في جامعة لا تروب: ورش، بطولات، وماراثون داخل الحرم.">
+<link rel="canonical" href="https://khotwastudentcouncil.com/events.html"/>
+<meta name="robots" content="index,follow"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Khotwa Student Council">
+<meta property="og:title" content="الفعاليات – Khotwa">
+<meta property="og:description" content="تابع كل جديد من فعاليات مجلس طلاب خطوة.">
+<meta property="og:url" content="https://khotwastudentcouncil.com/events.html">
+<meta property="og:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="الفعاليات – Khotwa">
+<meta name="twitter:description" content="تابع كل جديد من فعاليات مجلس طلاب خطوة.">
+<meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
+
 <style>
 :root{--primary:#1e40af;--primary-600:#1d4ed8;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
-*{box-sizing:border-box} body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text)}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
 a{color:inherit;text-decoration:none} a:visited{color:inherit}
 .container{width:min(1120px,92%);margin-inline:auto}
+
+/* وصولية */
+:where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
+.skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000}
+.skip-link:focus{inset-block-start:1rem}
+
+/* Navbar (موحّد مثل الصفحات السابقة) */
 .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
 .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
 .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
 .nav-links{display:flex;gap:1rem;align-items:center}
 .nav-links a{padding:.5rem .75rem;border-radius:10px}
 .nav-links a:hover{background:var(--card)}
 .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+.menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+.menu-toggle svg{width:20px;height:20px}
+
+/* عند الموبايل تصير القائمة منسدلة */
+@media (max-width:900px){
+  .menu-toggle{display:inline-flex}
+  .nav-links{
+    position:absolute; inset-inline:0; top:calc(100% + 8px);
+    background:#fff; border:1px solid var(--ring); border-radius:12px;
+    display:grid; gap:.2rem; padding:.4rem;
+    box-shadow:0 12px 30px rgba(2,6,23,.10);
+    max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
+    transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
+  }
+  .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
+  .nav-links a,.lang-toggle{padding:.7rem .9rem}
+}
+
+/* Sections */
 section{padding:2rem 0}
 .muted{color:var(--muted)}
 .grid{display:grid;gap:1rem}
@@ -27,18 +72,30 @@ section{padding:2rem 0}
 .chip svg{width:16px;height:16px;color:var(--primary)}
 .btn{display:inline-block;padding:.6rem .9rem;border-radius:10px;background:var(--primary);color:#fff}
 .btn:hover{background:var(--primary-600)}
+
+/* Footer */
 footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 </style>
 </head>
 <body>
-<nav class="navbar">
+<a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+
+<nav class="navbar" aria-label="الشريط العلوي">
   <div class="container nav-inner">
     <a class="brand" href="/index.html">
-      <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="">
+      <!-- تثبيت أبعاد الشعار لتقليل اهتزاز التخطيط -->
+      <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80" decoding="async">
       <span data-lang="ar">مجلس طلاب خطوة – La Trobe</span>
       <span data-lang="en" hidden>Khotwa Student Council – La Trobe</span>
     </a>
-    <div class="nav-links">
+
+    <button id="menu-toggle" class="menu-toggle" type="button"
+            aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      القائمة
+    </button>
+
+    <div class="nav-links" id="primary-nav" data-open="false">
       <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
       <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
       <a href="/events.html" aria-current="page"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
@@ -50,7 +107,7 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
   </div>
 </nav>
 
-<main class="container">
+<main class="container" id="main">
   <section>
     <h1 data-lang="ar" style="margin:0 0 .4rem">الفعاليات القادمة</h1>
     <h1 data-lang="en" hidden style="margin:0 0 .4rem">Upcoming Events</h1>
@@ -60,7 +117,7 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
     <div class="grid grid-3">
       <article class="card">
         <span class="chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7h8M7 3h10v18H7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" focusable="false" stroke-width="2"><path d="M8 7h8M7 3h10v18H7z"/></svg>
           <time datetime="2025-09-10T17:00" data-lang="ar">10 سبتمبر – 5:00م</time>
           <time datetime="2025-09-10T17:00" data-lang="en" hidden>10 Sep – 5:00 PM</time>
         </span>
@@ -73,7 +130,7 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 
       <article class="card">
         <span class="chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" focusable="false" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
           <time datetime="2025-09-24T16:00" data-lang="ar">24 سبتمبر – 4:00م</time>
           <time datetime="2025-09-24T16:00" data-lang="en" hidden>24 Sep – 4:00 PM</time>
         </span>
@@ -86,7 +143,7 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 
       <article class="card">
         <span class="chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18"/><path d="M12 3v18"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" focusable="false" stroke-width="2"><path d="M3 12h18"/><path d="M12 3v18"/></svg>
           <time datetime="2025-10-01T09:00" data-lang="ar">1 أكتوبر – 9:00ص</time>
           <time datetime="2025-10-01T09:00" data-lang="en" hidden>1 Oct – 9:00 AM</time>
         </span>
@@ -107,8 +164,31 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
   </div>
 </footer>
 
+<!-- JSON-LD للأحداث (غير مرئي لكنه مفيد لمحركات البحث) -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+  {"@type":"Event","name":"ورشة تخصصات خطوة","startDate":"2025-09-10T17:00"},
+  {"@type":"Event","name":"بطولة البادل","startDate":"2025-09-24T16:00"},
+  {"@type":"Event","name":"ماراثون داخل الحرم","startDate":"2025-10-01T09:00"}
+]}
+</script>
+
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
+
+// منيو الموبايل
+const menuBtn=document.getElementById('menu-toggle');
+const primaryNav=document.getElementById('primary-nav');
+menuBtn.addEventListener('click',()=>{
+  const open=primaryNav.getAttribute('data-open')==='true';
+  primaryNav.setAttribute('data-open', String(!open));
+  menuBtn.setAttribute('aria-expanded', String(!open));
+});
+matchMedia('(min-width:901px)').addEventListener('change',e=>{
+  if(e.matches){primaryNav.setAttribute('data-open','false'); menuBtn.setAttribute('aria-expanded','false');}
+});
+
+// اللغة
 const t=document.getElementById('lang-toggle');let en=false;
 function setLang(v){en=v;
   document.querySelectorAll('[data-lang="ar"]').forEach(el=>el.hidden=en);
