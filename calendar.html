@@ -7,6 +7,7 @@
 <meta name="description" content="تقويم فعاليات مجلس طلاب خطوة في جامعة لا تروب: ورش، بطولات، وماراثون داخل الحرم.">
 <link rel="canonical" href="https://khotwastudentcouncil.com/calendar.html"/>
 <meta name="robots" content="index,follow"/>
+<meta name="color-scheme" content="light dark"/>
 
 <!-- OG/Twitter -->
 <meta property="og:type" content="website">
@@ -20,47 +21,104 @@
 <meta name="twitter:description" content="جدول الفعاليات القادمة لطلاب خطوة.">
 <meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
 
-<style>
-:root{--primary:#1e40af;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
-*{box-sizing:border-box} body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
-a{color:inherit;text-decoration:none} a:visited{color:inherit}
-.container{width:min(1120px,92%);margin-inline:auto}
-
-/* وصولية */
-:where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
-.skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000}
-.skip-link:focus{inset-block-start:1rem}
-
-/* Navbar (مشترك) */
-.navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
-.brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-.brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
-.nav-links{display:flex;gap:1rem;align-items:center}
-.nav-links a{padding:.5rem .75rem;border-radius:10px}
-.nav-links a:hover{background:var(--card)}
-.lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-.menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-.menu-toggle svg{width:20px;height:20px}
-@media (max-width:900px){
-  .menu-toggle{display:inline-flex}
-  .nav-links{
-    position:absolute; inset-inline:0; top:calc(100% + 8px);
-    background:#fff; border:1px solid var(--ring); border-radius:12px;
-    display:grid; gap:.2rem; padding:.4rem;
-    box-shadow:0 12px 30px rgba(2,6,23,.10);
-    max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
-    transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
-  }
-  .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
-  .nav-links a,.lang-toggle{padding:.7rem .9rem}
+<!-- JSON-LD (Events) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {"@type":"Event","name":"ورشة تخصصات خطوة","startDate":"2025-09-10T17:00:00+10:00","location":{"@type":"Place","name":"La Trobe – Bundoora"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","url":"https://khotwastudentcouncil.com/events.html#e1"},
+    {"@type":"Event","name":"بطولة البادل","startDate":"2025-09-24T16:00:00+10:00","location":{"@type":"Place","name":"La Trobe Sports Centre"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","url":"https://khotwastudentcouncil.com/events.html#e2"},
+    {"@type":"Event","name":"ماراثون داخل الحرم","startDate":"2025-10-01T09:00:00+10:00","location":{"@type":"Place","name":"La Trobe – Bundoora"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","url":"https://khotwastudentcouncil.com/events.html#e3"}
+  ]
 }
+</script>
 
-/* Sections */
-section{padding:2rem 0}
-.card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
-.muted{color:var(--muted)}
-footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
+<style>
+  :root{
+    --primary:#1e40af;--primary-600:#1d4ed8;
+    --ring:#e5e7eb;--card:#f8fafc;
+    --text:#0f172a;--muted:#6b7280;
+    --shadow:0 10px 26px rgba(2,6,23,.08)
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
+  a{color:inherit;text-decoration:none} a:visited{color:inherit}
+  .container{width:min(1120px,92%);margin-inline:auto}
+
+  /* وصولية */
+  :where(a,button,[role="button"],input,select,textarea):focus-visible{
+    outline:3px solid #2563eb;outline-offset:3px;border-radius:8px
+  }
+  .skip-link{
+    position:absolute;inset-inline-start:1rem;inset-block-start:-100px;
+    background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000
+  }
+  .skip-link:focus{inset-block-start:1rem}
+
+  /* Navbar (موحّد) */
+  .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
+  .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
+  .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
+  .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
+  .nav-links{display:flex;gap:1rem;align-items:center}
+  .nav-links a{padding:.5rem .75rem;border-radius:10px}
+  .nav-links a:hover{background:var(--card)}
+  .nav-links a[aria-current="page"]{background:var(--card)}
+  .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+  .menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+  .menu-toggle svg{width:20px;height:20px}
+
+  @media (max-width:900px){
+    .menu-toggle{display:inline-flex}
+    .nav-links{
+      position:absolute; inset-inline:0; top:calc(100% + 8px);
+      background:#fff; border:1px solid var(--ring); border-radius:12px;
+      display:grid; gap:.2rem; padding:.4rem;
+      box-shadow:0 12px 30px rgba(2,6,23,.10);
+      max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
+      transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
+    }
+    .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
+    .nav-links a,.lang-toggle{padding:.7rem .9rem}
+  }
+
+  /* Sections */
+  section{padding:2rem 0}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
+  .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
+  .muted{color:var(--muted)}
+
+  .card{
+    background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;
+    box-shadow:var(--shadow)
+  }
+  .events-list{margin:0;padding-right:1rem;line-height:1.9}
+  .events-list li{margin:.2rem 0}
+  .events-list time{font-variant-numeric:tabular-nums}
+
+  footer{border-top:1px solid var(--ring);background:#fff}
+  .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
+
+  /* ثيم ليلي مطابق */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --card:#0b1220; --ring:#1f2937;
+      --text:#e5e7eb; --muted:#9ca3af;
+      --shadow:0 10px 26px rgba(2,6,23,.3)
+    }
+    body{ background:#0a0f1a; }
+    .navbar, footer{ background:#0c1220; border-color:var(--ring); }
+    .card{ background:#0f172a; border-color:var(--ring); }
+    .nav-links a:hover, .nav-links a[aria-current="page"]{ background:#0f172a; }
+    .lang-toggle,.menu-toggle{ background:transparent; color:var(--text); }
+  }
+
+  /* تقليل الحركة */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+  }
 </style>
 </head>
 <body>
@@ -68,8 +126,8 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 
 <nav class="navbar" aria-label="الشريط العلوي">
   <div class="container nav-inner">
-    <a class="brand" href="/index.html">
-      <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80" decoding="async">
+    <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+      <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80" decoding="async" loading="lazy">
       <span data-lang="ar">مجلس طلاب خطوة</span>
       <span data-lang="en" hidden>Khotwa Student Council</span>
     </a>
@@ -94,54 +152,76 @@ footer{border-top:1px solid var(--ring);padding:1rem 0;margin-top:1rem}
 
 <main class="container" id="main">
   <section>
-    <h1 data-lang="ar">تقويم الفعاليات</h1>
-    <h1 data-lang="en" hidden>Events Calendar</h1>
+    <div class="section-head">
+      <h1 data-lang="ar">تقويم الفعاليات</h1>
+      <h1 data-lang="en" hidden>Events Calendar</h1>
+    </div>
     <p class="muted" data-lang="ar">جدول الفعاليات القادمة.</p>
     <p class="muted" data-lang="en" hidden>Schedule of upcoming events.</p>
+
     <div class="card">
-      <ul style="margin:0;padding-right:1rem;line-height:1.9">
-        <li><strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong>: <span data-lang="ar">ورشة تخصصات خطوة – </span><span data-lang="en" hidden>Khotwa Majors Workshop – </span><time datetime="2025-09-10">10/09/2025</time></li>
-        <li><strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong>: <span data-lang="ar">بطولة البادل – </span><span data-lang="en" hidden>Padel Championship – </span><time datetime="2025-09-24">24/09/2025</time></li>
-        <li><strong data-lang="ar">أكتوبر</strong><strong data-lang="en" hidden>October</strong>: <span data-lang="ar">ماراثون داخل الحرم – </span><span data-lang="en" hidden>On-Campus Marathon – </span><time datetime="2025-10-01">01/10/2025</time></li>
+      <ul class="events-list">
+        <li>
+          <strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong> —
+          <span data-lang="ar">ورشة تخصصات خطوة – </span><span data-lang="en" hidden>Khotwa Majors Workshop – </span>
+          <time datetime="2025-09-10">10/09/2025</time>
+        </li>
+        <li>
+          <strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong> —
+          <span data-lang="ar">بطولة البادل – </span><span data-lang="en" hidden>Padel Championship – </span>
+          <time datetime="2025-09-24">24/09/2025</time>
+        </li>
+        <li>
+          <strong data-lang="ar">أكتوبر</strong><strong data-lang="en" hidden>October</strong> —
+          <span data-lang="ar">ماراثون داخل الحرم – </span><span data-lang="en" hidden>On-Campus Marathon – </span>
+          <time datetime="2025-10-01">01/10/2025</time>
+        </li>
       </ul>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="container" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">
+<footer aria-label="تذييل الموقع">
+  <div class="container foot">
     <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
     <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
   </div>
 </footer>
 
-<script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[
-  {"@type":"Event","name":"ورشة تخصصات خطوة","startDate":"2025-09-10"},
-  {"@type":"Event","name":"بطولة البادل","startDate":"2025-09-24"},
-  {"@type":"Event","name":"ماراثون داخل الحرم","startDate":"2025-10-01"}
-]}
-</script>
-
 <script>
-document.getElementById('year').textContent=new Date().getFullYear();
+  // سنة الحقوق
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-// منيو الموبايل
-const menuBtn=document.getElementById('menu-toggle');
-const primaryNav=document.getElementById('primary-nav');
-menuBtn.addEventListener('click',()=>{const open=primaryNav.getAttribute('data-open')==='true';primaryNav.setAttribute('data-open',String(!open));menuBtn.setAttribute('aria-expanded',String(!open));});
-matchMedia('(min-width:901px)').addEventListener('change',e=>{if(e.matches){primaryNav.setAttribute('data-open','false');menuBtn.setAttribute('aria-expanded','false');}});
+  // منيو الموبايل + وصولية
+  const menuBtn = document.getElementById('menu-toggle');
+  const primaryNav = document.getElementById('primary-nav');
+  function setMenu(open){
+    primaryNav.setAttribute('data-open', String(open));
+    menuBtn.setAttribute('aria-expanded', String(open));
+    if(open){ primaryNav.querySelector('a,button')?.focus(); }
+  }
+  menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+  matchMedia('(min-width:901px)').addEventListener('change', e=>{ if(e.matches) setMenu(false); });
+  document.addEventListener('click', (e)=>{
+    const open = primaryNav.getAttribute('data-open')==='true';
+    if(open && !primaryNav.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
+  });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
 
-// اللغة
-const t=document.getElementById('lang-toggle');let en=false;
-function setLang(v){en=v;
-  document.querySelectorAll('[data-lang="ar"]').forEach(el=>el.hidden=en);
-  document.querySelectorAll('[data-lang="en"]').forEach(el=>el.hidden=!en);
-  document.documentElement.lang=en?'en':'ar';
-  document.documentElement.dir=en?'ltr':'rtl';
-  t.textContent=en?'العربية':'English';
-}
-t.addEventListener('click',()=>setLang(!en)); setLang(false);
+  // اللغة + حفظ التفضيل
+  const toggleBtn = document.getElementById('lang-toggle');
+  let isEn = localStorage.getItem('khotwa_lang') === 'en';
+  function setLang(en){
+    isEn = en;
+    document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
+    document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
+    document.documentElement.lang = en ? 'en' : 'ar';
+    document.documentElement.dir  = en ? 'ltr' : 'rtl';
+    toggleBtn.textContent = en ? 'العربية' : 'English';
+    localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
+  }
+  toggleBtn.addEventListener('click',()=> setLang(!isEn));
+  setLang(isEn);
 </script>
 </body>
 </html>
