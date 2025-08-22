@@ -3,21 +3,18 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
   <title>مجلس طلاب خطوة – Khotwa</title>
   <meta name="description" content="مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن. فعاليات، أخبار، وانضمام للمجلس.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/"/>
   <meta name="robots" content="index,follow"/>
 
-  <!-- Open Graph -->
+  <!-- OG/Twitter -->
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Khotwa Student Council"/>
   <meta property="og:title" content="مجلس طلاب خطوة – Khotwa"/>
   <meta property="og:description" content="فعاليات، أخبار، وخدمات موجهة لطلاب خطوة في ملبورن."/>
   <meta property="og:url" content="https://khotwastudentcouncil.com/"/>
   <meta property="og:image" content="https://b.top4top.io/p_35166f7hr1.jpg"/>
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="مجلس طلاب خطوة – Khotwa"/>
   <meta name="twitter:description" content="فعاليات، أخبار، وخدمات لطلاب خطوة."/>
@@ -25,34 +22,44 @@
 
   <style>
     :root{--primary:#1e40af;--primary-600:#1d4ed8;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{box-sizing:border-box} html,body{height:100%}
     body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
     a{color:inherit;text-decoration:none} a:visited{color:inherit}
     .container{width:min(1120px,92%);margin-inline:auto}
 
-    /* وصولية بسيطة */
-    :where(a,button,[role="button"],input,select,textarea):focus-visible{
-      outline:3px solid #2563eb; outline-offset:3px; border-radius:8px;
-    }
-    .skip-link{
-      position:absolute; inset-inline-start:1rem; inset-block-start:-100px;
-      background:#fff; color:#000; padding:.6rem .9rem; border-radius:.5rem;
-      box-shadow:0 2px 8px rgba(0,0,0,.15); z-index:1000;
-    }
-    .skip-link:focus{ inset-block-start:1rem; }
+    /* وصولية */
+    :where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
+    .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000}
+    .skip-link:focus{inset-block-start:1rem}
 
-    /* Navbar */
+    /* Navbar (مشترك) */
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
     .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
     .nav-links{display:flex;gap:1rem;align-items:center}
     .nav-links a{padding:.5rem .75rem;border-radius:10px}
     .nav-links a:hover{background:var(--card)}
     .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+    .menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+    .menu-toggle svg{width:20px;height:20px}
 
-    /* Hero */
+    /* موبايل: القائمة منسدلة تحت الشريط */
+    @media (max-width: 900px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{
+        position:absolute; inset-inline:0; top:calc(100% + 8px);
+        background:#fff; border:1px solid var(--ring); border-radius:12px;
+        display:grid; gap:.2rem; padding:.4rem;
+        box-shadow:0 12px 30px rgba(2,6,23,.10);
+        max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
+        transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
+      }
+      .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
+      .nav-links a,.lang-toggle{padding:.7rem .9rem}
+    }
+
+    /* Hero + أقسام الصفحة (نفس تنسيقك السابق) */
     header.hero{background:linear-gradient(180deg,#fff 0,#f5f7ff 100%);border-bottom:1px solid var(--ring)}
     .hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;padding:3rem 0;align-items:center}
     .hero h1{margin:0 0 .5rem;font-size:clamp(1.6rem,2.6vw + 1rem,2.4rem)}
@@ -64,8 +71,6 @@
     .btn-outline{background:#fff;border-color:var(--ring)}
     .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
     .hero-img img{width:100%;height:auto;object-fit:cover;border-radius:16px}
-
-    /* Sections */
     section{padding:2rem 0}
     .section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
     .section-head h2{margin:0;font-size:1.4rem}
@@ -74,36 +79,35 @@
     .grid-3{grid-template-columns:repeat(3,1fr)}
     .grid-2{grid-template-columns:repeat(2,1fr)}
     @media (max-width:980px){.hero-inner{grid-template-columns:1fr}.grid-3,.grid-2{grid-template-columns:1fr}}
-
-    /* Footer */
     footer{border-top:1px solid var(--ring);background:#fff}
     .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
   </style>
 </head>
 <body>
-  <!-- رابط وصولية -->
   <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
 
   <!-- Navbar -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
       <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <!-- نفس صورة اللوغو الأصلية + أبعاد لتثبيت التخطيط -->
-        <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80">
+        <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80" decoding="async">
         <span data-lang="ar">مجلس طلاب خطوة – La Trobe</span>
         <span data-lang="en" hidden>Khotwa Student Council – La Trobe</span>
       </a>
 
-      <div class="nav-links">
+      <button id="menu-toggle" class="menu-toggle" type="button"
+              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        القائمة
+      </button>
+
+      <div class="nav-links" id="primary-nav" data-open="false">
         <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
         <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
         <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
         <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
         <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
-        <a href="/contact.html" class="nav-cta">
-          <span data-lang="ar">تواصل</span>
-          <span data-lang="en" hidden>Contact</span>
-        </a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
         <button id="lang-toggle" class="lang-toggle" type="button">English</button>
       </div>
     </div>
@@ -115,113 +119,47 @@
       <div>
         <h1 data-lang="ar">مجلس طلاب خطوة – صوت الطلاب وشريك الجامعة</h1>
         <h1 data-lang="en" hidden>Khotwa Student Council – Students’ Voice and University Partner</h1>
-
         <p data-lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا، ونبني الجسر بين الطلاب وإدارة الجامعة بفعاليات نوعية وخدمات موجهة.</p>
         <p data-lang="en" hidden>We empower Khotwa students academically, socially, and culturally, building bridges with the university through quality events and tailored services.</p>
-
         <div class="cta-row">
-          <a href="/contact.html" class="btn btn-primary">
-            <span data-lang="ar">قدّم للعضوية</span>
-            <span data-lang="en" hidden>Apply for Membership</span>
-          </a>
-          <a href="/events.html" class="btn btn-outline">
-            <span data-lang="ar">شاهد أقرب الفعاليات</span>
-            <span data-lang="en" hidden>See Upcoming Events</span>
-          </a>
+          <a href="/contact.html" class="btn btn-primary"><span data-lang="ar">قدّم للعضوية</span><span data-lang="en" hidden>Apply for Membership</span></a>
+          <a href="/events.html" class="btn btn-outline"><span data-lang="ar">شاهد أقرب الفعاليات</span><span data-lang="en" hidden>See Upcoming Events</span></a>
         </div>
       </div>
-
-      <!-- صورة الشباب الأصلية + أبعاد لتقليل CLS -->
       <div class="hero-img">
-        <img src="https://b.top4top.io/p_35166f7hr1.jpg"
-             alt="مجموعة طلاب مجلس خطوة – La Trobe"
-             width="1600" height="900" loading="eager" decoding="async">
+        <img src="https://b.top4top.io/p_35166f7hr1.jpg" alt="مجموعة طلاب مجلس خطوة – La Trobe" width="1600" height="900" loading="eager" decoding="async">
       </div>
     </div>
   </header>
 
-  <!-- About quick -->
-  <section aria-labelledby="about-ar">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="about-ar" data-lang="ar">من نحن</h2>
-        <h2 id="about-en" data-lang="en" hidden>About Us</h2>
-        <a class="muted" href="/about.html">
-          <span data-lang="ar">المزيد</span>
-          <span data-lang="en" hidden>Learn more</span>
-        </a>
-      </div>
-
-      <div class="grid grid-2">
-        <article class="card">
-          <h3 data-lang="ar">الرؤية</h3>
-          <h3 data-lang="en" hidden>Vision</h3>
-          <p data-lang="ar">دعم العملية التعليمية وخدمة المجتمع الجامعي.</p>
-          <p data-lang="en" hidden>Support the learning journey and serve our university community.</p>
-        </article>
-
-        <article class="card">
-          <h3 data-lang="ar">الرسالة</h3>
-          <h3 data-lang="en" hidden>Mission</h3>
-          <p data-lang="ar">تمكين الطلاب وتعزيز علاقتهم بالإدارة الجامعية.</p>
-          <p data-lang="en" hidden>Empower students and strengthen ties with university administration.</p>
-        </article>
-
-        <article class="card">
-          <h3 data-lang="ar">الأهداف</h3>
-          <h3 data-lang="en" hidden>Goals</h3>
-          <p data-lang="ar">التمثيل، القيادة، التفاعل المجتمعي، والدعوة.</p>
-          <p data-lang="en" hidden>Representation, leadership, community engagement, and advocacy.</p>
-        </article>
-
-        <article class="card">
-          <h3 data-lang="ar">التنظيم</h3>
-          <h3 data-lang="en" hidden>Structure</h3>
-          <p data-lang="ar">رئيس ونائب وقادة فرق ومنسقو الأنشطة والإعلام.</p>
-          <p data-lang="en" hidden>President, Vice President, team leads, and activity/media coordinators.</p>
-        </article>
-      </div>
+  <!-- About + Events (كما هي) -->
+  <section aria-labelledby="about-ar" class="container">
+    <div class="section-head">
+      <h2 id="about-ar" data-lang="ar">من نحن</h2>
+      <h2 id="about-en" data-lang="en" hidden>About Us</h2>
+      <a class="muted" href="/about.html"><span data-lang="ar">المزيد</span><span data-lang="en" hidden>Learn more</span></a>
+    </div>
+    <div class="grid grid-2">
+      <article class="card"><h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3><p data-lang="ar">دعم العملية التعليمية وخدمة المجتمع الجامعي.</p><p data-lang="en" hidden>Support the learning journey and serve our university community.</p></article>
+      <article class="card"><h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3><p data-lang="ar">تمكين الطلاب وتعزيز علاقتهم بالإدارة الجامعية.</p><p data-lang="en" hidden>Empower students and strengthen ties with university administration.</p></article>
+      <article class="card"><h3 data-lang="ar">الأهداف</h3><h3 data-lang="en" hidden>Goals</h3><p data-lang="ar">التمثيل، القيادة، التفاعل المجتمعي، والدعوة.</p><p data-lang="en" hidden>Representation, leadership, community engagement, and advocacy.</p></article>
+      <article class="card"><h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden>Structure</h3><p data-lang="ar">رئيس ونائب وقادة فرق ومنسقو الأنشطة والإعلام.</p><p data-lang="en" hidden>President, Vice President, team leads, and activity/media coordinators.</p></article>
     </div>
   </section>
 
-  <!-- Events preview -->
-  <section aria-labelledby="events-ar">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="events-ar" data-lang="ar">الفعاليات القادمة</h2>
-        <h2 id="events-en" data-lang="en" hidden>Upcoming Events</h2>
-        <a class="muted" href="/events.html">
-          <span data-lang="ar">تقويم الفعاليات</span>
-          <span data-lang="en" hidden>All events</span>
-        </a>
-      </div>
-
-      <div class="grid grid-3">
-        <article class="card">
-          <h3 data-lang="ar">ورشة تخصصات خطوة</h3>
-          <h3 data-lang="en" hidden>Khotwa Majors Workshop</h3>
-          <p class="muted" data-lang="ar">IT، الأمن السيبراني، العلوم الحيوية، الأعمال.</p>
-          <p class="muted" data-lang="en" hidden>IT, Cybersecurity, Biosciences, Business.</p>
-        </article>
-
-        <article class="card">
-          <h3 data-lang="ar">بطولة البادل</h3>
-          <h3 data-lang="en" hidden>Padel Championship</h3>
-          <p class="muted" data-lang="ar">تنظيم رياضي طلابي – La Trobe Sports Centre.</p>
-          <p class="muted" data-lang="en" hidden>Student sports event – La Trobe Sports Centre.</p>
-        </article>
-
-        <article class="card">
-          <h3 data-lang="ar">ماراثون داخل الحرم</h3>
-          <h3 data-lang="en" hidden>On-Campus Marathon</h3>
-          <p class="muted" data-lang="ar">مسارات 1K و2.5K و10K.</p>
-          <p class="muted" data-lang="en" hidden>1K, 2.5K, and 10K routes.</p>
-        </article>
-      </div>
+  <section aria-labelledby="events-ar" class="container">
+    <div class="section-head">
+      <h2 id="events-ar" data-lang="ar">الفعاليات القادمة</h2>
+      <h2 id="events-en" data-lang="en" hidden>Upcoming Events</h2>
+      <a class="muted" href="/events.html"><span data-lang="ar">تقويم الفعاليات</span><span data-lang="en" hidden>All events</span></a>
+    </div>
+    <div class="grid grid-3">
+      <article class="card"><h3 data-lang="ar">ورشة تخصصات خطوة</h3><h3 data-lang="en" hidden>Khotwa Majors Workshop</h3><p class="muted" data-lang="ar">IT، الأمن السيبراني، العلوم الحيوية، الأعمال.</p><p class="muted" data-lang="en" hidden>IT, Cybersecurity, Biosciences, Business.</p></article>
+      <article class="card"><h3 data-lang="ar">بطولة البادل</h3><h3 data-lang="en" hidden>Padel Championship</h3><p class="muted" data-lang="ar">تنظيم رياضي طلابي – La Trobe Sports Centre.</p><p class="muted" data-lang="en" hidden>Student sports event – La Trobe Sports Centre.</p></article>
+      <article class="card"><h3 data-lang="ar">ماراثون داخل الحرم</h3><h3 data-lang="en" hidden>On-Campus Marathon</h3><p class="muted" data-lang="ar">مسارات 1K و2.5K و10K.</p><p class="muted" data-lang="en" hidden>1K, 2.5K, and 10K routes.</p></article>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer aria-label="تذييل الموقع">
     <div class="container foot">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
@@ -233,7 +171,20 @@
     // سنة الحقوق
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // تبديل اللغة (نفس منطقك الأصلي)
+    // زر المنيو للموبايل
+    const menuBtn = document.getElementById('menu-toggle');
+    const primaryNav = document.getElementById('primary-nav');
+    menuBtn.addEventListener('click', () => {
+      const open = primaryNav.getAttribute('data-open') === 'true';
+      primaryNav.setAttribute('data-open', String(!open));
+      menuBtn.setAttribute('aria-expanded', String(!open));
+    });
+    // اغلاق القائمة عند تكبير الشاشة
+    matchMedia('(min-width:901px)').addEventListener('change', e=>{
+      if(e.matches){ primaryNav.setAttribute('data-open','false'); menuBtn.setAttribute('aria-expanded','false'); }
+    });
+
+    // تبديل اللغة (نفس منطقك)
     const toggleBtn = document.getElementById('lang-toggle');
     let isEn = false;
     function setLang(en){
