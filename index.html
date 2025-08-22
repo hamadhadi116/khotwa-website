@@ -4,178 +4,49 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>مجلس طلاب خطوة – La Trobe | الصفحة الرئيسية</title>
-  <meta name="description" content="مجلس طلاب خطوة في جامعة لا تروب – ملبورن: فعاليات قادمة، دعم أكاديمي واجتماعي، وفرص مشاركة للطلاب.">
+  <title>مجلس طلاب خطوة – Khotwa</title>
+  <meta name="description" content="مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن. فعاليات، أخبار، وانضمام للمجلس.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/"/>
-
-  <!-- Open Graph / Twitter -->
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Khotwa Student Council"/>
-  <meta property="og:title" content="مجلس طلاب خطوة – La Trobe"/>
-  <meta property="og:description" content="فعاليات وخدمات موجهة لطلاب خطوة في ملبورن."/>
-  <meta property="og:url" content="https://khotwastudentcouncil.com/"/>
-  <meta property="og:image" content="https://khotwastudentcouncil.com/assets/og-cover.jpg"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="مجلس طلاب خطوة – La Trobe"/>
-  <meta name="twitter:description" content="فعاليات قادمة، فرص، ودعم للطلاب."/>
-  <meta name="twitter:image" content="https://khotwastudentcouncil.com/assets/og-cover.jpg"/>
   <meta name="robots" content="index,follow"/>
 
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Khotwa Student Council"/>
+  <meta property="og:title" content="مجلس طلاب خطوة – Khotwa"/>
+  <meta property="og:description" content="فعاليات، أخبار، وخدمات موجهة لطلاب خطوة في ملبورن."/>
+  <meta property="og:url" content="https://khotwastudentcouncil.com/"/>
+  <!-- يمكنك لاحقًا تغيير og:image لأي صورة ثابتة عندك -->
+  <meta property="og:image" content="https://b.top4top.io/p_35166f7hr1.jpg"/>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="مجلس طلاب خطوة – Khotwa"/>
+  <meta name="twitter:description" content="فعاليات، أخبار، وخدمات لطلاب خطوة."/>
+  <meta name="twitter:image" content="https://b.top4top.io/p_35166f7hr1.jpg"/>
+
   <style>
-    :root{
-      --primary:#1e40af; --primary-600:#1d4ed8;
-      --bg:#ffffff; --card:#f8fafc; --ring:#e5e7eb;
-      --text:#0f172a; --muted:#475569; --focus:#2563eb; --radius:16px;
-    }
+    :root{--primary:#1e40af;--primary-600:#1d4ed8;--ring:#e5e7eb;--card:#f8fafc;--text:#0f172a;--muted:#6b7280}
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    a{color:inherit;text-decoration:none}
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
+    a{color:inherit;text-decoration:none} a:visited{color:inherit}
     .container{width:min(1120px,92%);margin-inline:auto}
 
-    /* وصولية */
-    .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000}
-    .skip-link:focus{inset-block-start:1rem}
-    :where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+    /* تحسين وصولية بسيط */
+    :where(a,button,[role="button"],input,select,textarea):focus-visible{
+      outline:3px solid #2563eb; outline-offset:3px; border-radius:8px;
+    }
+    .skip-link{
+      position:absolute; inset-inline-start:1rem; inset-block-start:-100px;
+      background:#fff; color:#000; padding:.6rem .9rem; border-radius:.5rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.15); z-index:1000;
+    }
+    .skip-link:focus{ inset-block-start:1rem; }
 
     /* Navbar */
     .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
-    .brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
-    .brand img{width:28px;height:28px;object-fit:contain}
-    .nav-links{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-    .pill{border:1px solid var(--ring);padding:.4rem .8rem;border-radius:999px;background:#fff}
-    .cta{background:var(--primary);color:#fff;padding:.55rem .95rem;border-radius:12px;font-weight:600}
-    .cta:hover{background:var(--primary-600)}
-
-    /* Hero */
-    .hero{background:linear-gradient(180deg,#f6f8ff 0%,#fff 100%);padding:40px 0 24px}
-    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
-    .hero-figure{border-radius:20px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,.08);background:#eef2ff}
-    .hero-figure img{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover}
-    .hero h1{margin:0 0 .6rem;font-size:clamp(24px,3.2vw,38px)}
-    .hero p{margin:0 0 1rem;color:var(--muted)}
-    .hero-actions{display:flex;gap:.6rem;flex-wrap:wrap}
-
-    /* Sections */
-    section{padding:28px 0}
-    .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .card{background:var(--card);border:1px solid var(--ring);border-radius:var(--radius);padding:16px}
-    .card h3{margin:.2rem 0 .6rem}
-    .muted{color:var(--muted)}
-
-    .events{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .event{border:1px solid var(--ring);border-radius:var(--radius);padding:14px;background:#fff}
-    .event small{color:var(--muted)}
-    .event img{width:100%;height:auto;margin-top:.5rem;border-radius:12px;aspect-ratio:16/9;object-fit:cover}
-
-    footer{border-top:1px solid var(--ring);padding:18px 0;color:var(--muted);background:#fff}
-
-    @media (max-width:900px){
-      .hero-grid{grid-template-columns:1fr}
-      .cards,.events{grid-template-columns:1fr}
-    }
-  </style>
-</head>
-<body>
-  <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
-
-  <header class="navbar" role="banner">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html" aria-label="الصفحة الرئيسية">
-        <!-- جرّب المسار الأول، وإن فشل بدّله تلقائيًا بالثاني ثم يخفي الصورة إن فشل -->
-        <img src="/assets/logo.svg" alt="شعار مجلس طلاب خطوة"
-             onerror="this.onerror=null; this.src='logo.png'; this.setAttribute('data-fallback','1');"
-             onload="if(this.getAttribute('data-fallback')==='1'){this.onerror=function(){this.style.display='none'}}">
-        <span>مجلس طلاب خطوة – La Trobe</span>
-      </a>
-      <nav class="nav-links" aria-label="التنقل الرئيسي">
-        <a class="pill" href="#" lang="en" hreflang="en">English</a>
-        <a class="pill" href="about.html">من نحن</a>
-        <a class="pill" href="news.html">الأخبار</a>
-        <a class="pill" href="events.html">الفعاليات</a>
-        <a class="pill" href="calendar.html">التقويم</a>
-        <a class="pill" href="resources.html">الموارد</a>
-        <a class="pill" href="contact.html">تواصل</a>
-        <a class="cta" href="register.html">قدّم للعضوية</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container hero-grid">
-        <figure class="hero-figure">
-          <!-- غيّر المسارات أدناه إلى مسارك الفعلي (مثلاً images/hero.jpg) -->
-          <img src="/assets/hero.webp" alt="طلاب مجلس خطوة في فعالية داخل حرم الجامعة"
-               width="1600" height="900" decoding="async"
-               onerror="this.onerror=null; this.src='images/hero.jpg';">
-        </figure>
-        <div>
-          <h1>مجلس طلاب خطوة – صوت الطلاب وشريك الإدارة الجامعية</h1>
-          <p>نُمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا، ونبني الجسر بين الطلاب وإدارة الجامعة بفعاليات نوعية وخدمات موجهة.</p>
-          <div class="hero-actions">
-            <a class="cta" href="register.html">قدّم للعضوية</a>
-            <a class="pill" href="events.html">شاهد أقرب الفعاليات</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- من نحن -->
-    <section aria-labelledby="about-title">
-      <div class="container">
-        <h2 id="about-title" style="margin:0 0 12px;">من نحن</h2>
-        <div class="cards">
-          <div class="card"><h3>الرؤية</h3><p class="muted">دعم العملية التعليمية وخدمة المجتمع الجامعي.</p></div>
-          <div class="card"><h3>الرسالة</h3><p class="muted">تمكين الطلاب وتعزيز علاقتهم بالإدارة الجامعية.</p></div>
-          <div class="card"><h3>الأهداف</h3><p class="muted">التمثيل، تطوير القيادة، التفاعل المجتمعي، والدعوة.</p></div>
-          <div class="card"><h3>التنظيم</h3><p class="muted">رئيس، نائب، قادة فرق، ومنسّقو الأنشطة والإعلام.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- فعاليات قادمة (نماذج ثابتة حالياً) -->
-    <section aria-labelledby="events-title">
-      <div class="container">
-        <h2 id="events-title" style="margin:0 0 12px;">الفعاليات القادمة</h2>
-        <div class="events">
-          <article class="event">
-            <h3 style="margin:.2rem 0 .4rem;">ورشة تعريفية للتخصصات</h3>
-            <small>الخميس • مبنى سيلفيا والتون • 5:00م</small>
-            <p class="muted">جلسة سريعة للتعريف بتخصصات الـ IT، الأمن السيبراني، العلوم الحيوية، والأعمال.</p>
-            <img src="/assets/event1.webp" alt="صورة توضيحية لورشة طلابية"
-                 width="640" height="360" loading="lazy" decoding="async"
-                 onerror="this.onerror=null; this.src='images/event1.jpg';">
-          </article>
-          <article class="event">
-            <h3 style="margin:.2rem 0 .4rem;">لقاء تعارف للطلاب الجدد</h3>
-            <small>الأحد • ساحة الحرم • 3:30م</small>
-            <p class="muted">فعالية تعارف مع ألعاب خفيفة ونصائح دراسية.</p>
-            <img src="/assets/event2.webp" alt="صورة لقاء تعارف"
-                 width="640" height="360" loading="lazy" decoding="async"
-                 onerror="this.onerror=null; this.src='images/event2.jpg';">
-          </article>
-        </div>
-        <div style="margin-top:10px;">
-          <a class="pill" href="events.html" aria-label="عرض جميع الفعاليات">عرض جميع الفعاليات</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer role="contentinfo">
-    <div class="container">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
-        <small>© <span id="y"></span> Khotwa Student Council – La Trobe</small>
-        <nav class="nav-links" aria-label="روابط تذييل">
-          <a class="pill" href="about.html">من نحن</a>
-          <a class="pill" href="contact.html">تواصل</a>
-        </nav>
-      </div>
-    </div>
-    <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
-</footer>
-</body>
-</html>
+    .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
+    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
+    .nav-links{display:flex;gap:1rem;align-items:center}
+    .nav-lin
