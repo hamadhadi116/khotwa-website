@@ -8,7 +8,6 @@
   <link rel="canonical" href="https://khotwastudentcouncil.com/about.html"/>
   <meta name="robots" content="index,follow"/>
   <meta name="color-scheme" content="light dark"/>
-  <!-- Theme color -->
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
@@ -24,76 +23,46 @@
   <meta name="twitter:description" content="مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن."/>
   <meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg"/>
 
-  <!-- JSON-LD -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"Khotwa Student Council","url":"https://khotwastudentcouncil.com/","logo":"https://g.top4top.io/p_3516rfttb1.jpg","sameAs":["https://www.instagram.com/khotwa.sc/"]}
   </script>
 
   <style>
     :root{
-      /* Palette */
       --primary:#1e40af; --primary-600:#1d4ed8;
       --text:#0f172a; --muted:#64748b;
       --surface:#ffffff; --card:#f8fafc; --ring:#e6eaf2;
-
-      /* Radii & shadows */
-      --r-sm:10px; --r-md:14px; --r-lg:16px; --r-xl:22px;
-      --sh-sm:0 2px 10px rgba(2,6,23,.06);
-      --sh-md:0 10px 26px rgba(2,6,23,.08);
-      --sh-lg:0 20px 48px rgba(2,6,23,.10);
-
-      /* Type */
-      --fs-1:clamp(1rem,.5vw + .92rem,1.05rem);
-      --fs-2:clamp(1.05rem,.7vw + .95rem,1.15rem);
-      --fs-h1:clamp(1.6rem,2.6vw + 1rem,2.2rem);
-      --fs-h2:clamp(1.35rem,1.6vw + 1rem,1.6rem);
+      --r-md:14px; --r-lg:16px; --r-xl:22px;
+      --sh-sm:0 2px 10px rgba(2,6,23,.06); --sh-md:0 10px 26px rgba(2,6,23,.08);
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0; font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
-      color:var(--text); background:var(--surface); line-height:1.6;
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    }
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:var(--surface)}
     a{color:inherit;text-decoration:none}
     .container{width:min(1120px,92%);margin-inline:auto}
 
-    /* Focus & skip */
     :where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
-    .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:var(--r-sm);box-shadow:var(--sh-sm);z-index:1000}
+    .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:10px;box-shadow:var(--sh-sm);z-index:1000}
     .skip-link:focus{inset-block-start:1rem}
 
-    /* NAVBAR (نفس الرئيسية) */
-    .navbar{
-      position:sticky;top:0;z-index:40;
-      background:color-mix(in oklab,#ffffff 75%,transparent);
-      border-bottom:1px solid color-mix(in oklab,var(--ring) 65%,transparent);
-      backdrop-filter:saturate(1.1) blur(8px);
-      transition:box-shadow .2s ease,background .2s ease;
-    }
-    body.nav-scrolled .navbar{ box-shadow:0 6px 18px rgba(2,6,23,.06); background:color-mix(in oklab,#ffffff 85%,transparent) }
+    /* NAV */
+    .navbar{position:sticky;top:0;z-index:40;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);backdrop-filter:blur(8px)}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
     .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
     .nav-links{display:flex;gap:.25rem;align-items:center}
-    .nav-links a{padding:.5rem .75rem;border-radius:var(--r-md);position:relative;font-size:var(--fs-1)}
+    .nav-links a{padding:.5rem .75rem;border-radius:var(--r-md)}
     .nav-links a:hover{background:var(--card)}
     .nav-links a[aria-current="page"]{background:var(--card)}
-    .nav-links a::after{content:"";position:absolute;inset-inline:10px;inset-block-end:6px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--primary),var(--primary-600));transform:scaleX(0);transform-origin:right;transition:transform .18s ease}
-    [dir="ltr"] .nav-links a::after{transform-origin:left}
-    .nav-links a:hover::after{transform:scaleX(1)}
     .lang-toggle,.menu-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:var(--r-md);cursor:pointer;font-weight:600}
     .menu-toggle{display:none;align-items:center;gap:.5rem}
     .menu-toggle svg{width:20px;height:20px}
-
-    /* Mobile menu */
     @media (max-width:900px){
       .menu-toggle{display:inline-flex}
       .nav-links{
         position:absolute;inset-inline:0;top:calc(100% + 8px);
         background:#fff;border:1px solid var(--ring);border-radius:var(--r-xl);
-        display:grid;gap:.2rem;padding:.4rem;box-shadow:var(--sh-lg);
+        display:grid;gap:.2rem;padding:.4rem;box-shadow:0 20px 48px rgba(2,6,23,.1);
         max-height:80vh;overflow:auto;opacity:1;transform:scale(1);transition:opacity .2s ease,transform .2s ease,padding .2s ease;
       }
       .nav-links[aria-hidden="true"]{transform:scale(.98);opacity:0}
@@ -103,16 +72,15 @@
     /* Sections */
     section{padding:2rem 0;position:relative}
     .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
-    .section-head h1{margin:0;font-size:var(--fs-h1)}
-    .section-head h2{margin:0;font-size:var(--fs-h2)}
-    .muted{color:var(--muted);font-size:var(--fs-1)}
-    section::before{content:"";position:absolute;inset-inline:0;inset-block-start:-1px;height:1px;background:linear-gradient(90deg,transparent,color-mix(in oklab,var(--ring) 80%,transparent),transparent)}
+    .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
+    .section-head h2{margin:0;font-size:clamp(1.35rem,1.6vw + 1rem,1.6rem)}
+    .muted{color:var(--muted)}
 
     /* Cards */
     .grid{display:grid;gap:1rem}
     .grid-2{grid-template-columns:repeat(2,1fr)}
-    @media (max-width:980px){.grid-2{grid-template-columns:1fr}}
-    .card{background:#fff;border:1px solid color-mix(in oklab,var(--ring) 70%,transparent);border-radius:var(--r-lg);padding:1rem;box-shadow:var(--sh-sm)}
+    @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid var(--ring);border-radius:var(--r-lg);padding:1rem;box-shadow:var(--sh-sm)}
     .card h3{margin:.2rem 0 .4rem;font-size:1.05rem}
     .card p{margin:0}
 
@@ -121,36 +89,30 @@
     @media(max-width:1120px){.members{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:820px){.members{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:520px){.members{grid-template-columns:1fr}}
-    .member-card{background:#fff;border:1px solid color-mix(in oklab,var(--ring) 70%,transparent);border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden;display:flex;flex-direction:column}
-    .member-card .thumb{position:relative;isolation:isolate}
+    .member-card{background:#fff;border:1px solid var(--ring);border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden;display:flex;flex-direction:column}
     .member-card img{
       width:100%; height:auto; aspect-ratio:3/2; object-fit:cover;
-      /* نطلّع الوجه للأعلى شوي بدل القص */
-      object-position:50% 20%;
-      display:block; background:#f3f4f6;
+      /* نرفع التركيز للأعلى عشان ما يتقص التاج/العِصابة */
+      object-position:50% 22%;
+      background:#f3f4f6; display:block;
     }
-    .member-card .meta{padding:.6rem .8rem .9rem}
-    .member-card h3{margin:.2rem 0 .2rem;font-size:1.05rem}
-    .member-card p{margin:0;color:var(--muted);font-size:.95rem}
+    .member-card h3{margin:.8rem .8rem .2rem;font-size:1.05rem}
+    .member-card p{margin:0 .8rem .8rem;color:var(--muted);font-size:.95rem}
 
     /* Footer */
     footer{border-top:1px solid var(--ring);background:#fff}
-    .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0;font-size:var(--fs-1)}
+    .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
 
     /* Dark */
     @media (prefers-color-scheme: dark){
-      :root{
-        --surface:#0a0f1a; --card:#0b1220; --ring:#1f2937; --text:#e5e7eb; --muted:#9ca3af;
-        --sh-sm:0 2px 12px rgba(0,0,0,.35); --sh-md:0 10px 28px rgba(0,0,0,.45); --sh-lg:0 20px 52px rgba(0,0,0,.5);
-        --primary:#3b82f6; --primary-600:#2563eb;
-      }
-      .navbar,footer{background:rgba(12,18,32,.7);border-color:var(--ring)}
-      .card,.member-card{background:#0f172a;border-color:color-mix(in oklab,var(--ring) 70%,transparent)}
+      :root{--surface:#0a0f1a;--card:#0b1220;--ring:#1f2937;--text:#e5e7eb;--muted:#9ca3af}
+      .navbar,footer{background:#0c1220;border-color:var(--ring)}
+      .card,.member-card{background:#0f172a;border-color:var(--ring)}
       .nav-links a:hover,.nav-links a[aria-current="page"]{background:#0f172a}
       .lang-toggle,.menu-toggle{background:transparent;color:var(--text)}
+      .member-card img{background:#0b1220}
     }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
     }
@@ -198,33 +160,14 @@
 
       <!-- Cards -->
       <div class="grid grid-2" style="margin-top:1rem">
-        <article class="card">
-          <h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3>
-          <p data-lang="ar">مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده.</p>
-          <p data-lang="en" hidden>A supportive and proactive student community contributing to members’ success.</p>
-        </article>
-
-        <article class="card">
-          <h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3>
-          <p data-lang="ar">توفير فرص وأنشطة وخدمات تعزز تجربة الطالب.</p>
-          <p data-lang="en" hidden>Providing opportunities, activities, and services that enhance the student experience.</p>
-        </article>
-
-        <article class="card">
-          <h3 data-lang="ar">القيم</h3><h3 data-lang="en" hidden>Values</h3>
-          <p data-lang="ar">العمل الجماعي، الشفافية، التطوع، الابتكار، المسؤولية.</p>
-          <p data-lang="en" hidden>Teamwork, transparency, volunteering, innovation, and responsibility.</p>
-        </article>
-
-        <article class="card">
-          <h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden>Structure</h3>
-          <p data-lang="ar">رئيس ونائب رئيس، قادة فرق (الفعاليات، الإعلام، العلاقات)، ومنسقون.</p>
-          <p data-lang="en" hidden>President, Vice President, team leaders (events, media, relations), and coordinators.</p>
-        </article>
+        <article class="card"><h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3><p data-lang="ar">مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده.</p><p data-lang="en" hidden>A supportive and proactive student community contributing to members’ success.</p></article>
+        <article class="card"><h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3><p data-lang="ar">توفير فرص وأنشطة وخدمات تعزز تجربة الطالب.</p><p data-lang="en" hidden>Providing opportunities, activities, and services that enhance the student experience.</p></article>
+        <article class="card"><h3 data-lang="ar">القيم</h3><h3 data-lang="en" hidden>Values</h3><p data-lang="ar">العمل الجماعي، الشفافية، التطوع، الابتكار، المسؤولية.</p><p data-lang="en" hidden>Teamwork, transparency, volunteering, innovation, and responsibility.</p></article>
+        <article class="card"><h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden>Structure</h3><p data-lang="ar">رئيس ونائب رئيس، قادة فرق (الفعاليات، الإعلام، العلاقات)، ومنسقون.</p><p data-lang="en" hidden>President, Vice President, team leaders (events, media, relations), and coordinators.</p></article>
       </div>
     </section>
 
-    <!-- Members -->
+    <!-- Members (الترتيب والروابط الصحيحة) -->
     <section>
       <div class="section-head">
         <h2 data-lang="ar">أعضاء المجلس</h2>
@@ -232,74 +175,53 @@
       </div>
 
       <div class="members">
+        <!-- 1: الرئيس -->
         <div class="member-card">
-          <div class="thumb">
-            <img src="https://f.top4top.io/p_35166op0u4.jpg" alt="حسين الصيعري" width="360" height="240" loading="lazy" decoding="async">
-          </div>
-          <div class="meta">
-            <h3 data-lang="ar">حسين الصيعري</h3><h3 data-lang="en" hidden>Hussain Al-Sieari</h3>
-            <p class="muted" data-lang="ar">منسق الفعاليات</p><p class="muted" data-lang="en" hidden>Events Coordinator</p>
-          </div>
+          <img src="https://f.top4top.io/p_35166op0u4.jpg" alt="حمد الهاجري – الرئيس" width="360" height="240" loading="lazy" decoding="async">
+          <h3 data-lang="ar">حمد الهاجري</h3><h3 data-lang="en" hidden>Hamad Al-Hajeri</h3>
+          <p class="muted" data-lang="ar">الرئيس</p><p class="muted" data-lang="en" hidden>President</p>
         </div>
 
+        <!-- 2: نائب الرئيس -->
         <div class="member-card">
-          <div class="thumb">
-            <img src="https://d.top4top.io/p_3516sprel2.jpg" alt="عبدالهادي المري" width="360" height="240" loading="lazy" decoding="async">
-          </div>
-          <div class="meta">
-            <h3 data-lang="ar">عبدالهادي المري</h3><h3 data-lang="en" hidden>Abdulhadi Al-Marri</h3>
-            <p class="muted" data-lang="ar">قائد المجموعة</p><p class="muted" data-lang="en" hidden>Team Leader</p>
-          </div>
+          <img src="https://c.top4top.io/p_3516ojbq71.jpg" alt="عبدالله الجابري – نائب الرئيس" width="360" height="240" loading="lazy" decoding="async">
+          <h3 data-lang="ar">عبدالله الجابري</h3><h3 data-lang="en" hidden>Abdullah Al-Jaberi</h3>
+          <p class="muted" data-lang="ar">نائب الرئيس</p><p class="muted" data-lang="en" hidden>Vice President</p>
         </div>
 
+        <!-- 3: قائد المجموعة -->
         <div class="member-card">
-          <div class="thumb">
-            <img src="https://c.top4top.io/p_3516ojbq71.jpg" alt="عبدالله الجابري" width="360" height="240" loading="lazy" decoding="async">
-          </div>
-          <div class="meta">
-            <h3 data-lang="ar">عبدالله الجابري</h3><h3 data-lang="en" hidden>Abdullah Al-Jaberi</h3>
-            <p class="muted" data-lang="ar">نائب الرئيس</p><p class="muted" data-lang="en" hidden>Vice President</p>
-          </div>
+          <img src="https://d.top4top.io/p_3516sprel2.jpg" alt="عبدالهادي المري – قائد المجموعة" width="360" height="240" loading="lazy" decoding="async">
+          <h3 data-lang="ar">عبدالهادي المري</h3><h3 data-lang="en" hidden>Abdulhadi Al-Marri</h3>
+          <p class="muted" data-lang="ar">قائد المجموعة</p><p class="muted" data-lang="en" hidden>Team Leader</p>
         </div>
 
+        <!-- 4: منسق الفعاليات (حسن) -->
         <div class="member-card">
-          <div class="thumb">
-            <img src="https://f.top4top.io/p_35166op0u4.jpg" alt="حمد الهاجري" width="360" height="240" loading="lazy" decoding="async">
-          </div>
-          <div class="meta">
-            <h3 data-lang="ar">حمد الهاجري</h3><h3 data-lang="en" hidden>Hamad Al-Hajeri</h3>
-            <p class="muted" data-lang="ar">الرئيس</p><p class="muted" data-lang="en" hidden>President</p>
-          </div>
+          <img src="https://h.top4top.io/p_3516xcf386.jpg" alt="حسن الصيعري – منسق الفعاليات" width="360" height="240" loading="lazy" decoding="async">
+          <h3 data-lang="ar">حسن الصيعري</h3><h3 data-lang="en" hidden>Hassan Al-Sieari</h3>
+          <p class="muted" data-lang="ar">منسق الفعاليات</p><p class="muted" data-lang="en" hidden>Events Coordinator</p>
         </div>
 
+        <!-- 5: منسق الإعلام -->
         <div class="member-card">
-          <div class="thumb">
-            <img src="https://g.top4top.io/p_3516zrfo75.jpg" alt="حمد المري" width="360" height="240" loading="lazy" decoding="async">
-          </div>
-          <div class="meta">
-            <h3 data-lang="ar">حمد المري</h3><h3 data-lang="en" hidden>Hamad Al-Marri</h3>
-            <p class="muted" data-lang="ar">منسق الإعلام</p><p class="muted" data-lang="en" hidden>Media Coordinator</p>
-          </div>
+          <img src="https://g.top4top.io/p_3516zrfo75.jpg" alt="حمد المري – منسق الإعلام" width="360" height="240" loading="lazy" decoding="async">
+          <h3 data-lang="ar">حمد المري</h3><h3 data-lang="en" hidden>Hamad Al-Marri</h3>
+          <p class="muted" data-lang="ar">منسق الإعلام</p><p class="muted" data-lang="en" hidden>Media Coordinator</p>
         </div>
 
+        <!-- 6: عضو -->
         <div class="member-card">
-          <div class="thumb">
-            <img src="https://e.top4top.io/p_35164gg6m3.jpg" alt="محمد الكثيري" width="360" height="240" loading="lazy" decoding="async">
-          </div>
-          <div class="meta">
-            <h3 data-lang="ar">محمد الكثيري</h3><h3 data-lang="en" hidden>Mohamed Al-Katheeri</h3>
-            <p class="muted" data-lang="ar">عضو</p><p class="muted" data-lang="en" hidden>Member</p>
-          </div>
+          <img src="https://e.top4top.io/p_35164gg6m3.jpg" alt="محمد الكثيري – عضو" width="360" height="240" loading="lazy" decoding="async">
+          <h3 data-lang="ar">محمد الكثيري</h3><h3 data-lang="en" hidden>Mohamed Al-Katheeri</h3>
+          <p class="muted" data-lang="ar">عضو</p><p class="muted" data-lang="en" hidden>Member</p>
         </div>
 
+        <!-- 7: عضو -->
         <div class="member-card">
-          <div class="thumb">
-            <img src="https://i.top4top.io/p_35168rtso7.jpg" alt="موزة العلي" width="360" height="240" loading="lazy" decoding="async">
-          </div>
-          <div class="meta">
-            <h3 data-lang="ar">موزة العلي</h3><h3 data-lang="en" hidden>Mouza Al-Ali</h3>
-            <p class="muted" data-lang="ar">عضو</p><p class="muted" data-lang="en" hidden>Member</p>
-          </div>
+          <img src="https://i.top4top.io/p_35168rtso7.jpg" alt="موزة العلي – عضو" width="360" height="240" loading="lazy" decoding="async">
+          <h3 data-lang="ar">موزة العلي</h3><h3 data-lang="en" hidden>Mouza Al-Ali</h3>
+          <p class="muted" data-lang="ar">عضو</p><p class="muted" data-lang="en" hidden>Member</p>
         </div>
       </div>
     </section>
@@ -313,20 +235,12 @@
   </footer>
 
   <script>
-    // سنة الحقوق
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ظل للنافبار عند التمرير (موحّد مع الرئيسية)
-    (function(){
-      const onScroll = () => document.body.classList.toggle('nav-scrolled', window.scrollY > 6);
-      onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
-    })();
-
-    // منيو الموبايل + وصولية
+    // منيو
     const menuBtn = document.getElementById('menu-toggle');
     const primaryNav = document.getElementById('primary-nav');
     const mq = matchMedia('(min-width:901px)');
-
     function setMenu(open){
       primaryNav.setAttribute('data-open', String(open));
       menuBtn.setAttribute('aria-expanded', String(open));
@@ -339,7 +253,6 @@
       primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
     }
     initMenu();
-
     menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
     mq.addEventListener('change', e=>{
       primaryNav.setAttribute('data-open','false');
@@ -352,7 +265,7 @@
     });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
 
-    // اللغة + حفظ التفضيل
+    // اللغة
     const toggleBtn = document.getElementById('lang-toggle');
     let isEn = localStorage.getItem('khotwa_lang') === 'en';
     function setLang(en){
