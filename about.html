@@ -9,6 +9,10 @@
   <meta name="robots" content="index,follow"/>
   <meta name="color-scheme" content="light dark"/>
 
+  <!-- Theme color (like home) -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
+
   <!-- OG/Twitter -->
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Khotwa Student Council"/>
@@ -118,12 +122,10 @@
     @media(max-width:520px){.members{grid-template-columns:1fr}}
     .member-card{
       background:#fff;border:1px solid var(--ring);border-radius:16px;padding:0 0 .8rem;text-align:center;
-      box-shadow:var(--shadow);
-      display:flex; flex-direction:column; overflow:hidden;
+      box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden;
     }
     .member-card img{
-      width:100%;height:240px;object-fit:cover;background:#f3f4f6;
-      display:block;
+      width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; background:#f3f4f6; display:block;
     }
     .member-card h3{margin:.8rem .8rem .3rem;font-size:1.05rem}
     .member-card p{margin:.1rem .8rem 0;color:var(--muted);font-size:.95rem}
@@ -160,7 +162,7 @@
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
       <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="80" height="80" decoding="async" loading="lazy">
+        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="40" height="40" decoding="async" loading="lazy">
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
@@ -171,14 +173,14 @@
         القائمة
       </button>
 
-      <div class="nav-links" id="primary-nav" data-open="false">
+      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
         <a href="/about.html" aria-current="page"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
         <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
         <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
         <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
         <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
         <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
-        <button id="lang-toggle" class="lang-toggle" type="button">English</button>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
       </div>
     </div>
   </nav>
@@ -232,7 +234,7 @@
         <div class="member-card">
           <img src="https://f.top4top.io/p_35166op0u4.jpg"
                alt="حمد الهاجري – الرئيس" width="360" height="240"
-               loading="lazy" decoding="async">
+               loading="lazy" decoding="async" sizes="(max-width:1120px) 50vw, 25vw">
           <h3 data-lang="ar">حمد الهاجري</h3><h3 data-lang="en" hidden>Hamad Al-Hajeri</h3>
           <p class="muted" data-lang="ar">الرئيس</p><p class="muted" data-lang="en" hidden>President</p>
         </div>
@@ -240,7 +242,7 @@
         <div class="member-card">
           <img src="https://c.top4top.io/p_3516ojbq71.jpg"
                alt="عبدالله الجابري – نائب الرئيس" width="360" height="240"
-               loading="lazy" decoding="async">
+               loading="lazy" decoding="async" sizes="(max-width:1120px) 50vw, 25vw">
           <h3 data-lang="ar">عبدالله الجابري</h3><h3 data-lang="en" hidden>Abdullah Al-Jaberi</h3>
           <p class="muted" data-lang="ar">نائب الرئيس</p><p class="muted" data-lang="en" hidden>Vice President</p>
         </div>
@@ -248,7 +250,7 @@
         <div class="member-card">
           <img src="https://d.top4top.io/p_3516sprel2.jpg"
                alt="عبدالهادي المري – قائد المجموعة" width="360" height="240"
-               loading="lazy" decoding="async">
+               loading="lazy" decoding="async" sizes="(max-width:1120px) 50vw, 25vw">
           <h3 data-lang="ar">عبدالهادي المري</h3><h3 data-lang="en" hidden>Abdulhadi Al-Marri</h3>
           <p class="muted" data-lang="ar">قائد المجموعة</p><p class="muted" data-lang="en" hidden>Team Leader</p>
         </div>
@@ -256,7 +258,7 @@
         <div class="member-card">
           <img src="https://h.top4top.io/p_3516xcf386.jpg"
                alt="حسن الصيعري – منسق الفعاليات" width="360" height="240"
-               loading="lazy" decoding="async">
+               loading="lazy" decoding="async" sizes="(max-width:1120px) 50vw, 25vw">
           <h3 data-lang="ar">حسن الصيعري</h3><h3 data-lang="en" hidden>Hassan Al-Sieari</h3>
           <p class="muted" data-lang="ar">منسق الفعاليات</p><p class="muted" data-lang="en" hidden>Events Coordinator</p>
         </div>
@@ -264,7 +266,7 @@
         <div class="member-card">
           <img src="https://g.top4top.io/p_3516zrfo75.jpg"
                alt="حمد المري – منسق الإعلام" width="360" height="240"
-               loading="lazy" decoding="async">
+               loading="lazy" decoding="async" sizes="(max-width:1120px) 50vw, 25vw">
           <h3 data-lang="ar">حمد المري</h3><h3 data-lang="en" hidden>Hamad Al-Marri</h3>
           <p class="muted" data-lang="ar">منسق الإعلام</p><p class="muted" data-lang="en" hidden>Media Coordinator</p>
         </div>
@@ -272,7 +274,7 @@
         <div class="member-card">
           <img src="https://e.top4top.io/p_35164gg6m3.jpg"
                alt="محمد الكثيري – عضو" width="360" height="240"
-               loading="lazy" decoding="async">
+               loading="lazy" decoding="async" sizes="(max-width:1120px) 50vw, 25vw">
           <h3 data-lang="ar">محمد الكثيري</h3><h3 data-lang="en" hidden>Mohamed Al-Katheeri</h3>
           <p class="muted" data-lang="ar">عضو</p><p class="muted" data-lang="en" hidden>Member</p>
         </div>
@@ -280,7 +282,7 @@
         <div class="member-card">
           <img src="https://i.top4top.io/p_35168rtso7.jpg"
                alt="موزة العلي – عضو" width="360" height="240"
-               loading="lazy" decoding="async">
+               loading="lazy" decoding="async" sizes="(max-width:1120px) 50vw, 25vw">
           <h3 data-lang="ar">موزة العلي</h3><h3 data-lang="en" hidden>Mouza Al-Ali</h3>
           <p class="muted" data-lang="ar">عضو</p><p class="muted" data-lang="en" hidden>Member</p>
         </div>
@@ -291,7 +293,7 @@
   <footer aria-label="تذييل الموقع">
     <div class="container foot">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </footer>
 
@@ -302,13 +304,41 @@
     // منيو الموبايل + وصولية
     const menuBtn = document.getElementById('menu-toggle');
     const primaryNav = document.getElementById('primary-nav');
+    const mq = matchMedia('(min-width:901px)');
+
     function setMenu(open){
       primaryNav.setAttribute('data-open', String(open));
       menuBtn.setAttribute('aria-expanded', String(open));
-      if(open){ primaryNav.querySelector('a,button')?.focus(); }
+      primaryNav.setAttribute('aria-hidden', String(!open));
+      if(open){
+        // تركيز أول عنصر قابل للضغط
+        const first = primaryNav.querySelector('a,button');
+        if(first) first.focus();
+      }
     }
-    menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
-    matchMedia('(min-width:901px)').addEventListener('change', e=>{ if(e.matches) setMenu(false); });
+
+    // تهيئة أولية بحسب العرض
+    function initMenu(){
+      const desktop = mq.matches;
+      primaryNav.setAttribute('data-open','false');
+      menuBtn.setAttribute('aria-expanded','false');
+      primaryNav.setAttribute('aria-hidden', desktop ? 'false' : 'true');
+    }
+    initMenu();
+
+    menuBtn.addEventListener('click', ()=> {
+      const open = primaryNav.getAttribute('data-open') === 'true';
+      setMenu(!open);
+    });
+
+    mq.addEventListener('change', e=>{
+      // على الديسكتوب القائمة ظاهرة (aria-hidden=false) حتى لو data-open=false
+      primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
+      primaryNav.setAttribute('data-open','false');
+      menuBtn.setAttribute('aria-expanded','false');
+    });
+
+    // إغلاق بالنقر خارج + ESC
     document.addEventListener('click', (e)=>{
       const open = primaryNav.getAttribute('data-open')==='true';
       if(open && !primaryNav.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
@@ -318,12 +348,14 @@
     // اللغة + حفظ التفضيل
     const toggleBtn = document.getElementById('lang-toggle');
     let isEn = localStorage.getItem('khotwa_lang') === 'en';
+
     function setLang(en){
       document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
       document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
       document.documentElement.lang = en ? 'en' : 'ar';
       document.documentElement.dir  = en ? 'ltr' : 'rtl';
       toggleBtn.textContent = en ? 'العربية' : 'English';
+      toggleBtn.setAttribute('aria-pressed', String(en));
       localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
     }
     toggleBtn.addEventListener('click',()=> setLang(!(localStorage.getItem('khotwa_lang') === 'en')));
