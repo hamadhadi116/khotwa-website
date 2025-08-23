@@ -83,8 +83,7 @@
         max-height:80vh; overflow:auto; opacity:1; transform:scale(1);
         transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
       }
-      /* عند الإغلاق نخفيها دلاليًا بعنصر hidden (لا حاجة لستايل إضافي) */
-      .nav-links[data-open="false"]{transform:scale(.98);opacity:.0}
+      .nav-links[data-open="false"]{transform:scale(.98);opacity:0}
     }
 
     /* Hero + أقسام */
@@ -141,7 +140,7 @@
   <!-- Navbar -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
-      <a class="brand" href="/" aria-label="العودة للرئيسية">
+      <a class="brand" href="/" aria-label="العودة للرئيسية" aria-current="page">
         <img
           src="https://g.top4top.io/p_3516rfttb1.jpg"
           class="logo"
@@ -171,63 +170,65 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero" id="main">
-    <div class="container hero-inner">
-      <div>
-        <h1 data-lang="ar">مجلس طلاب خطوة – صوت الطلاب وشريك الجامعة</h1>
-        <h1 data-lang="en" hidden>Khotwa Student Council – Students’ Voice and University Partner</h1>
-        <p data-lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا، ونبني الجسر بين الطلاب وإدارة الجامعة بفعاليات نوعية وخدمات موجهة.</p>
-        <p data-lang="en" hidden>We empower Khotwa students academically, socially, and culturally, building bridges with the university through quality events and tailored services.</p>
-        <div class="cta-row">
-          <a href="/contact.html" class="btn btn-primary"><span data-lang="ar">قدّم للعضوية</span><span data-lang="en" hidden>Apply for Membership</span></a>
-          <a href="/events.html" class="btn btn-outline"><span data-lang="ar">شاهد أقرب الفعاليات</span><span data-lang="en" hidden>See Upcoming Events</span></a>
+  <main id="main">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="container hero-inner">
+        <div>
+          <h1 data-lang="ar">مجلس طلاب خطوة – صوت الطلاب وشريك الجامعة</h1>
+          <h1 data-lang="en" hidden>Khotwa Student Council – Students’ Voice and University Partner</h1>
+          <p data-lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا، ونبني الجسر بين الطلاب وإدارة الجامعة بفعاليات نوعية وخدمات موجهة.</p>
+          <p data-lang="en" hidden>We empower Khotwa students academically, socially, and culturally, building bridges with the university through quality events and tailored services.</p>
+          <div class="cta-row">
+            <a href="/contact.html" class="btn btn-primary"><span data-lang="ar">قدّم للعضوية</span><span data-lang="en" hidden>Apply for Membership</span></a>
+            <a href="/events.html" class="btn btn-outline"><span data-lang="ar">شاهد أقرب الفعاليات</span><span data-lang="en" hidden>See Upcoming Events</span></a>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img
+            src="https://b.top4top.io/p_35166f7hr1.jpg"
+            alt="مجموعة طلاب مجلس خطوة – La Trobe"
+            width="1600" height="900"
+            loading="eager" decoding="async"
+            srcset="
+              https://b.top4top.io/p_35166f7hr1.jpg 1600w,
+              https://b.top4top.io/p_35166f7hr1.jpg 1200w,
+              https://b.top4top.io/p_35166f7hr1.jpg 800w"
+            sizes="(max-width:980px) 92vw, 50vw"
+          >
         </div>
       </div>
-      <div class="hero-img">
-        <img
-          src="https://b.top4top.io/p_35166f7hr1.jpg"
-          alt="مجموعة طلاب مجلس خطوة – La Trobe"
-          width="1600" height="900"
-          loading="eager" decoding="async"
-          srcset="
-            https://b.top4top.io/p_35166f7hr1.jpg 1600w,
-            https://b.top4top.io/p_35166f7hr1.jpg 1200w,
-            https://b.top4top.io/p_35166f7hr1.jpg 800w"
-          sizes="(max-width:980px) 92vw, 50vw"
-        >
+    </header>
+
+    <!-- About -->
+    <section aria-labelledby="about-ar" class="container">
+      <div class="section-head">
+        <h2 id="about-ar" data-lang="ar">من نحن</h2>
+        <h2 id="about-en" data-lang="en" hidden>About Us</h2>
+        <a class="muted" href="/about.html"><span data-lang="ar">المزيد</span><span data-lang="en" hidden>Learn more</span></a>
       </div>
-    </div>
-  </header>
+      <div class="grid grid-2">
+        <article class="card"><h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3><p data-lang="ar">دعم العملية التعليمية وخدمة المجتمع الجامعي.</p><p data-lang="en" hidden>Support the learning journey and serve our university community.</p></article>
+        <article class="card"><h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3><p data-lang="ar">تمكين الطلاب وتعزيز علاقتهم بالإدارة الجامعية.</p><p data-lang="en" hidden>Empower students and strengthen ties with university administration.</p></article>
+        <article class="card"><h3 data-lang="ar">الأهداف</h3><h3 data-lang="en" hidden>Goals</h3><p data-lang="ar">التمثيل، القيادة، التفاعل المجتمعي، والدعوة.</p><p data-lang="en" hidden>Representation, leadership, community engagement, and advocacy.</p></article>
+        <article class="card"><h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden>Structure</h3><p data-lang="ar">رئيس ونائب وقادة فرق ومنسقو الأنشطة والإعلام.</p><p data-lang="en" hidden>President, Vice President, team leads, and activity/media coordinators.</p></article>
+      </div>
+    </section>
 
-  <!-- About -->
-  <section aria-labelledby="about-ar" class="container">
-    <div class="section-head">
-      <h2 id="about-ar" data-lang="ar">من نحن</h2>
-      <h2 id="about-en" data-lang="en" hidden>About Us</h2>
-      <a class="muted" href="/about.html"><span data-lang="ar">المزيد</span><span data-lang="en" hidden>Learn more</span></a>
-    </div>
-    <div class="grid grid-2">
-      <article class="card"><h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3><p data-lang="ar">دعم العملية التعليمية وخدمة المجتمع الجامعي.</p><p data-lang="en" hidden>Support the learning journey and serve our university community.</p></article>
-      <article class="card"><h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3><p data-lang="ar">تمكين الطلاب وتعزيز علاقتهم بالإدارة الجامعية.</p><p data-lang="en" hidden>Empower students and strengthen ties with university administration.</p></article>
-      <article class="card"><h3 data-lang="ar">الأهداف</h3><h3 data-lang="en" hidden>Goals</h3><p data-lang="ar">التمثيل، القيادة، التفاعل المجتمعي، والدعوة.</p><p data-lang="en" hidden>Representation, leadership, community engagement, and advocacy.</p></article>
-      <article class="card"><h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden>Structure</h3><p data-lang="ar">رئيس ونائب وقادة فرق ومنسقو الأنشطة والإعلام.</p><p data-lang="en" hidden>President, Vice President, team leads, and activity/media coordinators.</p></article>
-    </div>
-  </section>
-
-  <!-- Events -->
-  <section aria-labelledby="events-ar" class="container">
-    <div class="section-head">
-      <h2 id="events-ar" data-lang="ar">الفعاليات القادمة</h2>
-      <h2 id="events-en" data-lang="en" hidden>Upcoming Events</h2>
-      <a class="muted" href="/events.html"><span data-lang="ar">تقويم الفعاليات</span><span data-lang="en" hidden>All events</span></a>
-    </div>
-    <div class="grid grid-3">
-      <article class="card"><h3 data-lang="ar">ورشة تخصصات خطوة</h3><h3 data-lang="en" hidden>Khotwa Majors Workshop</h3><p class="muted" data-lang="ar">IT، الأمن السيبراني، العلوم الحيوية، الأعمال.</p><p class="muted" data-lang="en" hidden>IT, Cybersecurity, Biosciences, Business.</p></article>
-      <article class="card"><h3 data-lang="ar">بطولة البادل</h3><h3 data-lang="en" hidden>Padel Championship</h3><p class="muted" data-lang="ar">تنظيم رياضي طلابي – La Trobe Sports Centre.</p><p class="muted" data-lang="en" hidden>Student sports event – La Trobe Sports Centre.</p></article>
-      <article class="card"><h3 data-lang="ar">ماراثون داخل الحرم</h3><h3 data-lang="en" hidden>On-Campus Marathon</h3><p class="muted" data-lang="ar">مسارات 1K و2.5K و10K.</p><p class="muted" data-lang="en" hidden>1K, 2.5K, and 10K routes.</p></article>
-    </div>
-  </section>
+    <!-- Events -->
+    <section aria-labelledby="events-ar" class="container">
+      <div class="section-head">
+        <h2 id="events-ar" data-lang="ar">الفعاليات القادمة</h2>
+        <h2 id="events-en" data-lang="en" hidden>Upcoming Events</h2>
+        <a class="muted" href="/events.html"><span data-lang="ar">تقويم الفعاليات</span><span data-lang="en" hidden>All events</span></a>
+      </div>
+      <div class="grid grid-3">
+        <article class="card"><h3 data-lang="ar">ورشة تخصصات خطوة</h3><h3 data-lang="en" hidden>Khotwa Majors Workshop</h3><p class="muted" data-lang="ar">IT، الأمن السيبراني، العلوم الحيوية، الأعمال.</p><p class="muted" data-lang="en" hidden>IT, Cybersecurity, Biosciences, Business.</p></article>
+        <article class="card"><h3 data-lang="ar">بطولة البادل</h3><h3 data-lang="en" hidden>Padel Championship</h3><p class="muted" data-lang="ar">تنظيم رياضي طلابي – La Trobe Sports Centre.</p><p class="muted" data-lang="en" hidden>Student sports event – La Trobe Sports Centre.</p></article>
+        <article class="card"><h3 data-lang="ar">ماراثون داخل الحرم</h3><h3 data-lang="en" hidden>On-Campus Marathon</h3><p class="muted" data-lang="ar">مسارات 1K و2.5K و10K.</p><p class="muted" data-lang="en" hidden>1K, 2.5K, and 10K routes.</p></article>
+      </div>
+    </section>
+  </main>
 
   <footer aria-label="تذييل الموقع">
     <div class="container foot">
@@ -250,12 +251,10 @@
       menuBtn.setAttribute('aria-expanded', String(open));
 
       if (open){
-        // عند الفتح في الموبايل نُظهر القائمة ونحوّل التركيز لأول رابط
         primaryNav.hidden = false;
         const firstFocusable = primaryNav.querySelector('a,button');
         if (firstFocusable) firstFocusable.focus();
       } else {
-        // عند الإغلاق نخفيها دلاليًا في الموبايل، ونعيد التركيز لزر القائمة
         if (!mq.matches) primaryNav.hidden = true;
         menuBtn.focus();
       }
@@ -270,12 +269,10 @@
     // مزامنة الحالة مع التغيير بين موبايل/ديسكتوب
     mq.addEventListener('change', e=>{
       if (e.matches){
-        // على الديسكتوب: القائمة دائماً ظاهرة، مع حالة "غير مفتوحة" للمؤشر فقط
         primaryNav.hidden = false;
         primaryNav.setAttribute('data-open','false');
         menuBtn.setAttribute('aria-expanded','false');
       } else {
-        // على الموبايل: تبدأ مغلقة ومخفية
         primaryNav.hidden = true;
         primaryNav.setAttribute('data-open','false');
         menuBtn.setAttribute('aria-expanded','false');
