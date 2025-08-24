@@ -120,7 +120,7 @@
     position:absolute;inset-inline-end:0;top:calc(100% + 6px);
     background:#fff;border:1px solid var(--ring);border-radius:12px;
     box-shadow:0 14px 34px rgba(2,6,23,.10);
-    padding:.5rem;display:grid;gap:.25rem;min-width:220px;z-index:50;
+    padding:.5rem;display:grid;gap:.25rem;min-width:220px;z-index:100; /* أعلى */
   }
   .add-pop[hidden]{display:none}
   .add-pop a{padding:.6rem .65rem;border-radius:.7rem}
@@ -364,10 +364,12 @@
     const d = new Date(iso);
     return d.toISOString().replace(/[-:]/g,'').replace('.000','');
   }
-  function icsFile({title, startISO, endISO, loc, url}){
+
+  // توليد ICS — مع دعم iOS
+  function icsContent({title, startISO, endISO, loc, url}){
     const uid = self.crypto?.randomUUID ? crypto.randomUUID() : String(Date.now())+'@khotwa';
     const toICS = iso => new Date(iso).toISOString().replace(/[-:]/g,'').replace('.000','');
-    const body = [
+    const lines = [
       'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Khotwa//Calendar//EN',
       'BEGIN:VEVENT',
       'UID:'+uid,
@@ -378,8 +380,27 @@
       'LOCATION:'+escapeICS(loc||''),
       'DESCRIPTION:'+escapeICS(url||''),
       'END:VEVENT','END:VCALENDAR'
-    ].join('\r\n');
-    return new Blob([body], {type:'text/calendar'});
+    ];
+    return lines.join('\r\n');
+  }
+  function icsDownload({title, startISO, endISO, loc, url}){
+    const content = icsContent({title, startISO, endISO, loc, url});
+    const filename = (title||'event')+'.ics';
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if(isIOS){
+      // فتح كرابط data: (iOS Safari يتعامل معه أفضل)
+      const dataUrl = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(content);
+      const a = document.createElement('a');
+      a.href = dataUrl; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+    }else{
+      const blob = new Blob([content], {type:'text/calendar'});
+      const urlObj = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = urlObj; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(urlObj), 1000);
+    }
   }
   function escapeICS(s){ return String(s||'').replace(/([,;])/g,'\\$1').replace(/\n/g,'\\n'); }
 
@@ -430,7 +451,7 @@
     updateJSONLD();
   }
 
-  // قائمة "أضف إلى التقويم" — نسخة ثابتة للجوال
+  // قائمة "أضف إلى التقويم" — تعتمد click فقط (أفضل للـ iOS)
   function setupAddMenu(li){
     const btn = li.querySelector('.add-btn');
     const pop = li.querySelector('.add-pop');
@@ -450,51 +471,40 @@
 
     const icsLink = li.querySelector('a.ics');
     icsLink.addEventListener('click',(e)=>{
-      e.preventDefault(); e.stopPropagation();
-      const blob = icsFile({title, startISO, endISO, loc, url:details});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = (title||'event')+'.ics';
-      document.body.appendChild(a); a.click();
-      a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 1000);
+      e.preventDefault(); // نحن نتولى التنزيل
+      icsDownload({title, startISO, endISO, loc, url:details});
       closeAllMenus();
     });
 
     const toggleMenu = (open)=>{
       if(open){
         closeAllMenus();
-        pop.removeAttribute('hidden');
+        pop.hidden = false;
         btn.setAttribute('aria-expanded','true');
       }else{
-        pop.setAttribute('hidden','');
+        pop.hidden = true;
         btn.setAttribute('aria-expanded','false');
       }
     };
 
-    // فتح/إغلاق باللمس والنقر
-    const opener = (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(pop.hasAttribute('hidden')); };
-    btn.addEventListener('click', opener);
-    btn.addEventListener('touchstart', opener, {passive:false});
-
-    // منع إغلاق القائمة عند التفاعل داخلها
-    pop.addEventListener('click', (e)=> e.stopPropagation());
-    pop.addEventListener('touchstart', (e)=> e.stopPropagation(), {passive:true});
+    // فتح/إغلاق بالنقر
+    btn.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMenu(pop.hidden); });
+    pop.addEventListener('click', (e)=> e.stopPropagation()); // لا تغلق عند الضغط داخل القائمة
   }
 
-  // إغلاق أي قوائم مفتوحة إذا كُبس خارجها (طور الالتقاط لمنع تداخل)
+  // إغلاق القوائم عند النقر خارجها (بدون capture عشان ما نسبق فتح القائمة)
   document.addEventListener('click', (e)=>{
-    // لو الضغط خارج أي .add-pop/.add-btn نقفلها
     if(!e.target.closest('.add-pop') && !e.target.closest('.add-btn')){
       closeAllMenus();
     }
-  }, true);
+  });
 
   // إغلاق عند Esc
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeAllMenus(); }});
 
   function closeAllMenus(){
     document.querySelectorAll('.add-pop:not([hidden])').forEach(p=>{
-      p.setAttribute('hidden','');
+      p.hidden = true;
       const b = p.parentElement.querySelector('.add-btn');
       if(b) b.setAttribute('aria-expanded','false');
     });
