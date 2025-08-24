@@ -8,6 +8,8 @@
 <link rel="canonical" href="https://khotwastudentcouncil.com/calendar.html"/>
 <meta name="robots" content="index,follow"/>
 <meta name="color-scheme" content="light dark"/>
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
 <!-- OG/Twitter -->
 <meta property="og:type" content="website">
@@ -21,29 +23,23 @@
 <meta name="twitter:description" content="جدول الفعاليات القادمة لطلاب خطوة.">
 <meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
 
-<!-- JSON-LD (Events) -->
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@graph":[
-    {"@type":"Event","name":"ورشة تخصصات خطوة","startDate":"2025-09-10T17:00:00+10:00","location":{"@type":"Place","name":"La Trobe – Bundoora"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","url":"https://khotwastudentcouncil.com/events.html#e1"},
-    {"@type":"Event","name":"بطولة البادل","startDate":"2025-09-24T16:00:00+10:00","location":{"@type":"Place","name":"La Trobe Sports Centre"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","url":"https://khotwastudentcouncil.com/events.html#e2"},
-    {"@type":"Event","name":"ماراثون داخل الحرم","startDate":"2025-10-01T09:00:00+10:00","location":{"@type":"Place","name":"La Trobe – Bundoora"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","url":"https://khotwastudentcouncil.com/events.html#e3"}
-  ]
-}
-</script>
+<!-- JSON-LD (سيُستبدل ديناميكيًا من JS) -->
+<script type="application/ld+json" id="events-jsonld">{ "@context":"https://schema.org", "@graph":[] }</script>
 
 <style>
   :root{
     --primary:#1e40af;--primary-600:#1d4ed8;
-    --ring:#e5e7eb;--card:#f8fafc;
-    --text:#0f172a;--muted:#6b7280;
+    --ring:#e6eaf2;--card:#f8fafc;
+    --text:#0f172a;--muted:#64748b;
+    --surface:#ffffff;
+    --r-md:14px; --r-lg:16px; --r-xl:22px;
     --shadow:0 10px 26px rgba(2,6,23,.08)
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff}
-  a{color:inherit;text-decoration:none} a:visited{color:inherit}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:var(--surface)}
+  a{color:inherit;text-decoration:none}
+  a:visited{color:inherit}
   .container{width:min(1120px,92%);margin-inline:auto}
 
   /* وصولية */
@@ -57,30 +53,30 @@
   }
   .skip-link:focus{inset-block-start:1rem}
 
-  /* Navbar (موحّد) */
-  .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
+  /* Navbar (مطابق للأخبار قدر الإمكان) */
+  .navbar{position:sticky;top:0;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);z-index:40;backdrop-filter:blur(8px)}
   .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
-  .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-  .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
-  .nav-links{display:flex;gap:1rem;align-items:center}
-  .nav-links a{padding:.5rem .75rem;border-radius:10px}
+  .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
+  .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+  .nav-links{display:flex;gap:.25rem;align-items:center}
+  .nav-links a{padding:.5rem .75rem;border-radius:var(--r-md)}
   .nav-links a:hover{background:var(--card)}
   .nav-links a[aria-current="page"]{background:var(--card)}
-  .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-  .menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
+  .lang-toggle,.menu-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:var(--r-md);cursor:pointer;font-weight:600}
+  .menu-toggle{display:none;align-items:center;gap:.5rem}
   .menu-toggle svg{width:20px;height:20px}
 
   @media (max-width:900px){
     .menu-toggle{display:inline-flex}
     .nav-links{
       position:absolute; inset-inline:0; top:calc(100% + 8px);
-      background:#fff; border:1px solid var(--ring); border-radius:12px;
+      background:#fff; border:1px solid var(--ring); border-radius:var(--r-xl);
       display:grid; gap:.2rem; padding:.4rem;
-      box-shadow:0 12px 30px rgba(2,6,23,.10);
-      max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
-      transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
+      box-shadow:0 20px 48px rgba(2,6,23,.1);
+      max-height:80vh; overflow:auto; opacity:1; transform:scale(1);
+      transition:opacity .2s ease,transform .2s ease,padding .2s ease;
     }
-    .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
+    .nav-links[aria-hidden="true"]{transform:scale(.98);opacity:0}
     .nav-links a,.lang-toggle{padding:.7rem .9rem}
   }
 
@@ -90,29 +86,53 @@
   .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
   .muted{color:var(--muted)}
 
+  /* أدوات التقويم */
+  .tools{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:.8rem 0 1rem}
+  .search{display:flex;align-items:center;gap:.5rem;border:1px solid var(--ring);border-radius:12px;padding:.45rem .6rem;background:#fff;min-width:240px}
+  .search input{border:0;outline:0;background:transparent;width:100%}
+  .chip{border:1px solid var(--ring);background:#fff;border-radius:999px;padding:.45rem .8rem;font-size:.9rem;cursor:pointer}
+  .chip[data-active="true"]{background:var(--primary);color:#fff;border-color:transparent}
+
   .card{
     background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;
     box-shadow:var(--shadow)
   }
-  .events-list{margin:0;padding-right:1rem;line-height:1.9}
-  .events-list li{margin:.2rem 0}
-  .events-list time{font-variant-numeric:tabular-nums}
+  .events-list{margin:0;padding-right:1rem;line-height:1.9;list-style:none}
+  .events-list li{margin:.2rem 0;padding:.6rem .6rem;border-radius:12px;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+  .events-list li:is(:hover,:focus-within){background:var(--card)}
+  .month{font-weight:700;margin-inline-end:.3rem}
+  .title{font-weight:600}
+  .when{font-variant-numeric:tabular-nums;color:#334155}
+  .loc{color:#475569}
+  .badges{display:inline-flex;gap:.35rem;align-items:center}
+  .badge{font-size:.75rem;background:var(--card);border:1px solid var(--ring);padding:.15rem .45rem;border-radius:999px;color:#334155}
+  .past{opacity:.6}
+  .actions{margin-inline-start:auto;display:inline-flex;gap:.35rem}
+  .btn{border:1px solid var(--ring);background:#fff;border-radius:10px;padding:.35rem .6rem;cursor:pointer}
+  .btn:hover{box-shadow:0 2px 10px rgba(2,6,23,.08)}
+  .add-menu{position:relative}
+  .add-pop{position:absolute;inset-inline-end:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--ring);border-radius:10px;box-shadow:0 14px 34px rgba(2,6,23,.10);padding:.4rem;display:grid;gap:.2rem;min-width:210px;z-index:20}
+  .add-pop[hidden]{display:none}
+  .add-pop a{padding:.45rem .6rem;border-radius:.6rem}
+  .add-pop a:hover{background:var(--card)}
 
   footer{border-top:1px solid var(--ring);background:#fff}
   .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
 
-  /* ثيم ليلي مطابق */
+  /* ثيم ليلي */
   @media (prefers-color-scheme: dark){
     :root{
-      --card:#0b1220; --ring:#1f2937;
+      --surface:#0a0f1a; --card:#0b1220; --ring:#1f2937;
       --text:#e5e7eb; --muted:#9ca3af;
       --shadow:0 10px 26px rgba(2,6,23,.3)
     }
-    body{ background:#0a0f1a; }
+    body{ background:var(--surface); }
     .navbar, footer{ background:#0c1220; border-color:var(--ring); }
-    .card{ background:#0f172a; border-color:var(--ring); }
+    .card,.search,.chip,.btn{ background:#0f172a; border-color:var(--ring); color:var(--text)}
     .nav-links a:hover, .nav-links a[aria-current="page"]{ background:#0f172a; }
     .lang-toggle,.menu-toggle{ background:transparent; color:var(--text); }
+    .add-pop{ background:#0f172a; }
+    .events-list li:is(:hover,:focus-within){ background:#0f172a; }
   }
 
   /* تقليل الحركة */
@@ -122,7 +142,8 @@
 </style>
 </head>
 <body>
-<a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+<a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
+<a class="skip-link" href="#main" data-lang="en" hidden>Skip to content</a>
 
 <nav class="navbar" aria-label="الشريط العلوي">
   <div class="container nav-inner">
@@ -135,17 +156,18 @@
     <button id="menu-toggle" class="menu-toggle" type="button"
             aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      القائمة
+      <span data-lang="ar">القائمة</span>
+      <span data-lang="en" hidden>Menu</span>
     </button>
 
-    <div class="nav-links" id="primary-nav" data-open="false">
+    <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
       <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
       <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
       <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
       <a href="/calendar.html" aria-current="page"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
       <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
       <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
-      <button id="lang-toggle" class="lang-toggle" type="button">English</button>
+      <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
     </div>
   </div>
 </nav>
@@ -159,24 +181,81 @@
     <p class="muted" data-lang="ar">جدول الفعاليات القادمة.</p>
     <p class="muted" data-lang="en" hidden>Schedule of upcoming events.</p>
 
+    <!-- أدوات -->
+    <div class="tools">
+      <div class="search" role="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="ابحث في الفعاليات…">
+      </div>
+      <button class="chip" id="filter-upcoming" data-active="true">
+        <span data-lang="ar">القادمة فقط</span><span data-lang="en" hidden>Upcoming only</span>
+      </button>
+      <button class="chip" id="filter-all" data-active="false">
+        <span data-lang="ar">الكل</span><span data-lang="en" hidden>All</span>
+      </button>
+    </div>
+
     <div class="card">
-      <ul class="events-list">
-        <li>
-          <strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong> —
-          <span data-lang="ar">ورشة تخصصات خطوة – </span><span data-lang="en" hidden>Khotwa Majors Workshop – </span>
-          <time datetime="2025-09-10">10/09/2025</time>
+      <ul class="events-list" id="events">
+        <!-- نحافظ على نفس العناصر، أضفنا بيانات ليستفيد منها السكربت -->
+        <li data-dt="2025-09-10T17:00:00+10:00" data-title-ar="ورشة تخصصات خطوة" data-title-en="Khotwa Majors Workshop" data-loc="La Trobe – Bundoora" data-url="/events.html#e1">
+          <span class="month"><strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong></span> —
+          <span class="title" data-lang="ar">ورشة تخصصات خطوة – </span>
+          <span class="title" data-lang="en" hidden>Khotwa Majors Workshop – </span>
+          <time class="when" datetime="2025-09-10">10/09/2025</time>
+          <span class="loc">· La Trobe – Bundoora</span>
+          <span class="badges"><span class="badge" data-lang="ar">ورشة</span><span class="badge" data-lang="en" hidden>Workshop</span></span>
+          <span class="actions add-menu">
+            <button class="btn add-btn" type="button" aria-haspopup="menu" aria-expanded="false">
+              <span data-lang="ar">أضِف إلى التقويم</span><span data-lang="en" hidden>Add to Calendar</span>
+            </button>
+            <div class="add-pop" hidden role="menu">
+              <a href="#" class="gcal" role="menuitem">Google Calendar</a>
+              <a href="#" class="ics" role="menuitem">ICS (iCal)</a>
+            </div>
+          </span>
         </li>
-        <li>
-          <strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong> —
-          <span data-lang="ar">بطولة البادل – </span><span data-lang="en" hidden>Padel Championship – </span>
-          <time datetime="2025-09-24">24/09/2025</time>
+
+        <li data-dt="2025-09-24T16:00:00+10:00" data-title-ar="بطولة البادل" data-title-en="Padel Championship" data-loc="La Trobe Sports Centre" data-url="/events.html#e2">
+          <span class="month"><strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong></span> —
+          <span class="title" data-lang="ar">بطولة البادل – </span>
+          <span class="title" data-lang="en" hidden>Padel Championship – </span>
+          <time class="when" datetime="2025-09-24">24/09/2025</time>
+          <span class="loc">· La Trobe Sports Centre</span>
+          <span class="badges"><span class="badge" data-lang="ar">رياضة</span><span class="badge" data-lang="en" hidden>Sports</span></span>
+          <span class="actions add-menu">
+            <button class="btn add-btn" type="button" aria-haspopup="menu" aria-expanded="false">
+              <span data-lang="ar">أضِف إلى التقويم</span><span data-lang="en" hidden>Add to Calendar</span>
+            </button>
+            <div class="add-pop" hidden role="menu">
+              <a href="#" class="gcal" role="menuitem">Google Calendar</a>
+              <a href="#" class="ics" role="menuitem">ICS (iCal)</a>
+            </div>
+          </span>
         </li>
-        <li>
-          <strong data-lang="ar">أكتوبر</strong><strong data-lang="en" hidden>October</strong> —
-          <span data-lang="ar">ماراثون داخل الحرم – </span><span data-lang="en" hidden>On-Campus Marathon – </span>
-          <time datetime="2025-10-01">01/10/2025</time>
+
+        <li data-dt="2025-10-01T09:00:00+10:00" data-title-ar="ماراثون داخل الحرم" data-title-en="On-Campus Marathon" data-loc="La Trobe – Bundoora" data-url="/events.html#e3">
+          <span class="month"><strong data-lang="ar">أكتوبر</strong><strong data-lang="en" hidden>October</strong></span> —
+          <span class="title" data-lang="ar">ماراثون داخل الحرم – </span>
+          <span class="title" data-lang="en" hidden>On-Campus Marathon – </span>
+          <time class="when" datetime="2025-10-01">01/10/2025</time>
+          <span class="loc">· La Trobe – Bundoora</span>
+          <span class="badges"><span class="badge" data-lang="ar">صحة</span><span class="badge" data-lang="en" hidden>Wellness</span></span>
+          <span class="actions add-menu">
+            <button class="btn add-btn" type="button" aria-haspopup="menu" aria-expanded="false">
+              <span data-lang="ar">أضِف إلى التقويم</span><span data-lang="en" hidden>Add to Calendar</span>
+            </button>
+            <div class="add-pop" hidden role="menu">
+              <a href="#" class="gcal" role="menuitem">Google Calendar</a>
+              <a href="#" class="ics" role="menuitem">ICS (iCal)</a>
+            </div>
+          </span>
         </li>
       </ul>
+      <div class="muted" id="empty" hidden>
+        <span data-lang="ar">لا نتائج مطابقة للبحث/الفلترة.</span>
+        <span data-lang="en" hidden>No events match your filters.</span>
+      </div>
     </div>
   </section>
 </main>
@@ -192,36 +271,232 @@
   // سنة الحقوق
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // منيو الموبايل + وصولية
+  // منيو + وصولية (مطابق للأخبار)
   const menuBtn = document.getElementById('menu-toggle');
   const primaryNav = document.getElementById('primary-nav');
+  const mq = matchMedia('(min-width:901px)');
   function setMenu(open){
     primaryNav.setAttribute('data-open', String(open));
     menuBtn.setAttribute('aria-expanded', String(open));
+    primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
     if(open){ primaryNav.querySelector('a,button')?.focus(); }
   }
+  function initMenu(){
+    primaryNav.setAttribute('data-open','false');
+    menuBtn.setAttribute('aria-expanded','false');
+    primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
+  }
+  initMenu();
   menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
-  matchMedia('(min-width:901px)').addEventListener('change', e=>{ if(e.matches) setMenu(false); });
+  mq.addEventListener('change', e=>{
+    primaryNav.setAttribute('data-open','false');
+    menuBtn.setAttribute('aria-expanded','false');
+    primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
+  });
   document.addEventListener('click', (e)=>{
     const open = primaryNav.getAttribute('data-open')==='true';
     if(open && !primaryNav.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
   });
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
 
-  // اللغة + حفظ التفضيل
+  // اللغة + مزامنة placeholder البحث
   const toggleBtn = document.getElementById('lang-toggle');
+  const qInput = document.getElementById('q');
   let isEn = localStorage.getItem('khotwa_lang') === 'en';
   function setLang(en){
-    isEn = en;
     document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
     document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
     document.documentElement.lang = en ? 'en' : 'ar';
     document.documentElement.dir  = en ? 'ltr' : 'rtl';
     toggleBtn.textContent = en ? 'العربية' : 'English';
+    toggleBtn.setAttribute('aria-pressed', String(en));
+    qInput.placeholder = en ? 'Search events…' : 'ابحث في الفعاليات…';
     localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
+    // إعادة تنسيق التواريخ حسب اللغة
+    render();
   }
-  toggleBtn.addEventListener('click',()=> setLang(!isEn));
+  toggleBtn.addEventListener('click',()=> setLang(!(localStorage.getItem('khotwa_lang') === 'en')));
   setLang(isEn);
+
+  // ========= منطق التقويم =========
+  const TZONE = 'Australia/Melbourne';
+  const list = document.getElementById('events');
+  const items = Array.from(list.querySelectorAll('li'));
+  const emptyMsg = document.getElementById('empty');
+  const btnUpcoming = document.getElementById('filter-upcoming');
+  const btnAll = document.getElementById('filter-all');
+
+  // أدوات
+  btnUpcoming.addEventListener('click',()=>{ setChips(btnUpcoming, btnAll); apply(); });
+  btnAll.addEventListener('click',()=>{ setChips(btnAll, btnUpcoming); apply(); });
+  function setChips(active, inactive){
+    active.dataset.active="true"; inactive.dataset.active="false";
+  }
+  qInput.addEventListener('input', apply);
+
+  // تنسيق التاريخ حسب اللغة والمنطقة
+  function fmtDate(dt){
+    const d = new Date(dt);
+    const lang = document.documentElement.lang || 'ar';
+    const opts = { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', timeZone:TZONE };
+    return new Intl.DateTimeFormat(lang==='en'?'en-AU':'ar-EG', opts).format(d);
+  }
+
+  // بناء روابط Google / ICS
+  function gcalUrl({title, startISO, endISO, loc, url}){
+    const params = new URLSearchParams({
+      action:'TEMPLATE',
+      text:title,
+      dates: toGCalDate(startISO) + '/' + toGCalDate(endISO),
+      location:loc,
+      details:url || ''
+    });
+    return 'https://calendar.google.com/calendar/render?' + params.toString();
+  }
+  function toGCalDate(iso){
+    // صيغة: YYYYMMDDTHHMMSSZ (نحو UTC)
+    const d = new Date(iso);
+    return d.toISOString().replace(/[-:]/g,'').replace('.000','');
+  }
+  function icsFile({title, startISO, endISO, loc, url}){
+    const uid = crypto.randomUUID();
+    const toICS = iso => {
+      const d = new Date(iso).toISOString().replace(/[-:]/g,'').replace('.000','');
+      return d;
+    };
+    const body = [
+      'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Khotwa//Calendar//EN',
+      'BEGIN:VEVENT',
+      'UID:'+uid,
+      'DTSTAMP:'+toICS(new Date().toISOString()),
+      'DTSTART:'+toICS(startISO),
+      'DTEND:'+toICS(endISO),
+      'SUMMARY:'+escapeICS(title),
+      'LOCATION:'+escapeICS(loc||''),
+      'DESCRIPTION:'+escapeICS(url||''),
+      'END:VEVENT','END:VCALENDAR'
+    ].join('\r\n');
+    return new Blob([body], {type:'text/calendar'});
+  }
+  function escapeICS(s){ return String(s||'').replace(/([,;])/g,'\\$1').replace(/\n/g,'\\n'); }
+
+  // مدة افتراضية (ساعتان)
+  function addDurationISO(startISO, hours=2){
+    const d = new Date(startISO);
+    d.setHours(d.getHours()+hours);
+    return d.toISOString();
+  }
+
+  // تطبيق الفلترة + الترتيب + تنسيق الواجهة
+  function apply(){
+    const term = (qInput.value||'').trim().toLowerCase();
+    const showUpcomingOnly = btnUpcoming.dataset.active === 'true';
+    const now = new Date();
+
+    // ترتيب حسب التاريخ
+    items.sort((a,b)=> new Date(a.dataset.dt) - new Date(b.dataset.dt))
+         .forEach(li=> list.appendChild(li));
+
+    let visible = 0;
+    items.forEach(li=>{
+      const start = new Date(li.dataset.dt);
+      const isPast = start < now;
+      li.classList.toggle('past', isPast);
+
+      const text = li.textContent.toLowerCase();
+      const matches = !term || text.includes(term);
+      const ok = matches && (!showUpcomingOnly || !isPast);
+
+      li.style.display = ok ? '' : 'none';
+      if(ok) visible++;
+
+      // تحديث عرض التاريخ بالتنسيق المحلي
+      const timeEl = li.querySelector('time.when');
+      timeEl.textContent = fmtDate(li.dataset.dt);
+
+      // تفعيل زر “أضف إلى التقويم”
+      setupAddMenu(li);
+    });
+
+    // نقل الفعاليات السابقة أسفل القائمة للمسة ترتيب
+    items.filter(li=>li.classList.contains('past')).forEach(li=> list.appendChild(li));
+
+    emptyMsg.hidden = visible !== 0;
+
+    // تحديث JSON-LD
+    updateJSONLD();
+  }
+
+  function setupAddMenu(li){
+    const btn = li.querySelector('.add-btn');
+    const pop = li.querySelector('.add-pop');
+    if(btn.dataset.wired) return; // مرة واحدة
+    btn.dataset.wired = '1';
+
+    const startISO = new Date(li.dataset.dt).toISOString();
+    const endISO = addDurationISO(startISO, 2);
+    const title = (document.documentElement.lang==='en' ? li.dataset.titleEn : li.dataset.titleAr) || li.dataset.titleAr;
+    const loc = li.dataset.loc || '';
+    const details = location.origin + (li.dataset.url || location.pathname);
+
+    // Google
+    const gLink = li.querySelector('a.gcal');
+    gLink.href = gcalUrl({title, startISO, endISO, loc, url:details});
+    gLink.target = '_blank'; gLink.rel='noopener';
+
+    // ICS
+    const icsLink = li.querySelector('a.ics');
+    icsLink.addEventListener('click',(e)=>{
+      e.preventDefault();
+      const blob = icsFile({title, startISO, endISO, loc, url:details});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = (title||'event')+'.ics';
+      document.body.appendChild(a); a.click();
+      a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    });
+
+    // فتح/إغلاق القائمة
+    btn.addEventListener('click', ()=>{
+      const open = pop.hasAttribute('hidden');
+      document.querySelectorAll('.add-pop:not([hidden])').forEach(p=>p.setAttribute('hidden',''));
+      pop.toggleAttribute('hidden', !open);
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', (e)=>{
+      if(!pop.contains(e.target) && !btn.contains(e.target)){
+        pop.setAttribute('hidden',''); btn.setAttribute('aria-expanded','false');
+      }
+    });
+    btn.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ pop.setAttribute('hidden',''); btn.setAttribute('aria-expanded','false'); }});
+  }
+
+  function updateJSONLD(){
+    const graph = [];
+    items.forEach(li=>{
+      if(li.style.display==='none') return; // حسب الفلترة الحالية
+      const start = new Date(li.dataset.dt);
+      const end = new Date(addDurationISO(start.toISOString(),2));
+      graph.push({
+        "@type":"Event",
+        "name": (document.documentElement.lang==='en' ? li.dataset.titleEn : li.dataset.titleAr) || li.dataset.titleAr,
+        "startDate": start.toISOString(),
+        "endDate": end.toISOString(),
+        "location": {"@type":"Place","name": li.dataset.loc || "La Trobe – Bundoora"},
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "url": location.origin + (li.dataset.url || location.pathname)
+      });
+    });
+    const json = { "@context":"https://schema.org", "@graph": graph };
+    const node = document.getElementById('events-jsonld');
+    node.textContent = JSON.stringify(json);
+  }
+
+  function render(){ apply(); }
+
+  // أول تشغيل
+  render();
 </script>
 </body>
 </html>
