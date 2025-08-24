@@ -17,43 +17,16 @@
   <meta property="og:title" content="الفعاليات – Khotwa">
   <meta property="og:description" content="تابع كل جديد من فعاليات مجلس طلاب خطوة.">
   <meta property="og:url" content="https://khotwastudentcouncil.com/events.html">
-  <meta property="og:image" content="https://b.top4top.io/p_35166f7hr1.jpg">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=80">
 
-  <!-- JSON-LD (تحسين SEO) -->
+  <!-- JSON-LD (SEO) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@graph":[
-      {
-        "@type":"Event",
-        "name":"ورشة تخصصات خطوة",
-        "startDate":"2025-09-10T17:00:00+10:00",
-        "location":{"@type":"Place","name":"La Trobe – Bundoora"},
-        "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
-        "eventStatus":"https://schema.org/EventScheduled",
-        "organizer":{"@type":"Organization","name":"Khotwa Student Council"},
-        "url":"https://khotwastudentcouncil.com/events.html#e-workshop"
-      },
-      {
-        "@type":"Event",
-        "name":"بطولة البادل",
-        "startDate":"2025-09-24T16:00:00+10:00",
-        "location":{"@type":"Place","name":"La Trobe Sports Centre"},
-        "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
-        "eventStatus":"https://schema.org/EventScheduled",
-        "organizer":{"@type":"Organization","name":"Khotwa Student Council"},
-        "url":"https://khotwastudentcouncil.com/events.html#e-padel"
-      },
-      {
-        "@type":"Event",
-        "name":"ماراثون داخل الحرم",
-        "startDate":"2025-10-01T09:00:00+10:00",
-        "location":{"@type":"Place","name":"La Trobe – Bundoora"},
-        "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
-        "eventStatus":"https://schema.org/EventScheduled",
-        "organizer":{"@type":"Organization","name":"Khotwa Student Council"},
-        "url":"https://khotwastudentcouncil.com/events.html#e-marathon"
-      }
+      {"@type":"Event","name":"ورشة تخصصات خطوة","startDate":"2025-09-10T17:00:00+10:00","location":{"@type":"Place","name":"La Trobe – Bundoora"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","organizer":{"@type":"Organization","name":"Khotwa Student Council"},"url":"https://khotwastudentcouncil.com/events.html#e-workshop"},
+      {"@type":"Event","name":"بطولة البادل","startDate":"2025-09-24T16:00:00+10:00","location":{"@type":"Place","name":"La Trobe Sports Centre"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","organizer":{"@type":"Organization","name":"Khotwa Student Council"},"url":"https://khotwastudentcouncil.com/events.html#e-padel"},
+      {"@type":"Event","name":"ماراثون داخل الحرم","startDate":"2025-10-01T09:00:00+10:00","location":{"@type":"Place","name":"La Trobe – Bundoora"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","organizer":{"@type":"Organization","name":"Khotwa Student Council"},"url":"https://khotwastudentcouncil.com/events.html#e-marathon"}
     ]
   }
   </script>
@@ -75,7 +48,7 @@
     .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:10px;box-shadow:var(--sh-sm);z-index:1000}
     .skip-link:focus{inset-block-start:1rem}
 
-    /* NAV (نفس بقية الصفحات) */
+    /* NAV (مطابق للبقية) */
     .navbar{position:sticky;top:0;z-index:40;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);backdrop-filter:blur(8px)}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
@@ -154,10 +127,16 @@
       <p class="muted" data-lang="en" hidden>Stay tuned for workshops, tournaments, and activities.</p>
 
       <div class="grid grid-3">
-        <!-- ورشة -->
+        <!-- ورشة التخصصات -->
         <article class="card" id="e-workshop">
           <div class="thumb">
-            <img src="https://b.top4top.io/p_35166f7hr1.jpg" alt="ورشة تخصصات خطوة">
+            <img
+              src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80"
+              srcset="
+                https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=70 800w,
+                https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80 1200w"
+              sizes="(max-width:980px) 92vw, 33vw"
+              alt="ورشة وتعريف بالتخصصات">
           </div>
           <div class="card-body">
             <span class="chip">
@@ -173,10 +152,16 @@
           </div>
         </article>
 
-        <!-- بادل -->
+        <!-- بطولة البادل -->
         <article class="card" id="e-padel">
           <div class="thumb">
-            <img src="https://b.top4top.io/p_35166f7hr1.jpg" alt="بطولة البادل">
+            <img
+              src="https://images.unsplash.com/photo-1605540436563-5f4d9f4d0a21?auto=format&fit=crop&w=1200&q=80"
+              srcset="
+                https://images.unsplash.com/photo-1605540436563-5f4d9f4d0a21?auto=format&fit=crop&w=800&q=70 800w,
+                https://images.unsplash.com/photo-1605540436563-5f4d9f4d0a21?auto=format&fit=crop&w=1200&q=80 1200w"
+              sizes="(max-width:980px) 92vw, 33vw"
+              alt="ملعب بادل وتجهيز بطولة">
           </div>
           <div class="card-body">
             <span class="chip">
@@ -195,7 +180,13 @@
         <!-- ماراثون -->
         <article class="card" id="e-marathon">
           <div class="thumb">
-            <img src="https://b.top4top.io/p_35166f7hr1.jpg" alt="ماراثون داخل الحرم">
+            <img
+              src="https://images.unsplash.com/photo-1541534401786-2077eed87a74?auto=format&fit=crop&w=1200&q=80"
+              srcset="
+                https://images.unsplash.com/photo-1541534401786-2077eed87a74?auto=format&fit=crop&w=800&q=70 800w,
+                https://images.unsplash.com/photo-1541534401786-2077eed87a74?auto=format&fit=crop&w=1200&q=80 1200w"
+              sizes="(max-width:980px) 92vw, 33vw"
+              alt="متسابقون في ماراثون داخل الحرم">
           </div>
           <div class="card-body">
             <span class="chip">
@@ -225,7 +216,7 @@
     // سنة الحقوق
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // اللغة (نفس المنطق في بقية الصفحات)
+    // اللغة (نفس باقي الصفحات)
     const toggleBtn = document.getElementById('lang-toggle');
     let isEn = localStorage.getItem('khotwa_lang') === 'en';
     function setLang(en){
