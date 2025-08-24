@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>لوحة الإدارة – Khotwa</title>
+<meta name="color-scheme" content="light dark"/>
+<style>
+  :root{--bg:#0a0f1a;--panel:#0f172a;--ring:#1f2937;--text:#e5e7eb;--muted:#94a3b8;--btn:#111827;--p:#1e40af;--ok:#16a34a;--err:#ef4444}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
+  .wrap{max-width:1100px;margin:auto;padding:16px}
+  header{display:flex;align-items:center;gap:.8rem;justify-content:space-between;margin-bottom:12px}
+  h1{margin:0;font-size:1.25rem}
+  .muted{color:var(--muted);font-size:.9rem}
+  .tabs{display:flex;gap:.4rem;margin:.6rem 0}
+  .tab{border:1px solid var(--ring);background:var(--panel);border-radius:10px;padding:.45rem .7rem;cursor:pointer}
+  .tab[aria-selected="true"]{background:#111827}
+  .panel{background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:12px;margin:12px 0}
+  .tools{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.6rem}
+  .btn{border:1px solid var(--ring);background:var(--btn);border-radius:10px;padding:.45rem .7rem;cursor:pointer}
+  .btn.p{background:var(--p);border-color:transparent}
+  .btn.ok{background:var(--ok);border-color:transparent}
+  .btn.err{background:var(--err);border-color:transparent}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  .row-3{grid-template-columns:repeat(3,1fr)}
+  label{display:grid;gap:.3rem;font-size:.9rem}
+  input,textarea,select{background:#0b1220;border:1px solid var(--ring);color:var(--text);border-radius:10px;padding:.55rem .6rem}
+  textarea{min-height:90px;resize:vertical}
+  table{width:100%;border-collapse:separate;border-spacing:0}
+  th,td{padding:.55rem;border-bottom:1px solid var(--ring);vertical-align:top}
+  th{color:var(--muted);font-weight:600;text-align:start}
+  .badge{display:inline-block;background:#111827;border:1px solid var(--ring);border-radius:999px;padding:.1rem .5rem;margin:.1rem;font-size:.75rem}
+  .right{margin-inline-start:auto}
+  code{background:#111827;border:1px solid var(--ring);padding:.12rem .3rem;border-radius:6px}
+  @media(max-width:900px){.row,.row-3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>لوحة الإدارة (ملف واحد)</h1>
+      <div class="muted">أضف/عدّل الأخبار والفعاليات → نزّل JSON → ارفعه في <code>data/</code> على GitHub. (لن نغيّر هياكل صفحاتك الأساسية)</div>
+    </div>
+    <div class="tools">
+      <button class="btn" id="import-news">⬆️ استيراد أخبار</button>
+      <button class="btn ok" id="export-news">⬇️ تصدير أخبار</button>
+      <button class="btn" id="import-events">⬆️ استيراد فعاليات</button>
+      <button class="btn ok" id="export-events">⬇️ تصدير فعاليات</button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="الأقسام">
+    <button class="tab" role="tab" id="tab-news" aria-selected="true" aria-controls="panel-news">📰 الأخبار</button>
+    <button class="tab" role="tab" id="tab-events" aria-selected="false" aria-controls="panel-events">📅 الفعاليات</button>
+  </nav>
+
+  <!-- الأخبار -->
+  <section class="panel" id="panel-news" role="tabpanel" aria-labelledby="tab-news">
+    <form id="form-news" class="grid">
+      <div class="row">
+        <label>العنوان (AR)<input id="n_title_ar" required></label>
+        <label>Title (EN)<input id="n_title_en" required></label>
+      </div>
+      <div class="row">
+        <label>الملخص (AR)<textarea id="n_desc_ar"></textarea></label>
+        <label>Summary (EN)<textarea id="n_desc_en"></textarea></label>
+      </div>
+      <div class="row-3 row">
+        <label>التاريخ/الوقت<input type="datetime-local" id="n_date" required></label>
+        <label>صورة (URL)<input type="url" id="n_image" placeholder="https://…"></label>
+        <label>رابط (اختياري)<input type="url" id="n_url" placeholder="/news.html#id"></label>
+      </div>
+      <div class="row">
+        <label>وسوم (مفصولة بفواصل)<input id="n_tags" placeholder="Announcements, Workshop"></label>
+        <div class="right"></div>
+        <button type="submit" class="btn p" id="n_submit">➕ أضف خبر</button>
+      </div>
+      <input type="hidden" id="n_edit_id">
+    </form>
+
+    <div class="tools">
+      <input id="n_q" placeholder="ابحث في الأخبار…" class="btn" style="width:260px"/>
+    </div>
+    <table id="n_table"><thead>
+      <tr><th>العنوان</th><th>التاريخ</th><th>وسوم</th><th>رابط/صورة</th><th>إجراءات</th></tr>
+    </thead><tbody></tbody></table>
+  </section>
+
+  <!-- الفعاليات -->
+  <section class="panel" id="panel-events" role="tabpanel" aria-labelledby="tab-events" hidden>
+    <form id="form-events" class="grid">
+      <div class="row">
+        <label>العنوان (AR)<input id="e_title_ar" required></label>
+        <label>Title (EN)<input id="e_title_en" required></label>
+      </div>
+      <div class="row-3 row">
+        <label>التاريخ/الوقت (بداية)<input type="datetime-local" id="e_start" required></label>
+        <label>المدة بالساعات<input id="e_dur" type="number" min="1" value="2"></label>
+        <label>الموقع<input id="e_loc" placeholder="La Trobe – Bundoora"></label>
+      </div>
+      <div class="row">
+        <label>رابط التفاصيل<input id="e_url" type="url" placeholder="/events.html#e1"></label>
+        <label>وسوم (مفصولة بفواصل)<input id="e_tags" placeholder="Workshop, Sports"></label>
+      </div>
+      <div class="row">
+        <label>صورة (URL)<input id="e_image" type="url" placeholder="https://…"></label>
+        <div class="right"></div>
+        <button type="submit" class="btn p" id="e_submit">➕ أضف فعالية</button>
+      </div>
+      <input type="hidden" id="e_edit_id">
+    </form>
+
+    <div class="tools">
+      <input id="e_q" placeholder="ابحث في الفعاليات…" class="btn" style="width:260px"/>
+    </div>
+    <table id="e_table"><thead>
+      <tr><th>العنوان</th><th>الوقت</th><th>الموقع</th><th>وسوم</th><th>إجراءات</th></tr>
+    </thead><tbody></tbody></table>
+  </section>
+</div>
+
+<script>
+/* ===== تخزين محلي ===== */
+const KEY_NEWS='khotwa_news_v1', KEY_EVENTS='khotwa_events_v1';
+let news = load(KEY_NEWS) || [], events = load(KEY_EVENTS) || [];
+
+/* ===== أدوات مساعدة ===== */
+const esc = s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const toLocal = iso=>{const d=new Date(iso);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16);}
+const fromLocal= val=>{const d=new Date(val);return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString();}
+const splitTags = s=> (s||'').split(',').map(t=>t.trim()).filter(Boolean);
+function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
+function load(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch{return null}}
+function cryptoId(){ return (self.crypto?.randomUUID ? crypto.randomUUID() : 'id_'+Math.random().toString(36).slice(2)); }
+function downloadJSON(obj, name){
+  const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob); const a=document.createElement('a');
+  a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function pickJSON(cb){
+  const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json';
+  inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; const t=await f.text(); try{ cb(JSON.parse(t)); }catch{ alert('JSON غير صالح'); } };
+  inp.click();
+}
+
+/* ===== تبويبات ===== */
+const tabNews=document.getElementById('tab-news'), tabEvents=document.getElementById('tab-events');
+const pnlNews=document.getElementById('panel-news'), pnlEvents=document.getElementById('panel-events');
+tabNews.onclick=()=>{tabNews.setAttribute('aria-selected','true');tabEvents.setAttribute('aria-selected','false');pnlNews.hidden=false;pnlEvents.hidden=true;}
+tabEvents.onclick=()=>{tabEvents.setAttribute('aria-selected','true');tabNews.setAttribute('aria-selected','false');pnlNews.hidden=true;pnlEvents.hidden=false;}
+
+/* ===== الأخبار ===== */
+const nForm=document.getElementById('form-news');
+const nSubmit=document.getElementById('n_submit');
+const nEditId=document.getElementById('n_edit_id');
+const nQ=document.getElementById('n_q'), nT=document.getElementById('n_table').querySelector('tbody');
+const nF={
+  title_ar:document.getElementById('n_title_ar'),
+  title_en:document.getElementById('n_title_en'),
+  desc_ar:document.getElementById('n_desc_ar'),
+  desc_en:document.getElementById('n_desc_en'),
+  date:document.getElementById('n_date'),
+  image:document.getElementById('n_image'),
+  url:document.getElementById('n_url'),
+  tags:document.getElementById('n_tags'),
+};
+nForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  const item={
+    id: nEditId.value || cryptoId(),
+    title:{ar:nF.title_ar.value.trim(), en:nF.title_en.value.trim()},
+    summary:{ar:nF.desc_ar.value.trim(), en:nF.desc_en.value.trim()},
+    date: fromLocal(nF.date.value),
+    image:nF.image.value.trim(),
+    url:nF.url.value.trim(),
+    tags: splitTags(nF.tags.value)
+  };
+  if(!item.title.ar||!item.title.en) return alert('العنوانين مطلوبين');
+  const idx=news.findIndex(x=>x.id===item.id);
+  if(idx>=0) news[idx]=item; else news.unshift(item);
+  save(KEY_NEWS,news);
+  nForm.reset(); nEditId.value=''; nSubmit.textContent='➕ أضف خبر';
+  renderNews();
+});
+nQ.addEventListener('input', renderNews);
+function renderNews(){
+  nT.innerHTML='';
+  const term=(nQ.value||'').toLowerCase();
+  const list = news
+    .slice().sort((a,b)=>new Date(b.date)-new Date(a.date))
+    .filter(x=>!term||JSON.stringify(x).toLowerCase().includes(term));
+  if(list.length===0){ nT.innerHTML='<tr><td colspan="5" class="muted">لا توجد أخبار.</td></tr>'; return; }
+  for(const it of list){
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><div>${esc(it.title.ar)}</div><div class="muted">${esc(it.title.en)}</div></td>
+      <td>${new Date(it.date).toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})}</td>
+      <td>${(it.tags||[]).map(t=>`<span class="badge">${esc(t)}</span>`).join('')}</td>
+      <td>
+        ${it.image?`🖼️ <a href="${esc(it.image)}" target="_blank" rel="noopener">صورة</a><br>`:''}
+        ${it.url?`🔗 <a href="${esc(it.url)}" target="_blank" rel="noopener">رابط</a>`:''}
+      </td>
+      <td>
+        <button class="btn" data-edit>تعديل</button>
+        <button class="btn err" data-del>حذف</button>
+      </td>`;
+    tr.querySelector('[data-del]').onclick=()=>{ if(confirm('حذف الخبر؟')){ news=news.filter(n=>n.id!==it.id); save(KEY_NEWS,news); renderNews(); } };
+    tr.querySelector('[data-edit]').onclick=()=>{
+      nF.title_ar.value=it.title.ar; nF.title_en.value=it.title.en;
+      nF.desc_ar.value=it.summary.ar; nF.desc_en.value=it.summary.en;
+      nF.date.value=toLocal(it.date); nF.image.value=it.image||''; nF.url.value=it.url||'';
+      nF.tags.value=(it.tags||[]).join(', ');
+      nEditId.value=it.id; nSubmit.textContent='💾 حفظ التعديل';
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    nT.appendChild(tr);
+  }
+}
+renderNews();
+
+/* ===== الفعاليات ===== */
+const eForm=document.getElementById('form-events');
+const eSubmit=document.getElementById('e_submit');
+const eEditId=document.getElementById('e_edit_id');
+const eQ=document.getElementById('e_q'), eT=document.getElementById('e_table').querySelector('tbody');
+const eF={
+  title_ar:document.getElementById('e_title_ar'),
+  title_en:document.getElementById('e_title_en'),
+  start:document.getElementById('e_start'),
+  dur:document.getElementById('e_dur'),
+  loc:document.getElementById('e_loc'),
+  url:document.getElementById('e_url'),
+  tags:document.getElementById('e_tags'),
+  image:document.getElementById('e_image')
+};
+eForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  const startISO=fromLocal(eF.start.value);
+  const durH=Math.max(1, Number(eF.dur.value||2));
+  const item={
+    id: eEditId.value || cryptoId(),
+    title:{ar:eF.title_ar.value.trim(), en:eF.title_en.value.trim()},
+    startDate:startISO,
+    endDate:new Date(new Date(startISO).getTime()+durH*3600e3).toISOString(),
+    location:eF.loc.value.trim()||'La Trobe – Bundoora',
+    url:eF.url.value.trim(),
+    image:eF.image.value.trim(),
+    tags: splitTags(eF.tags.value)
+  };
+  if(!item.title.ar||!item.title.en) return alert('العنوانين مطلوبين');
+  const idx=events.findIndex(x=>x.id===item.id);
+  if(idx>=0) events[idx]=item; else events.push(item);
+  save(KEY_EVENTS,events);
+  eForm.reset(); eEditId.value=''; eSubmit.textContent='➕ أضف فعالية';
+  renderEvents();
+});
+eQ.addEventListener('input', renderEvents);
+function renderEvents(){
+  eT.innerHTML='';
+  const term=(eQ.value||'').toLowerCase();
+  const list = events
+    .slice().sort((a,b)=>new Date(a.startDate)-new Date(b.startDate))
+    .filter(x=>!term||JSON.stringify(x).toLowerCase().includes(term));
+  if(list.length===0){ eT.innerHTML='<tr><td colspan="5" class="muted">لا توجد فعاليات.</td></tr>'; return; }
+  for(const it of list){
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><div>${esc(it.title.ar)}</div><div class="muted">${esc(it.title.en)}</div></td>
+      <td>${new Date(it.startDate).toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})}</td>
+      <td>${esc(it.location||'')}</td>
+      <td>${(it.tags||[]).map(t=>`<span class="badge">${esc(t)}</span>`).join('')}</td>
+      <td>
+        <button class="btn" data-edit>تعديل</button>
+        <button class="btn err" data-del>حذف</button>
+      </td>`;
+    tr.querySelector('[data-del]').onclick=()=>{ if(confirm('حذف الفعالية؟')){ events=events.filter(e=>e.id!==it.id); save(KEY_EVENTS,events); renderEvents(); } };
+    tr.querySelector('[data-edit]').onclick=()=>{
+      eF.title_ar.value=it.title.ar; eF.title_en.value=it.title.en;
+      eF.start.value=toLocal(it.startDate);
+      eF.dur.value=((new Date(it.endDate)-new Date(it.startDate))/3600e3)|0;
+      eF.loc.value=it.location||''; eF.url.value=it.url||''; eF.tags.value=(it.tags||[]).join(', '); eF.image.value=it.image||'';
+      eEditId.value=it.id; eSubmit.textContent='💾 حفظ التعديل';
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    eT.appendChild(tr);
+  }
+}
+renderEvents();
+
+/* ===== استيراد/تصدير ===== */
+document.getElementById('export-news').onclick=()=> downloadJSON(news,'news.json');
+document.getElementById('export-events').onclick=()=> downloadJSON(events,'events.json');
+document.getElementById('import-news').onclick=()=> pickJSON(arr=>{ if(Array.isArray(arr)){ news=arr; save(KEY_NEWS,news); renderNews(); alert('تم استيراد الأخبار.'); } else alert('يُتوقع مصفوفة JSON');});
+document.getElementById('import-events').onclick=()=> pickJSON(arr=>{ if(Array.isArray(arr)){ events=arr; save(KEY_EVENTS,events); renderEvents(); alert('تم استيراد الفعاليات.'); } else alert('يُتوقع مصفوفة JSON');});
+</script>
+</body>
+</html>
