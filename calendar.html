@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="جدول الفعاليات القادمة لطلاب خطوة.">
 <meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
 
-<!-- JSON-LD (سيُستبدل ديناميكيًا من JS) -->
+<!-- JSON-LD (سيُحدّث ديناميكيًا من JS) -->
 <script type="application/ld+json" id="events-jsonld">{ "@context":"https://schema.org", "@graph":[] }</script>
 
 <style>
@@ -53,7 +53,7 @@
   }
   .skip-link:focus{inset-block-start:1rem}
 
-  /* Navbar (مطابق للأخبار قدر الإمكان) */
+  /* Navbar (مطابق للأخبار) */
   .navbar{position:sticky;top:0;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);z-index:40;backdrop-filter:blur(8px)}
   .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
   .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
@@ -90,7 +90,7 @@
   .tools{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:.8rem 0 1rem}
   .search{display:flex;align-items:center;gap:.5rem;border:1px solid var(--ring);border-radius:12px;padding:.45rem .6rem;background:#fff;min-width:240px}
   .search input{border:0;outline:0;background:transparent;width:100%}
-  .chip{border:1px solid var(--ring);background:#fff;border-radius:999px;padding:.45rem .8rem;font-size:.9rem;cursor:pointer}
+  .chip{border:1px solid var(--ring);background:#fff;border-radius:999px;padding:.6rem .9rem;font-size:.95rem;cursor:pointer}
   .chip[data-active="true"]{background:var(--primary);color:#fff;border-color:transparent}
 
   .card{
@@ -98,7 +98,10 @@
     box-shadow:var(--shadow)
   }
   .events-list{margin:0;padding-right:1rem;line-height:1.9;list-style:none}
-  .events-list li{margin:.2rem 0;padding:.6rem .6rem;border-radius:12px;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+  .events-list li{
+    margin:.2rem 0;padding:.75rem .6rem;border-radius:12px;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;
+    position:relative; /* لزوم المنيو */
+  }
   .events-list li:is(:hover,:focus-within){background:var(--card)}
   .month{font-weight:700;margin-inline-end:.3rem}
   .title{font-weight:600}
@@ -107,13 +110,18 @@
   .badges{display:inline-flex;gap:.35rem;align-items:center}
   .badge{font-size:.75rem;background:var(--card);border:1px solid var(--ring);padding:.15rem .45rem;border-radius:999px;color:#334155}
   .past{opacity:.6}
-  .actions{margin-inline-start:auto;display:inline-flex;gap:.35rem}
-  .btn{border:1px solid var(--ring);background:#fff;border-radius:10px;padding:.35rem .6rem;cursor:pointer}
+  .actions{margin-inline-start:auto;display:inline-flex;gap:.4rem;align-items:center}
+  .btn{border:1px solid var(--ring);background:#fff;border-radius:12px;padding:.55rem .75rem;cursor:pointer;touch-action:manipulation}
   .btn:hover{box-shadow:0 2px 10px rgba(2,6,23,.08)}
   .add-menu{position:relative}
-  .add-pop{position:absolute;inset-inline-end:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--ring);border-radius:10px;box-shadow:0 14px 34px rgba(2,6,23,.10);padding:.4rem;display:grid;gap:.2rem;min-width:210px;z-index:20}
+  .add-pop{
+    position:absolute;inset-inline-end:0;top:calc(100% + 6px);
+    background:#fff;border:1px solid var(--ring);border-radius:12px;
+    box-shadow:0 14px 34px rgba(2,6,23,.10);
+    padding:.5rem;display:grid;gap:.25rem;min-width:220px;z-index:50;
+  }
   .add-pop[hidden]{display:none}
-  .add-pop a{padding:.45rem .6rem;border-radius:.6rem}
+  .add-pop a{padding:.6rem .65rem;border-radius:.7rem}
   .add-pop a:hover{background:var(--card)}
 
   footer{border-top:1px solid var(--ring);background:#fff}
@@ -197,7 +205,7 @@
 
     <div class="card">
       <ul class="events-list" id="events">
-        <!-- نحافظ على نفس العناصر، أضفنا بيانات ليستفيد منها السكربت -->
+        <!-- نفس العناصر + بيانات للسكربت -->
         <li data-dt="2025-09-10T17:00:00+10:00" data-title-ar="ورشة تخصصات خطوة" data-title-en="Khotwa Majors Workshop" data-loc="La Trobe – Bundoora" data-url="/events.html#e1">
           <span class="month"><strong data-lang="ar">سبتمبر</strong><strong data-lang="en" hidden>September</strong></span> —
           <span class="title" data-lang="ar">ورشة تخصصات خطوة – </span>
@@ -209,7 +217,7 @@
             <button class="btn add-btn" type="button" aria-haspopup="menu" aria-expanded="false">
               <span data-lang="ar">أضِف إلى التقويم</span><span data-lang="en" hidden>Add to Calendar</span>
             </button>
-            <div class="add-pop" hidden role="menu">
+            <div class="add-pop" hidden role="menu" aria-label="خيارات التقويم">
               <a href="#" class="gcal" role="menuitem">Google Calendar</a>
               <a href="#" class="ics" role="menuitem">ICS (iCal)</a>
             </div>
@@ -227,7 +235,7 @@
             <button class="btn add-btn" type="button" aria-haspopup="menu" aria-expanded="false">
               <span data-lang="ar">أضِف إلى التقويم</span><span data-lang="en" hidden>Add to Calendar</span>
             </button>
-            <div class="add-pop" hidden role="menu">
+            <div class="add-pop" hidden role="menu" aria-label="خيارات التقويم">
               <a href="#" class="gcal" role="menuitem">Google Calendar</a>
               <a href="#" class="ics" role="menuitem">ICS (iCal)</a>
             </div>
@@ -245,7 +253,7 @@
             <button class="btn add-btn" type="button" aria-haspopup="menu" aria-expanded="false">
               <span data-lang="ar">أضِف إلى التقويم</span><span data-lang="en" hidden>Add to Calendar</span>
             </button>
-            <div class="add-pop" hidden role="menu">
+            <div class="add-pop" hidden role="menu" aria-label="خيارات التقويم">
               <a href="#" class="gcal" role="menuitem">Google Calendar</a>
               <a href="#" class="ics" role="menuitem">ICS (iCal)</a>
             </div>
@@ -299,7 +307,7 @@
   });
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
 
-  // اللغة + مزامنة placeholder البحث
+  // اللغة + placeholder البحث
   const toggleBtn = document.getElementById('lang-toggle');
   const qInput = document.getElementById('q');
   let isEn = localStorage.getItem('khotwa_lang') === 'en';
@@ -312,10 +320,9 @@
     toggleBtn.setAttribute('aria-pressed', String(en));
     qInput.placeholder = en ? 'Search events…' : 'ابحث في الفعاليات…';
     localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
-    // إعادة تنسيق التواريخ حسب اللغة
-    render();
+    render(); // إعادة تنسيق التواريخ
   }
-  toggleBtn.addEventListener('click',()=> setLang(!(localStorage.getItem('khotwa_lang') === 'en')));
+  toggleBtn.addEventListener('click', (e)=>{ e.stopPropagation(); setLang(!(localStorage.getItem('khotwa_lang') === 'en')); });
   setLang(isEn);
 
   // ========= منطق التقويم =========
@@ -326,9 +333,9 @@
   const btnUpcoming = document.getElementById('filter-upcoming');
   const btnAll = document.getElementById('filter-all');
 
-  // أدوات
-  btnUpcoming.addEventListener('click',()=>{ setChips(btnUpcoming, btnAll); apply(); });
-  btnAll.addEventListener('click',()=>{ setChips(btnAll, btnUpcoming); apply(); });
+  // أدوات الفلترة
+  btnUpcoming.addEventListener('click', (e)=>{ e.stopPropagation(); setChips(btnUpcoming, btnAll); apply(); });
+  btnAll.addEventListener('click', (e)=>{ e.stopPropagation(); setChips(btnAll, btnUpcoming); apply(); });
   function setChips(active, inactive){
     active.dataset.active="true"; inactive.dataset.active="false";
   }
@@ -354,16 +361,12 @@
     return 'https://calendar.google.com/calendar/render?' + params.toString();
   }
   function toGCalDate(iso){
-    // صيغة: YYYYMMDDTHHMMSSZ (نحو UTC)
     const d = new Date(iso);
     return d.toISOString().replace(/[-:]/g,'').replace('.000','');
   }
   function icsFile({title, startISO, endISO, loc, url}){
-    const uid = crypto.randomUUID();
-    const toICS = iso => {
-      const d = new Date(iso).toISOString().replace(/[-:]/g,'').replace('.000','');
-      return d;
-    };
+    const uid = self.crypto?.randomUUID ? crypto.randomUUID() : String(Date.now())+'@khotwa';
+    const toICS = iso => new Date(iso).toISOString().replace(/[-:]/g,'').replace('.000','');
     const body = [
       'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Khotwa//Calendar//EN',
       'BEGIN:VEVENT',
@@ -380,7 +383,7 @@
   }
   function escapeICS(s){ return String(s||'').replace(/([,;])/g,'\\$1').replace(/\n/g,'\\n'); }
 
-  // مدة افتراضية (ساعتان)
+  // مدة افتراضية ساعتان
   function addDurationISO(startISO, hours=2){
     const d = new Date(startISO);
     d.setHours(d.getHours()+hours);
@@ -410,7 +413,7 @@
       li.style.display = ok ? '' : 'none';
       if(ok) visible++;
 
-      // تحديث عرض التاريخ بالتنسيق المحلي
+      // تحديث عرض التاريخ
       const timeEl = li.querySelector('time.when');
       timeEl.textContent = fmtDate(li.dataset.dt);
 
@@ -418,7 +421,7 @@
       setupAddMenu(li);
     });
 
-    // نقل الفعاليات السابقة أسفل القائمة للمسة ترتيب
+    // نقل الفعاليات السابقة أسفل القائمة
     items.filter(li=>li.classList.contains('past')).forEach(li=> list.appendChild(li));
 
     emptyMsg.hidden = visible !== 0;
@@ -427,6 +430,7 @@
     updateJSONLD();
   }
 
+  // قائمة "أضف إلى التقويم" — معالجة لمس الجوال
   function setupAddMenu(li){
     const btn = li.querySelector('.add-btn');
     const pop = li.querySelector('.add-pop');
@@ -439,36 +443,54 @@
     const loc = li.dataset.loc || '';
     const details = location.origin + (li.dataset.url || location.pathname);
 
-    // Google
+    // روابط Google / ICS
     const gLink = li.querySelector('a.gcal');
     gLink.href = gcalUrl({title, startISO, endISO, loc, url:details});
     gLink.target = '_blank'; gLink.rel='noopener';
 
-    // ICS
     const icsLink = li.querySelector('a.ics');
     icsLink.addEventListener('click',(e)=>{
-      e.preventDefault();
+      e.preventDefault(); e.stopPropagation();
       const blob = icsFile({title, startISO, endISO, loc, url:details});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = (title||'event')+'.ics';
       document.body.appendChild(a); a.click();
       a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 1000);
+      closeAllMenus();
     });
 
-    // فتح/إغلاق القائمة
-    btn.addEventListener('click', ()=>{
-      const open = pop.hasAttribute('hidden');
-      document.querySelectorAll('.add-pop:not([hidden])').forEach(p=>p.setAttribute('hidden',''));
-      pop.toggleAttribute('hidden', !open);
-      btn.setAttribute('aria-expanded', String(open));
-    });
-    document.addEventListener('click', (e)=>{
+    // فتح/إغلاق — نعتمد pointerdown لثبات اللمس
+    const toggleMenu = (open)=>{
+      if(open){
+        closeAllMenus();
+        pop.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded','true');
+      }else{
+        pop.setAttribute('hidden','');
+        btn.setAttribute('aria-expanded','false');
+      }
+    };
+    btn.addEventListener('pointerdown', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(pop.hasAttribute('hidden')); });
+    btn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); /* منع نقرتين متتاليتين */ });
+
+    // إغلاق عند الضغط خارج
+    document.addEventListener('pointerdown', (e)=>{
       if(!pop.contains(e.target) && !btn.contains(e.target)){
-        pop.setAttribute('hidden',''); btn.setAttribute('aria-expanded','false');
+        toggleMenu(false);
       }
     });
-    btn.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ pop.setAttribute('hidden',''); btn.setAttribute('aria-expanded','false'); }});
+
+    // إغلاق عند Esc
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ toggleMenu(false); }});
+  }
+
+  function closeAllMenus(){
+    document.querySelectorAll('.add-pop:not([hidden])').forEach(p=>{
+      p.setAttribute('hidden','');
+      const b = p.parentElement.querySelector('.add-btn');
+      if(b) b.setAttribute('aria-expanded','false');
+    });
   }
 
   function updateJSONLD(){
@@ -488,14 +510,11 @@
         "url": location.origin + (li.dataset.url || location.pathname)
       });
     });
-    const json = { "@context":"https://schema.org", "@graph": graph };
     const node = document.getElementById('events-jsonld');
-    node.textContent = JSON.stringify(json);
+    node.textContent = JSON.stringify({ "@context":"https://schema.org", "@graph": graph });
   }
 
   function render(){ apply(); }
-
-  // أول تشغيل
   render();
 </script>
 </body>
