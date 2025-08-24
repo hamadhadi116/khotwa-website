@@ -2,133 +2,218 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <base href="/">
-
-  <title>التسجيل في عضوية مجلس طلاب خطوة</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title data-lang="ar">التسجيل في عضوية مجلس خطوة</title>
+  <title data-lang="en" hidden>Apply for Khotwa Council Membership</title>
   <meta name="description" content="قدّم طلب الانضمام إلى مجلس طلاب خطوة.">
-  <link rel="canonical" href="https://khotwastudentcouncil.com/register"/>
+  <link rel="canonical" href="https://khotwastudentcouncil.com/register.html"/>
+  <meta name="robots" content="index,follow"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
-  <!-- Open Graph / Twitter -->
+  <!-- OG/Twitter -->
   <meta property="og:type" content="website"/>
-  <meta property="og:title" content="التسجيل في عضوية مجلس طلاب خطوة"/>
+  <meta property="og:site_name" content="Khotwa Student Council"/>
+  <meta property="og:title" content="التسجيل في عضوية مجلس خطوة"/>
   <meta property="og:description" content="انضم إلى مجلس طلاب خطوة وساهم في الفعاليات والأنشطة."/>
-  <meta property="og:url" content="https://khotwastudentcouncil.com/register"/>
-  <meta property="og:image" content="https://khotwastudentcouncil.com/og-cover.jpg"/>
+  <meta property="og:url" content="https://khotwastudentcouncil.com/register.html"/>
+  <meta property="og:image" content="https://b.top4top.io/p_35166f7hr1.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
 
   <style>
-    :root{--primary:#1e40af;--primary-600:#1d4ed8;--ring:#e5e7eb;--bg:#fff;--text:#0f172a;--muted:#475569;--card:#f8fafc;--radius:16px}
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    :root{
+      --primary:#1e40af; --primary-600:#1d4ed8;
+      --text:#0f172a; --muted:#64748b;
+      --surface:#ffffff; --card:#f8fafc; --ring:#e6eaf2;
+      --r-md:14px; --r-lg:16px; --r-xl:22px;
+      --sh-sm:0 2px 10px rgba(2,6,23,.06); --sh-md:0 10px 26px rgba(2,6,23,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:var(--surface)}
     a{color:inherit;text-decoration:none}
     .container{width:min(1120px,92%);margin-inline:auto}
 
-    /* Navbar */
-    .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0}
-    .brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
-    .brand img{width:28px;height:28px;object-fit:contain}
-    .nav-links{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-    .pill{border:1px solid var(--ring);padding:.4rem .8rem;border-radius:999px;background:#fff}
-    .cta{background:var(--primary);color:#fff;padding:.55rem .95rem;border-radius:12px;font-weight:600}
-    .cta:hover{background:var(--primary-600)}
+    :where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
+    .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:10px;box-shadow:var(--sh-sm);z-index:1000}
+    .skip-link:focus{inset-block-start:1rem}
 
-    main{padding:32px 0}
-    .card{background:var(--card);border:1px solid var(--ring);border-radius:var(--radius);padding:16px}
-    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    label{font-weight:600}
-    input,select,textarea{padding:.6rem .7rem;border:1px solid var(--ring);border-radius:10px}
+    /* NAV (مطابق لبقية الصفحات) */
+    .navbar{position:sticky;top:0;z-index:40;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);backdrop-filter:blur(8px)}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
+    .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
+    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .nav-links{display:flex;gap:.25rem;align-items:center}
+    .nav-links a{padding:.5rem .75rem;border-radius:var(--r-md)}
+    .nav-links a:hover{background:var(--card)}
+    .nav-links a[aria-current="page"]{background:var(--card)}
+    .lang-toggle,.menu-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:var(--r-md);cursor:pointer;font-weight:600}
+    .menu-toggle{display:none;align-items:center;gap:.5rem}
+    .menu-toggle svg{width:20px;height:20px}
+    @media (max-width:900px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{
+        position:absolute;inset-inline:0;top:calc(100% + 8px);
+        background:#fff;border:1px solid var(--ring);border-radius:var(--r-xl);
+        display:grid;gap:.2rem;padding:.4rem;box-shadow:0 20px 48px rgba(2,6,23,.1);
+        max-height:80vh;overflow:auto;opacity:1;transform:scale(1);transition:opacity .2s ease,transform .2s ease,padding .2s ease;
+      }
+      .nav-links[aria-hidden="true"]{transform:scale(.98);opacity:0}
+      .nav-links a,.lang-toggle{padding:.7rem .9rem}
+    }
+
+    /* Header */
+    main section{padding:2rem 0}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
+    .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
+    .muted{color:var(--muted)}
+
+    /* Form Card */
+    .card{background:#fff;border:1px solid var(--ring);border-radius:var(--r-lg);padding:1rem;box-shadow:var(--sh-sm)}
+    form{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    @media(max-width:900px){form{grid-template-columns:1fr}}
     .full{grid-column:1/-1}
-    .actions{display:flex;gap:.6rem;margin-top:6px}
-    button{cursor:pointer;border:0}
-    .btn-primary{background:var(--primary);color:#fff;padding:.6rem 1rem;border-radius:10px}
-    .btn-muted{background:#fff;border:1px solid var(--ring);padding:.6rem 1rem;border-radius:10px}
+    label{font-weight:700;margin-bottom:.25rem;display:block}
+    .req{color:#ef4444}
+    input,select,textarea{width:100%;padding:.7rem .8rem;border:1px solid var(--ring);border-radius:12px;background:#fff}
+    .help{color:var(--muted);font-size:.9rem;margin-top:.25rem}
+    .err{color:#ef4444;font-size:.9rem;display:none;margin-top:.25rem}
+    .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.4rem}
+    .btn{cursor:pointer;border:1px solid var(--ring);background:#fff;border-radius:12px;padding:.65rem 1rem}
+    .btn-primary{background:var(--primary);color:#fff;border-color:transparent}
+    .btn-primary:hover{background:var(--primary-600)}
 
-    footer{border-top:1px solid var(--ring);padding:18px 0;color:var(--muted)}
-    @media (max-width:900px){form{grid-template-columns:1fr}}
+    /* Toast */
+    .toast{position:fixed;inset-inline-start:50%;transform:translateX(-50%);bottom:18px;background:#0ea5e9;color:#fff;padding:.8rem 1rem;border-radius:12px;box-shadow:var(--sh-md);display:none;z-index:50}
+
+    /* Footer */
+    footer{border-top:1px solid var(--ring);background:#fff}
+    .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
+
+    /* Dark */
+    @media (prefers-color-scheme: dark){
+      :root{--surface:#0a0f1a;--card:#0b1220;--ring:#1f2937;--text:#e5e7eb;--muted:#9ca3af}
+      .navbar,footer{background:#0c1220;border-color:var(--ring)}
+      .card,.lang-toggle,.menu-toggle,.btn{background:#0f172a;border-color:var(--ring);color:var(--text)}
+      input,select,textarea{background:#0b1220;color:var(--text);border-color:var(--ring)}
+      .nav-links a:hover,.nav-links a[aria-current="page"]{background:#0f172a}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+    }
   </style>
 </head>
 <body>
-  <header class="navbar" role="banner">
+  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden>Skip to content</a>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
-      <a class="brand" href="index.html" aria-label="الصفحة الرئيسية">
-        <img id="logo" alt="شعار مجلس طلاب خطوة" width="28" height="28">
-        <span>مجلس طلاب خطوة – La Trobe</span>
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+        <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="40" height="40" decoding="async" loading="lazy">
+        <span data-lang="ar">مجلس طلاب خطوة</span>
+        <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
-      <nav class="nav-links" aria-label="التنقل الرئيسي">
-        <a class="pill" href="#" lang="en" hreflang="en">English</a>
-        <a class="pill" href="about.html">من نحن</a>
-        <a class="pill" href="news.html">الأخبار</a>
-        <a class="pill" href="events.html">الفعاليات</a>
-        <a class="pill" href="calendar.html">التقويم</a>
-        <a class="pill" href="resources.html">الموارد</a>
-        <a class="pill" href="contact.html">تواصل</a>
-        <a class="cta" href="register.html" aria-current="page">قدّم للعضوية</a>
-      </nav>
+
+      <button id="menu-toggle" class="menu-toggle" type="button"
+              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden>Menu</span>
+      </button>
+
+      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
+        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
+        <a href="/register.html" aria-current="page"><span data-lang="ar">العضوية</span><span data-lang="en" hidden>Membership</span></a>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
+      </div>
     </div>
-  </header>
+  </nav>
 
   <main class="container" id="main">
-    <h1 style="margin:0 0 12px;">التسجيل في عضوية المجلس</h1>
-    <p style="margin:0 0 16px;color:var(--muted);">عبّئ النموذج التالي ليتم التواصل معك من فريق مجلس طلاب خطوة.</p>
-    <div class="card">
-      <form method="post" action="#">
-        <div class="full">
-          <label for="fullName">الاسم الكامل</label>
-          <input id="fullName" name="fullName" type="text" required placeholder="اكتب اسمك الثلاثي">
-        </div>
-        <div>
-          <label for="email">البريد الجامعي</label>
-          <input id="email" name="email" type="email" required placeholder="name@latrobe.edu.au">
-        </div>
-        <div>
-          <label for="phone">رقم الجوال</label>
-          <input id="phone" name="phone" type="tel" placeholder="+61">
-        </div>
-        <div>
-          <label for="program">البرنامج</label>
-          <select id="program" name="program" required>
-            <option value="">اختر</option>
-            <option>IT</option><option>Cybersecurity</option><option>Bioscience</option><option>Business</option><option>Foundation</option>
-          </select>
-        </div>
-        <div>
-          <label for="intake">فصل الدراسة</label>
-          <select id="intake" name="intake">
-            <option value="">اختر</option>
-            <option>Oct 2025</option><option>Mar 2026</option>
-          </select>
-        </div>
-        <div class="full">
-          <label for="interest">ليش حاب تنضم؟</label>
-          <textarea id="interest" name="interest" rows="4" placeholder="اكتب باختصار"></textarea>
-        </div>
-        <div class="actions full">
-          <button class="btn-primary" type="submit">إرسال الطلب</button>
-          <a class="btn-muted" href="index.html">الرجوع للرئيسية</a>
-        </div>
-      </form>
-    </div>
+    <section>
+      <div class="section-head">
+        <h1 data-lang="ar">التسجيل في عضوية المجلس</h1>
+        <h1 data-lang="en" hidden>Apply for Membership</h1>
+      </div>
+      <p class="muted" data-lang="ar">عبّئ النموذج وسيتم التواصل معك من فريق مجلس طلاب خطوة.</p>
+      <p class="muted" data-lang="en" hidden>Fill the form and we’ll contact you shortly.</p>
+
+      <div class="card">
+        <form id="applyForm" novalidate>
+          <div class="full">
+            <label for="fullName"><span data-lang="ar">الاسم الكامل</span><span data-lang="en" hidden>Full name</span> <span class="req">*</span></label>
+            <input id="fullName" name="fullName" type="text" required
+                   placeholder="محمد أحمد علي"
+                   data-ph-ar="محمد أحمد علي" data-ph-en="Your full name">
+            <div class="err" id="err-name" data-lang="ar">فضلاً اكتب اسمك.</div>
+            <div class="err" id="err-name-en" data-lang="en" hidden>Please enter your name.</div>
+          </div>
+
+          <div>
+            <label for="email"><span data-lang="ar">البريد الجامعي</span><span data-lang="en" hidden>University email</span> <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required
+                   placeholder="name@latrobe.edu.au"
+                   data-ph-ar="name@latrobe.edu.au" data-ph-en="name@latrobe.edu.au">
+            <div class="help" data-lang="ar">يُفضّل بريد ‎@latrobe.edu.au</div>
+            <div class="help" data-lang="en" hidden>Preferably use @latrobe.edu.au</div>
+            <div class="err" id="err-email" data-lang="ar">البريد غير صالح.</div>
+            <div class="err" id="err-email-en" data-lang="en" hidden>Invalid email.</div>
+          </div>
+
+          <div>
+            <label for="phone"><span data-lang="ar">رقم الجوال</span><span data-lang="en" hidden>Phone</span></label>
+            <input id="phone" name="phone" type="tel"
+                   placeholder="+61 4xx xxx xxx"
+                   data-ph-ar="+61 4xx xxx xxx" data-ph-en="+61 4xx xxx xxx"
+                   pattern="^[\d\s\+\-()]{6,}$">
+            <div class="err" id="err-phone" data-lang="ar">رقم غير صالح.</div>
+            <div class="err" id="err-phone-en" data-lang="en" hidden>Invalid phone number.</div>
+          </div>
+
+          <div>
+            <label for="program"><span data-lang="ar">البرنامج</span><span data-lang="en" hidden>Program</span> <span class="req">*</span></label>
+            <select id="program" name="program" required>
+              <option value="" data-lang="ar">اختر</option><option value="" data-lang="en" hidden>Select</option>
+              <option>IT</option><option>Cybersecurity</option><option>Bioscience</option><option>Business</option><option>Foundation</option>
+            </select>
+            <div class="err" id="err-program" data-lang="ar">اختر البرنامج.</div>
+            <div class="err" id="err-program-en" data-lang="en" hidden>Please select your program.</div>
+          </div>
+
+          <div>
+            <label for="intake"><span data-lang="ar">فصل الدراسة</span><span data-lang="en" hidden>Intake</span></label>
+            <select id="intake" name="intake">
+              <option value="" data-lang="ar">اختر</option><option value="" data-lang="en" hidden>Select</option>
+              <option>Oct 2025</option><option>Mar 2026</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label for="interest"><span data-lang="ar">ليش حاب تنضم؟</span><span data-lang="en" hidden>Why do you want to join?</span></label>
+            <textarea id="interest" name="interest" rows="4"
+                      placeholder="اكتب باختصار"
+                      data-ph-ar="اكتب باختصار" data-ph-en="Write briefly"></textarea>
+          </div>
+
+          <div class="actions full">
+            <button class="btn btn-primary" type="submit" data-lang="ar">إرسال الطلب</button>
+            <button class="btn btn-primary" type="submit" data-lang="en" hidden>Submit</button>
+            <a class="btn" href="/index.html" data-lang="ar">العودة للرئيسية</a>
+            <a class="btn" href="/index.html" data-lang="en" hidden>Back to Home</a>
+          </div>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <footer role="contentinfo">
-    <div class="container">
-      <small>© <span id="y"></span> Khotwa Student Council</small>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById('y').textContent=new Date().getFullYear();
-    // حمّل أول مسار لوغو متاح (عدّل القائمة حسب مساراتك الفعلية)
-    (function(){
-      const img=document.getElementById('logo');
-      const candidates=['/assets/logo.svg','/assets/logo.png','/logo.svg','/logo.png','/images/logo.svg','/images/logo.png'];
-      let i=0; const tryNext=()=>{ if(i>=candidates.length){img.style.display='none';return;}
-        const t=new Image(); t.onload=()=>img.src=candidates[i]; t.onerror=()=>{i++;tryNext()}; t.src=candidates[i];
-      }; tryNext();
-    })();
-  </script>
-</body>
-</html>
-
+  <footer aria-label="تذييل الموقع">
+    <div class="container foot">
+      <div class="muted">© <span id="year"></span> Khotwa Student Council</div
