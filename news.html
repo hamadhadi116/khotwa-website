@@ -152,7 +152,7 @@
         <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
         <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
         <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
-        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-label="تبديل اللغة">English</button>
       </div>
     </div>
   </nav>
@@ -182,69 +182,7 @@
     <!-- Posts -->
     <section>
       <div class="grid grid-3" id="posts">
-        <!-- بطاقة 1 -->
-        <article class="post" data-tags="ann">
-          <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1600&auto=format&fit=crop" alt="إعلان تسجيل أعضاء جدد" loading="lazy" decoding="async">
-          <div class="body">
-            <div class="meta">
-              <span data-lang="ar">24 Aug 2025</span>
-              <span data-lang="en" hidden>24 Aug 2025</span>
-              <span>•</span>
-              <span data-lang="ar">إعلانات</span>
-              <span data-lang="en" hidden>Announcements</span>
-            </div>
-            <h3 data-lang="ar">فتح باب الانضمام لعضوية المجلس</h3>
-            <h3 data-lang="en" hidden>Membership applications are open</h3>
-            <p class="muted" data-lang="ar">إذا حاب تطوّر مهاراتك وتخدم مجتمع خطوة، التقديم مفتوح الآن لعدد من المناصب التطوعية.</p>
-            <p class="muted" data-lang="en" hidden>If you want to grow your skills and serve the Khotwa community, applications are now open for several volunteer roles.</p>
-            <div class="tags">
-              <span class="tag">Membership</span><span class="tag">Volunteer</span>
-            </div>
-            <a class="more" href="/register.html"><span data-lang="ar">قدّم الآن</span><span data-lang="en" hidden>Apply now</span></a>
-          </div>
-        </article>
-
-        <!-- بطاقة 2 -->
-        <article class="post" data-tags="event">
-          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1600&auto=format&fit=crop" alt="ورشة تخصصات خطوة" loading="lazy" decoding="async">
-          <div class="body">
-            <div class="meta">
-              <span data-lang="ar">18 Aug 2025</span>
-              <span data-lang="en" hidden>18 Aug 2025</span>
-              <span>•</span>
-              <span data-lang="ar">فعاليات</span>
-              <span data-lang="en" hidden>Events</span>
-            </div>
-            <h3 data-lang="ar">ورشة تخصصات خطوة – تقنية وأعمال وعلوم</h3>
-            <h3 data-lang="en" hidden>Khotwa Majors Workshop – Tech, Business & Sciences</h3>
-            <p class="muted" data-lang="ar">جلسات تعريفية مع طلاب وخريجين حول المسارات والفرص المهنية.</p>
-            <p class="muted" data-lang="en" hidden>Info sessions with students and alumni about study paths and career opportunities.</p>
-            <div class="tags"><span class="tag">Workshop</span><span class="tag">Careers</span></div>
-            <a class="more" href="/events.html"><span data-lang="ar">تفاصيل أكثر</span><span data-lang="en" hidden>More details</span></a>
-          </div>
-        </article>
-
-        <!-- بطاقة 3 -->
-        <article class="post" data-tags="media">
-          <img src="https://images.unsplash.com/photo-1522199794611-8e2d0a04ce95?q=80&w=1600&auto=format&fit=crop" alt="تغطية فعالية البادل" loading="lazy" decoding="async">
-          <div class="body">
-            <div class="meta">
-              <span data-lang="ar">10 Aug 2025</span>
-              <span data-lang="en" hidden>10 Aug 2025</span>
-              <span>•</span>
-              <span data-lang="ar">تغطيات</span>
-              <span data-lang="en" hidden>Media</span>
-            </div>
-            <h3 data-lang="ar">تقرير: بطولة البادل الطلابية</h3>
-            <h3 data-lang="en" hidden>Recap: Student Padel Championship</h3>
-            <p class="muted" data-lang="ar">صور وفيديو لأبرز اللقطات وأسماء الفائزين من مجتمع خطوة.</p>
-            <p class="muted" data-lang="en" hidden>Photos and videos of the highlights and winners from our community.</p>
-            <div class="tags"><span class="tag">Sports</span><span class="tag">Highlights</span></div>
-            <a class="more" href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">
-              <span data-lang="ar">شاهد الصور</span><span data-lang="en" hidden>See photos</span>
-            </a>
-          </div>
-        </article>
+        <!-- سيتم ملؤها تلقائيًا من data/news.json -->
       </div>
     </section>
   </main>
@@ -290,9 +228,8 @@
 
     // اللغة
     const toggleBtn = document.getElementById('lang-toggle');
-    let isEn = localStorage.getItem('khotwa_lang') === 'en';
     const qInput = document.getElementById('q');
-
+    let isEn = localStorage.getItem('khotwa_lang') === 'en';
     function setLang(en){
       document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
       document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
@@ -300,21 +237,21 @@
       document.documentElement.dir  = en ? 'ltr' : 'rtl';
       toggleBtn.textContent = en ? 'العربية' : 'English';
       toggleBtn.setAttribute('aria-pressed', String(en));
-      // placeholder البحث
       qInput.placeholder = en ? 'Search news…' : 'ابحث في الأخبار…';
       localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
+      applyFilter(); // لإعادة الفلترة بعد تغيير اللغة
     }
     toggleBtn.addEventListener('click',()=> setLang(!(localStorage.getItem('khotwa_lang') === 'en')));
     setLang(isEn);
 
     // فلترة الأخبار
     const chips = Array.from(document.querySelectorAll('.chip'));
-    const posts = Array.from(document.querySelectorAll('.post'));
     function applyFilter(){
+      const posts = Array.from(document.querySelectorAll('.post')); // التقط بعد التحميل
       const active = chips.find(c=>c.dataset.active==="true")?.dataset.filter || 'all';
-      const term = qInput.value.trim().toLowerCase();
+      const term = (qInput.value||'').trim().toLowerCase();
       posts.forEach(p=>{
-        const tagOK = (active==='all') || p.dataset.tags.includes(active);
+        const tagOK = (active==='all') || (p.dataset.tags||'').includes(active);
         const txt = p.textContent.toLowerCase();
         const termOK = !term || txt.includes(term);
         p.style.display = (tagOK && termOK) ? '' : 'none';
@@ -328,6 +265,61 @@
       });
     });
     qInput.addEventListener('input', applyFilter);
+
+    // تحميل الأخبار من data/news.json
+    async function loadNews(){
+      try{
+        const res = await fetch('data/news.json', {cache:'no-cache'});
+        const data = await res.json();
+        const postsEl = document.getElementById('posts');
+        postsEl.innerHTML = '';
+
+        // لو فاضي، لا شي (أو تقدر تعرض رسالة بسيطة)
+        if(!Array.isArray(data) || data.length===0){
+          postsEl.innerHTML = '<div class="muted">لا توجد أخبار حالياً.</div>';
+          return;
+        }
+
+        data.sort((a,b)=> new Date(b.date) - new Date(a.date));
+
+        data.forEach(item=>{
+          const article = document.createElement('article');
+          article.className = 'post';
+          // في data.tags: نستخدم أول تصنيف رئيسي لو موجود (ann/event/media)
+          const tagsLower = (item.tags||[]).map(t=>String(t).toLowerCase());
+          const typeTag = tagsLower.find(t=>['ann','event','media'].includes(t)) || 'ann';
+          article.dataset.tags = typeTag;
+
+          const arDate = new Date(item.date).toLocaleDateString('ar-EG');
+          const enDate = new Date(item.date).toLocaleDateString('en-AU');
+
+          article.innerHTML = `
+            ${item.image ? `<img src="${item.image}" alt="${item.title?.ar||''}" loading="lazy" decoding="async">` : `<div style="aspect-ratio:16/9;background:#f3f4f6"></div>`}
+            <div class="body">
+              <div class="meta">
+                <span data-lang="ar">${arDate}</span>
+                <span data-lang="en" hidden>${enDate}</span>
+                <span>•</span>
+                <span data-lang="ar">${(item.tags||[]).join('، ')}</span>
+                <span data-lang="en" hidden>${(item.tags||[]).join(', ')}</span>
+              </div>
+              <h3 data-lang="ar">${item.title?.ar||''}</h3>
+              <h3 data-lang="en" hidden>${item.title?.en||''}</h3>
+              <p class="muted" data-lang="ar">${item.summary?.ar||''}</p>
+              <p class="muted" data-lang="en" hidden>${item.summary?.en||''}</p>
+              <div class="tags">${(item.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+              ${item.url ? `<a class="more" href="${item.url}" target="_blank" rel="noopener"><span data-lang="ar">المزيد</span><span data-lang="en" hidden>More</span></a>` : ''}
+            </div>
+          `;
+          postsEl.appendChild(article);
+        });
+
+        applyFilter();
+      }catch(err){
+        console.error('فشل تحميل الأخبار:', err);
+      }
+    }
+    loadNews();
   </script>
 </body>
 </html>
