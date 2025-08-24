@@ -4,40 +4,35 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الفعاليات – Khotwa</title>
-  <meta name="description" content="الفعاليات القادمة لمجلس طلاب خطوة في جامعة لا تروب: ورش، بطولات، وماراثون داخل الحرم."/>
+  <meta name="description" content="الفعاليات القادمة لمجلس طلاب خطوة في جامعة لا تروب: ورش، بطولات، وماراثون داخل الحرم.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/events.html"/>
   <meta name="robots" content="index,follow"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
-  <!-- OG -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Khotwa Student Council">
   <meta property="og:title" content="الفعاليات – Khotwa">
   <meta property="og:description" content="تابع كل جديد من فعاليات مجلس طلاب خطوة.">
   <meta property="og:url" content="https://khotwastudentcouncil.com/events.html">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1600&q=80">
+  <meta property="og:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <!-- JSON-LD -->
+  <!-- JSON-LD (اختياري/خفيف) -->
   <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@graph":[
-      {"@type":"Event","name":"ورشة تخصصات خطوة","startDate":"2025-09-10T17:00:00+10:00","location":{"@type":"Place","name":"La Trobe – Bundoora"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","organizer":{"@type":"Organization","name":"Khotwa Student Council"},"url":"https://khotwastudentcouncil.com/events.html#e-workshop"},
-      {"@type":"Event","name":"بطولة البادل","startDate":"2025-09-24T16:00:00+10:00","location":{"@type":"Place","name":"La Trobe Sports Centre"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","organizer":{"@type":"Organization","name":"Khotwa Student Council"},"url":"https://khotwastudentcouncil.com/events.html#e-padel"},
-      {"@type":"Event","name":"ماراثون داخل الحرم","startDate":"2025-10-01T09:00:00+10:00","location":{"@type":"Place","name":"La Trobe – Bundoora"},"eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","organizer":{"@type":"Organization","name":"Khotwa Student Council"},"url":"https://khotwastudentcouncil.com/events.html#e-marathon"}
-    ]
-  }
+  {"@context":"https://schema.org","@type":"CollectionPage","name":"Khotwa Events","url":"https://khotwastudentcouncil.com/events.html"}
   </script>
 
   <style>
     :root{
-      --primary:#1e40af; --primary-600:#1d4ed8;
-      --text:#0f172a; --muted:#64748b;
-      --surface:#ffffff; --card:#f8fafc; --ring:#e6eaf2;
-      --r-md:14px; --r-lg:16px; --r-xl:22px;
-      --sh-sm:0 2px 10px rgba(2,6,23,.06); --sh-md:0 10px 26px rgba(2,6,23,.08);
+      --primary:#1e40af;--primary-600:#1d4ed8;
+      --ring:#e6eaf2;--card:#f8fafc;
+      --text:#0f172a;--muted:#64748b;
+      --surface:#ffffff;
+      --r-md:14px;--r-lg:16px;--r-xl:22px;
+      --sh-sm:0 2px 10px rgba(2,6,23,.06);--sh-md:0 10px 26px rgba(2,6,23,.08);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -45,54 +40,80 @@
     a{color:inherit;text-decoration:none}
     .container{width:min(1120px,92%);margin-inline:auto}
 
+    /* وصولية */
     :where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
     .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:10px;box-shadow:var(--sh-sm);z-index:1000}
     .skip-link:focus{inset-block-start:1rem}
 
-    /* NAV */
+    /* Navbar (موحّد مع بقية الصفحات) */
     .navbar{position:sticky;top:0;z-index:40;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);backdrop-filter:blur(8px)}
-    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
     .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
     .nav-links{display:flex;gap:.25rem;align-items:center}
     .nav-links a{padding:.5rem .75rem;border-radius:var(--r-md)}
     .nav-links a:hover{background:var(--card)}
     .nav-links a[aria-current="page"]{background:var(--card)}
-    .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:var(--r-md);cursor:pointer;font-weight:600}
+    .lang-toggle,.menu-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:var(--r-md);cursor:pointer;font-weight:600}
+    .menu-toggle{display:none;align-items:center;gap:.5rem}
+    .menu-toggle svg{width:20px;height:20px}
 
+    @media (max-width:900px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{
+        position:absolute;inset-inline:0;top:calc(100% + 8px);
+        background:#fff;border:1px solid var(--ring);border-radius:var(--r-xl);
+        display:grid;gap:.2rem;padding:.4rem;box-shadow:0 20px 48px rgba(2,6,23,.1);
+        max-height:80vh;overflow:auto;opacity:1;transform:scale(1);transition:opacity .2s ease,transform .2s ease,padding .2s ease;
+      }
+      .nav-links[aria-hidden="true"]{transform:scale(.98);opacity:0}
+      .nav-links a,.lang-toggle{padding:.7rem .9rem}
+    }
+
+    /* Sections */
     section{padding:2rem 0}
     .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
     .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
     .muted{color:var(--muted)}
 
+    /* Cards grid */
     .grid{display:grid;gap:1rem}
     .grid-3{grid-template-columns:repeat(3,1fr)}
     @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
 
     .card{background:#fff;border:1px solid var(--ring);border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden;display:flex;flex-direction:column}
-    .thumb{width:100%;height:180px;background:#eef2ff}
-    .thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-    .card-body{padding:1rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
-    .chip{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;padding:.25rem .6rem;border-radius:999px;background:var(--card);border:1px solid var(--ring)}
-    .card h3{margin:.2rem 0 .2rem;font-size:1.06rem}
-    .card p{margin:0;color:var(--muted);flex:1}
-    .btn{display:inline-block;margin-top:.4rem;padding:.6rem .9rem;border-radius:12px;background:var(--primary);color:#fff;font-weight:700;text-align:center}
+    .thumb{aspect-ratio:16/10;background:#eef2ff;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .card-body{padding:1rem;display:grid;gap:.55rem}
+    .chip{display:inline-flex;align-items:center;gap:.45rem;padding:.25rem .6rem;border-radius:999px;background:var(--card);border:1px solid var(--ring);font-size:.85rem;color:var(--muted)}
+    .btn{display:inline-flex;justify-content:center;align-items:center;padding:.7rem 1rem;border-radius:12px;border:1px solid transparent;background:var(--primary);color:#fff;font-weight:700}
     .btn:hover{background:var(--primary-600)}
 
+    /* Footer */
     footer{border-top:1px solid var(--ring);background:#fff}
     .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
 
+    /* Dark */
     @media (prefers-color-scheme: dark){
       :root{--surface:#0a0f1a;--card:#0b1220;--ring:#1f2937;--text:#e5e7eb;--muted:#9ca3af}
       .navbar,footer{background:#0c1220;border-color:var(--ring)}
-      .card,.lang-toggle{background:#0f172a;border-color:var(--ring);color:var(--text)}
+      .card,.lang-toggle,.menu-toggle,.btn{background:#0f172a;border-color:var(--ring);color:var(--text)}
+      .thumb{background:#0b1220}
+      .btn{background:#3b82f6;border-color:transparent}
+      .btn:hover{background:#2563eb}
       .nav-links a:hover,.nav-links a[aria-current="page"]{background:#0f172a}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden>Skip to content</a>
 
+  <!-- NAV -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
       <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
@@ -101,14 +122,19 @@
         <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
 
-      <div class="nav-links" id="primary-nav" data-open="false">
+      <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden>Menu</span>
+      </button>
+
+      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
         <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
         <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
         <a href="/events.html" aria-current="page"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
         <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
         <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
         <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
-        <button id="lang-toggle" class="lang-toggle" type="button">English</button>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
       </div>
     </div>
   </nav>
@@ -120,77 +146,76 @@
         <h1 data-lang="en" hidden>Upcoming Events</h1>
       </div>
       <p class="muted" data-lang="ar">تابع آخر ورش العمل، البطولات، والأنشطة.</p>
-      <p class="muted" data-lang="en" hidden>Stay tuned for workshops, tournaments, and activities.</p>
+      <p class="muted" data-lang="en" hidden>Follow our latest workshops, tournaments, and activities.</p>
 
       <div class="grid grid-3">
         <!-- ورشة التخصصات -->
         <article class="card" id="e-workshop">
           <div class="thumb">
             <img
-              src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80"
+              src="https://images.pexels.com/photos/3182761/pexels-photo-3182761.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop"
               srcset="
-                https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=70 800w,
-                https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80 1200w"
-              sizes="(max-width:980px) 92vw, 33vw"
-              alt="ورشة عمل وتعاون طلابي">
+                https://images.pexels.com/photos/3182761/pexels-photo-3182761.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop 800w,
+                https://images.pexels.com/photos/3182761/pexels-photo-3182761.jpeg?auto=compress&cs=tinysrgb&w=1200&h=750&fit=crop 1200w,
+                https://images.pexels.com/photos/3182761/pexels-photo-3182761.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop 1600w"
+              sizes="(max-width:980px) 92vw, 360px"
+              alt="ورشة تعارف ومناقشة تخصصات خطوة"
+              loading="lazy" decoding="async">
           </div>
           <div class="card-body">
             <span class="chip"><time data-lang="ar">10 سبتمبر – 5:00م</time><time data-lang="en" hidden>10 Sep – 5:00 PM</time></span>
             <h3 data-lang="ar">ورشة تخصصات خطوة</h3>
             <h3 data-lang="en" hidden>Khotwa Majors Workshop</h3>
-            <p data-lang="ar">جلسة تعريفية عن تخصصات خطوة: IT، الأمن السيبراني، العلوم الحيوية، والأعمال.</p>
-            <p data-lang="en" hidden>Intro to Khotwa majors: IT, Cybersecurity, Biosciences, and Business.</p>
-            <!-- رابط التواصل -->
+            <p data-lang="ar" class="muted">جلسة تعريفية عن تخصصات خطوة: IT، الأمن السيبراني، العلوم الحيوية، والأعمال.</p>
+            <p data-lang="en" class="muted" hidden>Intro session about Khotwa majors: IT, Cybersecurity, Biosciences, and Business.</p>
             <a class="btn" href="/contact.html?event=workshop" data-lang="ar">سجّل الآن</a>
             <a class="btn" href="/contact.html?event=workshop" data-lang="en" hidden>Register</a>
           </div>
         </article>
 
-        <!-- بطولة البادل -->
+        <!-- بطولة البادل (صور ثابتة شغّالة) -->
         <article class="card" id="e-padel">
           <div class="thumb">
-           <img
-  src="https://source.unsplash.com/1600x1000/?padel,court,racket"
-  srcset="
-    https://source.unsplash.com/800x500/?padel,court,racket 800w,
-    https://source.unsplash.com/1200x750/?padel,court,racket 1200w,
-    https://source.unsplash.com/1600x1000/?padel,court,racket 1600w"
-  sizes="(max-width:980px) 92vw, 360px"
-  alt="بطولة البادل – La Trobe Sports Centre"
-/>
+            <img
+              src="https://images.pexels.com/photos/5739150/pexels-photo-5739150.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop"
+              srcset="
+                https://images.pexels.com/photos/5739150/pexels-photo-5739150.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop 800w,
+                https://images.pexels.com/photos/5739150/pexels-photo-5739150.jpeg?auto=compress&cs=tinysrgb&w=1200&h=750&fit=crop 1200w,
+                https://images.pexels.com/photos/5739150/pexels-photo-5739150.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop 1600w"
+              sizes="(max-width:980px) 92vw, 360px"
+              alt="بطولة البادل – La Trobe Sports Centre"
+              loading="lazy" decoding="async">
           </div>
           <div class="card-body">
             <span class="chip"><time data-lang="ar">24 سبتمبر – 4:00م</time><time data-lang="en" hidden>24 Sep – 4:00 PM</time></span>
             <h3 data-lang="ar">بطولة البادل</h3>
             <h3 data-lang="en" hidden>Padel Championship</h3>
-            <p data-lang="ar">بطولة رياضية لطلاب خطوة – La Trobe Sports Centre.</p>
-            <p data-lang="en" hidden>Sports tournament for Khotwa students – La Trobe Sports Centre.</p>
-            <!-- رابط التواصل -->
+            <p data-lang="ar" class="muted">بطولة رياضية لطلاب خطوة – La Trobe Sports Centre.</p>
+            <p data-lang="en" class="muted" hidden>Sports tournament for Khotwa students – La Trobe Sports Centre.</p>
             <a class="btn" href="/contact.html?event=padel" data-lang="ar">سجّل الآن</a>
             <a class="btn" href="/contact.html?event=padel" data-lang="en" hidden>Register</a>
           </div>
         </article>
 
-        <!-- ماراثون -->
+        <!-- ماراثون داخل الحرم (صور ثابتة شغّالة) -->
         <article class="card" id="e-marathon">
           <div class="thumb">
-           <img
-  src="https://source.unsplash.com/1600x1000/?marathon,road,running"
-  srcset="
-    https://source.unsplash.com/800x500/?marathon,road,running 800w,
-    https://source.unsplash.com/1200x750/?marathon,road,running 1200w,
-    https://source.unsplash.com/1600x1000/?marathon,road,running 1600w"
-  sizes="(max-width:980px) 92vw, 360px"
-  alt="متسابقون في ماراثون داخل الحرم – La Trobe"
-/>
+            <img
+              src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop"
+              srcset="
+                https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop 800w,
+                https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=1200&h=750&fit=crop 1200w,
+                https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop 1600w"
+              sizes="(max-width:980px) 92vw, 360px"
+              alt="ماراثون داخل الحرم – مسارات 1K و2.5K و10K"
+              loading="lazy" decoding="async">
           </div>
           <div class="card-body">
             <span class="chip"><time data-lang="ar">1 أكتوبر – 9:00ص</time><time data-lang="en" hidden>1 Oct – 9:00 AM</time></span>
             <h3 data-lang="ar">ماراثون داخل الحرم</h3>
             <h3 data-lang="en" hidden>On-Campus Marathon</h3>
-            <p data-lang="ar">مسارات 1K و2.5K و10K مع نقاط مياه وخدمات دعم.</p>
-            <p data-lang="en" hidden>1K, 2.5K & 10K routes with water points and support.</p>
-            <!-- رابط التواصل -->
+            <p data-lang="ar" class="muted">مسارات 1K و2.5K و10K مع نقاط مياه وخدمات دعم.</p>
+            <p data-lang="en" class="muted" hidden>1K, 2.5K & 10K routes with water points and support.</p>
             <a class="btn" href="/contact.html?event=marathon" data-lang="ar">سجّل الآن</a>
             <a class="btn" href="/contact.html?event=marathon" data-lang="en" hidden>Register</a>
           </div>
@@ -210,7 +235,35 @@
     // سنة الحقوق
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // تبديل اللغة (مطابق لبقية الصفحات)
+    // منيو الموبايل + وصولية (مطابق للنمط المعتمد)
+    const menuBtn = document.getElementById('menu-toggle');
+    const primaryNav = document.getElementById('primary-nav');
+    const mq = matchMedia('(min-width:901px)');
+    function setMenu(open){
+      primaryNav.setAttribute('data-open', String(open));
+      menuBtn.setAttribute('aria-expanded', String(open));
+      primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
+      if(open){ primaryNav.querySelector('a,button')?.focus(); }
+    }
+    function initMenu(){
+      primaryNav.setAttribute('data-open','false');
+      menuBtn.setAttribute('aria-expanded','false');
+      primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
+    }
+    initMenu();
+    menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+    mq.addEventListener('change', e=>{
+      primaryNav.setAttribute('data-open','false');
+      menuBtn.setAttribute('aria-expanded','false');
+      primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
+    });
+    document.addEventListener('click', (e)=>{
+      const open = primaryNav.getAttribute('data-open')==='true';
+      if(open && !primaryNav.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
+    });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
+
+    // اللغة + حفظ التفضيل (مطابق)
     const toggleBtn = document.getElementById('lang-toggle');
     let isEn = localStorage.getItem('khotwa_lang') === 'en';
     function setLang(en){
@@ -219,6 +272,7 @@
       document.documentElement.lang = en ? 'en' : 'ar';
       document.documentElement.dir  = en ? 'ltr' : 'rtl';
       toggleBtn.textContent = en ? 'العربية' : 'English';
+      toggleBtn.setAttribute('aria-pressed', String(en));
       localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
     }
     toggleBtn.addEventListener('click',()=> setLang(!(localStorage.getItem('khotwa_lang') === 'en')));
