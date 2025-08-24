@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="جدول الفعاليات القادمة لطلاب خطوة.">
 <meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
 
-<!-- JSON-LD (سيُحدّث ديناميكيًا من JS) -->
+<!-- JSON-LD (يُحدّث من JS) -->
 <script type="application/ld+json" id="events-jsonld">{ "@context":"https://schema.org", "@graph":[] }</script>
 
 <style>
@@ -100,7 +100,7 @@
   .events-list{margin:0;padding-right:1rem;line-height:1.9;list-style:none}
   .events-list li{
     margin:.2rem 0;padding:.75rem .6rem;border-radius:12px;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;
-    position:relative; /* لزوم المنيو */
+    position:relative;
   }
   .events-list li:is(:hover,:focus-within){background:var(--card)}
   .month{font-weight:700;margin-inline-end:.3rem}
@@ -113,6 +113,8 @@
   .actions{margin-inline-start:auto;display:inline-flex;gap:.4rem;align-items:center}
   .btn{border:1px solid var(--ring);background:#fff;border-radius:12px;padding:.55rem .75rem;cursor:pointer;touch-action:manipulation}
   .btn:hover{box-shadow:0 2px 10px rgba(2,6,23,.08)}
+
+  /* منيو الإضافة */
   .add-menu{position:relative}
   .add-pop{
     position:absolute;inset-inline-end:0;top:calc(100% + 6px);
@@ -279,7 +281,7 @@
   // سنة الحقوق
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // منيو + وصولية (مطابق للأخبار)
+  // منيو + وصولية
   const menuBtn = document.getElementById('menu-toggle');
   const primaryNav = document.getElementById('primary-nav');
   const mq = matchMedia('(min-width:901px)');
@@ -295,7 +297,7 @@
     primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
   }
   initMenu();
-  menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+  menuBtn.addEventListener('click', (e)=>{ e.stopPropagation(); setMenu(primaryNav.getAttribute('data-open')!=='true'); });
   mq.addEventListener('change', e=>{
     primaryNav.setAttribute('data-open','false');
     menuBtn.setAttribute('aria-expanded','false');
@@ -305,12 +307,10 @@
     const open = primaryNav.getAttribute('data-open')==='true';
     if(open && !primaryNav.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
   });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
 
   // اللغة + placeholder البحث
   const toggleBtn = document.getElementById('lang-toggle');
   const qInput = document.getElementById('q');
-  let isEn = localStorage.getItem('khotwa_lang') === 'en';
   function setLang(en){
     document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
     document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
@@ -323,7 +323,7 @@
     render(); // إعادة تنسيق التواريخ
   }
   toggleBtn.addEventListener('click', (e)=>{ e.stopPropagation(); setLang(!(localStorage.getItem('khotwa_lang') === 'en')); });
-  setLang(isEn);
+  setLang(localStorage.getItem('khotwa_lang') === 'en');
 
   // ========= منطق التقويم =========
   const TZONE = 'Australia/Melbourne';
@@ -430,7 +430,7 @@
     updateJSONLD();
   }
 
-  // قائمة "أضف إلى التقويم" — معالجة لمس الجوال
+  // قائمة "أضف إلى التقويم" — نسخة ثابتة للجوال
   function setupAddMenu(li){
     const btn = li.querySelector('.add-btn');
     const pop = li.querySelector('.add-pop');
@@ -460,7 +460,6 @@
       closeAllMenus();
     });
 
-    // فتح/إغلاق — نعتمد pointerdown لثبات اللمس
     const toggleMenu = (open)=>{
       if(open){
         closeAllMenus();
@@ -471,19 +470,27 @@
         btn.setAttribute('aria-expanded','false');
       }
     };
-    btn.addEventListener('pointerdown', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(pop.hasAttribute('hidden')); });
-    btn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); /* منع نقرتين متتاليتين */ });
 
-    // إغلاق عند الضغط خارج
-    document.addEventListener('pointerdown', (e)=>{
-      if(!pop.contains(e.target) && !btn.contains(e.target)){
-        toggleMenu(false);
-      }
-    });
+    // فتح/إغلاق باللمس والنقر
+    const opener = (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(pop.hasAttribute('hidden')); };
+    btn.addEventListener('click', opener);
+    btn.addEventListener('touchstart', opener, {passive:false});
 
-    // إغلاق عند Esc
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ toggleMenu(false); }});
+    // منع إغلاق القائمة عند التفاعل داخلها
+    pop.addEventListener('click', (e)=> e.stopPropagation());
+    pop.addEventListener('touchstart', (e)=> e.stopPropagation(), {passive:true});
   }
+
+  // إغلاق أي قوائم مفتوحة إذا كُبس خارجها (طور الالتقاط لمنع تداخل)
+  document.addEventListener('click', (e)=>{
+    // لو الضغط خارج أي .add-pop/.add-btn نقفلها
+    if(!e.target.closest('.add-pop') && !e.target.closest('.add-btn')){
+      closeAllMenus();
+    }
+  }, true);
+
+  // إغلاق عند Esc
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeAllMenus(); }});
 
   function closeAllMenus(){
     document.querySelectorAll('.add-pop:not([hidden])').forEach(p=>{
@@ -496,7 +503,7 @@
   function updateJSONLD(){
     const graph = [];
     items.forEach(li=>{
-      if(li.style.display==='none') return; // حسب الفلترة الحالية
+      if(li.style.display==='none') return;
       const start = new Date(li.dataset.dt);
       const end = new Date(addDurationISO(start.toISOString(),2));
       graph.push({
@@ -510,8 +517,7 @@
         "url": location.origin + (li.dataset.url || location.pathname)
       });
     });
-    const node = document.getElementById('events-jsonld');
-    node.textContent = JSON.stringify({ "@context":"https://schema.org", "@graph": graph });
+    document.getElementById('events-jsonld').textContent = JSON.stringify({ "@context":"https://schema.org", "@graph": graph });
   }
 
   function render(){ apply(); }
