@@ -1,201 +1,24 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>لوحة الإدارة – Khotwa</title>
-<meta name="color-scheme" content="light dark"/>
-<style>
-  :root{--bg:#0a0f1a;--panel:#0f172a;--ring:#1f2937;--text:#e5e7eb;--muted:#94a3b8;--btn:#111827;--p:#1e40af;--ok:#16a34a;--err:#ef4444}
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
-  .wrap{max-width:1200px;margin:auto;padding:16px}
-  header{display:flex;align-items:center;gap:.8rem;justify-content:space-between;margin-bottom:12px}
-  h1{margin:0;font-size:1.25rem}
-  .muted{color:var(--muted);font-size:.9rem}
-  .tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:.6rem 0}
-  .tab{border:1px solid var(--ring);background:var(--panel);border-radius:10px;padding:.45rem .7rem;cursor:pointer}
-  .tab[aria-selected="true"]{background:#111827}
-  .panel{background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:12px;margin:12px 0}
-  .tools{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.6rem}
-  .btn{border:1px solid var(--ring);background:var(--btn);border-radius:10px;padding:.45rem .7rem;cursor:pointer}
-  .btn.p{background:var(--p);border-color:transparent}
-  .btn.ok{background:var(--ok);border-color:transparent}
-  .btn.err{background:var(--err);border-color:transparent}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-  .row-3{grid-template-columns:repeat(3,1fr)}
-  label{display:grid;gap:.3rem;font-size:.9rem}
-  input,textarea,select{background:#0b1220;border:1px solid var(--ring);color:var(--text);border-radius:10px;padding:.55rem .6rem}
-  textarea{min-height:90px;resize:vertical}
-  table{width:100%;border-collapse:separate;border-spacing:0}
-  th,td{padding:.55rem;border-bottom:1px solid var(--ring);vertical-align:top}
-  th{color:var(--muted);font-weight:600;text-align:start}
-  .badge{display:inline-block;background:#111827;border:1px solid var(--ring);border-radius:999px;padding:.1rem .5rem;margin:.1rem;font-size:.75rem}
-  .right{margin-inline-start:auto}
-  code{background:#111827;border:1px solid var(--ring);padding:.12rem .3rem;border-radius:6px}
-  .toasts{position:fixed;inset-inline-start:16px;inset-block-end:16px;display:grid;gap:.4rem;z-index:1000}
-  .toast{background:#111827;border:1px solid var(--ring);border-radius:10px;padding:.5rem .7rem}
-  .toast.ok{background:#0d1f16;border-color:#1f3d2c}
-  .toast.err{background:#2a1111;border-color:#4c1d1d}
-  @media(max-width:980px){.row,.row-3{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <header>
-    <div>
-      <h1>لوحة الإدارة</h1>
-      <div class="muted">إدارة الإعدادات والقائمة + الأخبار والفعاليات. (لا تغيير على الصفحات العامة)</div>
-    </div>
-    <div class="tools">
-      <button class="btn" id="backup">⬇️ تنزيل نسخة احتياطية (JSON)</button>
-    </div>
-  </header>
-
-  <nav class="tabs" role="tablist" aria-label="الأقسام">
-    <button class="tab" role="tab" data-tab="settings" aria-selected="true">⚙️ الإعدادات</button>
-    <button class="tab" role="tab" data-tab="nav" aria-selected="false">🧭 القائمة</button>
-    <button class="tab" role="tab" data-tab="news" aria-selected="false">📰 الأخبار</button>
-    <button class="tab" role="tab" data-tab="events" aria-selected="false">📅 الفعاليات</button>
-  </nav>
-
-  <!-- الإعدادات -->
-  <section class="panel" data-panel="settings">
-    <div class="tools">
-      <button class="btn" id="settings-import">⬆️ استيراد</button>
-      <button class="btn ok" id="settings-export">⬇️ تصدير</button>
-      <button class="btn p" id="settings-save">💾 حفظ للمستودع</button>
-    </div>
-    <form id="form-settings" class="grid" novalidate>
-      <div class="row">
-        <label>اسم الموقع <input id="s_siteName" required></label>
-        <label>OG Image (URL) <input id="s_og" type="url" placeholder="https://…"></label>
-      </div>
-      <div class="row">
-        <label>الشعار/سطر (AR) <input id="s_tag_ar"></label>
-        <label>Tagline (EN) <input id="s_tag_en"></label>
-      </div>
-      <label>الوصف <textarea id="s_desc"></textarea></label>
-      <div class="row">
-        <label>Instagram <input id="s_ig" type="url"></label>
-        <label>Twitter/X <input id="s_tw" type="url"></label>
-      </div>
-      <div class="row">
-        <label>Facebook <input id="s_fb" type="url"></label>
-        <label>LinkedIn <input id="s_in" type="url"></label>
-      </div>
-      <div class="row">
-        <label>حقوق النشر <input id="s_copy" placeholder="Khotwa Student Council"></label>
-        <div class="right"></div>
-        <button type="submit" class="btn p">💾 حفظ محليًا</button>
-      </div>
-    </form>
-  </section>
-
-  <!-- القائمة -->
-  <section class="panel" data-panel="nav" hidden>
-    <div class="tools">
-      <button class="btn" id="nav-import">⬆️ استيراد</button>
-      <button class="btn ok" id="nav-export">⬇️ تصدير</button>
-      <button class="btn p" id="nav-save">💾 حفظ للمستودع</button>
-      <button class="btn" id="nav-add">➕ إضافة رابط</button>
-    </div>
-    <table id="nav-table"><thead>
-      <tr><th>#</th><th>العربي</th><th>English</th><th>الرابط</th><th>عرض</th><th>إجراءات</th></tr>
-    </thead><tbody></tbody></table>
-  </section>
-
-  <!-- الأخبار -->
-  <section class="panel" data-panel="news" hidden>
-    <div class="tools">
-      <button class="btn" id="import-news">⬆️ استيراد أخبار</button>
-      <button class="btn ok" id="export-news">⬇️ تصدير أخبار</button>
-      <button class="btn p" id="save-news">💾 حفظ للمستودع</button>
-    </div>
-    <form id="form-news" class="grid" novalidate>
-      <div class="row">
-        <label>العنوان (AR)<input id="n_title_ar" required maxlength="120"></label>
-        <label>Title (EN)<input id="n_title_en" required maxlength="120"></label>
-      </div>
-      <div class="row">
-        <label>الملخص (AR)<textarea id="n_desc_ar" maxlength="400"></textarea></label>
-        <label>Summary (EN)<textarea id="n_desc_en" maxlength="400"></textarea></label>
-      </div>
-      <div class="row-3 row">
-        <label>التاريخ/الوقت<input type="datetime-local" id="n_date" required></label>
-        <label>صورة (URL)<input type="url" id="n_image" placeholder="https://…"></label>
-        <label>رابط (اختياري)<input type="url" id="n_url" placeholder="/news.html#id"></label>
-      </div>
-      <div class="row">
-        <label>وسوم (مفصولة بفواصل)<input id="n_tags" placeholder="ann, event, media"></label>
-        <div class="right"></div>
-        <button type="submit" class="btn p" id="n_submit">➕ أضف خبر</button>
-      </div>
-      <input type="hidden" id="n_edit_id">
-    </form>
-    <div class="tools">
-      <input id="n_q" placeholder="ابحث في الأخبار…" class="btn" style="width:260px"/>
-      <select id="n_sort" class="btn">
-        <option value="date_desc">الأحدث أولًا</option>
-        <option value="date_asc">الأقدم أولًا</option>
-        <option value="title_ar">العنوان (AR)</option>
-        <option value="title_en">Title (EN)</option>
-      </select>
-    </div>
-    <table id="n_table"><thead>
-      <tr><th>العنوان</th><th>التاريخ</th><th>وسوم</th><th>رابط/صورة</th><th>إجراءات</th></tr>
-    </thead><tbody></tbody></table>
-  </section>
-
-  <!-- الفعاليات -->
-  <section class="panel" data-panel="events" hidden>
-    <div class="tools">
-      <button class="btn" id="import-events">⬆️ استيراد فعاليات</button>
-      <button class="btn ok" id="export-events">⬇️ تصدير فعاليات</button>
-      <button class="btn p" id="save-events">💾 حفظ للمستودع</button>
-    </div>
-    <form id="form-events" class="grid" novalidate>
-      <div class="row">
-        <label>العنوان (AR)<input id="e_title_ar" required maxlength="120"></label>
-        <label>Title (EN)<input id="e_title_en" required maxlength="120"></label>
-      </div>
-      <div class="row-3 row">
-        <label>التاريخ/الوقت (بداية)<input type="datetime-local" id="e_start" required></label>
-        <label>المدة بالساعات<input id="e_dur" type="number" min="1" value="2"></label>
-        <label>الموقع<input id="e_loc" placeholder="La Trobe – Bundoora"></label>
-      </div>
-      <div class="row">
-        <label>رابط التفاصيل<input id="e_url" type="url" placeholder="/events.html#e1"></label>
-        <label>وسوم (مفصولة بفواصل)<input id="e_tags" placeholder="Workshop, Sports"></label>
-      </div>
-      <div class="row">
-        <label>صورة (URL)<input id="e_image" type="url" placeholder="https://…"></label>
-        <div class="right"></div>
-        <button type="submit" class="btn p" id="e_submit">➕ أضف فعالية</button>
-      </div>
-      <input type="hidden" id="e_edit_id">
-    </form>
-    <div class="tools">
-      <input id="e_q" placeholder="ابحث في الفعاليات…" class="btn" style="width:260px"/>
-      <select id="e_sort" class="btn">
-        <option value="date_asc">الأقرب أولًا</option>
-        <option value="date_desc">الأبعد أولًا</option>
-        <option value="title_ar">العنوان (AR)</option>
-        <option value="title_en">Title (EN)</option>
-      </select>
-    </div>
-    <table id="e_table"><thead>
-      <tr><th>العنوان</th><th>الوقت</th><th>الموقع</th><th>وسوم</th><th>إجراءات</th></tr>
-    </thead><tbody></tbody></table>
-  </section>
-</div>
-
-<div class="toasts" id="toasts" aria-live="polite"></div>
-
 <script>
-/* ========== الربط مع الـWorker ========== */
+/* ========== الربط مع الـWorker (خطوة 2) ========== */
+/* إذا عامل Cloudflare مربوط على نفس الدومين، هذا الرابط يكفي */
 const API_URL = 'https://khotwastudentcouncil.com/admin/update';
-const ADMIN_TOKEN = 'my-secret-1234567890'; // نفس القيمة اللي في ADMIN_TOKEN داخل Cloudflare
+
+/* نخزّن ADMIN_TOKEN في localStorage بدل ما يكون ثابت في الكود */
+const TOKEN_KEY = 'khotwa_admin_token_v1';
+let ADMIN_TOKEN = localStorage.getItem(TOKEN_KEY);
+async function ensureToken(){
+  if(!ADMIN_TOKEN){
+    const val = prompt('أدخل ADMIN_TOKEN (من Cloudflare Worker):');
+    if(!val){ alert('لازم تدخل التوكن للاستمرار'); throw new Error('Missing ADMIN_TOKEN'); }
+    ADMIN_TOKEN = val.trim();
+    localStorage.setItem(TOKEN_KEY, ADMIN_TOKEN);
+  }
+}
+function clearToken(){
+  localStorage.removeItem(TOKEN_KEY);
+  ADMIN_TOKEN = null;
+  toast('تم مسح التوكن—سنسألك عنه مرة أخرى عند الحفظ','ok');
+}
 
 /* ========== أدوات مساعدة ========== */
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
@@ -212,6 +35,7 @@ function pickJSON(cb){const inp=document.createElement('input');inp.type='file';
 
 /* الكتابة للمخزن عبر الـWorker */
 async function saveToRepo(path, content){
+  await ensureToken();
   try{
     const res = await fetch(API_URL,{
       method:'POST',
@@ -222,10 +46,17 @@ async function saveToRepo(path, content){
       body: JSON.stringify({ path, content })
     });
     if(!res.ok){
+      // لمساعدة التشخيص السريع (مثلاً 401 أو CORS)
       const txt = await res.text().catch(()=>res.statusText);
+      if(res.status === 401){
+        toast('Unauthorized: تأكد من ADMIN_TOKEN، سنمسحه الآن لتعيد إدخاله','err');
+        clearToken();
+      }
       throw new Error(txt||('HTTP '+res.status));
     }
-    return await res.json();
+    const json = await res.json();
+    toast('حُفظ للمخزن (KV) ✔️','ok');
+    return json;
   }catch(err){
     console.error(err);
     toast('فشل الحفظ: '+err.message,'err');
@@ -269,7 +100,7 @@ $('#form-settings').addEventListener('submit',e=>{
 });
 $('#settings-export').onclick=()=>downloadJSON(settings,'settings.json');
 $('#settings-import').onclick=()=>pickJSON(obj=>{settings=obj;save(KEY_SETTINGS,settings);fillSettings();toast('تم الاستيراد ✔️','ok');});
-$('#settings-save').onclick=()=>saveToRepo('data/settings.json',settings).then(()=>toast('حُفظ للمستودع ✔️','ok'));
+$('#settings-save').onclick=()=>saveToRepo('data/settings.json',settings);
 
 /* ========== القائمة ========== */
 const KEY_NAV='khotwa_nav_v1';
@@ -310,7 +141,7 @@ renderNav();
 $('#nav-add').onclick=()=>{ navItems.push({id:cryptoId(),ar:'عن',en:'About',href:'/about.html',visible:true,order:navItems.length+1}); save(KEY_NAV,navItems); renderNav(); };
 $('#nav-export').onclick=()=>downloadJSON(navItems,'navigation.json');
 $('#nav-import').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ navItems=arr; save(KEY_NAV,navItems); renderNav(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
-$('#nav-save').onclick=()=>saveToRepo('data/navigation.json',navItems).then(()=>toast('حُفظ للمستودع ✔️','ok'));
+$('#nav-save').onclick=()=>saveToRepo('data/navigation.json',navItems);
 
 /* ========== الأخبار ========== */
 const KEY_NEWS='khotwa_news_v1';
@@ -342,7 +173,7 @@ function renderNews(){
       <td><div>${esc(it.title.ar)}</div><div class="muted">${esc(it.title.en)}</div></td>
       <td>${new Date(it.date).toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})}</td>
       <td>${(it.tags||[]).map(t=>`<span class="badge">${esc(t)}</span>`).join('')}</td>
-      <td>${it.image?`🖼️ <a href="${esc(it.image)}" target="_blank">صورة</a><br>`:''}${it.url?`🔗 <a href="${esc(it.url)}" target="_blank">رابط</a>`:''}</td>
+      <td>${it.image?`🖼️ <a href="${esc(it.image)}" target="_blank" rel="noopener">صورة</a><br>`:''}${it.url?`🔗 <a href="${esc(it.url)}" target="_blank" rel="noopener">رابط</a>`:''}</td>
       <td><button class="btn" data-edit>تعديل</button> <button class="btn err" data-del>حذف</button></td>`;
     tr.querySelector('[data-edit]').onclick=()=>{ nF.title_ar.value=it.title.ar; nF.title_en.value=it.title.en; nF.desc_ar.value=it.summary.ar; nF.desc_en.value=it.summary.en; nF.date.value=toLocal(it.date); nF.image.value=it.image||''; nF.url.value=it.url||''; nF.tags.value=(it.tags||[]).join(', '); nEditId.value=it.id; nSubmit.textContent='💾 حفظ التعديل'; window.scrollTo({top:0,behavior:'smooth'}); };
     tr.querySelector('[data-del]').onclick=()=>{ news=news.filter(x=>x.id!==it.id); save(KEY_NEWS,news); renderNews(); };
@@ -352,7 +183,7 @@ function renderNews(){
 renderNews();
 $('#export-news').onclick=()=>downloadJSON(news,'news.json');
 $('#import-news').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ news=arr; save(KEY_NEWS,news); renderNews(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
-$('#save-news').onclick=()=>saveToRepo('data/news.json',news).then(()=>toast('حُفظ للمستودع ✔️','ok'));
+$('#save-news').onclick=()=>saveToRepo('data/news.json',news);
 
 /* ========== الفعاليات ========== */
 const KEY_EVENTS='khotwa_events_v1';
@@ -395,7 +226,7 @@ function renderEvents(){
 renderEvents();
 $('#export-events').onclick=()=>downloadJSON(events,'events.json');
 $('#import-events').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ events=arr; save(KEY_EVENTS,events); renderEvents(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
-$('#save-events').onclick=()=>saveToRepo('data/events.json',events).then(()=>toast('حُفظ للمستودع ✔️','ok'));
+$('#save-events').onclick=()=>saveToRepo('data/events.json',events);
 
 /* نسخة احتياطية */
 $('#backup').onclick=()=>{
@@ -409,5 +240,3 @@ $('#backup').onclick=()=>{
   try{ const n=await fetch('../data/navigation.json',{cache:'no-cache'}); if(n.ok){ navItems=await n.json(); save(KEY_NAV,navItems); renderNav(); } }catch{}
 })();
 </script>
-</body>
-</html>
