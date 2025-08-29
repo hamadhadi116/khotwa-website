@@ -1,0 +1,8 @@
+[
+  {"id":"about","ar":"من نحن","en":"About","href":"/about.html","visible":true,"order":1},
+  {"id":"news","ar":"الأخبار","en":"News","href":"/news.html","visible":true,"order":2},
+  {"id":"events","ar":"الفعاليات","en":"Events","href":"/events.html","visible":true,"order":3},
+  {"id":"calendar","ar":"التقويم","en":"Calendar","href":"/calendar.html","visible":true,"order":4},
+  {"id":"resources","ar":"الموارد","en":"Resources","href":"/resources.html","visible":true,"order":5},
+  {"id":"contact","ar":"تواصل","en":"Contact","href":"/contact.html","visible":true,"order":6}
+]
