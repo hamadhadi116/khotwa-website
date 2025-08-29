@@ -6,14 +6,14 @@
 <title>لوحة الإدارة – Khotwa</title>
 <meta name="color-scheme" content="light dark"/>
 <style>
-  :root{--bg:#0a0f1a;--panel:#0f172a;--ring:#1f2937;--text:#e5e7eb;--muted:#94a3b8;--btn:#111827;--p:#1e40af;--ok:#16a34a;--warn:#f59e0b;--err:#ef4444}
+  :root{--bg:#0a0f1a;--panel:#0f172a;--ring:#1f2937;--text:#e5e7eb;--muted:#94a3b8;--btn:#111827;--p:#1e40af;--ok:#16a34a;--err:#ef4444}
   *{box-sizing:border-box}
   body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
-  .wrap{max-width:1100px;margin:auto;padding:16px}
+  .wrap{max-width:1200px;margin:auto;padding:16px}
   header{display:flex;align-items:center;gap:.8rem;justify-content:space-between;margin-bottom:12px}
   h1{margin:0;font-size:1.25rem}
   .muted{color:var(--muted);font-size:.9rem}
-  .tabs{display:flex;gap:.4rem;margin:.6rem 0}
+  .tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:.6rem 0}
   .tab{border:1px solid var(--ring);background:var(--panel);border-radius:10px;padding:.45rem .7rem;cursor:pointer}
   .tab[aria-selected="true"]{background:#111827}
   .panel{background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:12px;margin:12px 0}
@@ -21,115 +21,118 @@
   .btn{border:1px solid var(--ring);background:var(--btn);border-radius:10px;padding:.45rem .7rem;cursor:pointer}
   .btn.p{background:var(--p);border-color:transparent}
   .btn.ok{background:var(--ok);border-color:transparent}
-  .btn.warn{background:var(--warn);border-color:transparent;color:#111}
   .btn.err{background:var(--err);border-color:transparent}
-  .btn[disabled]{opacity:.6;cursor:not-allowed}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
   .row-3{grid-template-columns:repeat(3,1fr)}
   label{display:grid;gap:.3rem;font-size:.9rem}
   input,textarea,select{background:#0b1220;border:1px solid var(--ring);color:var(--text);border-radius:10px;padding:.55rem .6rem}
   textarea{min-height:90px;resize:vertical}
-  .hint{font-size:.75rem;color:var(--muted);display:flex;justify-content:space-between}
-  .error{color:#fecaca}
-  .preview{display:flex;gap:.5rem;align-items:center}
-  .preview img{width:48px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--ring)}
   table{width:100%;border-collapse:separate;border-spacing:0}
   th,td{padding:.55rem;border-bottom:1px solid var(--ring);vertical-align:top}
   th{color:var(--muted);font-weight:600;text-align:start}
   .badge{display:inline-block;background:#111827;border:1px solid var(--ring);border-radius:999px;padding:.1rem .5rem;margin:.1rem;font-size:.75rem}
   .right{margin-inline-start:auto}
   code{background:#111827;border:1px solid var(--ring);padding:.12rem .3rem;border-radius:6px}
-  .divider{height:1px;background:var(--ring);margin:.6rem 0}
-  /* Toasts */
   .toasts{position:fixed;inset-inline-start:16px;inset-block-end:16px;display:grid;gap:.4rem;z-index:1000}
-  .toast{background:#111827;border:1px solid var(--ring);border-radius:10px;padding:.5rem .7rem;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+  .toast{background:#111827;border:1px solid var(--ring);border-radius:10px;padding:.5rem .7rem}
   .toast.ok{background:#0d1f16;border-color:#1f3d2c}
   .toast.err{background:#2a1111;border-color:#4c1d1d}
-  /* Modal confirm */
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;z-index:999}
-  .modal[open]{display:flex}
-  .modal .box{background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:1rem;max-width:420px;width:92%}
-  .modal .box .actions{display:flex;gap:.5rem;justify-content:flex-end;margin-top:.8rem}
-  /* Loader */
-  .spinner{display:inline-block;width:16px;height:16px;border:2px solid #9ca3af;border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;margin-inline-start:.4rem}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  @media(max-width:900px){.row,.row-3{grid-template-columns:1fr}}
+  @media(max-width:980px){.row,.row-3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div>
-      <h1>لوحة الإدارة (نفس الهيكل – محسّنة)</h1>
-      <div class="muted">أضف/عدّل الأخبار والفعاليات → تصدير/استيراد JSON، أو احفظ للمستودع لاحقًا عبر API. لا تغيير على هياكل صفحاتك الأساسية.</div>
+      <h1>لوحة الإدارة</h1>
+      <div class="muted">إدارة الإعدادات والقائمة + الأخبار والفعاليات. (لا تغيير على الصفحات العامة)</div>
     </div>
     <div class="tools">
-      <button class="btn" id="import-news">⬆️ استيراد أخبار</button>
-      <button class="btn ok" id="export-news">⬇️ تصدير أخبار</button>
-      <button class="btn" id="import-events">⬆️ استيراد فعاليات</button>
-      <button class="btn ok" id="export-events">⬇️ تصدير فعاليات</button>
-      <!-- اختياري: حفظ للمستودع (جاهزة للربط) -->
-      <button class="btn p" id="save-news-remote">💾 حفظ الأخبار للمستودع</button>
-      <button class="btn p" id="save-events-remote">💾 حفظ الفعاليات للمستودع</button>
+      <button class="btn" id="backup">⬇️ تنزيل نسخة احتياطية (JSON)</button>
     </div>
   </header>
 
   <nav class="tabs" role="tablist" aria-label="الأقسام">
-    <button class="tab" role="tab" id="tab-news" aria-selected="true" aria-controls="panel-news">📰 الأخبار</button>
-    <button class="tab" role="tab" id="tab-events" aria-selected="false" aria-controls="panel-events">📅 الفعاليات</button>
+    <button class="tab" role="tab" data-tab="settings" aria-selected="true">⚙️ الإعدادات</button>
+    <button class="tab" role="tab" data-tab="nav" aria-selected="false">🧭 القائمة</button>
+    <button class="tab" role="tab" data-tab="news" aria-selected="false">📰 الأخبار</button>
+    <button class="tab" role="tab" data-tab="events" aria-selected="false">📅 الفعاليات</button>
   </nav>
 
-  <!-- الأخبار (نفس الهيكل) -->
-  <section class="panel" id="panel-news" role="tabpanel" aria-labelledby="tab-news">
+  <!-- الإعدادات -->
+  <section class="panel" data-panel="settings">
+    <div class="tools">
+      <button class="btn" id="settings-import">⬆️ استيراد</button>
+      <button class="btn ok" id="settings-export">⬇️ تصدير</button>
+      <button class="btn p" id="settings-save">💾 حفظ للمستودع</button>
+    </div>
+    <form id="form-settings" class="grid" novalidate>
+      <div class="row">
+        <label>اسم الموقع <input id="s_siteName" required></label>
+        <label>OG Image (URL) <input id="s_og" type="url" placeholder="https://…"></label>
+      </div>
+      <div class="row">
+        <label>الشعار/سطر (AR) <input id="s_tag_ar"></label>
+        <label>Tagline (EN) <input id="s_tag_en"></label>
+      </div>
+      <label>الوصف <textarea id="s_desc"></textarea></label>
+      <div class="row">
+        <label>Instagram <input id="s_ig" type="url"></label>
+        <label>Twitter/X <input id="s_tw" type="url"></label>
+      </div>
+      <div class="row">
+        <label>Facebook <input id="s_fb" type="url"></label>
+        <label>LinkedIn <input id="s_in" type="url"></label>
+      </div>
+      <div class="row">
+        <label>حقوق النشر <input id="s_copy" placeholder="Khotwa Student Council"></label>
+        <div class="right"></div>
+        <button type="submit" class="btn p">💾 حفظ محليًا</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- القائمة -->
+  <section class="panel" data-panel="nav" hidden>
+    <div class="tools">
+      <button class="btn" id="nav-import">⬆️ استيراد</button>
+      <button class="btn ok" id="nav-export">⬇️ تصدير</button>
+      <button class="btn p" id="nav-save">💾 حفظ للمستودع</button>
+      <button class="btn" id="nav-add">➕ إضافة رابط</button>
+    </div>
+    <table id="nav-table"><thead>
+      <tr><th>#</th><th>العربي</th><th>English</th><th>الرابط</th><th>عرض</th><th>إجراءات</th></tr>
+    </thead><tbody></tbody></table>
+  </section>
+
+  <!-- الأخبار -->
+  <section class="panel" data-panel="news" hidden>
+    <div class="tools">
+      <button class="btn" id="import-news">⬆️ استيراد أخبار</button>
+      <button class="btn ok" id="export-news">⬇️ تصدير أخبار</button>
+      <button class="btn p" id="save-news">💾 حفظ للمستودع</button>
+    </div>
     <form id="form-news" class="grid" novalidate>
       <div class="row">
-        <label>العنوان (AR)
-          <input id="n_title_ar" required maxlength="120">
-          <div class="hint"><span>اكتب عنوانًا واضحًا.</span><span><span id="n_len_ar">0</span>/120</span></div>
-        </label>
-        <label>Title (EN)
-          <input id="n_title_en" required maxlength="120">
-          <div class="hint"><span>English title.</span><span><span id="n_len_en">0</span>/120</span></div>
-        </label>
+        <label>العنوان (AR)<input id="n_title_ar" required maxlength="120"></label>
+        <label>Title (EN)<input id="n_title_en" required maxlength="120"></label>
       </div>
       <div class="row">
-        <label>الملخص (AR)
-          <textarea id="n_desc_ar" maxlength="400"></textarea>
-          <div class="hint"><span>مختصر 1–3 جمل.</span><span><span id="n_desc_ar_len">0</span>/400</span></div>
-        </label>
-        <label>Summary (EN)
-          <textarea id="n_desc_en" maxlength="400"></textarea>
-          <div class="hint"><span>Short summary.</span><span><span id="n_desc_en_len">0</span>/400</span></div>
-        </label>
+        <label>الملخص (AR)<textarea id="n_desc_ar" maxlength="400"></textarea></label>
+        <label>Summary (EN)<textarea id="n_desc_en" maxlength="400"></textarea></label>
       </div>
       <div class="row-3 row">
-        <label>التاريخ/الوقت
-          <input type="datetime-local" id="n_date" required>
-          <div class="hint"><span class="error" id="n_date_err"></span><span></span></div>
-        </label>
-        <label>صورة (URL)
-          <div class="preview">
-            <input type="url" id="n_image" placeholder="https://…">
-            <img id="n_img_prev" alt="" aria-hidden="true">
-          </div>
-          <div class="hint"><span>اختياري.</span><span></span></div>
-        </label>
-        <label>رابط (اختياري)
-          <input type="url" id="n_url" placeholder="/news.html#id">
-          <div class="hint"><span>رابط تفصيلي إن وجد.</span><span></span></div>
-        </label>
+        <label>التاريخ/الوقت<input type="datetime-local" id="n_date" required></label>
+        <label>صورة (URL)<input type="url" id="n_image" placeholder="https://…"></label>
+        <label>رابط (اختياري)<input type="url" id="n_url" placeholder="/news.html#id"></label>
       </div>
       <div class="row">
-        <label>وسوم (مفصولة بفواصل)
-          <input id="n_tags" placeholder="Announcements, Workshop">
-          <div class="hint"><span>مثال: ann,event,media…</span><span></span></div>
-        </label>
+        <label>وسوم (مفصولة بفواصل)<input id="n_tags" placeholder="ann, event, media"></label>
         <div class="right"></div>
         <button type="submit" class="btn p" id="n_submit">➕ أضف خبر</button>
       </div>
       <input type="hidden" id="n_edit_id">
     </form>
-
     <div class="tools">
       <input id="n_q" placeholder="ابحث في الأخبار…" class="btn" style="width:260px"/>
       <select id="n_sort" class="btn">
@@ -138,61 +141,40 @@
         <option value="title_ar">العنوان (AR)</option>
         <option value="title_en">Title (EN)</option>
       </select>
-      <button class="btn" id="n_copy">📋 نسخ JSON</button>
     </div>
     <table id="n_table"><thead>
       <tr><th>العنوان</th><th>التاريخ</th><th>وسوم</th><th>رابط/صورة</th><th>إجراءات</th></tr>
     </thead><tbody></tbody></table>
   </section>
 
-  <!-- الفعاليات (نفس الهيكل) -->
-  <section class="panel" id="panel-events" role="tabpanel" aria-labelledby="tab-events" hidden>
+  <!-- الفعاليات -->
+  <section class="panel" data-panel="events" hidden>
+    <div class="tools">
+      <button class="btn" id="import-events">⬆️ استيراد فعاليات</button>
+      <button class="btn ok" id="export-events">⬇️ تصدير فعاليات</button>
+      <button class="btn p" id="save-events">💾 حفظ للمستودع</button>
+    </div>
     <form id="form-events" class="grid" novalidate>
       <div class="row">
-        <label>العنوان (AR)
-          <input id="e_title_ar" required maxlength="120">
-          <div class="hint"><span></span><span><span id="e_len_ar">0</span>/120</span></div>
-        </label>
-        <label>Title (EN)
-          <input id="e_title_en" required maxlength="120">
-          <div class="hint"><span></span><span><span id="e_len_en">0</span>/120</span></div>
-        </label>
+        <label>العنوان (AR)<input id="e_title_ar" required maxlength="120"></label>
+        <label>Title (EN)<input id="e_title_en" required maxlength="120"></label>
       </div>
       <div class="row-3 row">
-        <label>التاريخ/الوقت (بداية)
-          <input type="datetime-local" id="e_start" required>
-          <div class="hint"><span class="error" id="e_date_err"></span><span></span></div>
-        </label>
-        <label>المدة بالساعات
-          <input id="e_dur" type="number" min="1" value="2">
-          <div class="hint"><span>افتراضي 2 ساعات.</span><span></span></div>
-        </label>
-        <label>الموقع
-          <input id="e_loc" placeholder="La Trobe – Bundoora">
-          <div class="hint"><span></span><span></span></div>
-        </label>
+        <label>التاريخ/الوقت (بداية)<input type="datetime-local" id="e_start" required></label>
+        <label>المدة بالساعات<input id="e_dur" type="number" min="1" value="2"></label>
+        <label>الموقع<input id="e_loc" placeholder="La Trobe – Bundoora"></label>
       </div>
       <div class="row">
-        <label>رابط التفاصيل
-          <input id="e_url" type="url" placeholder="/events.html#e1">
-        </label>
-        <label>وسوم (مفصولة بفواصل)
-          <input id="e_tags" placeholder="Workshop, Sports">
-        </label>
+        <label>رابط التفاصيل<input id="e_url" type="url" placeholder="/events.html#e1"></label>
+        <label>وسوم (مفصولة بفواصل)<input id="e_tags" placeholder="Workshop, Sports"></label>
       </div>
       <div class="row">
-        <label>صورة (URL)
-          <div class="preview">
-            <input id="e_image" type="url" placeholder="https://…">
-            <img id="e_img_prev" alt="" aria-hidden="true">
-          </div>
-        </label>
+        <label>صورة (URL)<input id="e_image" type="url" placeholder="https://…"></label>
         <div class="right"></div>
         <button type="submit" class="btn p" id="e_submit">➕ أضف فعالية</button>
       </div>
       <input type="hidden" id="e_edit_id">
     </form>
-
     <div class="tools">
       <input id="e_q" placeholder="ابحث في الفعاليات…" class="btn" style="width:260px"/>
       <select id="e_sort" class="btn">
@@ -201,7 +183,6 @@
         <option value="title_ar">العنوان (AR)</option>
         <option value="title_en">Title (EN)</option>
       </select>
-      <button class="btn" id="e_copy">📋 نسخ JSON</button>
     </div>
     <table id="e_table"><thead>
       <tr><th>العنوان</th><th>الوقت</th><th>الموقع</th><th>وسوم</th><th>إجراءات</th></tr>
@@ -209,352 +190,205 @@
   </section>
 </div>
 
-<!-- Toasts + Modal -->
 <div class="toasts" id="toasts" aria-live="polite"></div>
-<div class="modal" id="confirm">
-  <div class="box">
-    <div id="confirm-text">هل أنت متأكد من الحذف؟</div>
-    <div class="actions">
-      <button class="btn" id="confirm-cancel">إلغاء</button>
-      <button class="btn err" id="confirm-ok">حذف</button>
-    </div>
-  </div>
-</div>
 
 <script>
-/* ===== ثوابت عامة ===== */
-const KEY_NEWS='khotwa_news_v1', KEY_EVENTS='khotwa_events_v1';
-const DRAFT_NEWS='khotwa_news_draft', DRAFT_EVENTS='khotwa_events_draft';
-const PREF='khotwa_admin_pref';
-const API_URL = ''; // ضع هنا رابط الـ Worker لاحقًا إن رغبت بالحفظ المباشر
+/* ========== إعداد اختياري للحفظ المباشر لاحقًا ========== */
+const API_URL = ''; // خليه فاضي الآن. (نربطه لاحقًا)
 
-/* ===== أدوات مساعدة ===== */
-const $ = s=>document.querySelector(s);
-const esc = s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
-const toLocal = iso=>{const d=new Date(iso);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16);}
-const fromLocal= val=>{const d=new Date(val);return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString();}
-const splitTags = s=> (s||'').split(',').map(t=>t.trim()).filter(Boolean);
+/* ========== أدوات مساعدة ========== */
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const toLocal=iso=>{const d=new Date(iso);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16);}
+const fromLocal=v=>{const d=new Date(v);return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString();}
+const splitTags=s=>(s||'').split(',').map(t=>t.trim()).filter(Boolean);
+function toast(msg,type=''){const t=document.createElement('div');t.className='toast '+type;t.textContent=msg;$('#toasts').appendChild(t);setTimeout(()=>t.remove(),2500);}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
 function load(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch{return null}}
-function cryptoId(){ return (self.crypto?.randomUUID ? crypto.randomUUID() : 'id_'+Math.random().toString(36).slice(2)); }
-function toast(msg, type=''){ const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg; $('#toasts').appendChild(t); setTimeout(()=>t.remove(), 3000); }
-function copy(text){ navigator.clipboard?.writeText(text).then(()=>toast('تم النسخ ✔️','ok')).catch(()=>toast('تعذر النسخ','err')); }
-function confirmBox(text){ return new Promise(res=>{ $('#confirm-text').textContent=text; const m=$('#confirm'); m.setAttribute('open',''); const ok=()=>{cleanup();res(true)}; const cancel=()=>{cleanup();res(false)}; $('#confirm-ok').onclick=ok; $('#confirm-cancel').onclick=cancel; m.onclick=(e)=>{ if(e.target===m) cancel();}; function cleanup(){ m.removeAttribute('open'); $('#confirm-ok').onclick=null; $('#confirm-cancel').onclick=null; m.onclick=null; } }); }
-function downloadJSON(obj, name){
-  const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob); const a=document.createElement('a');
-  a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
+function downloadJSON(obj,name){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function pickJSON(cb){const inp=document.createElement('input');inp.type='file';inp.accept='application/json';inp.onchange=async()=>{const f=inp.files[0];if(!f)return;const t=await f.text();try{cb(JSON.parse(t));}catch{toast('JSON غير صالح','err');}};inp.click();}
+async function saveToRepo(path, content){
+  if(!API_URL){ toast('اربط API لاحقًا…','err'); throw new Error('No API_URL'); }
+  const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path,content,message:`update ${path} via admin`})});
+  if(!res.ok){throw new Error(await res.text());}
+  return res.json();
 }
 
-/* ===== بيانات ===== */
-let news = load(KEY_NEWS) || [];
-let events = load(KEY_EVENTS) || [];
-const pref = load(PREF) || { tab:'news', n_sort:'date_desc', e_sort:'date_asc', n_q:'', e_q:'' };
+/* ========== تبويبات ========== */
+const tabs=$$('.tab'), panels=$$('[data-panel]');
+tabs.forEach(b=>b.addEventListener('click',()=>{
+  tabs.forEach(t=>t.setAttribute('aria-selected','false'));
+  panels.forEach(p=>p.hidden=true);
+  b.setAttribute('aria-selected','true');
+  document.querySelector(`[data-panel="${b.dataset.tab}"]`).hidden=false;
+}));
 
-/* ===== تبويبات ===== */
-const tabNews=$('#tab-news'), tabEvents=$('#tab-events');
-const pnlNews=$('#panel-news'), pnlEvents=$('#panel-events');
-function setTab(tab){
-  pref.tab = tab; save(PREF,pref);
-  const newsOn = tab==='news';
-  tabNews.setAttribute('aria-selected', String(newsOn));
-  tabEvents.setAttribute('aria-selected', String(!newsOn));
-  pnlNews.hidden = !newsOn; pnlEvents.hidden = newsOn;
-}
-tabNews.onclick=()=>setTab('news'); tabEvents.onclick=()=>setTab('events');
-setTab(pref.tab);
-
-/* ===== الأخبار ===== */
-const nForm=$('#form-news'), nSubmit=$('#n_submit'), nEditId=$('#n_edit_id');
-const nQ=$('#n_q'), nSort=$('#n_sort'), nT=$('#n_table tbody');
-const nF={
-  title_ar:$('#n_title_ar'), title_en:$('#n_title_en'),
-  desc_ar:$('#n_desc_ar'), desc_en:$('#n_desc_en'),
-  date:$('#n_date'), image:$('#n_image'), url:$('#n_url'), tags:$('#n_tags'),
-  len_ar:$('#n_len_ar'), len_en:$('#n_len_en'),
-  desc_ar_len:$('#n_desc_ar_len'), desc_en_len:$('#n_desc_en_len'),
-  date_err:$('#n_date_err'), img_prev:$('#n_img_prev')
+/* ========== الإعدادات ========== */
+const KEY_SETTINGS='khotwa_settings_v1';
+let settings=load(KEY_SETTINGS)||{
+  siteName:'Khotwa Student Council',
+  tagline_ar:'مجلس طلاب خطوة',
+  tagline_en:'Khotwa Student Council',
+  description:'',
+  ogImage:'',
+  social:{instagram:'https://www.instagram.com/khotwa.sc/',twitter:'',facebook:'',linkedin:''},
+  footer:{copyright:'Khotwa Student Council'}
 };
-[nF.title_ar,nF.title_en,nF.desc_ar,nF.desc_en].forEach(inp=>{
-  inp.addEventListener('input',()=>{
-    if(inp===nF.title_ar) nF.len_ar.textContent=inp.value.length;
-    if(inp===nF.title_en) nF.len_en.textContent=inp.value.length;
-    if(inp===nF.desc_ar) nF.desc_ar_len.textContent=inp.value.length;
-    if(inp===nF.desc_en) nF.desc_en_len.textContent=inp.value.length;
-    saveDraft('news');
-  });
-});
-nF.image.addEventListener('input', ()=>{
-  const u=nF.image.value.trim(); nF.img_prev.src = u; nF.img_prev.hidden = !u;
-  saveDraft('news');
-});
-[nF.date,nF.url,nF.tags].forEach(inp=> inp.addEventListener('input',()=>saveDraft('news')));
-
-nQ.value = pref.n_q||''; nSort.value = pref.n_sort||'date_desc';
-nQ.addEventListener('input',()=>{pref.n_q=nQ.value; save(PREF,pref); renderNews();});
-nSort.addEventListener('change',()=>{pref.n_sort=nSort.value; save(PREF,pref); renderNews();});
-
-nForm.addEventListener('submit', e=>{
+const sF={name:$('#s_siteName'),og:$('#s_og'),tag_ar:$('#s_tag_ar'),tag_en:$('#s_tag_en'),desc:$('#s_desc'),ig:$('#s_ig'),tw:$('#s_tw'),fb:$('#s_fb'),ln:$('#s_in'),copy:$('#s_copy')};
+function fillSettings(){ sF.name.value=settings.siteName||''; sF.og.value=settings.ogImage||''; sF.tag_ar.value=settings.tagline_ar||''; sF.tag_en.value=settings.tagline_en||''; sF.desc.value=settings.description||''; sF.ig.value=settings.social?.instagram||''; sF.tw.value=settings.social?.twitter||''; sF.fb.value=settings.social?.facebook||''; sF.ln.value=settings.social?.linkedin||''; sF.copy.value=settings.footer?.copyright||''; }
+fillSettings();
+$('#form-settings').addEventListener('submit',e=>{
   e.preventDefault();
-  nF.date_err.textContent='';
-  if(!nF.title_ar.value.trim() || !nF.title_en.value.trim()) return toast('العنوان بالعربية والإنجليزية مطلوبان','err');
-  if(!nF.date.value) { nF.date_err.textContent='التاريخ/الوقت مطلوب'; return; }
-
-  const item={
-    id: nEditId.value || cryptoId(),
-    title:{ar:nF.title_ar.value.trim(), en:nF.title_en.value.trim()},
-    summary:{ar:nF.desc_ar.value.trim(), en:nF.desc_en.value.trim()},
-    date: fromLocal(nF.date.value),
-    image:nF.image.value.trim(),
-    url:nF.url.value.trim(),
-    tags: splitTags(nF.tags.value)
-  };
-  const idx=news.findIndex(x=>x.id===item.id);
-  if(idx>=0){ news[idx]=item; toast('تم حفظ التعديل ✔️','ok'); }
-  else{ news.unshift(item); toast('تمت إضافة الخبر ✔️','ok'); }
-
-  save(KEY_NEWS,news);
-  clearForm('news'); renderNews();
+  settings.siteName=sF.name.value.trim();
+  settings.ogImage=sF.og.value.trim();
+  settings.tagline_ar=sF.tag_ar.value.trim();
+  settings.tagline_en=sF.tag_en.value.trim();
+  settings.description=sF.desc.value.trim();
+  settings.social={instagram:sF.ig.value.trim(),twitter:sF.tw.value.trim(),facebook:sF.fb.value.trim(),linkedin:sF.ln.value.trim()};
+  settings.footer={copyright:sF.copy.value.trim()||'Khotwa Student Council'};
+  save(KEY_SETTINGS,settings); toast('تم الحفظ محليًا ✔️','ok');
 });
+$('#settings-export').onclick=()=>downloadJSON(settings,'settings.json');
+$('#settings-import').onclick=()=>pickJSON(obj=>{settings=obj;save(KEY_SETTINGS,settings);fillSettings();toast('تم الاستيراد ✔️','ok');});
+$('#settings-save').onclick=()=>saveToRepo('data/settings.json',settings).then(()=>toast('حُفظ للمستودع ✔️','ok')).catch(e=>console.error(e));
 
+/* ========== القائمة ========== */
+const KEY_NAV='khotwa_nav_v1';
+let navItems=load(KEY_NAV)||[];
+const navT=$('#nav-table tbody');
+function renderNav(){
+  navT.innerHTML='';
+  navItems.sort((a,b)=>(a.order||0)-(b.order||0));
+  if(navItems.length===0){ navT.innerHTML='<tr><td colspan="6" class="muted">لا توجد عناصر.</td></tr>'; return; }
+  navItems.forEach((it,idx)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${idx+1}</td>
+      <td><input value="${esc(it.ar||'')}" data-f="ar" style="width:100%"></td>
+      <td><input value="${esc(it.en||'')}" data-f="en" style="width:100%"></td>
+      <td><input value="${esc(it.href||'')}" data-f="href" style="width:100%"></td>
+      <td><input type="checkbox" ${it.visible!==false?'checked':''} data-f="visible"></td>
+      <td>
+        <button class="btn" data-up>⬆️</button>
+        <button class="btn" data-down>⬇️</button>
+        <button class="btn err" data-del>🗑️</button>
+      </td>`;
+    tr.querySelectorAll('input').forEach(inp=>{
+      inp.oninput=()=>{
+        const f=inp.dataset.f;
+        if(f==='visible') it.visible=inp.checked;
+        else it[f]=inp.value;
+        save(KEY_NAV,navItems);
+      };
+    });
+    tr.querySelector('[data-up]').onclick=()=>{ if(idx>0){ [navItems[idx-1],navItems[idx]]=[navItems[idx],navItems[idx-1]]; save(KEY_NAV,navItems); renderNav(); } };
+    tr.querySelector('[data-down]').onclick=()=>{ if(idx<navItems.length-1){ [navItems[idx+1],navItems[idx]]=[navItems[idx],navItems[idx+1]]; save(KEY_NAV,navItems); renderNav(); } };
+    tr.querySelector('[data-del]').onclick=()=>{ navItems=navItems.filter(x=>x!==it); save(KEY_NAV,navItems); renderNav(); };
+    navT.appendChild(tr);
+  });
+}
+renderNav();
+$('#nav-add').onclick=()=>{ navItems.push({id:cryptoId(),ar:'عن',en:'About',href:'/about.html',visible:true,order:navItems.length+1}); save(KEY_NAV,navItems); renderNav(); };
+$('#nav-export').onclick=()=>downloadJSON(navItems,'navigation.json');
+$('#nav-import').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ navItems=arr; save(KEY_NAV,navItems); renderNav(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
+$('#nav-save').onclick=()=>saveToRepo('data/navigation.json',navItems).then(()=>toast('حُفظ للمستودع ✔️','ok')).catch(e=>console.error(e));
+
+/* ========== الأخبار ========== */
+const KEY_NEWS='khotwa_news_v1';
+let news=load(KEY_NEWS)||[];
+const nForm=$('#form-news'), nSubmit=$('#n_submit'), nEditId=$('#n_edit_id'), nQ=$('#n_q'), nSort=$('#n_sort'), nT=$('#n_table tbody');
+const nF={title_ar:$('#n_title_ar'),title_en:$('#n_title_en'),desc_ar:$('#n_desc_ar'),desc_en:$('#n_desc_en'),date:$('#n_date'),image:$('#n_image'),url:$('#n_url'),tags:$('#n_tags')};
+nForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  if(!nF.title_ar.value.trim()||!nF.title_en.value.trim()) return toast('العنوانين مطلوبين','err');
+  if(!nF.date.value) return toast('التاريخ/الوقت مطلوب','err');
+  const item={id:nEditId.value||cryptoId(),title:{ar:nF.title_ar.value.trim(),en:nF.title_en.value.trim()},summary:{ar:nF.desc_ar.value.trim(),en:nF.desc_en.value.trim()},date:fromLocal(nF.date.value),image:nF.image.value.trim(),url:nF.url.value.trim(),tags:splitTags(nF.tags.value)};
+  const idx=news.findIndex(x=>x.id===item.id); if(idx>=0) news[idx]=item; else news.unshift(item);
+  save(KEY_NEWS,news); nForm.reset(); nEditId.value=''; nSubmit.textContent='➕ أضف خبر'; renderNews(); toast('تم الحفظ ✔️','ok');
+});
+nQ.addEventListener('input',renderNews); nSort.addEventListener('change',renderNews);
 function renderNews(){
   nT.innerHTML='';
-  let list = news.slice();
-  // بحث
+  let list=news.slice();
   const term=(nQ.value||'').toLowerCase();
-  if(term) list = list.filter(x=> JSON.stringify(x).toLowerCase().includes(term));
-  // فرز
+  if(term) list=list.filter(x=>JSON.stringify(x).toLowerCase().includes(term));
   if(nSort.value==='date_asc') list.sort((a,b)=>new Date(a.date)-new Date(b.date));
   if(nSort.value==='date_desc') list.sort((a,b)=>new Date(b.date)-new Date(a.date));
   if(nSort.value==='title_ar') list.sort((a,b)=> (a.title.ar||'').localeCompare(b.title.ar||'','ar'));
   if(nSort.value==='title_en') list.sort((a,b)=> (a.title.en||'').localeCompare(b.title.en||'','en'));
-  // عرض
   if(list.length===0){ nT.innerHTML='<tr><td colspan="5" class="muted">لا توجد أخبار.</td></tr>'; return; }
-  for(const it of list){
+  list.forEach(it=>{
     const tr=document.createElement('tr');
     tr.innerHTML=`
       <td><div>${esc(it.title.ar)}</div><div class="muted">${esc(it.title.en)}</div></td>
       <td>${new Date(it.date).toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})}</td>
       <td>${(it.tags||[]).map(t=>`<span class="badge">${esc(t)}</span>`).join('')}</td>
-      <td>
-        ${it.image?`🖼️ <a href="${esc(it.image)}" target="_blank" rel="noopener">صورة</a><br>`:''}
-        ${it.url?`🔗 <a href="${esc(it.url)}" target="_blank" rel="noopener">رابط</a>`:''}
-      </td>
-      <td>
-        <button class="btn" data-edit>تعديل</button>
-        <button class="btn warn" data-copy>نسخ</button>
-        <button class="btn err" data-del>حذف</button>
-      </td>`;
-    tr.querySelector('[data-edit]').onclick=()=> editNews(it);
-    tr.querySelector('[data-copy]').onclick=()=> copy(JSON.stringify(it,null,2));
-    tr.querySelector('[data-del]').onclick=async()=>{
-      const ok = await confirmBox('حذف هذا الخبر؟');
-      if(!ok) return;
-      const backup=[...news];
-      news=news.filter(n=>n.id!==it.id); save(KEY_NEWS,news); renderNews(); 
-      const undo=document.createElement('button'); undo.className='btn'; undo.textContent='تراجع';
-      const t=document.createElement('div'); t.className='toast'; t.textContent='تم الحذف '; t.appendChild(undo); $('#toasts').appendChild(t);
-      const timer=setTimeout(()=>t.remove(),4000);
-      undo.onclick=()=>{ clearTimeout(timer); t.remove(); news=backup; save(KEY_NEWS,news); renderNews(); toast('تم التراجع ✔️','ok'); };
-    };
+      <td>${it.image?`🖼️ <a href="${esc(it.image)}" target="_blank">صورة</a><br>`:''}${it.url?`🔗 <a href="${esc(it.url)}" target="_blank">رابط</a>`:''}</td>
+      <td><button class="btn" data-edit>تعديل</button> <button class="btn err" data-del>حذف</button></td>`;
+    tr.querySelector('[data-edit]').onclick=()=>{ nF.title_ar.value=it.title.ar; nF.title_en.value=it.title.en; nF.desc_ar.value=it.summary.ar; nF.desc_en.value=it.summary.en; nF.date.value=toLocal(it.date); nF.image.value=it.image||''; nF.url.value=it.url||''; nF.tags.value=(it.tags||[]).join(', '); nEditId.value=it.id; nSubmit.textContent='💾 حفظ التعديل'; window.scrollTo({top:0,behavior:'smooth'}); };
+    tr.querySelector('[data-del]').onclick=()=>{ news=news.filter(x=>x.id!==it.id); save(KEY_NEWS,news); renderNews(); };
     nT.appendChild(tr);
-  }
+  });
 }
-function editNews(it){
-  nF.title_ar.value=it.title.ar; nF.title_en.value=it.title.en;
-  nF.desc_ar.value=it.summary.ar; nF.desc_en.value=it.summary.en;
-  nF.date.value=toLocal(it.date); nF.image.value=it.image||''; nF.url.value=it.url||'';
-  nF.tags.value=(it.tags||[]).join(', ');
-  nF.len_ar.textContent = nF.title_ar.value.length; nF.len_en.textContent = nF.title_en.value.length;
-  nF.desc_ar_len.textContent = nF.desc_ar.value.length; nF.desc_en_len.textContent = nF.desc_en.value.length;
-  nF.img_prev.src = it.image||''; nF.img_prev.hidden = !it.image;
-  nEditId.value=it.id; nSubmit.textContent='💾 حفظ التعديل';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function clearForm(which){
-  if(which==='news'){
-    nForm.reset(); nEditId.value=''; nSubmit.textContent='➕ أضف خبر';
-    nF.len_ar.textContent='0'; nF.len_en.textContent='0'; nF.desc_ar_len.textContent='0'; nF.desc_en_len.textContent='0';
-    nF.img_prev.removeAttribute('src'); nF.img_prev.hidden = true;
-    localStorage.removeItem(DRAFT_NEWS);
-  }
-}
+renderNews();
+$('#export-news').onclick=()=>downloadJSON(news,'news.json');
+$('#import-news').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ news=arr; save(KEY_NEWS,news); renderNews(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
+$('#save-news').onclick=()=>saveToRepo('data/news.json',news).then(()=>toast('حُفظ للمستودع ✔️','ok')).catch(e=>console.error(e));
 
-/* ===== الفعاليات ===== */
-const eForm=$('#form-events'), eSubmit=$('#e_submit'), eEditId=$('#e_edit_id');
-const eQ=$('#e_q'), eSort=$('#e_sort'), eT=$('#e_table tbody');
-const eF={
-  title_ar:$('#e_title_ar'), title_en:$('#e_title_en'),
-  start:$('#e_start'), dur:$('#e_dur'), loc:$('#e_loc'),
-  url:$('#e_url'), tags:$('#e_tags'), image:$('#e_image'),
-  len_ar:$('#e_len_ar'), len_en:$('#e_len_en'), date_err:$('#e_date_err'), img_prev:$('#e_img_prev')
-};
-[eF.title_ar,eF.title_en].forEach(inp=> inp.addEventListener('input',()=>{ 
-  if(inp===eF.title_ar) (eF.len_ar||{}).textContent=inp.value.length; 
-  if(inp===eF.title_en) (eF.len_en||{}).textContent=inp.value.length; 
-  saveDraft('events');
-}));
-[eF.start,eF.dur,eF.loc,eF.url,eF.tags,eF.image].forEach(inp=> inp.addEventListener('input',()=>{ if(inp===eF.image){ eF.img_prev.src=inp.value.trim(); eF.img_prev.hidden = !inp.value.trim(); } saveDraft('events'); }));
-
-eQ.value = pref.e_q||''; eSort.value = pref.e_sort||'date_asc';
-eQ.addEventListener('input',()=>{pref.e_q=eQ.value; save(PREF,pref); renderEvents();});
-eSort.addEventListener('change',()=>{pref.e_sort=eSort.value; save(PREF,pref); renderEvents();});
-
-eForm.addEventListener('submit', e=>{
+/* ========== الفعاليات ========== */
+const KEY_EVENTS='khotwa_events_v1';
+let events=load(KEY_EVENTS)||[];
+const eForm=$('#form-events'), eSubmit=$('#e_submit'), eEditId=$('#e_edit_id'), eQ=$('#e_q'), eSort=$('#e_sort'), eT=$('#e_table tbody');
+const eF={title_ar:$('#e_title_ar'),title_en:$('#e_title_en'),start:$('#e_start'),dur:$('#e_dur'),loc:$('#e_loc'),url:$('#e_url'),tags:$('#e_tags'),image:$('#e_image')};
+eForm.addEventListener('submit',e=>{
   e.preventDefault();
-  eF.date_err.textContent='';
-  if(!eF.title_ar.value.trim() || !eF.title_en.value.trim()) return toast('العنوان بالعربية والإنجليزية مطلوبان','err');
-  if(!eF.start.value) { eF.date_err.textContent='وقت البداية مطلوب'; return; }
-  const startISO=fromLocal(eF.start.value);
-  const durH=Math.max(1, Number(eF.dur.value||2));
-  const item={
-    id: eEditId.value || cryptoId(),
-    title:{ar:eF.title_ar.value.trim(), en:eF.title_en.value.trim()},
-    startDate:startISO,
-    endDate:new Date(new Date(startISO).getTime()+durH*3600e3).toISOString(),
-    location:eF.loc.value.trim()||'La Trobe – Bundoora',
-    url:eF.url.value.trim(),
-    image:eF.image.value.trim(),
-    tags: splitTags(eF.tags.value)
-  };
-  const idx=events.findIndex(x=>x.id===item.id);
-  if(idx>=0){ events[idx]=item; toast('تم حفظ التعديل ✔️','ok'); }
-  else{ events.push(item); toast('تمت إضافة الفعالية ✔️','ok'); }
-  save(KEY_EVENTS,events);
-  clearForm('events'); renderEvents();
+  if(!eF.title_ar.value.trim()||!eF.title_en.value.trim()) return toast('العنوانين مطلوبين','err');
+  if(!eF.start.value) return toast('وقت البداية مطلوب','err');
+  const startISO=fromLocal(eF.start.value), durH=Math.max(1,Number(eF.dur.value||2));
+  const item={id:eEditId.value||cryptoId(),title:{ar:eF.title_ar.value.trim(),en:eF.title_en.value.trim()},startDate:startISO,endDate:new Date(new Date(startISO).getTime()+durH*3600e3).toISOString(),location:eF.loc.value.trim()||'La Trobe – Bundoora',url:eF.url.value.trim(),image:eF.image.value.trim(),tags:splitTags(eF.tags.value)};
+  const idx=events.findIndex(x=>x.id===item.id); if(idx>=0) events[idx]=item; else events.push(item);
+  save(KEY_EVENTS,events); eForm.reset(); eEditId.value=''; eSubmit.textContent='➕ أضف فعالية'; renderEvents(); toast('تم الحفظ ✔️','ok');
 });
-
+eQ.addEventListener('input',renderEvents); eSort.addEventListener('change',renderEvents);
 function renderEvents(){
   eT.innerHTML='';
-  let list = events.slice();
+  let list=events.slice();
   const term=(eQ.value||'').toLowerCase();
-  if(term) list = list.filter(x=> JSON.stringify(x).toLowerCase().includes(term));
+  if(term) list=list.filter(x=>JSON.stringify(x).toLowerCase().includes(term));
   if(eSort.value==='date_asc') list.sort((a,b)=>new Date(a.startDate)-new Date(b.startDate));
   if(eSort.value==='date_desc') list.sort((a,b)=>new Date(b.startDate)-new Date(a.startDate));
   if(eSort.value==='title_ar') list.sort((a,b)=> (a.title.ar||'').localeCompare(b.title.ar||'','ar'));
   if(eSort.value==='title_en') list.sort((a,b)=> (a.title.en||'').localeCompare(b.title.en||'','en'));
   if(list.length===0){ eT.innerHTML='<tr><td colspan="5" class="muted">لا توجد فعاليات.</td></tr>'; return; }
-  for(const it of list){
+  list.forEach(it=>{
     const tr=document.createElement('tr');
     tr.innerHTML=`
       <td><div>${esc(it.title.ar)}</div><div class="muted">${esc(it.title.en)}</div></td>
       <td>${new Date(it.startDate).toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})}</td>
       <td>${esc(it.location||'')}</td>
       <td>${(it.tags||[]).map(t=>`<span class="badge">${esc(t)}</span>`).join('')}</td>
-      <td>
-        <button class="btn" data-edit>تعديل</button>
-        <button class="btn warn" data-copy>نسخ</button>
-        <button class="btn err" data-del>حذف</button>
-      </td>`;
-    tr.querySelector('[data-edit]').onclick=()=> editEvent(it);
-    tr.querySelector('[data-copy]').onclick=()=> copy(JSON.stringify(it,null,2));
-    tr.querySelector('[data-del]').onclick=async()=>{
-      const ok = await confirmBox('حذف هذه الفعالية؟');
-      if(!ok) return;
-      const backup=[...events];
-      events=events.filter(x=>x.id!==it.id); save(KEY_EVENTS,events); renderEvents();
-      const undo=document.createElement('button'); undo.className='btn'; undo.textContent='تراجع';
-      const t=document.createElement('div'); t.className='toast'; t.textContent='تم الحذف '; t.appendChild(undo); $('#toasts').appendChild(t);
-      const timer=setTimeout(()=>t.remove(),4000);
-      undo.onclick=()=>{ clearTimeout(timer); t.remove(); events=backup; save(KEY_EVENTS,events); renderEvents(); toast('تم التراجع ✔️','ok'); };
-    };
+      <td><button class="btn" data-edit>تعديل</button> <button class="btn err" data-del>حذف</button></td>`;
+    tr.querySelector('[data-edit]').onclick=()=>{ eF.title_ar.value=it.title.ar; eF.title_en.value=it.title.en; eF.start.value=toLocal(it.startDate); eF.dur.value=((new Date(it.endDate)-new Date(it.startDate))/3600e3)|0; eF.loc.value=it.location||''; eF.url.value=it.url||''; eF.tags.value=(it.tags||[]).join(', '); eF.image.value=it.image||''; eEditId.value=it.id; eSubmit.textContent='💾 حفظ التعديل'; window.scrollTo({top:0,behavior:'smooth'}); };
+    tr.querySelector('[data-del]').onclick=()=>{ events=events.filter(x=>x.id!==it.id); save(KEY_EVENTS,events); renderEvents(); };
     eT.appendChild(tr);
-  }
+  });
 }
-function editEvent(it){
-  eF.title_ar.value=it.title.ar; eF.title_en.value=it.title.en;
-  eF.start.value=toLocal(it.startDate);
-  const dur=((new Date(it.endDate)-new Date(it.startDate))/3600e3);
-  eF.dur.value = isFinite(dur)&&dur>0 ? dur : 2;
-  eF.loc.value=it.location||''; eF.url.value=it.url||'';
-  eF.tags.value=(it.tags||[]).join(', '); eF.image.value=it.image||'';
-  eF.img_prev.src = it.image||''; eF.img_prev.hidden=!it.image;
-  eEditId.value=it.id; eSubmit.textContent='💾 حفظ التعديل';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function clearForm(which){
-  if(which==='events'){
-    eForm.reset(); eEditId.value=''; eSubmit.textContent='➕ أضف فعالية';
-    if(eF.img_prev){ eF.img_prev.removeAttribute('src'); eF.img_prev.hidden = true; }
-    localStorage.removeItem(DRAFT_EVENTS);
-  } else if(which==='news') {
-    // handled above
-  }
-}
-
-/* ===== استيراد/تصدير/نسخ ===== */
-$('#export-news').onclick=()=> downloadJSON(news,'news.json');
-$('#export-events').onclick=()=> downloadJSON(events,'events.json');
-$('#import-news').onclick=()=> pickJSON(arr=>{ if(Array.isArray(arr)){ news=arr; save(KEY_NEWS,news); renderNews(); toast('تم استيراد الأخبار ✔️','ok'); } else toast('يُتوقع مصفوفة JSON','err');});
-$('#import-events').onclick=()=> pickJSON(arr=>{ if(Array.isArray(arr)){ events=arr; save(KEY_EVENTS,events); renderEvents(); toast('تم استيراد الفعاليات ✔️','ok'); } else toast('يُتوقع مصفوفة JSON','err');});
-$('#n_copy').onclick=()=> copy(JSON.stringify(news,null,2));
-$('#e_copy').onclick=()=> copy(JSON.stringify(events,null,2));
-function pickJSON(cb){
-  const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json';
-  inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; const t=await f.text(); try{ cb(JSON.parse(t)); }catch{ toast('JSON غير صالح','err'); } };
-  inp.click();
-}
-
-/* ===== مسودّات تلقائية ===== */
-function saveDraft(which){
-  const key = which==='news' ? DRAFT_NEWS : DRAFT_EVENTS;
-  const obj = which==='news' ? {
-    title_ar:nF.title_ar.value, title_en:nF.title_en.value,
-    desc_ar:nF.desc_ar.value, desc_en:nF.desc_en.value,
-    date:nF.date.value, image:nF.image.value, url:nF.url.value, tags:nF.tags.value
-  } : {
-    title_ar:eF.title_ar.value, title_en:eF.title_en.value,
-    start:eF.start.value, dur:eF.dur.value, loc:eF.loc.value,
-    url:eF.url.value, tags:eF.tags.value, image:eF.image.value
-  };
-  save(key, obj);
-}
-(function restoreDrafts(){
-  const nd = load(DRAFT_NEWS); if(nd){
-    nF.title_ar.value=nd.title_ar||''; nF.title_en.value=nd.title_en||'';
-    nF.desc_ar.value=nd.desc_ar||''; nF.desc_en.value=nd.desc_en||'';
-    nF.date.value=nd.date||''; nF.image.value=nd.image||''; nF.url.value=nd.url||''; nF.tags.value=nd.tags||'';
-    nF.len_ar.textContent=nF.title_ar.value.length; nF.len_en.textContent=nF.title_en.value.length;
-    nF.desc_ar_len.textContent=nF.desc_ar.value.length; nF.desc_en_len.textContent=nF.desc_en.value.length;
-    if(nd.image){ nF.img_prev.src=nd.image; nF.img_prev.hidden=false; }
-  }
-  const ed = load(DRAFT_EVENTS); if(ed){
-    eF.title_ar.value=ed.title_ar||''; eF.title_en.value=ed.title_en||'';
-    eF.start.value=ed.start||''; eF.dur.value=ed.dur||2; eF.loc.value=ed.loc||'';
-    eF.url.value=ed.url||''; eF.tags.value=ed.tags||''; eF.image.value=ed.image||'';
-    if(ed.image){ eF.img_prev.src=ed.image; eF.img_prev.hidden=false; }
-  }
-})();
-
-/* ===== حفظ للمستودع (اختياري – جاهز للربط) ===== */
-async function saveToRepo(path, content){
-  if(!API_URL){ toast('اربط API_URL أولًا', 'err'); throw new Error('No API_URL'); }
-  const btn = path.includes('news') ? $('#save-news-remote') : $('#save-events-remote');
-  btn.disabled = true; const sp=document.createElement('span'); sp.className='spinner'; btn.appendChild(sp);
-  try{
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ path, content, message: `update ${path} via admin` })
-    });
-    if(!res.ok){ const t=await res.text(); throw new Error(t); }
-    const out = await res.json();
-    toast('تم الحفظ للمستودع ✔️','ok');
-    return out;
-  } catch(e){
-    toast('فشل الحفظ للمستودع','err'); console.error(e);
-    throw e;
-  } finally {
-    btn.disabled=false; sp.remove();
-  }
-}
-$('#save-news-remote').onclick=()=> saveToRepo('data/news.json', news).catch(()=>{});
-$('#save-events-remote').onclick=()=> saveToRepo('data/events.json', events).catch(()=>{});
-
-/* ===== تشغيل أولي ===== */
-renderNews();
 renderEvents();
+$('#export-events').onclick=()=>downloadJSON(events,'events.json');
+$('#import-events').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ events=arr; save(KEY_EVENTS,events); renderEvents(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
+$('#save-events').onclick=()=>saveToRepo('data/events.json',events).then(()=>toast('حُفظ للمستودع ✔️','ok')).catch(e=>console.error(e));
+
+/* نسخة احتياطية */
+$('#backup').onclick=()=>{
+  const bundle={'settings.json':settings,'navigation.json':navItems,'news.json':news,'events.json':events};
+  downloadJSON(bundle,'khotwa-backup.json');
+};
+
+/* تحميل مبدئي من /data إن وُجد (اختياري) */
+(async function bootstrap(){
+  try{ const s=await fetch('../data/settings.json',{cache:'no-cache'}); if(s.ok){ settings=await s.json(); save(KEY_SETTINGS,settings); fillSettings(); } }catch{}
+  try{ const n=await fetch('../data/navigation.json',{cache:'no-cache'}); if(n.ok){ navItems=await n.json(); save('khotwa_nav_v1',navItems); renderNav(); } }catch{}
+})();
 </script>
 </body>
 </html>
