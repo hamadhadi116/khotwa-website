@@ -99,7 +99,7 @@
     .post img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#f3f4f6}
     .post .body{padding:1rem}
     .post h3{margin:0 0 .4rem;font-size:1.05rem}
-    .meta{display:flex;gap:.6rem;align-items:center;color:var(--muted);font-size:.9rem;margin-bottom:.6rem}
+    .meta{display:flex;gap:.6رم;align-items:center;color:var(--muted);font-size:.9rem;margin-bottom:.6rem}
     .tags{display:flex;gap:.4rem;flex-wrap:wrap}
     .tag{background:var(--card);border:1px solid var(--ring);padding:.2rem .5rem;border-radius:999px;font-size:.8rem;color:#334155}
     .post a.more{margin-top:auto;display:inline-block;border:1px solid var(--ring);padding:.6rem .8rem;border-radius:12px}
@@ -169,18 +169,18 @@
 
       <div class="tools" style="margin-top:1rem">
         <div class="search" role="search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-          <input id="q" type="search" placeholder="ابحث في الأخبار…">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="q" type="search" placeholder="ابحث في الأخبار…" aria-label="ابحث في الأخبار">
         </div>
-        <button class="chip" data-filter="all" data-active="true"><span data-lang="ar">الكل</span><span data-lang="en" hidden>All</span></button>
-        <button class="chip" data-filter="ann"><span data-lang="ar">إعلانات</span><span data-lang="en" hidden>Announcements</span></button>
-        <button class="chip" data-filter="event"><span data-lang="ar">فعاليات</span><span data-lang="en" hidden>Events</span></button>
-        <button class="chip" data-filter="media"><span data-lang="ar">تغطيات</span><span data-lang="en" hidden>Media</span></button>
+        <button class="chip" data-filter="all" data-active="true" aria-pressed="true"><span data-lang="ar">الكل</span><span data-lang="en" hidden>All</span></button>
+        <button class="chip" data-filter="ann" aria-pressed="false"><span data-lang="ar">إعلانات</span><span data-lang="en" hidden>Announcements</span></button>
+        <button class="chip" data-filter="event" aria-pressed="false"><span data-lang="ar">فعاليات</span><span data-lang="en" hidden>Events</span></button>
+        <button class="chip" data-filter="media" aria-pressed="false"><span data-lang="ar">تغطيات</span><span data-lang="en" hidden>Media</span></button>
       </div>
     </section>
 
     <!-- Posts -->
-    <section>
+    <section aria-live="polite">
       <div class="grid grid-3" id="posts">
         <!-- سيتم ملؤها تلقائيًا من data/news.json -->
       </div>
@@ -247,8 +247,9 @@
     // فلترة الأخبار
     const chips = Array.from(document.querySelectorAll('.chip'));
     function applyFilter(){
-      const posts = Array.from(document.querySelectorAll('.post')); // التقط بعد التحميل
-      const active = chips.find(c=>c.dataset.active==="true")?.dataset.filter || 'all';
+      const posts = Array.from(document.querySelectorAll('.post')); // بعد التحميل
+      const activeBtn = chips.find(c=>c.dataset.active==="true");
+      const active = activeBtn?.dataset.filter || 'all';
       const term = (qInput.value||'').trim().toLowerCase();
       posts.forEach(p=>{
         const tagOK = (active==='all') || (p.dataset.tags||'').includes(active);
@@ -256,6 +257,7 @@
         const termOK = !term || txt.includes(term);
         p.style.display = (tagOK && termOK) ? '' : 'none';
       });
+      chips.forEach(b=> b.setAttribute('aria-pressed', String(b===activeBtn)));
     }
     chips.forEach(ch=>{
       ch.addEventListener('click', ()=>{
@@ -266,15 +268,15 @@
     });
     qInput.addEventListener('input', applyFilter);
 
-    // تحميل الأخبار من data/news.json
+    // تحميل الأخبار من /data/news.json
     async function loadNews(){
       try{
-        const res = await fetch('data/news.json', {cache:'no-cache'});
+        const res = await fetch('/data/news.json', { cache:'no-cache' });
+        if (!res.ok) throw new Error('Failed to load news.json');
         const data = await res.json();
         const postsEl = document.getElementById('posts');
         postsEl.innerHTML = '';
 
-        // لو فاضي، لا شي (أو تقدر تعرض رسالة بسيطة)
         if(!Array.isArray(data) || data.length===0){
           postsEl.innerHTML = '<div class="muted">لا توجد أخبار حالياً.</div>';
           return;
@@ -285,7 +287,8 @@
         data.forEach(item=>{
           const article = document.createElement('article');
           article.className = 'post';
-          // في data.tags: نستخدم أول تصنيف رئيسي لو موجود (ann/event/media)
+
+          // خذ تصنيف رئيسي (ann/event/media) إن وُجد
           const tagsLower = (item.tags||[]).map(t=>String(t).toLowerCase());
           const typeTag = tagsLower.find(t=>['ann','event','media'].includes(t)) || 'ann';
           article.dataset.tags = typeTag;
@@ -294,7 +297,7 @@
           const enDate = new Date(item.date).toLocaleDateString('en-AU');
 
           article.innerHTML = `
-            ${item.image ? `<img src="${item.image}" alt="${item.title?.ar||''}" loading="lazy" decoding="async">` : `<div style="aspect-ratio:16/9;background:#f3f4f6"></div>`}
+            ${item.image ? `<img src="${item.image}" alt="${(item.title?.ar||'').replace(/"/g,'&quot;')}" loading="lazy" decoding="async">` : `<div style="aspect-ratio:16/9;background:#f3f4f6"></div>`}
             <div class="body">
               <div class="meta">
                 <span data-lang="ar">${arDate}</span>
@@ -320,6 +323,9 @@
       }
     }
     loadNews();
+  </script>
+
+  <!-- يفعّل توصيل لوحة الإدارة (لا يغيّر الشكل) -->
   <script src="/assets/cms-boot.js" defer></script>
 </body>
 </html>
