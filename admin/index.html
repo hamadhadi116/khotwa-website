@@ -193,8 +193,9 @@
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
 <script>
-/* ========== إعداد اختياري للحفظ المباشر لاحقًا ========== */
-const API_URL = ''; // خليه فاضي الآن. (نربطه لاحقًا)
+/* ========== الربط مع الـWorker ========== */
+const API_URL = 'https://khotwastudentcouncil.com/admin/update';
+const ADMIN_TOKEN = 'my-secret-1234567890'; // نفس القيمة اللي في ADMIN_TOKEN داخل Cloudflare
 
 /* ========== أدوات مساعدة ========== */
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
@@ -202,16 +203,34 @@ const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&
 const toLocal=iso=>{const d=new Date(iso);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16);}
 const fromLocal=v=>{const d=new Date(v);return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString();}
 const splitTags=s=>(s||'').split(',').map(t=>t.trim()).filter(Boolean);
+const cryptoId=()=>crypto.getRandomValues(new Uint32Array(4)).join('-');
 function toast(msg,type=''){const t=document.createElement('div');t.className='toast '+type;t.textContent=msg;$('#toasts').appendChild(t);setTimeout(()=>t.remove(),2500);}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
 function load(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch{return null}}
 function downloadJSON(obj,name){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function pickJSON(cb){const inp=document.createElement('input');inp.type='file';inp.accept='application/json';inp.onchange=async()=>{const f=inp.files[0];if(!f)return;const t=await f.text();try{cb(JSON.parse(t));}catch{toast('JSON غير صالح','err');}};inp.click();}
+
+/* الكتابة للمخزن عبر الـWorker */
 async function saveToRepo(path, content){
-  if(!API_URL){ toast('اربط API لاحقًا…','err'); throw new Error('No API_URL'); }
-  const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path,content,message:`update ${path} via admin`})});
-  if(!res.ok){throw new Error(await res.text());}
-  return res.json();
+  try{
+    const res = await fetch(API_URL,{
+      method:'POST',
+      headers:{
+        'Authorization': `Bearer ${ADMIN_TOKEN}`,
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({ path, content })
+    });
+    if(!res.ok){
+      const txt = await res.text().catch(()=>res.statusText);
+      throw new Error(txt||('HTTP '+res.status));
+    }
+    return await res.json();
+  }catch(err){
+    console.error(err);
+    toast('فشل الحفظ: '+err.message,'err');
+    throw err;
+  }
 }
 
 /* ========== تبويبات ========== */
@@ -250,7 +269,7 @@ $('#form-settings').addEventListener('submit',e=>{
 });
 $('#settings-export').onclick=()=>downloadJSON(settings,'settings.json');
 $('#settings-import').onclick=()=>pickJSON(obj=>{settings=obj;save(KEY_SETTINGS,settings);fillSettings();toast('تم الاستيراد ✔️','ok');});
-$('#settings-save').onclick=()=>saveToRepo('data/settings.json',settings).then(()=>toast('حُفظ للمستودع ✔️','ok')).catch(e=>console.error(e));
+$('#settings-save').onclick=()=>saveToRepo('data/settings.json',settings).then(()=>toast('حُفظ للمستودع ✔️','ok'));
 
 /* ========== القائمة ========== */
 const KEY_NAV='khotwa_nav_v1';
@@ -291,7 +310,7 @@ renderNav();
 $('#nav-add').onclick=()=>{ navItems.push({id:cryptoId(),ar:'عن',en:'About',href:'/about.html',visible:true,order:navItems.length+1}); save(KEY_NAV,navItems); renderNav(); };
 $('#nav-export').onclick=()=>downloadJSON(navItems,'navigation.json');
 $('#nav-import').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ navItems=arr; save(KEY_NAV,navItems); renderNav(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
-$('#nav-save').onclick=()=>saveToRepo('data/navigation.json',navItems).then(()=>toast('حُفظ للمستودع ✔️','ok')).catch(e=>console.error(e));
+$('#nav-save').onclick=()=>saveToRepo('data/navigation.json',navItems).then(()=>toast('حُفظ للمستودع ✔️','ok'));
 
 /* ========== الأخبار ========== */
 const KEY_NEWS='khotwa_news_v1';
@@ -333,7 +352,7 @@ function renderNews(){
 renderNews();
 $('#export-news').onclick=()=>downloadJSON(news,'news.json');
 $('#import-news').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ news=arr; save(KEY_NEWS,news); renderNews(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
-$('#save-news').onclick=()=>saveToRepo('data/news.json',news).then(()=>toast('حُفظ للمستودع ✔️','ok')).catch(e=>console.error(e));
+$('#save-news').onclick=()=>saveToRepo('data/news.json',news).then(()=>toast('حُفظ للمستودع ✔️','ok'));
 
 /* ========== الفعاليات ========== */
 const KEY_EVENTS='khotwa_events_v1';
@@ -376,7 +395,7 @@ function renderEvents(){
 renderEvents();
 $('#export-events').onclick=()=>downloadJSON(events,'events.json');
 $('#import-events').onclick=()=>pickJSON(arr=>{ if(Array.isArray(arr)){ events=arr; save(KEY_EVENTS,events); renderEvents(); toast('تم الاستيراد ✔️','ok'); } else toast('Array مطلوبة','err');});
-$('#save-events').onclick=()=>saveToRepo('data/events.json',events).then(()=>toast('حُفظ للمستودع ✔️','ok')).catch(e=>console.error(e));
+$('#save-events').onclick=()=>saveToRepo('data/events.json',events).then(()=>toast('حُفظ للمستودع ✔️','ok'));
 
 /* نسخة احتياطية */
 $('#backup').onclick=()=>{
@@ -387,7 +406,7 @@ $('#backup').onclick=()=>{
 /* تحميل مبدئي من /data إن وُجد (اختياري) */
 (async function bootstrap(){
   try{ const s=await fetch('../data/settings.json',{cache:'no-cache'}); if(s.ok){ settings=await s.json(); save(KEY_SETTINGS,settings); fillSettings(); } }catch{}
-  try{ const n=await fetch('../data/navigation.json',{cache:'no-cache'}); if(n.ok){ navItems=await n.json(); save('khotwa_nav_v1',navItems); renderNav(); } }catch{}
+  try{ const n=await fetch('../data/navigation.json',{cache:'no-cache'}); if(n.ok){ navItems=await n.json(); save(KEY_NAV,navItems); renderNav(); } }catch{}
 })();
 </script>
 </body>
