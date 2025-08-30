@@ -1,5 +1,5 @@
 (function(){
-  const esc = s => String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  const esc = s => String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
   const lang = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
 
   async function getJSON(path, fallback){
