@@ -68,6 +68,7 @@
       border-radius: 12px;
       padding: 12px;
       margin: 12px 0;
+      display: none;
     }
     .tools {
       display: flex;
@@ -202,22 +203,26 @@
 
     <!-- إعدادات -->
     <div class="panel" data-panel="settings">
-      <!-- إضافة إعدادات الموقع هنا -->
+      <h2>الإعدادات</h2>
+      <p>يمكنك تعديل إعدادات الموقع هنا مثل اللغة، الشعار، والمحتوى الثابت.</p>
     </div>
 
     <!-- القائمة -->
     <div class="panel" data-panel="nav">
-      <!-- إضافة القائمة هنا -->
+      <h2>القائمة</h2>
+      <p>قم بتعديل عناصر القائمة هنا.</p>
     </div>
 
     <!-- الأخبار -->
     <div class="panel" data-panel="news">
-      <!-- إضافة الأخبار هنا -->
+      <h2>الأخبار</h2>
+      <p>أضف آخر الأخبار والأنشطة التي تتم داخل المجلس.</p>
     </div>
 
     <!-- الفعاليات -->
     <div class="panel" data-panel="events">
-      <!-- إضافة الفعاليات هنا -->
+      <h2>الفعاليات</h2>
+      <p>هنا يمكنك إضافة تفاصيل الفعاليات القادمة والماضية.</p>
     </div>
   </div>
 
@@ -225,95 +230,23 @@
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const API_URL = 'https://khotwastudentcouncil.com/admin/update';
-      const TOKEN_KEY = 'khotwa_admin_token_v1';
-      let ADMIN_TOKEN = localStorage.getItem(TOKEN_KEY);
-      async function ensureToken() {
-        if (!ADMIN_TOKEN) {
-          const val = prompt('أدخل ADMIN_TOKEN (من Cloudflare Worker):');
-          if (!val) { alert('لازم تدخل التوكن للاستمرار'); throw new Error('Missing ADMIN_TOKEN'); }
-          ADMIN_TOKEN = val.trim();
-          localStorage.setItem(TOKEN_KEY, ADMIN_TOKEN);
-        }
-      }
-      function clearToken() {
-        localStorage.removeItem(TOKEN_KEY);
-        ADMIN_TOKEN = null;
-        toast('تم مسح التوكن—سنسألك عنه مرة أخرى عند الحفظ', 'ok');
-      }
+      const tabs = document.querySelectorAll('.tab');
+      const panels = document.querySelectorAll('.panel');
 
-      // دالة التوست (الإشعارات)
-      function toast(msg, type = '') {
-        const t = document.createElement('div');
-        t.className = 'toast ' + type;
-        t.textContent = msg;
-        $('#toasts').appendChild(t);
-        setTimeout(() => t.remove(), 2500);
-      }
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+          tab.setAttribute('aria-selected', 'true');
 
-      // حفظ واسترجاع البيانات من LocalStorage
-      function save(k, v) {
-        localStorage.setItem(k, JSON.stringify(v));
-      }
-      function load(k) {
-        try {
-          return JSON.parse(localStorage.getItem(k) || 'null');
-        } catch { return null }
-      }
+          panels.forEach(panel => panel.style.display = 'none');
+          const activePanel = document.querySelector(`[data-panel="${tab.dataset.tab}"]`);
+          activePanel.style.display = 'block';
+        });
+      });
 
-      // استيراد و تصدير الملفات JSON
-      function downloadJSON(obj, name) {
-        const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = name;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-      }
-
-      function pickJSON(cb) {
-        const inp = document.createElement('input');
-        inp.type = 'file';
-        inp.accept = 'application/json';
-        inp.onchange = async () => {
-          const f = inp.files[0];
-          if (!f) return;
-          const t = await f.text();
-          try {
-            cb(JSON.parse(t));
-          } catch {
-            toast('JSON غير صالح', 'err');
-          }
-        };
-        inp.click();
-      }
-
-      async function saveToRepo(path, content) {
-        await ensureToken();
-        try {
-          const res = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${ADMIN_TOKEN}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path, content })
-          });
-          if (!res.ok) {
-            const txt = await res.text().catch(() => res.statusText);
-            if (res.status === 401) {
-              toast('Unauthorized: تأكد من ADMIN_TOKEN، سنمسحه الآن لتعيد إدخاله', 'err');
-              clearToken();
-            }
-            throw new Error(txt || ('HTTP ' + res.status));
-          }
-          await res.json();
-          toast('حُفظ للمخزن (KV) ✔️', 'ok');
-        } catch (err) {
-          console.error(err);
-          toast('فشل الحفظ: ' + err.message, 'err');
-        }
-      }
+      panels.forEach(panel => panel.style.display = 'none');
+      const firstPanel = document.querySelector(`[data-panel="${tabs[0].dataset.tab}"]`);
+      firstPanel.style.display = 'block';
     });
   </script>
 </body>
