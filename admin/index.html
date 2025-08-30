@@ -196,91 +196,33 @@
 
     <nav class="tabs" role="tablist" aria-label="الأقسام">
       <button class="tab" role="tab" data-tab="settings" aria-selected="true">⚙️ الإعدادات</button>
-      <button class="tab" role="tab" data-tab="nav" aria-selected="false">🧭 القائمة</button>
-      <button class="tab" role="tab" data-tab="news" aria-selected="false">📰 الأخبار</button>
-      <button class="tab" role="tab" data-tab="events" aria-selected="false">📅 الفعاليات</button>
-      <button class="tab" role="tab" data-tab="users" aria-selected="false">👥 إدارة المستخدمين</button>
-      <button class="tab" role="tab" data-tab="comments" aria-selected="false">💬 التعليقات</button>
-      <button class="tab" role="tab" data-tab="likes-comments" aria-selected="false">👍 التعليقات والإعجابات</button>
-      <button class="tab" role="tab" data-tab="backup" aria-selected="false">🔄 النسخ الاحتياطي</button>
+      <button class="tab" role="tab" data-tab="content" aria-selected="false">📝 المحتوى</button>
+      <button class="tab" role="tab" data-tab="analytics" aria-selected="false">📊 التحليلات</button>
       <button class="tab" role="tab" data-tab="security" aria-selected="false">🔒 الأمان</button>
       <button class="tab" role="tab" data-tab="notifications" aria-selected="false">🔔 الإشعارات</button>
     </nav>
+
+    <!-- إدارة المحتوى -->
+    <div class="panel" data-panel="content">
+      <h2>إدارة المحتوى</h2>
+      <div id="content-list">
+        <!-- سيتم عرض المقالات والفعاليات هنا -->
+      </div>
+      <button class="btn" onclick="loadContent()">تحميل المحتوى</button>
+    </div>
 
     <!-- الإعدادات -->
     <div class="panel" data-panel="settings">
       <h2>الإعدادات</h2>
       <form>
         <label for="logo">الشعار:</label>
-        <input type="file" id="logo" name="logo" />
+        <input type="file" id="logo" name="logo" autocomplete="off" />
         <label for="language">اللغة:</label>
-        <select name="language" id="language">
+        <select name="language" id="language" autocomplete="off">
           <option value="ar">العربية</option>
           <option value="en">English</option>
         </select>
         <button type="submit" class="btn p">حفظ الإعدادات</button>
-      </form>
-    </div>
-
-    <!-- إدارة المستخدمين -->
-    <div class="panel" data-panel="users">
-      <h2>إدارة المستخدمين</h2>
-      <form>
-        <label for="username">اسم المستخدم:</label>
-        <input type="text" id="username" name="username" required />
-        <label for="email">البريد الإلكتروني:</label>
-        <input type="email" id="email" name="email" required />
-        <label for="role">دور المستخدم:</label>
-        <select name="role" id="role">
-          <option value="admin">مدير</option>
-          <option value="editor">محرر</option>
-          <option value="viewer">مشاهد</option>
-        </select>
-        <button type="submit" class="btn p">إضافة مستخدم</button>
-      </form>
-    </div>
-
-    <!-- إدارة التعليقات والإعجابات -->
-    <div class="panel" data-panel="likes-comments">
-      <h2>التعليقات والإعجابات</h2>
-      <table>
-        <thead>
-          <tr><th>المقال</th><th>الإعجابات</th><th>التعليقات</th><th>الإجراء</th></tr>
-        </thead>
-        <tbody>
-          <!-- سيتم عرض المقالات مع التعليقات والإعجابات هنا -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- النسخ الاحتياطي -->
-    <div class="panel" data-panel="backup">
-      <h2>النسخ الاحتياطي</h2>
-      <form>
-        <label for="backup_version">إجراء النسخ الاحتياطي:</label>
-        <button type="submit" class="btn ok">نسخ احتياطي الآن</button>
-      </form>
-    </div>
-
-    <!-- الأمان -->
-    <div class="panel" data-panel="security">
-      <h2>إعدادات الأمان</h2>
-      <form>
-        <label for="enable_2fa">تفعيل المصادقة الثنائية:</label>
-        <input type="checkbox" id="enable_2fa" name="enable_2fa" />
-        <button type="submit" class="btn p">حفظ الإعدادات</button>
-      </form>
-    </div>
-
-    <!-- الإشعارات -->
-    <div class="panel" data-panel="notifications">
-      <h2>إرسال إشعار</h2>
-      <form>
-        <label for="notification_title">عنوان الإشعار:</label>
-        <input type="text" id="notification_title" name="notification_title" />
-        <label for="notification_content">محتوى الإشعار:</label>
-        <textarea id="notification_content" name="notification_content"></textarea>
-        <button type="submit" class="btn p">إرسال الإشعار</button>
       </form>
     </div>
 
@@ -308,6 +250,36 @@
       const firstPanel = document.querySelector(`[data-panel="${tabs[0].dataset.tab}"]`);
       firstPanel.style.display = 'block';
     });
+
+    // Function to load content (news, events)
+    function loadContent() {
+      fetch('/data/news.json')
+        .then(response => response.json())
+        .then(data => {
+          const contentList = document.getElementById('content-list');
+          contentList.innerHTML = ''; // Clear previous content
+
+          data.forEach(item => {
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('content-item');
+            contentDiv.innerHTML = `
+              <h3>${item.title}</h3>
+              <p>${item.body}</p>
+              <button class="btn" onclick="editContent(${item.id})">تعديل</button>
+            `;
+            contentList.appendChild(contentDiv);
+          });
+        })
+        .catch(error => {
+          console.error('Error loading content:', error);
+        });
+    }
+
+    // Function to edit content (you can expand this functionality)
+    function editContent(id) {
+      // Here, implement the logic to edit the selected content
+      alert('تعديل المحتوى برقم: ' + id);
+    }
   </script>
 </body>
 </html>
