@@ -24,44 +24,80 @@
   <meta name="twitter:description" content="فعاليات، أخبار، وخدمات لطلاب خطوة."/>
   <meta name="twitter:image" content="https://b.top4top.io/p_35166f7hr1.jpg"/>
 
-  <style>
-    :root{
-      --primary: #1e40af;
-      --primary-600:#1d4ed8;
-      --text:#0f172a;
-      --muted:#64748b;
-      --ring:#e6eaf2;
-      --surface:#ffffff;
-      --card:#f8fafc;
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Khotwa Student Council",
+    "url":"https://khotwastudentcouncil.com/",
+    "logo":"https://g.top4top.io/p_3516rfttb1.jpg",
+    "sameAs":["https://www.instagram.com/khotwa.sc/"]
+  }
+  </script>
 
-      --r-sm:10px; --r-md:14px; --r-lg:16px; --r-xl:22px;
+  <!-- ====== الجمالية المُحسّنة (Drop‑in CSS) ====== -->
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-600: #1d4ed8;
+      --text: #0f172a;
+      --muted: #64748b;
+      --ring: #e6eaf2;
+      --surface: #ffffff;
+      --card: #f8fafc;
+
+      --r-sm: 10px;
+      --r-md: 14px;
+      --r-lg: 16px;
+      --r-xl: 22px;
       --shadow-sm: 0 2px 10px rgba(2,6,23,.06);
       --shadow-md: 0 10px 26px rgba(2,6,23,.08);
       --shadow-lg: 0 20px 48px rgba(2,6,23,.10);
-      --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem; --sp-5:1.25rem; --sp-6:1.5rem; --sp-8:2rem;
 
-      --fs-0:.92rem;
-      --fs-1:clamp(1rem, .5vw + .9rem, 1.05rem);
-      --fs-2:clamp(1.05rem, .7vw + .95rem, 1.15rem);
-      --fs-3:clamp(1.25rem, 1vw + 1rem, 1.35rem);
-      --fs-h2:clamp(1.35rem, 1.6vw + 1rem, 1.6rem);
-      --fs-h1:clamp(1.6rem, 2.6vw + 1rem, 2.4rem);
+      --sp-1: .25rem;
+      --sp-2: .5rem;
+      --sp-3: .75rem;
+      --sp-4: 1rem;
+      --sp-5: 1.25rem;
+      --sp-6: 1.5rem;
+      --sp-8: 2rem;
+
+      --fs-0: .92rem;
+      --fs-1: clamp(1rem, .5vw + .9rem, 1.05rem);
+      --fs-2: clamp(1.05rem, .7vw + .95rem, 1.15rem);
+      --fs-3: clamp(1.25rem, 1vw + 1rem, 1.35rem);
+      --fs-h2: clamp(1.35rem, 1.6vw + 1rem, 1.6rem);
+      --fs-h1: clamp(1.6rem, 2.6vw + 1rem, 2.4rem);
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
-      color:var(--text);
-      background:var(--surface);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
+    * {
+      box-sizing: border-box;
     }
 
-    a{color:inherit;text-decoration:none}
-    .container{width:min(1120px,92%);margin-inline:auto}
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, Tahoma, Arial, sans-serif;
+      color: var(--text);
+      background: var(--surface);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin-inline: auto;
+    }
 
     /* Navbar */
     .navbar {
@@ -278,22 +314,6 @@
         </div>
       </div>
     </header>
-
-    <!-- About Section -->
-    <section aria-labelledby="about-ar" class="container">
-      <div class="section-head">
-        <h2 id="about-ar" data-lang="ar">من نحن</h2>
-        <h2 id="about-en" data-lang="en" hidden>About Us</h2>
-        <a class="muted" href="/about.html"><span data-lang="ar">المزيد</span><span data-lang="en" hidden>Learn more</span></a>
-      </div>
-      <div class="grid grid-2">
-        <article class="card"><h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3><p data-lang="ar">دعم العملية التعليمية وخدمة المجتمع الجامعي.</p><p data-lang="en" hidden>Support the learning journey and serve our university community.</p></article>
-        <article class="card"><h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3><p data-lang="ar">تمكين الطلاب وتعزيز علاقتهم بالإدارة الجامعية.</p><p data-lang="en" hidden>Empower students and strengthen ties with university administration.</p></article>
-        <article class="card"><h3 data-lang="ar">الأهداف</h3><h3 data-lang="en" hidden>Goals</h3><p data-lang="ar">التمثيل، القيادة، التفاعل المجتمعي، والدعوة.</p><p data-lang="en" hidden>Representation, leadership, community engagement, and advocacy.</p></article>
-        <article class="card"><h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden>Structure</h3><p data-lang="ar">رئيس ونائب وقادة فرق ومنسقو الأنشطة والإعلام.</p><p data-lang="en" hidden>President, Vice President, team leads, and activity/media coordinators.</p></article>
-      </div>
-    </section>
-
   </main>
 
   <!-- Footer Section -->
@@ -307,6 +327,8 @@
   <!-- ====== JavaScript ====== -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Toggle Menu
     const menuBtn = document.getElementById('menu-toggle');
     const primaryNav = document.getElementById('primary-nav');
     menuBtn.addEventListener('click', () => {
@@ -315,9 +337,10 @@
       menuBtn.setAttribute('aria-expanded', String(!isOpen));
     });
 
+    // Language Toggle
     const toggleBtn = document.getElementById('lang-toggle');
     let isEn = localStorage.getItem('khotwa_lang') === 'en';
-    function setLang(en){
+    function setLang(en) {
       isEn = en;
       document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
       document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
