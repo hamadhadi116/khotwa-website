@@ -338,137 +338,97 @@
   </footer>
 
   <script>
-    // سنة الحقوق
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.addEventListener("DOMContentLoaded", function() {
+      const chips = Array.from(document.querySelectorAll('.chip'));
+      const qInput = document.getElementById('q');
+      const menuBtn = document.getElementById('menu-toggle');
+      const primaryNav = document.getElementById('primary-nav');
 
-    // منيو + وصولية
-    const menuBtn = document.getElementById('menu-toggle');
-    const primaryNav = document.getElementById('primary-nav');
-    const mq = matchMedia('(min-width:901px)');
-    function setMenu(open){
-      primaryNav.setAttribute('data-open', String(open));
-      menuBtn.setAttribute('aria-expanded', String(open));
-      primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
-      if(open){ primaryNav.querySelector('a,button')?.focus(); }
-    }
-    function initMenu(){
-      primaryNav.setAttribute('data-open','false');
-      menuBtn.setAttribute('aria-expanded','false');
-      primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
-    }
-    initMenu();
-    menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
-    mq.addEventListener('change', e=>{
-      primaryNav.setAttribute('data-open','false');
-      menuBtn.setAttribute('aria-expanded','false');
-      primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
-    });
-    document.addEventListener('click', (e)=>{
-      const open = primaryNav.getAttribute('data-open')==='true';
-      if(open && !primaryNav.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
-    });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
-
-    // اللغة
-    const toggleBtn = document.getElementById('lang-toggle');
-    const qInput = document.getElementById('q');
-    let isEn = localStorage.getItem('khotwa_lang') === 'en';
-    function setLang(en){
-      document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
-      document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
-      document.documentElement.lang = en ? 'en' : 'ar';
-      document.documentElement.dir  = en ? 'ltr' : 'rtl';
-      toggleBtn.textContent = en ? 'العربية' : 'English';
-      toggleBtn.setAttribute('aria-pressed', String(en));
-      qInput.placeholder = en ? 'Search news…' : 'ابحث في الأخبار…';
-      localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
-      applyFilter(); // لإعادة الفلترة بعد تغيير اللغة
-    }
-    toggleBtn.addEventListener('click',()=> setLang(!(localStorage.getItem('khotwa_lang') === 'en')));
-    setLang(isEn);
-
-    // فلترة الأخبار
-    const chips = Array.from(document.querySelectorAll('.chip'));
-    function applyFilter(){
-      const posts = Array.from(document.querySelectorAll('.post')); // بعد التحميل
-      const activeBtn = chips.find(c=>c.dataset.active==="true");
-      const active = activeBtn?.dataset.filter || 'all';
-      const term = (qInput.value||'').trim().toLowerCase();
-      posts.forEach(p=>{
-        const tagOK = (active==='all') || (p.dataset.tags||'').includes(active);
-        const txt = p.textContent.toLowerCase();
-        const termOK = !term || txt.includes(term);
-        p.style.display = (tagOK && termOK) ? '' : 'none';
-      });
-      chips.forEach(b=> b.setAttribute('aria-pressed', String(b===activeBtn)));
-    }
-    chips.forEach(ch=>{
-      ch.addEventListener('click', ()=>{
-        chips.forEach(c=>c.dataset.active="false");
-        ch.dataset.active="true";
-        applyFilter();
-      });
-    });
-    qInput.addEventListener('input', applyFilter);
-
-    // تحميل الأخبار من /data/news.json
-    async function loadNews(){
-      try{
-        const res = await fetch('/data/news.json', { cache:'no-cache' });
-        if (!res.ok) throw new Error('Failed to load news.json');
-        const data = await res.json();
-        const postsEl = document.getElementById('posts');
-        postsEl.innerHTML = '';
-
-        if(!Array.isArray(data) || data.length===0){
-          postsEl.innerHTML = '<div class="muted">لا توجد أخبار حالياً.</div>';
-          return;
-        }
-
-        data.sort((a,b)=> new Date(b.date) - new Date(a.date));
-
-        data.forEach(item=>{
-          const article = document.createElement('article');
-          article.className = 'post';
-
-          // خذ تصنيف رئيسي (ann/event/media) إن وُجد
-          const tagsLower = (item.tags||[]).map(t=>String(t).toLowerCase());
-          const typeTag = tagsLower.find(t=>['ann','event','media'].includes(t)) || 'ann';
-          article.dataset.tags = typeTag;
-
-          const arDate = new Date(item.date).toLocaleDateString('ar-EG');
-          const enDate = new Date(item.date).toLocaleDateString('en-AU');
-
-          article.innerHTML = `
-            ${item.image ? `<img src="${item.image}" alt="${(item.title?.ar||'').replace(/"/g,'&quot;')}" loading="lazy" decoding="async">` : `<div style="aspect-ratio:16/9;background:#f3f4f6"></div>`}
-            <div class="body">
-              <div class="meta">
-                <span data-lang="ar">${arDate}</span>
-                <span data-lang="en" hidden>${enDate}</span>
-                <span>•</span>
-                <span data-lang="ar">${(item.tags||[]).join('، ')}</span>
-                <span data-lang="en" hidden>${(item.tags||[]).join(', ')}</span>
-              </div>
-              <h3 data-lang="ar">${item.title?.ar||''}</h3>
-              <h3 data-lang="en" hidden>${item.title?.en||''}</h3>
-              <p class="muted" data-lang="ar">${item.summary?.ar||''}</p>
-              <p class="muted" data-lang="en" hidden>${item.summary?.en||''}</p>
-              <div class="tags">${(item.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-              ${item.url ? `<a class="more" href="${item.url}" target="_blank" rel="noopener"><span data-lang="ar">المزيد</span><span data-lang="en" hidden>More</span></a>` : ''}
-            </div>
-          `;
-          postsEl.appendChild(article);
+      // قائمة العناصر
+      const applyFilter = () => {
+        const posts = Array.from(document.querySelectorAll('.post'));
+        const activeBtn = chips.find(c => c.dataset.active === "true");
+        const active = activeBtn?.dataset.filter || 'all';
+        const term = (qInput.value || '').trim().toLowerCase();
+        
+        posts.forEach(p => {
+          const tagOK = (active === 'all') || (p.dataset.tags || '').includes(active);
+          const txt = p.textContent.toLowerCase();
+          const termOK = !term || txt.includes(term);
+          p.style.display = (tagOK && termOK) ? '' : 'none';
         });
 
-        applyFilter();
-      }catch(err){
-        console.error('فشل تحميل الأخبار:', err);
+        chips.forEach(b => b.setAttribute('aria-pressed', String(b === activeBtn)));
+      };
+
+      chips.forEach(ch => {
+        ch.addEventListener('click', () => {
+          chips.forEach(c => c.dataset.active = "false");
+          ch.dataset.active = "true";
+          applyFilter();
+        });
+      });
+
+      qInput.addEventListener('input', applyFilter);
+
+      // تحميل الأخبار من /data/news.json
+      async function loadNews() {
+        try {
+          const res = await fetch('/data/news.json', { cache: 'no-cache' });
+          if (!res.ok) throw new Error('Failed to load news.json');
+          const data = await res.json();
+          const postsEl = document.getElementById('posts');
+          postsEl.innerHTML = '';
+
+          if (!Array.isArray(data) || data.length === 0) {
+            postsEl.innerHTML = '<div class="muted">لا توجد أخبار حالياً.</div>';
+            return;
+          }
+
+          data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+          data.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'post';
+
+            const tagsLower = (item.tags || []).map(t => String(t).toLowerCase());
+            const typeTag = tagsLower.find(t => ['ann', 'event', 'media'].includes(t)) || 'ann';
+            article.dataset.tags = typeTag;
+
+            const arDate = new Date(item.date).toLocaleDateString('ar-EG');
+            const enDate = new Date(item.date).toLocaleDateString('en-AU');
+
+            article.innerHTML = `
+              ${item.image ? `<img src="${item.image}" alt="${(item.title?.ar || '').replace(/"/g, '&quot;')}" loading="lazy" decoding="async">` : `<div style="aspect-ratio:16/9;background:#f3f4f6"></div>`}
+              <div class="body">
+                <div class="meta">
+                  <span data-lang="ar">${arDate}</span>
+                  <span data-lang="en" hidden>${enDate}</span>
+                  <span>•</span>
+                  <span data-lang="ar">${(item.tags || []).join('، ')}</span>
+                  <span data-lang="en" hidden>${(item.tags || []).join(', ')}</span>
+                </div>
+                <h3 data-lang="ar">${item.title?.ar || ''}</h3>
+                <h3 data-lang="en" hidden>${item.title?.en || ''}</h3>
+                <p class="muted" data-lang="ar">${item.summary?.ar || ''}</p>
+                <p class="muted" data-lang="en" hidden>${item.summary?.en || ''}</p>
+                <div class="tags">${(item.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                ${item.url ? `<a class="more" href="${item.url}" target="_blank" rel="noopener"><span data-lang="ar">المزيد</span><span data-lang="en" hidden>More</span></a>` : ''}
+              </div>
+            `;
+            postsEl.appendChild(article);
+          });
+
+          applyFilter();
+        } catch (err) {
+          console.error('فشل تحميل الأخبار:', err);
+        }
       }
-    }
-    loadNews();
+
+      loadNews();
+    });
   </script>
 
-  <!-- يفعّل توصيل لوحة الإدارة (لا يغيّر الشكل) -->
   <script src="/assets/cms-boot.js" defer></script>
 </body>
 </html>
