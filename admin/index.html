@@ -187,7 +187,7 @@
     <header>
       <div>
         <h1>لوحة الإدارة</h1>
-        <div class="muted">إدارة الإعدادات والقائمة + الأخبار والفعاليات. (لا تغيير على الصفحات العامة)</div>
+        <div class="muted">إدارة الإعدادات والقائمة + الأخبار والفعاليات + المستخدمين والتقارير والإعلانات.</div>
       </div>
       <div class="tools">
         <button class="btn" id="backup">⬇️ تنزيل نسخة احتياطية (JSON)</button>
@@ -199,31 +199,128 @@
       <button class="tab" role="tab" data-tab="nav" aria-selected="false">🧭 القائمة</button>
       <button class="tab" role="tab" data-tab="news" aria-selected="false">📰 الأخبار</button>
       <button class="tab" role="tab" data-tab="events" aria-selected="false">📅 الفعاليات</button>
+      <button class="tab" role="tab" data-tab="users" aria-selected="false">👥 إدارة المستخدمين</button>
+      <button class="tab" role="tab" data-tab="reports" aria-selected="false">📊 التقارير</button>
+      <button class="tab" role="tab" data-tab="ads" aria-selected="false">📢 الإعلانات</button>
+      <button class="tab" role="tab" data-tab="tasks" aria-selected="false">🗓️ المهام المجدولة</button>
+      <button class="tab" role="tab" data-tab="seo" aria-selected="false">🔍 SEO</button>
     </nav>
 
     <!-- إعدادات -->
     <div class="panel" data-panel="settings">
       <h2>الإعدادات</h2>
-      <p>يمكنك تعديل إعدادات الموقع هنا مثل اللغة، الشعار، والمحتوى الثابت.</p>
+      <form>
+        <label>الشعار:</label>
+        <input type="file" name="logo" />
+        <label>اللغة:</label>
+        <select name="language">
+          <option value="ar">العربية</option>
+          <option value="en">English</option>
+        </select>
+        <button type="submit" class="btn p">حفظ الإعدادات</button>
+      </form>
     </div>
 
     <!-- القائمة -->
     <div class="panel" data-panel="nav">
       <h2>القائمة</h2>
-      <p>قم بتعديل عناصر القائمة هنا.</p>
+      <form>
+        <label>إضافة عنصر إلى القائمة:</label>
+        <input type="text" name="menu_item" />
+        <button type="submit" class="btn p">إضافة إلى القائمة</button>
+      </form>
     </div>
 
     <!-- الأخبار -->
     <div class="panel" data-panel="news">
       <h2>الأخبار</h2>
-      <p>أضف آخر الأخبار والأنشطة التي تتم داخل المجلس.</p>
+      <form>
+        <label>عنوان الخبر:</label>
+        <input type="text" name="news_title" />
+        <label>المحتوى:</label>
+        <textarea name="news_content"></textarea>
+        <button type="submit" class="btn p">نشر الخبر</button>
+      </form>
     </div>
 
     <!-- الفعاليات -->
     <div class="panel" data-panel="events">
       <h2>الفعاليات</h2>
-      <p>هنا يمكنك إضافة تفاصيل الفعاليات القادمة والماضية.</p>
+      <form>
+        <label>عنوان الفعالية:</label>
+        <input type="text" name="event_title" />
+        <label>تاريخ الفعالية:</label>
+        <input type="date" name="event_date" />
+        <label>الوصف:</label>
+        <textarea name="event_description"></textarea>
+        <button type="submit" class="btn p">إضافة الفعالية</button>
+      </form>
     </div>
+
+    <!-- إدارة المستخدمين -->
+    <div class="panel" data-panel="users">
+      <h2>إدارة المستخدمين</h2>
+      <form>
+        <label>اسم المستخدم:</label>
+        <input type="text" name="username" required/>
+        <label>البريد الإلكتروني:</label>
+        <input type="email" name="email" required/>
+        <label>دور المستخدم:</label>
+        <select name="role">
+          <option value="admin">مدير</option>
+          <option value="editor">محرر</option>
+          <option value="viewer">مشاهد</option>
+        </select>
+        <button type="submit" class="btn p">إضافة مستخدم</button>
+      </form>
+    </div>
+
+    <!-- التقارير -->
+    <div class="panel" data-panel="reports">
+      <h2>التقارير</h2>
+      <p>عدد الزوار: 5000</p>
+      <p>التفاعلات مع المقالات: 1500</p>
+      <p>الفعاليات القادمة: 3</p>
+    </div>
+
+    <!-- الإعلانات -->
+    <div class="panel" data-panel="ads">
+      <h2>الإعلانات</h2>
+      <form>
+        <label>عنوان الإعلان:</label>
+        <input type="text" name="ad_title" />
+        <label>محتوى الإعلان:</label>
+        <textarea name="ad_content"></textarea>
+        <button type="submit" class="btn p">نشر الإعلان</button>
+      </form>
+    </div>
+
+    <!-- المهام المجدولة -->
+    <div class="panel" data-panel="tasks">
+      <h2>المهام المجدولة</h2>
+      <form>
+        <label>عنوان المهمة:</label>
+        <input type="text" name="task_title" />
+        <label>تاريخ المهمة:</label>
+        <input type="date" name="task_date" />
+        <button type="submit" class="btn p">إضافة مهمة</button>
+      </form>
+    </div>
+
+    <!-- SEO -->
+    <div class="panel" data-panel="seo">
+      <h2>إعدادات SEO</h2>
+      <form>
+        <label>عنوان الصفحة:</label>
+        <input type="text" name="seo_title" />
+        <label>وصف الصفحة:</label>
+        <textarea name="seo_description"></textarea>
+        <label>الكلمات الرئيسية:</label>
+        <input type="text" name="seo_keywords" />
+        <button type="submit" class="btn p">حفظ الإعدادات</button>
+      </form>
+    </div>
+
   </div>
 
   <div class="toasts" id="toasts" aria-live="polite"></div>
