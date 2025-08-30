@@ -7,61 +7,60 @@
   <meta name="color-scheme" content="light dark"/>
   <style>
     :root {
-      --bg: #0a0f1a;
-      --panel: #1e293b;
+      --bg: #111827;
+      --panel: #1f2937;
       --primary: #3b82f6;
-      --accent: #4b5563;
       --text: #e5e7eb;
-      --muted: #9ca3af;
       --btn-bg: #111827;
-      --btn-hover: #1e40af;
-      --error: #ef4444;
+      --hover-bg: #4b5563;
       --success: #10b981;
+      --error: #ef4444;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
+
     body {
-      background-color: var(--bg);
       font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+      background-color: var(--bg);
       color: var(--text);
+      margin: 0;
     }
+
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px;
       background-color: var(--panel);
-      border-bottom: 1px solid var(--accent);
+      border-bottom: 2px solid var(--primary);
     }
+
     h1 {
       font-size: 1.5rem;
       color: var(--primary);
     }
-    .muted {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
+
     .tabs {
       display: flex;
       gap: 1rem;
-      padding: 10px;
-      border-bottom: 2px solid var(--accent);
     }
+
     .tab {
       padding: 10px 20px;
       background-color: var(--panel);
       border-radius: 10px;
       cursor: pointer;
-      color: var(--text);
       transition: background-color 0.3s;
     }
+
     .tab:hover, .tab[aria-selected="true"] {
       background-color: var(--primary);
     }
+
     .panel {
       display: none;
       padding: 20px;
@@ -69,116 +68,109 @@
       border-radius: 12px;
       margin-top: 20px;
     }
+
     .panel.active {
       display: block;
     }
-    .tools {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 20px;
-    }
+
     .btn {
       padding: 10px 20px;
-      border-radius: 6px;
       background-color: var(--btn-bg);
       color: var(--text);
-      border: none;
+      border-radius: 8px;
       cursor: pointer;
+      border: none;
       transition: background-color 0.3s;
     }
+
     .btn:hover {
-      background-color: var(--btn-hover);
+      background-color: var(--hover-bg);
     }
+
     .btn.success {
       background-color: var(--success);
     }
+
     .btn.error {
       background-color: var(--error);
     }
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--accent);
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
+
+    .content-list {
+      margin-top: 20px;
     }
-    .card h3 {
-      font-size: 1.2rem;
+
+    .content-item {
+      background-color: var(--panel);
+      padding: 15px;
+      border-radius: 8px;
       margin-bottom: 10px;
     }
+
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
+
     input, select, textarea {
       width: 100%;
       padding: 10px;
-      background-color: #111827;
-      border-radius: 8px;
-      border: 1px solid var(--accent);
+      background-color: #1f2937;
       color: var(--text);
-      font-size: 1rem;
-    }
-    .content-item {
-      background-color: var(--panel);
-      padding: 10px;
       border-radius: 8px;
-      margin-bottom: 10px;
-    }
-
-    /* Media Query for responsiveness */
-    @media (max-width: 768px) {
-      .row {
-        grid-template-columns: 1fr;
-      }
+      border: 1px solid var(--primary);
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
+
   <div class="wrap">
     <header>
       <div>
         <h1>لوحة الإدارة</h1>
-        <div class="muted">إدارة الموقع بالكامل بما في ذلك الأخبار، الفعاليات، المهام، والإعلانات.</div>
       </div>
-      <div class="tools">
-        <button class="btn" id="backup">⬇️ تنزيل نسخة احتياطية (JSON)</button>
+      <div class="tabs" role="tablist" aria-label="الأقسام">
+        <button class="tab" role="tab" data-tab="content" aria-selected="true">📝 المحتوى</button>
+        <button class="tab" role="tab" data-tab="settings" aria-selected="false">⚙️ الإعدادات</button>
+        <button class="tab" role="tab" data-tab="analytics" aria-selected="false">📊 التحليلات</button>
       </div>
     </header>
 
-    <nav class="tabs" role="tablist" aria-label="الأقسام">
-      <button class="tab" role="tab" data-tab="settings" aria-selected="true">⚙️ الإعدادات</button>
-      <button class="tab" role="tab" data-tab="content" aria-selected="false">📝 المحتوى</button>
-      <button class="tab" role="tab" data-tab="analytics" aria-selected="false">📊 التحليلات</button>
-      <button class="tab" role="tab" data-tab="security" aria-selected="false">🔒 الأمان</button>
-      <button class="tab" role="tab" data-tab="notifications" aria-selected="false">🔔 الإشعارات</button>
-    </nav>
-
-    <!-- إدارة المحتوى -->
     <div class="panel active" data-panel="content">
       <h2>إدارة المحتوى</h2>
       <div id="content-list">
-        <!-- سيتم عرض المقالات والفعاليات هنا -->
+        <!-- سيتم عرض المقالات هنا -->
       </div>
       <button class="btn success" onclick="loadContent()">تحميل المحتوى</button>
     </div>
 
-    <!-- الإعدادات -->
     <div class="panel" data-panel="settings">
-      <h2>الإعدادات</h2>
-      <form>
+      <h2>إعدادات الموقع</h2>
+      <form id="settings-form">
+        <!-- الشعار -->
         <label for="logo">الشعار:</label>
-        <input type="file" id="logo" name="logo" autocomplete="off" />
+        <input type="file" id="logo" name="logo" />
+        <!-- اللغة -->
         <label for="language">اللغة:</label>
-        <select name="language" id="language" autocomplete="off">
+        <select name="language" id="language">
           <option value="ar">العربية</option>
           <option value="en">English</option>
         </select>
-        <button type="submit" class="btn p">حفظ الإعدادات</button>
+        <!-- النص الترحيبي -->
+        <label for="welcome-text">النص الترحيبي:</label>
+        <textarea name="welcome-text" id="welcome-text" rows="4"></textarea>
+        <!-- الإعلانات -->
+        <label for="ads">إعلانات الموقع:</label>
+        <textarea name="ads" id="ads" rows="4"></textarea>
+        <button type="submit" class="btn success">حفظ الإعدادات</button>
       </form>
     </div>
 
+    <div class="panel" data-panel="analytics">
+      <h2>التحليلات</h2>
+      <p>إحصائيات الموقع ستعرض هنا في المستقبل.</p>
+    </div>
   </div>
 
   <div class="toasts" id="toasts" aria-live="polite"></div>
@@ -198,13 +190,9 @@
           activePanel.classList.add('active');
         });
       });
-
-      panels.forEach(panel => panel.style.display = 'none');
-      const firstPanel = document.querySelector(`[data-panel="${tabs[0].dataset.tab}"]`);
-      firstPanel.style.display = 'block';
     });
 
-    // Function to load content (news, events)
+    // تحميل المحتوى من Cloudflare Worker
     function loadContent() {
       fetch('https://khotwa-data.khotwastudentcouncil.com/data/news.json')
         .then(response => response.json())
@@ -228,11 +216,28 @@
         });
     }
 
-    // Function to edit content (you can expand this functionality)
+    // وظيفة تعديل المحتوى
     function editContent(id) {
-      // Here, implement the logic to edit the selected content
       alert('تعديل المحتوى برقم: ' + id);
+      // يمكنك هنا إضافة منطق لتعديل المحتوى
     }
+
+    // حفظ إعدادات الموقع
+    document.getElementById('settings-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const logo = document.getElementById('logo').files[0];
+      const language = document.getElementById('language').value;
+      const welcomeText = document.getElementById('welcome-text').value;
+      const ads = document.getElementById('ads').value;
+
+      // ارسال البيانات عبر POST إلى Cloudflare Worker (إضافة منطق لتخزينها)
+      console.log('الشعار:', logo);
+      console.log('اللغة:', language);
+      console.log('النص الترحيبي:', welcomeText);
+      console.log('الإعلانات:', ads);
+      
+      // إرسال البيانات إلى Cloudflare Worker أو KV لتخزينها
+    });
   </script>
 </body>
 </html>
