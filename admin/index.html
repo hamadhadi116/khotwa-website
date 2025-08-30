@@ -6,38 +6,179 @@
   <title>لوحة الإدارة – Khotwa</title>
   <meta name="color-scheme" content="light dark"/>
   <style>
-    :root{--bg:#0a0f1a;--panel:#0f172a;--ring:#1f2937;--text:#e5e7eb;--muted:#94a3b8;--btn:#111827;--p:#1e40af;--ok:#16a34a;--err:#ef4444}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1200px;margin:auto;padding:16px}
-    header{display:flex;align-items:center;gap:.8rem;justify-content:space-between;margin-bottom:12px}
-    h1{margin:0;font-size:1.25rem}
-    .muted{color:var(--muted);font-size:.9rem}
-    .tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:.6rem 0}
-    .tab{border:1px solid var(--ring);background:var(--panel);border-radius:10px;padding:.45rem .7rem;cursor:pointer}
-    .tab[aria-selected="true"]{background:#111827}
-    .panel{background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:12px;margin:12px 0}
-    .tools{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.6rem}
-    .btn{border:1px solid var(--ring);background:var(--btn);border-radius:10px;padding:.45rem .7rem;cursor:pointer}
-    .btn.p{background:var(--p);border-color:transparent}
-    .btn.ok{background:var(--ok);border-color:transparent}
-    .btn.err{background:var(--err);border-color:transparent}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-    .row-3{grid-template-columns:repeat(3,1fr)}
-    label{display:grid;gap:.3rem;font-size:.9rem}
-    input,textarea,select{background:#0b1220;border:1px solid var(--ring);color:var(--text);border-radius:10px;padding:.55rem .6rem}
-    textarea{min-height:90px;resize:vertical}
-    table{width:100%;border-collapse:separate;border-spacing:0}
-    th,td{padding:.55rem;border-bottom:1px solid var(--ring);vertical-align:top}
-    th{color:var(--muted);font-weight:600;text-align:start}
-    .badge{display:inline-block;background:#111827;border:1px solid var(--ring);border-radius:999px;padding:.1rem .5rem;margin:.1rem;font-size:.75rem}
-    .right{margin-inline-start:auto}
-    code{background:#111827;border:1px solid var(--ring);padding:.12rem .3rem;border-radius:6px}
-    .toasts{position:fixed;inset-inline-start:16px;inset-block-end:16px;display:grid;gap:.4rem;z-index:1000}
-    .toast{background:#111827;border:1px solid var(--ring);border-radius:10px;padding:.5rem .7rem}
-    .toast.ok{background:#0d1f16;border-color:#1f3d2c}
-    .toast.err{background:#2a1111;border-color:#4c1d1d}
-    @media(max-width:980px){.row,.row-3{grid-template-columns:1fr}}
+    :root {
+      --bg: #0a0f1a;
+      --panel: #0f172a;
+      --ring: #1f2937;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --btn: #111827;
+      --p: #1e40af;
+      --ok: #16a34a;
+      --err: #ef4444;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+    .muted {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .tabs {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      margin: .6rem 0;
+    }
+    .tab {
+      border: 1px solid var(--ring);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: .45rem .7rem;
+      cursor: pointer;
+    }
+    .tab[aria-selected="true"] {
+      background: #111827;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--ring);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 12px 0;
+    }
+    .tools {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: .6rem;
+    }
+    .btn {
+      border: 1px solid var(--ring);
+      background: var(--btn);
+      border-radius: 10px;
+      padding: .45rem .7rem;
+      cursor: pointer;
+    }
+    .btn.p {
+      background: var(--p);
+      border-color: transparent;
+    }
+    .btn.ok {
+      background: var(--ok);
+      border-color: transparent;
+    }
+    .btn.err {
+      background: var(--err);
+      border-color: transparent;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .6rem;
+    }
+    .row-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    label {
+      display: grid;
+      gap: .3rem;
+      font-size: .9rem;
+    }
+    input, textarea, select {
+      background: #0b1220;
+      border: 1px solid var(--ring);
+      color: var(--text);
+      border-radius: 10px;
+      padding: .55rem .6rem;
+    }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    th, td {
+      padding: .55rem;
+      border-bottom: 1px solid var(--ring);
+      vertical-align: top;
+    }
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      text-align: start;
+    }
+    .badge {
+      display: inline-block;
+      background: #111827;
+      border: 1px solid var(--ring);
+      border-radius: 999px;
+      padding: .1rem .5rem;
+      margin: .1rem;
+      font-size: .75rem;
+    }
+    .right {
+      margin-inline-start: auto;
+    }
+    code {
+      background: #111827;
+      border: 1px solid var(--ring);
+      padding: .12rem .3rem;
+      border-radius: 6px;
+    }
+    .toasts {
+      position: fixed;
+      inset-inline-start: 16px;
+      inset-block-end: 16px;
+      display: grid;
+      gap: .4rem;
+      z-index: 1000;
+    }
+    .toast {
+      background: #111827;
+      border: 1px solid var(--ring);
+      border-radius: 10px;
+      padding: .5rem .7rem;
+    }
+    .toast.ok {
+      background: #0d1f16;
+      border-color: #1f3d2c;
+    }
+    .toast.err {
+      background: #2a1111;
+      border-color: #4c1d1d;
+    }
+    @media (max-width: 980px) {
+      .row, .row-3 {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -59,37 +200,50 @@
       <button class="tab" role="tab" data-tab="events" aria-selected="false">📅 الفعاليات</button>
     </nav>
 
-    <!-- بقية الأقسام هنا حسب الحاجة -->
-    
+    <!-- إعدادات -->
+    <div class="panel" data-panel="settings">
+      <!-- إضافة إعدادات الموقع هنا -->
+    </div>
+
+    <!-- القائمة -->
+    <div class="panel" data-panel="nav">
+      <!-- إضافة القائمة هنا -->
+    </div>
+
+    <!-- الأخبار -->
+    <div class="panel" data-panel="news">
+      <!-- إضافة الأخبار هنا -->
+    </div>
+
+    <!-- الفعاليات -->
+    <div class="panel" data-panel="events">
+      <!-- إضافة الفعاليات هنا -->
+    </div>
   </div>
+
   <div class="toasts" id="toasts" aria-live="polite"></div>
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const API_URL = 'https://khotwastudentcouncil.com/admin/update'; // هنا يمكنك تغيير رابط API الخاص بك
+      const API_URL = 'https://khotwastudentcouncil.com/admin/update';
       const TOKEN_KEY = 'khotwa_admin_token_v1';
       let ADMIN_TOKEN = localStorage.getItem(TOKEN_KEY);
-
-      // تأكد من أن لديك ADMIN_TOKEN
-      async function ensureToken(){
-        if(!ADMIN_TOKEN){
+      async function ensureToken() {
+        if (!ADMIN_TOKEN) {
           const val = prompt('أدخل ADMIN_TOKEN (من Cloudflare Worker):');
-          if(!val){ alert('لازم تدخل التوكن للاستمرار'); throw new Error('Missing ADMIN_TOKEN'); }
+          if (!val) { alert('لازم تدخل التوكن للاستمرار'); throw new Error('Missing ADMIN_TOKEN'); }
           ADMIN_TOKEN = val.trim();
           localStorage.setItem(TOKEN_KEY, ADMIN_TOKEN);
         }
       }
-
-      function clearToken(){
+      function clearToken() {
         localStorage.removeItem(TOKEN_KEY);
         ADMIN_TOKEN = null;
-        toast('تم مسح التوكن—سنسألك عنه مرة أخرى عند الحفظ','ok');
+        toast('تم مسح التوكن—سنسألك عنه مرة أخرى عند الحفظ', 'ok');
       }
 
-      const $ = (s) => document.querySelector(s);
-      const $$ = (s) => Array.from(document.querySelectorAll(s));
-      const esc = (s) => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;'}[m]));
-      const toast = (msg, type='') => {
+      // دالة التوست (الإشعارات)
+      function toast(msg, type = '') {
         const t = document.createElement('div');
         t.className = 'toast ' + type;
         t.textContent = msg;
@@ -97,35 +251,70 @@
         setTimeout(() => t.remove(), 2500);
       }
 
-      async function saveToRepo(path, content){
+      // حفظ واسترجاع البيانات من LocalStorage
+      function save(k, v) {
+        localStorage.setItem(k, JSON.stringify(v));
+      }
+      function load(k) {
+        try {
+          return JSON.parse(localStorage.getItem(k) || 'null');
+        } catch { return null }
+      }
+
+      // استيراد و تصدير الملفات JSON
+      function downloadJSON(obj, name) {
+        const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+
+      function pickJSON(cb) {
+        const inp = document.createElement('input');
+        inp.type = 'file';
+        inp.accept = 'application/json';
+        inp.onchange = async () => {
+          const f = inp.files[0];
+          if (!f) return;
+          const t = await f.text();
+          try {
+            cb(JSON.parse(t));
+          } catch {
+            toast('JSON غير صالح', 'err');
+          }
+        };
+        inp.click();
+      }
+
+      async function saveToRepo(path, content) {
         await ensureToken();
         try {
           const res = await fetch(API_URL, {
             method: 'POST',
-            headers: { 
-              'Authorization': `Bearer ${ADMIN_TOKEN}`, 
-              'Content-Type': 'application/json' 
-            },
+            headers: { 'Authorization': `Bearer ${ADMIN_TOKEN}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({ path, content })
           });
           if (!res.ok) {
             const txt = await res.text().catch(() => res.statusText);
             if (res.status === 401) {
-              toast('Unauthorized: تأكد من ADMIN_TOKEN، سنمسحه الآن لتعيد إدخاله','err'); clearToken();
+              toast('Unauthorized: تأكد من ADMIN_TOKEN، سنمسحه الآن لتعيد إدخاله', 'err');
+              clearToken();
             }
             throw new Error(txt || ('HTTP ' + res.status));
           }
           await res.json();
-          toast('حُفظ للمخزن (KV) ✔️','ok');
+          toast('حُفظ للمخزن (KV) ✔️', 'ok');
         } catch (err) {
           console.error(err);
           toast('فشل الحفظ: ' + err.message, 'err');
         }
       }
-
-      /* باقي الكود مثل إضافة الأخبار والفعاليات حسب المتطلبات */
     });
   </script>
-
 </body>
 </html>
