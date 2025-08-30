@@ -254,7 +254,7 @@
 
     // Function to load content (news, events)
     function loadContent() {
-      fetch('/data/news.json')
+      fetch('https://khotwa-data.khotwastudentcouncil.com/data/news.json')
         .then(response => response.json())
         .then(data => {
           const contentList = document.getElementById('content-list');
@@ -265,7 +265,7 @@
             contentDiv.classList.add('content-item');
             contentDiv.innerHTML = `
               <h3>${item.title}</h3>
-              <p>${item.body}</p>
+              <p>${item.summary}</p>
               <button class="btn" onclick="editContent(${item.id})">تعديل</button>
             `;
             contentList.appendChild(contentDiv);
