@@ -1,17 +1,32 @@
 [
   {
-    "id": "dec0d208-695c-485f-af5e-2564b7640428",
+    "id": "1",
     "title": {
-      "ar": "مجلس طلاب خطوه",
-      "en": "KHSC"
+      "ar": "أخبار 1",
+      "en": "News 1"
     },
     "summary": {
-      "ar": "اهلا بكم",
-      "en": "Welcome"
+      "ar": "ملخص الخبر 1",
+      "en": "Summary of news 1"
     },
-    "date": "2025-08-25T01:54:00.000Z",
-    "image": "",
-    "url": "",
-    "tags": []
+    "date": "2025-08-01T09:00:00Z",
+    "image": "https://example.com/news-image1.jpg",
+    "url": "https://example.com/news1",
+    "tags": ["announcement"]
+  },
+  {
+    "id": "2",
+    "title": {
+      "ar": "أخبار 2",
+      "en": "News 2"
+    },
+    "summary": {
+      "ar": "ملخص الخبر 2",
+      "en": "Summary of news 2"
+    },
+    "date": "2025-08-10T11:00:00Z",
+      "image": "https://example.com/news-image2.jpg",
+      "url": "https://example.com/news2",
+      "tags": ["announcement"]
   }
 ]
