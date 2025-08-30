@@ -187,7 +187,7 @@
     <header>
       <div>
         <h1>لوحة الإدارة</h1>
-        <div class="muted">إدارة الإعدادات والقائمة + الأخبار والفعاليات + المستخدمين والتقارير والإعلانات.</div>
+        <div class="muted">إدارة الموقع بالكامل بما في ذلك الأخبار، الفعاليات، المهام، والإعلانات.</div>
       </div>
       <div class="tools">
         <button class="btn" id="backup">⬇️ تنزيل نسخة احتياطية (JSON)</button>
@@ -200,13 +200,14 @@
       <button class="tab" role="tab" data-tab="news" aria-selected="false">📰 الأخبار</button>
       <button class="tab" role="tab" data-tab="events" aria-selected="false">📅 الفعاليات</button>
       <button class="tab" role="tab" data-tab="users" aria-selected="false">👥 إدارة المستخدمين</button>
-      <button class="tab" role="tab" data-tab="reports" aria-selected="false">📊 التقارير</button>
-      <button class="tab" role="tab" data-tab="ads" aria-selected="false">📢 الإعلانات</button>
-      <button class="tab" role="tab" data-tab="tasks" aria-selected="false">🗓️ المهام المجدولة</button>
-      <button class="tab" role="tab" data-tab="seo" aria-selected="false">🔍 SEO</button>
+      <button class="tab" role="tab" data-tab="comments" aria-selected="false">💬 التعليقات</button>
+      <button class="tab" role="tab" data-tab="likes-comments" aria-selected="false">👍 التعليقات والإعجابات</button>
+      <button class="tab" role="tab" data-tab="backup" aria-selected="false">🔄 النسخ الاحتياطي</button>
+      <button class="tab" role="tab" data-tab="security" aria-selected="false">🔒 الأمان</button>
+      <button class="tab" role="tab" data-tab="notifications" aria-selected="false">🔔 الإشعارات</button>
     </nav>
 
-    <!-- إعدادات -->
+    <!-- الإعدادات -->
     <div class="panel" data-panel="settings">
       <h2>الإعدادات</h2>
       <form>
@@ -218,42 +219,6 @@
           <option value="en">English</option>
         </select>
         <button type="submit" class="btn p">حفظ الإعدادات</button>
-      </form>
-    </div>
-
-    <!-- القائمة -->
-    <div class="panel" data-panel="nav">
-      <h2>القائمة</h2>
-      <form>
-        <label>إضافة عنصر إلى القائمة:</label>
-        <input type="text" name="menu_item" />
-        <button type="submit" class="btn p">إضافة إلى القائمة</button>
-      </form>
-    </div>
-
-    <!-- الأخبار -->
-    <div class="panel" data-panel="news">
-      <h2>الأخبار</h2>
-      <form>
-        <label>عنوان الخبر:</label>
-        <input type="text" name="news_title" />
-        <label>المحتوى:</label>
-        <textarea name="news_content"></textarea>
-        <button type="submit" class="btn p">نشر الخبر</button>
-      </form>
-    </div>
-
-    <!-- الفعاليات -->
-    <div class="panel" data-panel="events">
-      <h2>الفعاليات</h2>
-      <form>
-        <label>عنوان الفعالية:</label>
-        <input type="text" name="event_title" />
-        <label>تاريخ الفعالية:</label>
-        <input type="date" name="event_date" />
-        <label>الوصف:</label>
-        <textarea name="event_description"></textarea>
-        <button type="submit" class="btn p">إضافة الفعالية</button>
       </form>
     </div>
 
@@ -275,49 +240,47 @@
       </form>
     </div>
 
-    <!-- التقارير -->
-    <div class="panel" data-panel="reports">
-      <h2>التقارير</h2>
-      <p>عدد الزوار: 5000</p>
-      <p>التفاعلات مع المقالات: 1500</p>
-      <p>الفعاليات القادمة: 3</p>
+    <!-- إدارة التعليقات والإعجابات -->
+    <div class="panel" data-panel="likes-comments">
+      <h2>التعليقات والإعجابات</h2>
+      <table>
+        <thead>
+          <tr><th>المقال</th><th>الإعجابات</th><th>التعليقات</th><th>الإجراء</th></tr>
+        </thead>
+        <tbody>
+          <!-- سيتم عرض المقالات مع التعليقات والإعجابات هنا -->
+        </tbody>
+      </table>
     </div>
 
-    <!-- الإعلانات -->
-    <div class="panel" data-panel="ads">
-      <h2>الإعلانات</h2>
+    <!-- النسخ الاحتياطي -->
+    <div class="panel" data-panel="backup">
+      <h2>النسخ الاحتياطي</h2>
       <form>
-        <label>عنوان الإعلان:</label>
-        <input type="text" name="ad_title" />
-        <label>محتوى الإعلان:</label>
-        <textarea name="ad_content"></textarea>
-        <button type="submit" class="btn p">نشر الإعلان</button>
+        <label>إجراء النسخ الاحتياطي:</label>
+        <button type="submit" class="btn ok">نسخ احتياطي الآن</button>
       </form>
     </div>
 
-    <!-- المهام المجدولة -->
-    <div class="panel" data-panel="tasks">
-      <h2>المهام المجدولة</h2>
+    <!-- الأمان -->
+    <div class="panel" data-panel="security">
+      <h2>إعدادات الأمان</h2>
       <form>
-        <label>عنوان المهمة:</label>
-        <input type="text" name="task_title" />
-        <label>تاريخ المهمة:</label>
-        <input type="date" name="task_date" />
-        <button type="submit" class="btn p">إضافة مهمة</button>
-      </form>
-    </div>
-
-    <!-- SEO -->
-    <div class="panel" data-panel="seo">
-      <h2>إعدادات SEO</h2>
-      <form>
-        <label>عنوان الصفحة:</label>
-        <input type="text" name="seo_title" />
-        <label>وصف الصفحة:</label>
-        <textarea name="seo_description"></textarea>
-        <label>الكلمات الرئيسية:</label>
-        <input type="text" name="seo_keywords" />
+        <label>تفعيل المصادقة الثنائية:</label>
+        <input type="checkbox" name="enable_2fa" />
         <button type="submit" class="btn p">حفظ الإعدادات</button>
+      </form>
+    </div>
+
+    <!-- الإشعارات -->
+    <div class="panel" data-panel="notifications">
+      <h2>إرسال إشعار</h2>
+      <form>
+        <label>عنوان الإشعار:</label>
+        <input type="text" name="notification_title" />
+        <label>محتوى الإشعار:</label>
+        <textarea name="notification_content"></textarea>
+        <button type="submit" class="btn p">إرسال الإشعار</button>
       </form>
     </div>
 
