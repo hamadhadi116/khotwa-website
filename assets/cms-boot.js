@@ -2,14 +2,16 @@
   const esc = s => String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
   const lang = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
 
+  // تحميل البيانات من Cloudflare Worker
   async function getJSON(path, fallback){
     try{
-      const r = await fetch(path, {cache:'no-cache'});
+      const r = await fetch(`https://khotwa-data.khotwastudentcouncil.com/data/${path}`, {cache:'no-cache'});
       if(!r.ok) throw 0;
       return await r.json();
     }catch{ return fallback; }
   }
 
+  // تطبيق الإعدادات المسترجعة
   function applySettings(settings){
     if(settings?.siteName){ document.title = document.title || settings.siteName; }
 
@@ -28,6 +30,7 @@
     }
   }
 
+  // تطبيق التنقل عبر الموقع
   function applyNavigation(items){
     if(!Array.isArray(items)) return;
     const visible = items.filter(i=>i.visible!==false)
@@ -60,13 +63,13 @@
   }
 
   (async function boot(){
-    const settings = await getJSON('data/settings.json', null);
-    const navItems = await getJSON('data/navigation.json', null);
+    const settings = await getJSON('settings.json', null);
+    const navItems = await getJSON('navigation.json', null);
 
     if(settings) applySettings(settings);
     if(navItems) applyNavigation(navItems);
 
-    document.documentElement.lang = (lang==='en'?'en':'ar');
-    document.documentElement.dir  = (lang==='en'?'ltr':'rtl');
+    document.documentElement.lang = (lang === 'en' ? 'en' : 'ar');
+    document.documentElement.dir  = (lang === 'en' ? 'ltr' : 'rtl');
   })();
 })();
