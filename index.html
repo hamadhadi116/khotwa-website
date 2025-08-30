@@ -88,14 +88,6 @@
       outline:3px solid #2563eb; outline-offset:3px; border-radius:var(--r-md)
     }
 
-    /* Skip link */
-    .skip-link{
-      position:absolute; inset-inline-start:1rem; inset-block-start:-100px;
-      background:#fff; color:#000; padding:.6rem .9rem; border-radius:var(--r-sm);
-      box-shadow:var(--shadow-sm); z-index:1000
-    }
-    .skip-link:focus{ inset-block-start:1rem }
-
     /* Navbar (glass on scroll) */
     .navbar{
       position:sticky; top:0; z-index:40;
@@ -130,8 +122,6 @@
       padding:.45rem .75rem; border:1px solid var(--ring); background:#fff; border-radius:var(--r-md); cursor:pointer;
       font-weight:600;
     }
-    .menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:var(--r-md);cursor:pointer}
-    .menu-toggle svg{width:20px;height:20px}
 
     /* Mobile menu */
     @media (max-width: 900px){
@@ -429,8 +419,6 @@
       onScroll();
       window.addEventListener('scroll', onScroll, {passive:true});
     })();
-  <script src="/assets/cms-boot.js" defer></script>
+  </script>
 </body>
 </html>
-
-
