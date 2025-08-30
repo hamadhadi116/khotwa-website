@@ -24,22 +24,8 @@
   <meta name="twitter:description" content="فعاليات، أخبار، وخدمات لطلاب خطوة."/>
   <meta name="twitter:image" content="https://b.top4top.io/p_35166f7hr1.jpg"/>
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"Khotwa Student Council",
-    "url":"https://khotwastudentcouncil.com/",
-    "logo":"https://g.top4top.io/p_3516rfttb1.jpg",
-    "sameAs":["https://www.instagram.com/khotwa.sc/"]
-  }
-  </script>
-
-  <!-- ====== الجمالية المُحسّنة (Drop‑in CSS) ====== -->
   <style>
     :root{
-      /* Colors */
       --primary: #1e40af;
       --primary-600:#1d4ed8;
       --text:#0f172a;
@@ -48,18 +34,12 @@
       --surface:#ffffff;
       --card:#f8fafc;
 
-      /* Radii */
       --r-sm:10px; --r-md:14px; --r-lg:16px; --r-xl:22px;
-
-      /* Shadows */
       --shadow-sm: 0 2px 10px rgba(2,6,23,.06);
       --shadow-md: 0 10px 26px rgba(2,6,23,.08);
       --shadow-lg: 0 20px 48px rgba(2,6,23,.10);
-
-      /* Spacing scale */
       --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem; --sp-5:1.25rem; --sp-6:1.5rem; --sp-8:2rem;
 
-      /* Type scale */
       --fs-0:.92rem;
       --fs-1:clamp(1rem, .5vw + .9rem, 1.05rem);
       --fs-2:clamp(1.05rem, .7vw + .95rem, 1.15rem);
@@ -68,31 +48,26 @@
       --fs-h1:clamp(1.6rem, 2.6vw + 1rem, 2.4rem);
     }
 
-    * {box-sizing:border-box}
-    html, body {height:100%}
-    body {
-      margin: 0;
-      font-family: "Segoe UI", system-ui, -apple-system, Tahoma, Arial, sans-serif;
-      color: var(--text);
-      background: var(--surface);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
+      color:var(--text);
+      background:var(--surface);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
 
-    a {color: inherit; text-decoration: none}
-    .container {width: min(1120px, 92%); margin-inline: auto}
-
-    /* Focus ring */
-    :where(a, button, [role="button"], input, select, textarea):focus-visible {
-      outline: 3px solid #2563eb;
-      outline-offset: 3px;
-      border-radius: var(--r-md);
-    }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1120px,92%);margin-inline:auto}
 
     /* Navbar */
     .navbar {
-      position: sticky; top: 0; z-index: 40;
+      position: sticky;
+      top: 0;
+      z-index: 40;
       background: color-mix(in oklab, #ffffff 75%, transparent);
       border-bottom: 1px solid color-mix(in oklab, var(--ring) 65%, transparent);
       backdrop-filter: saturate(1.1) blur(8px);
@@ -100,71 +75,157 @@
     }
 
     body.nav-scrolled .navbar {
-      box-shadow: 0 6px 18px rgba(2,6,23,.06);
+      box-shadow: 0 6px 18px rgba(2, 6, 23, .06);
       background: color-mix(in oklab, #ffffff 85%, transparent);
     }
 
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .8rem 0;
+      gap: .8rem;
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .brand .logo {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: .25rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      padding: .5rem .75rem;
+      border-radius: var(--r-md);
+      font-size: var(--fs-1);
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      background: var(--card);
+    }
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      gap: .5rem;
+      padding: .5rem .7rem;
+      border: 1px solid var(--ring);
+      background: #fff;
+      border-radius: var(--r-md);
+      cursor: pointer;
+    }
+
+    /* Mobile menu */
+    @media (max-width: 900px) {
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        inset-inline: 0;
+        top: calc(100% + 8px);
+        background: #fff;
+        border: 1px solid var(--ring);
+        border-radius: var(--r-xl);
+        display: grid;
+        gap: .2rem;
+        padding: .4rem;
+        box-shadow: var(--shadow-lg);
+        max-height: 80vh;
+        overflow: auto;
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity .2s ease, transform .2s ease, padding .2s ease;
+      }
+
+      .nav-links[data-open="false"] {
+        transform: scale(.98);
+        opacity: 0;
+      }
+    }
+
+    /* Hero Section */
     .hero {
       background: linear-gradient(180deg, #fff 0, #f6f8ff 100%);
       border-bottom: 1px solid var(--ring);
     }
 
     .hero-inner {
-      display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.2rem; padding: 3rem 0; align-items: center;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.2rem;
+      padding: 3rem 0;
+      align-items: center;
     }
 
-    .hero h1 {margin: 0 0 .6rem; font-size: var(--fs-h1); letter-spacing: .2px;}
-    .hero p {color: var(--muted); margin: 0 0 1.2rem; font-size: var(--fs-2);}
+    .hero h1 {
+      margin: 0 0 .6rem;
+      font-size: var(--fs-h1);
+      letter-spacing: .2px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin: 0 0 1.2rem;
+      font-size: var(--fs-2);
+    }
 
     .cta-row {
-      display: flex; gap: .8rem; flex-wrap: wrap;
+      display: flex;
+      gap: .8rem;
+      flex-wrap: wrap;
     }
 
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-      padding: .9rem 1.1rem; border-radius: var(--r-xl); font-weight: 800; border: 1px solid transparent; cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      padding: .9rem 1.1rem;
+      border-radius: var(--r-xl);
+      font-weight: 800;
+      border: 1px solid transparent;
+      cursor: pointer;
       transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
     }
 
     .btn-primary {
-      background: var(--primary); color: #fff; box-shadow: 0 10px 28px rgba(29,78,216,.22);
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(29, 78, 216, .22);
     }
 
     .btn-primary:hover {
-      background: var(--primary-600); transform: translateY(-1px);
+      background: var(--primary-600);
+      transform: translateY(-1px);
     }
 
     .btn-outline {
-      background: #fff; border-color: var(--ring);
+      background: #fff;
+      border-color: var(--ring);
     }
 
     .btn-outline:hover {
-      box-shadow: var(--shadow-sm); transform: translateY(-1px);
-    }
-
-    .card {
-      background: #fff; border: 1px solid color-mix(in oklab, var(--ring) 70%, transparent);
-      border-radius: var(--r-lg); padding: 1rem; box-shadow: var(--shadow-sm);
-      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: color-mix(in oklab, var(--ring) 90%, transparent);
-    }
-
-    .hero-img img {
-      width: 100%; height: auto; object-fit: cover; border-radius: var(--r-xl);
-      box-shadow: var(--shadow-md);
-    }
-
-    footer {
-      border-top: 1px solid var(--ring);
-      background: #fff;
-    }
-
-    .foot {
-      display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1.2rem 0;
-      font-size: var(--fs-1);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-1px);
     }
 
   </style>
@@ -199,7 +260,7 @@
   </nav>
 
   <main id="main">
-    <!-- Hero -->
+    <!-- Hero Section -->
     <header class="hero">
       <div class="container hero-inner">
         <div>
@@ -208,7 +269,7 @@
           <p data-lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا، ونبني الجسر بين الطلاب وإدارة الجامعة بفعاليات نوعية وخدمات موجهة.</p>
           <p data-lang="en" hidden>We empower Khotwa students academically, socially, and culturally, building bridges with the university through quality events and tailored services.</p>
           <div class="cta-row">
-            <a href="/register.html"class="btn btn-primary"><span data-lang="ar">قدّم للعضوية</span><span data-lang="en" hidden>Apply for Membership</span></a>
+            <a href="/register.html" class="btn btn-primary"><span data-lang="ar">قدّم للعضوية</span><span data-lang="en" hidden>Apply for Membership</span></a>
             <a href="/events.html" class="btn btn-outline"><span data-lang="ar">شاهد أقرب الفعاليات</span><span data-lang="en" hidden>See Upcoming Events</span></a>
           </div>
         </div>
@@ -233,21 +294,9 @@
       </div>
     </section>
 
-    <!-- Events Section -->
-    <section aria-labelledby="events-ar" class="container">
-      <div class="section-head">
-        <h2 id="events-ar" data-lang="ar">الفعاليات القادمة</h2>
-        <h2 id="events-en" data-lang="en" hidden>Upcoming Events</h2>
-        <a class="muted" href="/events.html"><span data-lang="ar">تقويم الفعاليات</span><span data-lang="en" hidden>All events</span></a>
-      </div>
-      <div class="grid grid-3">
-        <article class="card"><h3 data-lang="ar">ورشة تخصصات خطوة</h3><h3 data-lang="en" hidden>Khotwa Majors Workshop</h3><p class="muted" data-lang="ar">IT، الأمن السيبراني، العلوم الحيوية، الأعمال.</p><p class="muted" data-lang="en" hidden>IT, Cybersecurity, Biosciences, Business.</p></article>
-        <article class="card"><h3 data-lang="ar">بطولة البادل</h3><h3 data-lang="en" hidden>Padel Championship</h3><p class="muted" data-lang="ar">تنظيم رياضي طلابي – La Trobe Sports Centre.</p><p class="muted" data-lang="en" hidden>Student sports event – La Trobe Sports Centre.</p></article>
-        <article class="card"><h3 data-lang="ar">ماراثون داخل الحرم</h3><h3 data-lang="en" hidden>On-Campus Marathon</h3><p class="muted" data-lang="ar">مسارات 1K و2.5K و10K.</p><p class="muted" data-lang="en" hidden>1K, 2.5K, and 10K routes.</p></article>
-      </div>
-    </section>
   </main>
 
+  <!-- Footer Section -->
   <footer aria-label="تذييل الموقع">
     <div class="container foot">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
@@ -255,11 +304,9 @@
     </div>
   </footer>
 
-  <!-- ====== سلوك القائمة + اللغة ====== -->
+  <!-- ====== JavaScript ====== -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Toggle Menu
     const menuBtn = document.getElementById('menu-toggle');
     const primaryNav = document.getElementById('primary-nav');
     menuBtn.addEventListener('click', () => {
@@ -268,7 +315,6 @@
       menuBtn.setAttribute('aria-expanded', String(!isOpen));
     });
 
-    // Language Toggle
     const toggleBtn = document.getElementById('lang-toggle');
     let isEn = localStorage.getItem('khotwa_lang') === 'en';
     function setLang(en){
@@ -276,7 +322,7 @@
       document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
       document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
       document.documentElement.lang = en ? 'en' : 'ar';
-      document.documentElement.dir  = en ? 'ltr' : 'rtl';
+      document.documentElement.dir = en ? 'ltr' : 'rtl';
       toggleBtn.textContent = en ? 'العربية' : 'English';
       toggleBtn.setAttribute('aria-pressed', en ? 'true' : 'false');
       localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
