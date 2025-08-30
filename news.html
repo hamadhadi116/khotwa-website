@@ -370,12 +370,11 @@
       });
 
       qInput.addEventListener('input', applyFilter);
-
-      // تحميل الأخبار من /data/news.json
-      async function loadNews() {
+            // تحميل الأخبار من /data/news.json
+      async function loadNews(){
         try {
           const res = await fetch('/data/news.json', { cache: 'no-cache' });
-          if (!res.ok) throw new Error('Failed to load news.json');
+          if (!res.ok) throw new Error('فشل تحميل الأخبار');
           const data = await res.json();
           const postsEl = document.getElementById('posts');
           postsEl.innerHTML = '';
@@ -391,6 +390,7 @@
             const article = document.createElement('article');
             article.className = 'post';
 
+            // خذ تصنيف رئيسي (ann/event/media) إن وُجد
             const tagsLower = (item.tags || []).map(t => String(t).toLowerCase());
             const typeTag = tagsLower.find(t => ['ann', 'event', 'media'].includes(t)) || 'ann';
             article.dataset.tags = typeTag;
@@ -424,11 +424,11 @@
           console.error('فشل تحميل الأخبار:', err);
         }
       }
-
       loadNews();
     });
   </script>
 
+  <!-- يفعّل توصيل لوحة الإدارة (لا يغيّر الشكل) -->
   <script src="/assets/cms-boot.js" defer></script>
 </body>
 </html>
