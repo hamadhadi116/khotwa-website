@@ -7,14 +7,18 @@
   <meta name="color-scheme" content="light dark"/>
   <style>
     :root {
-      --bg: #111827;
+      --bg: #0a0f1a;
       --panel: #1f2937;
       --primary: #3b82f6;
+      --accent: #4b5563;
       --text: #e5e7eb;
+      --muted: #9ca3af;
       --btn-bg: #111827;
       --hover-bg: #4b5563;
       --success: #10b981;
       --error: #ef4444;
+      --border-radius: 10px;
+      --transition-duration: 0.3s;
     }
 
     * {
@@ -27,7 +31,6 @@
       font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      margin: 0;
     }
 
     header {
@@ -40,8 +43,13 @@
     }
 
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       color: var(--primary);
+    }
+
+    .muted {
+      font-size: 0.9rem;
+      color: var(--muted);
     }
 
     .tabs {
@@ -52,9 +60,9 @@
     .tab {
       padding: 10px 20px;
       background-color: var(--panel);
-      border-radius: 10px;
+      border-radius: var(--border-radius);
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color var(--transition-duration);
     }
 
     .tab:hover, .tab[aria-selected="true"] {
@@ -65,7 +73,7 @@
       display: none;
       padding: 20px;
       background-color: var(--panel);
-      border-radius: 12px;
+      border-radius: var(--border-radius);
       margin-top: 20px;
     }
 
@@ -73,14 +81,20 @@
       display: block;
     }
 
+    .tools {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 20px;
+    }
+
     .btn {
-      padding: 10px 20px;
+      padding: 12px 25px;
       background-color: var(--btn-bg);
       color: var(--text);
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       cursor: pointer;
       border: none;
-      transition: background-color 0.3s;
+      transition: background-color var(--transition-duration);
     }
 
     .btn:hover {
@@ -102,7 +116,7 @@
     .content-item {
       background-color: var(--panel);
       padding: 15px;
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       margin-bottom: 10px;
     }
 
@@ -114,12 +128,45 @@
 
     input, select, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background-color: #1f2937;
       color: var(--text);
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       border: 1px solid var(--primary);
       margin-bottom: 15px;
+    }
+
+    .toasts {
+      position: fixed;
+      inset-inline-start: 16px;
+      inset-block-end: 16px;
+      display: grid;
+      gap: 0.4rem;
+      z-index: 1000;
+    }
+
+    .toast {
+      background: #111827;
+      border: 1px solid var(--primary);
+      border-radius: var(--border-radius);
+      padding: 0.5rem 0.7rem;
+      color: var(--text);
+    }
+
+    .toast.success {
+      background: var(--success);
+      border-color: #1f3d2c;
+    }
+
+    .toast.error {
+      background: var(--error);
+      border-color: #4c1d1d;
+    }
+
+    @media (max-width: 768px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -129,13 +176,18 @@
     <header>
       <div>
         <h1>لوحة الإدارة</h1>
+        <div class="muted">إدارة الموقع بالكامل، بما في ذلك الأخبار، الفعاليات، والإعدادات.</div>
       </div>
-      <div class="tabs" role="tablist" aria-label="الأقسام">
-        <button class="tab" role="tab" data-tab="content" aria-selected="true">📝 المحتوى</button>
-        <button class="tab" role="tab" data-tab="settings" aria-selected="false">⚙️ الإعدادات</button>
-        <button class="tab" role="tab" data-tab="analytics" aria-selected="false">📊 التحليلات</button>
+      <div class="tools">
+        <button class="btn" id="backup">⬇️ تنزيل نسخة احتياطية (JSON)</button>
       </div>
     </header>
+
+    <nav class="tabs" role="tablist" aria-label="الأقسام">
+      <button class="tab" role="tab" data-tab="content" aria-selected="true">📝 المحتوى</button>
+      <button class="tab" role="tab" data-tab="settings" aria-selected="false">⚙️ الإعدادات</button>
+      <button class="tab" role="tab" data-tab="analytics" aria-selected="false">📊 التحليلات</button>
+    </nav>
 
     <div class="panel active" data-panel="content">
       <h2>إدارة المحتوى</h2>
@@ -148,21 +200,21 @@
     <div class="panel" data-panel="settings">
       <h2>إعدادات الموقع</h2>
       <form id="settings-form">
-        <!-- الشعار -->
         <label for="logo">الشعار:</label>
         <input type="file" id="logo" name="logo" />
-        <!-- اللغة -->
+        
         <label for="language">اللغة:</label>
         <select name="language" id="language">
           <option value="ar">العربية</option>
           <option value="en">English</option>
         </select>
-        <!-- النص الترحيبي -->
+
         <label for="welcome-text">النص الترحيبي:</label>
         <textarea name="welcome-text" id="welcome-text" rows="4"></textarea>
-        <!-- الإعلانات -->
-        <label for="ads">إعلانات الموقع:</label>
+
+        <label for="ads">الإعلانات:</label>
         <textarea name="ads" id="ads" rows="4"></textarea>
+
         <button type="submit" class="btn success">حفظ الإعدادات</button>
       </form>
     </div>
@@ -219,7 +271,6 @@
     // وظيفة تعديل المحتوى
     function editContent(id) {
       alert('تعديل المحتوى برقم: ' + id);
-      // يمكنك هنا إضافة منطق لتعديل المحتوى
     }
 
     // حفظ إعدادات الموقع
@@ -230,13 +281,11 @@
       const welcomeText = document.getElementById('welcome-text').value;
       const ads = document.getElementById('ads').value;
 
-      // ارسال البيانات عبر POST إلى Cloudflare Worker (إضافة منطق لتخزينها)
+      // إرسال البيانات إلى Cloudflare Worker أو KV لتخزينها
       console.log('الشعار:', logo);
       console.log('اللغة:', language);
       console.log('النص الترحيبي:', welcomeText);
       console.log('الإعلانات:', ads);
-      
-      // إرسال البيانات إلى Cloudflare Worker أو KV لتخزينها
     });
   </script>
 </body>
