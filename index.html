@@ -11,7 +11,7 @@
 
   <!-- Theme color -->
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#0a0f1a"   media="(prefers-color-scheme: dark)">
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
@@ -33,18 +33,54 @@
 
   <!-- Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"Khotwa Student Council",
-    "url":"https://khotwastudentcouncil.com/",
-    "logo":"/assets/apple-touch-icon.png",
-    "sameAs":["https://www.instagram.com/khotwa.sc/"]
-  }
+  {"@context":"https://schema.org","@type":"Organization","name":"Khotwa Student Council","url":"https://khotwastudentcouncil.com/","logo":"/assets/apple-touch-icon.png","sameAs":["https://www.instagram.com/khotwa.sc/"]}
   </script>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="/assets/main.css">
+  <!-- Critical CSS (يبقي الصفحة مرتبة حتى لو فشل CSS الخارجي) -->
+  <style>
+    :root{--bg:#ffffff;--text:#0f172a;--muted:#64748b;--ring:#e5e7eb;--primary:#1e40af}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;line-height:1.6}
+    a{color:inherit}
+    .container{width:min(1120px,92%);margin-inline:auto}
+    .skip-link{position:absolute;inset-inline-start:0;top:-40px;background:#000;color:#fff;padding:.5rem 1rem;z-index:100}
+    .skip-link:focus{top:0}
+    .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
+    .logo{border-radius:8px}
+    .menu-toggle{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--ring);background:#fff;padding:.4rem .6rem;border-radius:.5rem}
+    .nav-links{display:flex;gap:1rem;align-items:center}
+    .nav-links a{padding:.4rem .2rem}
+    .lang-toggle{border:1px solid var(--ring);background:#fff;padding:.4rem .6rem;border-radius:.5rem}
+    @media (max-width:960px){
+      .nav-links{position:absolute;inset-inline:0;top:64px;background:#fff;border-bottom:1px solid var(--ring);padding:1rem;flex-direction:column;display:none}
+      .nav-links[data-open="true"]{display:flex}
+    }
+    .hero{padding:2.5rem 0}
+    .hero-inner{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center}
+    @media (max-width:980px){.hero-inner{grid-template-columns:1fr}}
+    h1{margin:0 0 .6rem 0;font-size:clamp(1.6rem,3vw,2.2rem)}
+    p{margin:.3rem 0 1rem}
+    .cta-row{display:flex;gap:.8rem;flex-wrap:wrap}
+    .btn{display:inline-block;padding:.7rem 1rem;border-radius:.6rem;border:1px solid var(--primary)}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-outline{background:#fff;color:var(--primary)}
+    .hero-img img{width:100%;height:auto;border-radius:12px;display:block}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin:1.8rem 0 1rem}
+    .grid{display:grid;gap:1rem}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:960px){.grid-2,.grid-3{grid-template-columns:1fr}}
+    .card{border:1px solid var(--ring);border-radius:12px;padding:1rem;background:#fff}
+    .muted{color:var(--muted)}
+    footer{border-top:1px solid var(--ring);margin-top:2rem;padding:1rem 0;background:#fff}
+    .foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+  </style>
+
+  <!-- تحميل CSS خارجي بأسلوب آمن وسريع -->
+  <link rel="preload" href="/assets/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/assets/main.css"></noscript>
 </head>
 <body>
   <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
@@ -60,7 +96,7 @@
 
       <button id="menu-toggle" class="menu-toggle" type="button"
               aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         القائمة
       </button>
 
@@ -85,18 +121,16 @@
         <p data-lang="ar">نمكّن طلاب برنامج خطوة أكاديميًا واجتماعيًا وثقافيًا، ونبني الجسر بين الطلاب وإدارة الجامعة بفعاليات نوعية وخدمات موجهة.</p>
         <p data-lang="en" hidden>We empower Khotwa students academically, socially, and culturally, building bridges with the university through quality events and tailored services.</p>
         <div class="cta-row">
-          <!-- FIXED: added missing space before class -->
-          <a href="/register.html" class="btn btn-primary">
-            <span data-lang="ar">قدّم للعضوية</span><span data-lang="en" hidden>Apply for Membership</span>
-          </a>
-          <a href="/events.html" class="btn btn-outline">
-            <span data-lang="ar">شاهد أقرب الفعاليات</span><span data-lang="en" hidden>See Upcoming Events</span>
-          </a>
+          <a href="/register.html" class="btn btn-primary"><span data-lang="ar">قدّم للعضوية</span><span data-lang="en" hidden>Apply for Membership</span></a>
+          <a href="/events.html" class="btn btn-outline"><span data-lang="ar">شاهد أقرب الفعاليات</span><span data-lang="en" hidden>See Upcoming Events</span></a>
         </div>
       </div>
       <div class="hero-img">
-        <img src="https://b.top4top.io/p_35166f7hr1.jpg" alt="مجموعة طلاب مجلس خطوة – La Trobe"
-          width="1600" height="900" loading="eager" decoding="async"
+        <img
+          src="https://b.top4top.io/p_35166f7hr1.jpg"
+          alt="مجموعة طلاب مجلس خطوة – La Trobe"
+          width="1600" height="900"
+          loading="eager" decoding="async" fetchpriority="high"
           srcset="https://b.top4top.io/p_35166f7hr1.jpg 1600w,
                   https://b.top4top.io/p_35166f7hr1.jpg 1200w,
                   https://b.top4top.io/p_35166f7hr1.jpg 800w"
@@ -105,7 +139,6 @@
     </div>
   </header>
 
-  <!-- Main content wrapper added for skip-link target -->
   <main id="main">
     <!-- About -->
     <section aria-labelledby="about-ar" class="container">
@@ -145,49 +178,31 @@
     </div>
   </footer>
 
-  <!-- Scripts: tiny helpers so الصفحة تعمل حتى لو غاب cms-boot.js -->
+  <!-- Helpers -->
   <script>
     // سنة الحقوق
-    (function(){ var y=document.getElementById('year'); if(y){ y.textContent=new Date().getFullYear(); } })();
-
+    (function(){const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();})();
     // فتح/غلق قائمة الجوال
     (function(){
-      const btn = document.getElementById('menu-toggle');
-      const nav = document.getElementById('primary-nav');
-      if(btn && nav){
-        btn.addEventListener('click', () => {
-          const open = nav.getAttribute('data-open') === 'true';
-          nav.setAttribute('data-open', String(!open));
-          btn.setAttribute('aria-expanded', String(!open));
-        });
-      }
+      const btn=document.getElementById('menu-toggle'), nav=document.getElementById('primary-nav');
+      if(btn&&nav){ btn.addEventListener('click',()=>{ const open=nav.getAttribute('data-open')==='true'; nav.setAttribute('data-open', String(!open)); btn.setAttribute('aria-expanded', String(!open)); });}
     })();
-
-    // تبديل اللغة (يخفي/يظهر العناصر ذات data-lang)
+    // تبديل اللغة
     (function(){
-      const toggle = document.getElementById('lang-toggle');
-      if(!toggle) return;
-      const setLang = (lang) => {
-        document.querySelectorAll('[data-lang]').forEach(el => {
-          const v = el.getAttribute('data-lang');
-          if(v === lang){ el.hidden = false; } else { el.hidden = true; }
-        });
-        toggle.textContent = (lang === 'ar') ? 'English' : 'العربية';
-        toggle.setAttribute('aria-pressed', lang !== 'ar');
-        document.documentElement.lang = (lang === 'ar') ? 'ar' : 'en';
-        document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
+      const t=document.getElementById('lang-toggle'); if(!t) return;
+      const set=(lang)=>{
+        document.querySelectorAll('[data-lang]').forEach(el=>{ el.hidden = (el.getAttribute('data-lang')!==lang);});
+        t.textContent = (lang==='ar')?'English':'العربية';
+        t.setAttribute('aria-pressed', lang!=='ar');
+        document.documentElement.lang = (lang==='ar')?'ar':'en';
+        document.documentElement.dir  = (lang==='ar')?'rtl':'ltr';
       };
-      // اللغة الافتراضية: العربية
-      let current = 'ar';
-      setLang(current);
-      toggle.addEventListener('click', () => {
-        current = (current === 'ar') ? 'en' : 'ar';
-        setLang(current);
-      });
+      let cur='ar'; set(cur);
+      t.addEventListener('click',()=>{cur=(cur==='ar')?'en':'ar'; set(cur);});
     })();
   </script>
 
-  <!-- ملف نظامك (إن وُجد) -->
+  <!-- نظامك (إن وُجد) -->
   <script src="/assets/cms-boot.js" defer></script>
 </body>
 </html>
