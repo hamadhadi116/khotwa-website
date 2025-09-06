@@ -1,32 +1,3 @@
-[
-  {
-    "id": "1",
-    "title": {
-      "ar": "أخبار 1",
-      "en": "News 1"
-    },
-    "summary": {
-      "ar": "ملخص الخبر 1",
-      "en": "Summary of news 1"
-    },
-    "date": "2025-08-01T09:00:00Z",
-    "image": "https://example.com/news-image1.jpg",
-    "url": "https://example.com/news1",
-    "tags": ["announcement"]
-  },
-  {
-    "id": "2",
-    "title": {
-      "ar": "أخبار٣ 2",
-      "en": "News 2"
-    },
-    "summary": {
-      "ar": "ملخص الخبر 2",
-      "en": "Summary of news 2"
-    },
-    "date": "2025-08-10T11:00:00Z",
-      "image": "https://example.com/news-image2.jpg",
-      "url": "https://example.com/news2",
-      "tags": ["announcement"]
-  }
-]
+{
+  "items": []
+}
