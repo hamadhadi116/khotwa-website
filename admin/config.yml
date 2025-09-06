@@ -1,0 +1,49 @@
+backend:
+  name: github
+  repo: hamadhadi116/khotwa-website
+  branch: main
+  auth_type: implicit
+
+media_folder: "assets/img"
+public_folder: "/assets/img"
+
+locale: ar
+
+collections:
+  - label: "Settings"
+    name: "settings"
+    files:
+      - label: "Site Settings"
+        name: "site"
+        file: "assets/data/settings.json"
+        format: "json"
+        fields:
+          - { label: "Site Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+
+  - label: "Events"
+    name: "events"
+    file: "assets/data/events.json"
+    format: "json"
+    fields:
+      - label: "Events"
+        name: "items"
+        widget: "list"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Date", name: "date", widget: "datetime" }
+          - { label: "Location", name: "location", widget: "string" }
+          - { label: "Summary", name: "summary", widget: "text" }
+
+  - label: "News"
+    name: "news"
+    file: "assets/data/news.json"
+    format: "json"
+    fields:
+      - label: "Articles"
+        name: "items"
+        widget: "list"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Date", name: "date", widget: "datetime" }
+          - { label: "Body", name: "body", widget: "markdown" }
