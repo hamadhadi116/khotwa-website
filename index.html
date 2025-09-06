@@ -36,7 +36,7 @@
   {"@context":"https://schema.org","@type":"Organization","name":"Khotwa Student Council","url":"https://khotwastudentcouncil.com/","logo":"/assets/apple-touch-icon.png","sameAs":["https://www.instagram.com/khotwa.sc/"]}
   </script>
 
-  <!-- Critical CSS (يبقي الصفحة مرتبة حتى لو فشل CSS الخارجي) -->
+  <!-- Critical CSS -->
   <style>
     :root{--bg:#ffffff;--text:#0f172a;--muted:#64748b;--ring:#e5e7eb;--primary:#1e40af}
     *{box-sizing:border-box} html,body{height:100%}
@@ -78,7 +78,7 @@
     .foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
   </style>
 
-  <!-- تحميل CSS خارجي بأسلوب آمن وسريع -->
+  <!-- تحميل CSS خارجي -->
   <link rel="preload" href="/assets/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="/assets/main.css"></noscript>
 </head>
@@ -200,6 +200,23 @@
       let cur='ar'; set(cur);
       t.addEventListener('click',()=>{cur=(cur==='ar')?'en':'ar'; set(cur);});
     })();
+  </script>
+
+  <!-- Netlify Identity widget + تحويل رابط الدعوة تلقائيًا -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    // إذا وصل المستخدم برابط دعوة يحمل #invite_token في الصفحة الرئيسية،
+    // حوّله مباشرة إلى /admin/ مع نفس التوكن ليُكمل إنشاء كلمة المرور.
+    if (location.hash && location.hash.startsWith('#invite_token=')) {
+      location.replace('/admin/' + location.hash);
+    }
+
+    // بعد تسجيل الدخول عبر الودجِت، انقله إلى لوحة الإدارة
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('login', () => {
+        window.location.href = '/admin/';
+      });
+    }
   </script>
 
   <!-- نظامك (إن وُجد) -->
