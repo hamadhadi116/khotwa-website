@@ -1,16 +1,19 @@
 backend:
-  name: github
-  repo: hamadhadi116/khotwa-website
-  branch: main
-  auth_type: implicit
+  name: git-gateway        # نستخدم Netlify Identity + Git Gateway
+  branch: main             # فرع الكتابة في Git
 
+# مكان حفظ الصور داخل المستودع ومسارها العلني على الموقع
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
+# (اختياري) واجهة التحرير بالعربية
 locale: ar
 
+# (اختياري) تفعيل مسار عمل تحريري (مسودات ثم نشر)
+# publish_mode: editorial_workflow
+
 collections:
-  # ملف إعدادات ثابت (file collection)
+  # 1) إعدادات الموقع (ملف JSON واحد)
   - label: "Settings"
     name: "settings"
     files:
@@ -22,7 +25,7 @@ collections:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
 
-  # أحداث: ملف JSON واحد فيه قائمة items (file collection صحيحة)
+  # 2) الفعاليات (ملف JSON واحد فيه قائمة items)
   - label: "Events"
     name: "events"
     files:
@@ -40,7 +43,7 @@ collections:
               - { label: "Location", name: "location", widget: "string" }
               - { label: "Summary", name: "summary", widget: "text" }
 
-  # أخبار: ملف JSON واحد فيه قائمة items (file collection صحيحة)
+  # 3) الأخبار (ملف JSON واحد فيه قائمة items)
   - label: "News"
     name: "news"
     files:
