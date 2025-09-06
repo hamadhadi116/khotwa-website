@@ -20,7 +20,7 @@
   <meta property="og:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
   <meta name="twitter:card" content="summary_large_image">
 
-  <!-- JSON-LD (اختياري/خفيف) -->
+  <!-- JSON-LD (اختياري) -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage","name":"Khotwa Events","url":"https://khotwastudentcouncil.com/events.html"}
   </script>
@@ -45,7 +45,7 @@
     .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:10px;box-shadow:var(--sh-sm);z-index:1000}
     .skip-link:focus{inset-block-start:1rem}
 
-    /* Navbar (موحّد مع بقية الصفحات) */
+    /* Navbar */
     .navbar{position:sticky;top:0;z-index:40;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);backdrop-filter:blur(8px)}
     .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
@@ -148,79 +148,29 @@
       <p class="muted" data-lang="ar">تابع آخر ورش العمل، البطولات، والأنشطة.</p>
       <p class="muted" data-lang="en" hidden>Follow our latest workshops, tournaments, and activities.</p>
 
-      <div class="grid grid-3">
-        <!-- ورشة التخصصات -->
-        <article class="card" id="e-workshop">
-          <div class="thumb">
-            <img
-              src="https://images.pexels.com/photos/3182761/pexels-photo-3182761.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop"
-              srcset="
-                https://images.pexels.com/photos/3182761/pexels-photo-3182761.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop 800w,
-                https://images.pexels.com/photos/3182761/pexels-photo-3182761.jpeg?auto=compress&cs=tinysrgb&w=1200&h=750&fit=crop 1200w,
-                https://images.pexels.com/photos/3182761/pexels-photo-3182761.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop 1600w"
-              sizes="(max-width:980px) 92vw, 360px"
-              alt="ورشة تعارف ومناقشة تخصصات خطوة"
-              loading="lazy" decoding="async">
-          </div>
-          <div class="card-body">
-            <span class="chip"><time data-lang="ar">10 سبتمبر – 5:00م</time><time data-lang="en" hidden>10 Sep – 5:00 PM</time></span>
-            <h3 data-lang="ar">ورشة تخصصات خطوة</h3>
-            <h3 data-lang="en" hidden>Khotwa Majors Workshop</h3>
-            <p data-lang="ar" class="muted">جلسة تعريفية عن تخصصات خطوة: IT، الأمن السيبراني، العلوم الحيوية، والأعمال.</p>
-            <p data-lang="en" class="muted" hidden>Intro session about Khotwa majors: IT, Cybersecurity, Biosciences, and Business.</p>
-            <a class="btn" href="/contact.html?event=workshop" data-lang="ar">سجّل الآن</a>
-            <a class="btn" href="/contact.html?event=workshop" data-lang="en" hidden>Register</a>
-          </div>
-        </article>
+      <!-- القائمة الديناميكية -->
+      <div id="events-list" class="grid grid-3" role="list" aria-live="polite"></div>
 
-        <!-- بطولة البادل (صور ثابتة شغّالة) -->
-        <article class="card" id="e-padel">
-          <div class="thumb">
-            <img
-              src="https://images.pexels.com/photos/5739150/pexels-photo-5739150.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop"
-              srcset="
-                https://images.pexels.com/photos/5739150/pexels-photo-5739150.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop 800w,
-                https://images.pexels.com/photos/5739150/pexels-photo-5739150.jpeg?auto=compress&cs=tinysrgb&w=1200&h=750&fit=crop 1200w,
-                https://images.pexels.com/photos/5739150/pexels-photo-5739150.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop 1600w"
-              sizes="(max-width:980px) 92vw, 360px"
-              alt="بطولة البادل – La Trobe Sports Centre"
-              loading="lazy" decoding="async">
-          </div>
+      <!-- قالب البطاقة -->
+      <template id="event-card-tpl">
+        <article class="card" role="listitem">
+          <div class="thumb"><img alt=""></div>
           <div class="card-body">
-            <span class="chip"><time data-lang="ar">24 سبتمبر – 4:00م</time><time data-lang="en" hidden>24 Sep – 4:00 PM</time></span>
-            <h3 data-lang="ar">بطولة البادل</h3>
-            <h3 data-lang="en" hidden>Padel Championship</h3>
-            <p data-lang="ar" class="muted">بطولة رياضية لطلاب خطوة – La Trobe Sports Centre.</p>
-            <p data-lang="en" class="muted" hidden>Sports tournament for Khotwa students – La Trobe Sports Centre.</p>
-            <a class="btn" href="/contact.html?event=padel" data-lang="ar">سجّل الآن</a>
-            <a class="btn" href="/contact.html?event=padel" data-lang="en" hidden>Register</a>
+            <span class="chip">
+              <span class="ev-meta-ar"></span>
+              <span class="ev-meta-en" hidden></span>
+            </span>
+            <h3 class="ev-title-ar"></h3>
+            <h3 class="ev-title-en" hidden></h3>
+            <p class="muted ev-summary-ar"></p>
+            <p class="muted ev-summary-en" hidden></p>
+            <a class="btn ev-link" target="_blank" rel="noopener" hidden>التفاصيل</a>
           </div>
         </article>
+      </template>
 
-        <!-- ماراثون داخل الحرم (صور ثابتة شغّالة) -->
-        <article class="card" id="e-marathon">
-          <div class="thumb">
-            <img
-              src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop"
-              srcset="
-                https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=800&h=500&fit=crop 800w,
-                https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=1200&h=750&fit=crop 1200w,
-                https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop 1600w"
-              sizes="(max-width:980px) 92vw, 360px"
-              alt="ماراثون داخل الحرم – مسارات 1K و2.5K و10K"
-              loading="lazy" decoding="async">
-          </div>
-          <div class="card-body">
-            <span class="chip"><time data-lang="ar">1 أكتوبر – 9:00ص</time><time data-lang="en" hidden>1 Oct – 9:00 AM</time></span>
-            <h3 data-lang="ar">ماراثون داخل الحرم</h3>
-            <h3 data-lang="en" hidden>On-Campus Marathon</h3>
-            <p data-lang="ar" class="muted">مسارات 1K و2.5K و10K مع نقاط مياه وخدمات دعم.</p>
-            <p data-lang="en" class="muted" hidden>1K, 2.5K & 10K routes with water points and support.</p>
-            <a class="btn" href="/contact.html?event=marathon" data-lang="ar">سجّل الآن</a>
-            <a class="btn" href="/contact.html?event=marathon" data-lang="en" hidden>Register</a>
-          </div>
-        </article>
-      </div>
+      <!-- رسالة فارغة -->
+      <p id="events-empty" class="muted" hidden>لا توجد فعاليات حالياً.</p>
     </section>
   </main>
 
@@ -235,7 +185,7 @@
     // سنة الحقوق
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // منيو الموبايل + وصولية (مطابق للنمط المعتمد)
+    // منيو الموبايل + وصولية
     const menuBtn = document.getElementById('menu-toggle');
     const primaryNav = document.getElementById('primary-nav');
     const mq = matchMedia('(min-width:901px)');
@@ -243,7 +193,7 @@
       primaryNav.setAttribute('data-open', String(open));
       menuBtn.setAttribute('aria-expanded', String(open));
       primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
-      if(open){ primaryNav.querySelector('a,button')?.focus(); }
+      if(open){ (primaryNav.querySelector('a,button')||menuBtn).focus(); }
     }
     function initMenu(){
       primaryNav.setAttribute('data-open','false');
@@ -263,9 +213,9 @@
     });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
 
-    // اللغة + حفظ التفضيل (مطابق)
+    // اللغة + حفظ التفضيل
     const toggleBtn = document.getElementById('lang-toggle');
-    let isEn = localStorage.getItem('khotwa_lang') === 'en';
+    function isEn(){ return localStorage.getItem('khotwa_lang') === 'en'; }
     function setLang(en){
       document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
       document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
@@ -274,9 +224,100 @@
       toggleBtn.textContent = en ? 'العربية' : 'English';
       toggleBtn.setAttribute('aria-pressed', String(en));
       localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
+
+      // اخفاء/إظهار عناصر البطاقات المولدة
+      document.querySelectorAll('.ev-title-ar,.ev-summary-ar,.ev-meta-ar').forEach(el => el.hidden = en);
+      document.querySelectorAll('.ev-title-en,.ev-summary-en,.ev-meta-en').forEach(el => el.hidden = !en);
     }
-    toggleBtn.addEventListener('click',()=> setLang(!(localStorage.getItem('khotwa_lang') === 'en')));
-    setLang(isEn);
+    toggleBtn.addEventListener('click',()=> setLang(!isEn()));
+    setLang(isEn());
+  </script>
+
+  <!-- تحميل الفعاليات من JSON وبناء البطاقات -->
+  <script>
+  (async function () {
+    const LIST  = document.getElementById('events-list');
+    const TPL   = document.getElementById('event-card-tpl');
+    const EMPTY = document.getElementById('events-empty');
+
+    try {
+      const res = await fetch('/assets/data/events.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      const today = new Date();
+      const upcoming = items
+        .map(ev => ({ ...ev, _date: ev.date ? new Date(ev.date) : null }))
+        .filter(ev => ev._date && !isNaN(ev._date))
+        .sort((a,b) => a._date - b._date)
+        .filter(ev => ev._date >= today);
+
+      if (upcoming.length === 0) {
+        EMPTY.hidden = false;
+        return;
+      }
+
+      const fmtAr = new Intl.DateTimeFormat('ar', { weekday:'short', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+      const fmtEn = new Intl.DateTimeFormat('en', { weekday:'short', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+
+      upcoming.forEach(ev => {
+        const node = TPL.content.cloneNode(true);
+
+        // عناوين
+        node.querySelector('.ev-title-ar').textContent = ev.title || 'فعالية';
+        node.querySelector('.ev-title-en').textContent = ev.title_en || ev.title || 'Event';
+
+        // ملخص
+        node.querySelector('.ev-summary-ar').textContent = ev.summary || '';
+        node.querySelector('.ev-summary-en').textContent = ev.summary_en || ev.summary || '';
+
+        // ميتا (مكان + تاريخ)
+        const metaAr = [
+          ev.location ? `المكان: ${ev.location}` : null,
+          ev._date ? `التاريخ: ${fmtAr.format(ev._date)}` : null
+        ].filter(Boolean).join(' | ');
+        const metaEn = [
+          (ev.location_en || ev.location) ? `Location: ${ev.location_en || ev.location}` : null,
+          ev._date ? `Date: ${fmtEn.format(ev._date)}` : null
+        ].filter(Boolean).join(' | ');
+        node.querySelector('.ev-meta-ar').textContent = metaAr;
+        node.querySelector('.ev-meta-en').textContent = metaEn;
+
+        // صورة اختيارية
+        const thumb = node.querySelector('.thumb');
+        if (ev.image) {
+          const img = thumb.querySelector('img');
+          img.src = ev.image;
+          img.alt = ev.title || 'Event';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+        } else {
+          thumb.remove();
+        }
+
+        // رابط اختياري
+        if (ev.link) {
+          const a = node.querySelector('.ev-link');
+          a.href = ev.link;
+          a.hidden = false;
+          a.textContent = isEn() ? 'Details' : 'التفاصيل';
+        }
+
+        LIST.appendChild(node);
+      });
+
+      // اضبط اللغة الحالية على العناصر المضافة
+      setLang(isEn());
+    } catch (err) {
+      console.error('Failed to load events.json', err);
+      EMPTY.hidden = false;
+      EMPTY.textContent = 'تعذر تحميل الفعاليات.';
+    }
+  })();
+  </script>
+
+  <!-- نظامك (إن وُجد) -->
   <script src="/assets/cms-boot.js" defer></script>
 </body>
 </html>
