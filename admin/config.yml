@@ -10,6 +10,7 @@ public_folder: "/assets/img"
 locale: ar
 
 collections:
+  # ملف إعدادات ثابت (file collection)
   - label: "Settings"
     name: "settings"
     files:
@@ -21,29 +22,37 @@ collections:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
 
+  # أحداث: ملف JSON واحد فيه قائمة items (file collection صحيحة)
   - label: "Events"
     name: "events"
-    file: "assets/data/events.json"
-    format: "json"
-    fields:
-      - label: "Events"
-        name: "items"
-        widget: "list"
+    files:
+      - label: "Events Data"
+        name: "events_data"
+        file: "assets/data/events.json"
+        format: "json"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Date", name: "date", widget: "datetime" }
-          - { label: "Location", name: "location", widget: "string" }
-          - { label: "Summary", name: "summary", widget: "text" }
+          - label: "Events"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Date", name: "date", widget: "datetime" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Summary", name: "summary", widget: "text" }
 
+  # أخبار: ملف JSON واحد فيه قائمة items (file collection صحيحة)
   - label: "News"
     name: "news"
-    file: "assets/data/news.json"
-    format: "json"
-    fields:
-      - label: "Articles"
-        name: "items"
-        widget: "list"
+    files:
+      - label: "News Data"
+        name: "news_data"
+        file: "assets/data/news.json"
+        format: "json"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Date", name: "date", widget: "datetime" }
-          - { label: "Body", name: "body", widget: "markdown" }
+          - label: "Articles"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Date", name: "date", widget: "datetime" }
+              - { label: "Body", name: "body", widget: "markdown" }
