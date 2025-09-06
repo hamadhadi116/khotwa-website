@@ -1,34 +1,3 @@
-[
-  {
-    "id": "1",
-    "title": {
-      "ar": "فعالية 1",
-      "en": "Event 1"
-    },
-    "summary": {
-      "ar": "ملخص الفعالية 1",
-      "en": "Summary of event 1"
-    },
-    "date": "2025-09-01T10:00:00Z",
-    "location": "موقع الفعالية 1",
-    "tags": ["event", "announcement"],
-    "image": "https://example.com/image1.jpg",
-    "url": "https://example.com/event1"
-  },
-  {
-    "id": "2",
-    "title": {
-      "ar": "فعالية 2",
-      "en": "Event 2"
-    },
-    "summary": {
-      "ar": "ملخص الفعالية 2",
-      "en": "Summary of event 2"
-    },
-    "date": "2025-09-10T14:00:00Z",
-    "location": "موقع الفعالية 2",
-    "tags": ["event", "announcement"],
-    "image": "https://example.com/image2.jpg",
-    "url": "https://example.com/event2"
-  }
-]
+{
+  "items": []
+}
