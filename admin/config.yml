@@ -1,21 +1,22 @@
 backend:
-  name: git-gateway        # نستخدم Netlify Identity + Git Gateway
-  branch: main             # فرع الكتابة في Git
+  name: git-gateway        # Netlify Identity + Git Gateway
+  branch: main             # فرع الكتابة
 
-# مكان حفظ الصور داخل المستودع ومسارها العلني على الموقع
+# مكان حفظ الصور داخل المستودع ومسارها العلني
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
-# (اختياري) واجهة التحرير بالعربية
+# واجهة التحرير بالعربية
 locale: ar
 
-# (اختياري) تفعيل مسار عمل تحريري (مسودات ثم نشر)
+# لو تبغى مسودات قبل النشر:
 # publish_mode: editorial_workflow
 
 collections:
-  # 1) إعدادات الموقع (ملف JSON واحد)
+  # 1) إعدادات الموقع (JSON واحد)
   - label: "Settings"
     name: "settings"
+    editor: { preview: false }
     files:
       - label: "Site Settings"
         name: "site"
@@ -25,27 +26,36 @@ collections:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
 
-  # 2) الفعاليات (ملف JSON واحد فيه قائمة items)
-  - label: "Events"
-    name: "events"
+  # 2) الفعاليات (JSON واحد فيه items)
+  - label: "Events Data (JSON)"
+    name: "events_data"
+    editor: { preview: false }
     files:
-      - label: "Events Data"
-        name: "events_data"
+      - label: "Events List"
+        name: "events"
         file: "assets/data/events.json"
         format: "json"
         fields:
-          - label: "Events"
+          - label: "الفعّاليات"
             name: "items"
             widget: "list"
+            label_singular: "فعالية"
+            summary: "{{fields.title}} — {{fields.date}}"
             fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Date", name: "date", widget: "datetime" }
-              - { label: "Location", name: "location", widget: "string" }
-              - { label: "Summary", name: "summary", widget: "text" }
+              - { label: "العنوان (AR)", name: "title", widget: "string" }
+              - { label: "Title (EN)", name: "title_en", widget: "string", required: false }
+              - { label: "التاريخ والوقت", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
+              - { label: "المكان (AR)", name: "location", widget: "string", required: false }
+              - { label: "Location (EN)", name: "location_en", widget: "string", required: false }
+              - { label: "وصف مختصر (AR)", name: "summary", widget: "text", required: false }
+              - { label: "Short summary (EN)", name: "summary_en", widget: "text", required: false }
+              - { label: "صورة الغلاف", name: "image", widget: "image", required: false }
+              - { label: "رابط التفاصيل", name: "link", widget: "string", required: false }
 
-  # 3) الأخبار (ملف JSON واحد فيه قائمة items)
+  # 3) الأخبار (JSON واحد فيه items)
   - label: "News"
     name: "news"
+    editor: { preview: false }
     files:
       - label: "News Data"
         name: "news_data"
@@ -55,7 +65,12 @@ collections:
           - label: "Articles"
             name: "items"
             widget: "list"
+            label_singular: "Article"
+            summary: "{{fields.title}} — {{fields.date}}"
             fields:
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Date", name: "date", widget: "datetime" }
-              - { label: "Body", name: "body", widget: "markdown" }
+              - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
+              - { label: "Summary", name: "summary", widget: "text", required: false }
+              - { label: "Body", name: "body", widget: "markdown", required: false }
+              - { label: "Image", name: "image", widget: "image", required: false }
+              - { label: "Link (optional)", name: "link", widget: "string", required: false }
