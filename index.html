@@ -202,4 +202,57 @@
         nav.setAttribute('data-open', String(open));
         btn.setAttribute('aria-expanded', String(open));
         nav.setAttribute('aria-hidden', String(!open && !mq.matches));
-        if(open){ (nav.querySelector('a,button')||btn).focus();
+        if(open){ (nav.querySelector('a,button')||btn).focus(); }
+      }
+      function init(){
+        setMenu(false);
+        nav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
+      }
+      init();
+
+      btn?.addEventListener('click', ()=> setMenu(nav.getAttribute('data-open')!=='true'));
+      mq.addEventListener('change', e=>{ setMenu(false); nav.setAttribute('aria-hidden', e.matches ? 'false':'true'); });
+      document.addEventListener('click', (e)=>{
+        const open = nav.getAttribute('data-open')==='true';
+        if(open && !nav.contains(e.target) && !btn.contains(e.target)) setMenu(false);
+      });
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
+    })();
+
+    // تبديل اللغة + حفظ التفضيل
+    (function(){
+      const t=document.getElementById('lang-toggle'); if(!t) return;
+      function isEn(){ return localStorage.getItem('khotwa_lang')==='en'; }
+      function set(lang){
+        document.querySelectorAll('[data-lang]').forEach(el=>{
+          const want = el.getAttribute('data-lang')===lang;
+          el.hidden = !want;
+        });
+        t.textContent = (lang==='ar')?'English':'العربية';
+        t.setAttribute('aria-pressed', String(lang!=='ar'));
+        document.documentElement.lang = (lang==='ar')?'ar':'en';
+        document.documentElement.dir  = (lang==='ar')?'rtl':'ltr';
+        localStorage.setItem('khotwa_lang', lang);
+      }
+      set(isEn()?'en':'ar');
+      t.addEventListener('click',()=> set(isEn()?'ar':'en'));
+    })();
+  </script>
+
+  <!-- Netlify Identity widget + تحويل رابط الدعوة تلقائيًا -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    // إذا وصل المستخدم برابط دعوة يحمل #invite_token، حوّله مباشرة إلى /admin/
+    if (location.hash && location.hash.startsWith('#invite_token=')) {
+      location.replace('/admin/' + location.hash);
+    }
+    // بعد تسجيل الدخول عبر الودجت، انقل المستخدم إلى لوحة الإدارة
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('login', () => { window.location.href = '/admin/'; });
+    }
+  </script>
+
+  <!-- نظامك (إن وُجد) -->
+  <script src="/assets/cms-boot.js" defer></script>
+</body>
+</html>
