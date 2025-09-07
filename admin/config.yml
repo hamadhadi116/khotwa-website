@@ -1,19 +1,15 @@
 backend:
-  name: git-gateway        # Netlify Identity + Git Gateway
-  branch: main             # فرع الكتابة
+  name: git-gateway
+  branch: main
 
-# مكان حفظ الصور داخل المستودع ومسارها العلني
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
-# واجهة التحرير بالعربية
 locale: ar
-
-# لو تبغى مسودات قبل النشر:
 # publish_mode: editorial_workflow
 
 collections:
-  # 1) إعدادات الموقع (JSON واحد)
+  # 1) الإعدادات
   - label: "Settings"
     name: "settings"
     editor: { preview: false }
@@ -26,9 +22,9 @@ collections:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
 
-  # 2) الفعاليات (JSON واحد فيه items)
+  # 2) الفعاليات (JSON واحد)
   - label: "Events Data (JSON)"
-    name: "events_data"
+    name: "events_json"            # اسم فريد
     editor: { preview: false }
     files:
       - label: "Events List"
@@ -52,13 +48,13 @@ collections:
               - { label: "صورة الغلاف", name: "image", widget: "image", required: false }
               - { label: "رابط التفاصيل", name: "link", widget: "string", required: false }
 
-  # 3) الأخبار (JSON واحد فيه items)
-  - label: "News"
-    name: "news"
+  # 3) الأخبار (JSON واحد)
+  - label: "News Data (JSON)"
+    name: "news_json"              # اسم فريد
     editor: { preview: false }
     files:
-      - label: "News Data"
-        name: "news_data"
+      - label: "News List"
+        name: "news"
         file: "assets/data/news.json"
         format: "json"
         fields:
@@ -69,8 +65,9 @@ collections:
             summary: "{{fields.title}} — {{fields.date}}"
             fields:
               - { label: "Title", name: "title", widget: "string" }
+              - { label: "Title (AR)", name: "title_ar", widget: "string", required: false }
               - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
               - { label: "Summary", name: "summary", widget: "text", required: false }
               - { label: "Body", name: "body", widget: "markdown", required: false }
               - { label: "Image", name: "image", widget: "image", required: false }
-              - { label: "Link (optional)", name: "link", widget: "string", required: false }
+              - { label: "Link", name: "link", widget: "string", required: false }
