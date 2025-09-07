@@ -236,8 +236,8 @@
     const EMPTY = document.getElementById('events-empty');
 
     try {
-      // لاحظ المسار الصحيح لملف JSON: /data/events.json
-      const res = await fetch('/data/events.json', { cache: 'no-store' });
+      // المسار الصحيح + كسر الكاش
+      const res = await fetch('/assets/data/events.json?ts=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
       const items = Array.isArray(data.items) ? data.items : [];
