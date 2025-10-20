@@ -58,9 +58,17 @@
       font-family: "Segoe UI", system-ui, -apple-system, Tahoma, Arial, sans-serif;
       color: var(--text);
       background: var(--surface);
+      line-height: 1.6;
     }
     a { color: inherit; text-decoration: none; }
     .container { width: min(1120px, 92%); margin-inline: auto; }
+
+    /* وصولية */
+    :where(a,button,input,select,textarea,[role="button"]):focus-visible{
+      outline:3px solid #2563eb; outline-offset:3px; border-radius:8px;
+    }
+    .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:10px;box-shadow:var(--sh-sm);z-index:1000}
+    .skip-link:focus{inset-block-start:1rem}
 
     /* NAV */
     .navbar {
@@ -101,12 +109,8 @@
       padding: .5rem .75rem;
       border-radius: var(--r-md);
     }
-    .nav-links a:hover {
-      background: var(--card);
-    }
-    .nav-links a[aria-current="page"] {
-      background: var(--card);
-    }
+    .nav-links a:hover { background: var(--card); }
+    .nav-links a[aria-current="page"] { background: var(--card); }
     .lang-toggle, .menu-toggle {
       padding: .45rem .75rem;
       border: 1px solid var(--ring);
@@ -231,6 +235,14 @@
       transition: .18s;
     }
 
+    /* Skeleton */
+    .skeleton{border:1px solid var(--ring);border-radius:16px;overflow:hidden;background:#fff}
+    .sk-img{aspect-ratio:16/9;background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 37%,#f1f5f9 63%);background-size:400% 100%;animation:sk 1.2s infinite}
+    .sk-body{padding:1rem}
+    .sk-line{height:12px;background:#e2e8f0;border-radius:8px;margin:.4rem 0}
+    .sk-line.w60{width:60%}.sk-line.w80{width:80%}.sk-line.w40{width:40%}
+    @keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
+
     /* Footer */
     footer {
       border-top: 1px solid var(--ring);
@@ -254,9 +266,12 @@
         --muted: #9ca3af;
       }
       .navbar, footer { background: #0c1220; border-color: var(--ring); }
-      .post, .search, .chip { background: #0f172a; border-color: var(--ring); }
+      .post, .search, .chip, .skeleton { background: #0f172a; border-color: var(--ring); }
       .nav-links a:hover, .nav-links a[aria-current="page"] { background: #0f172a; }
       .lang-toggle, .menu-toggle { background: transparent; color: var(--text); }
+      .sk-img{background:linear-gradient(90deg,#111827 25%,#1f2937 37%,#111827 63%)}
+      .sk-line{background:#1f2937}
+      .tag{color:#cbd5e1}
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -271,7 +286,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-  <a class="skip-link" href="#main" data-lang="en" hidden>Skip to content</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
   <!-- NAVBAR -->
   <nav class="navbar" aria-label="الشريط العلوي">
@@ -279,22 +294,22 @@
       <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
         <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="40" height="40" decoding="async" loading="lazy">
         <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden>Khotwa Student Council</span>
+        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
 
       <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         <span data-lang="ar">القائمة</span>
-        <span data-lang="en" hidden>Menu</span>
+        <span data-lang="en" hidden aria-hidden="true">Menu</span>
       </button>
 
       <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
-        <a href="/news.html" aria-current="page"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
-        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
-        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+        <a href="/news.html" aria-current="page"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden aria-hidden="true">Calendar</span></a>
+        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden aria-hidden="true">Resources</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
         <button id="lang-toggle" class="lang-toggle" type="button" aria-label="تبديل اللغة">English</button>
       </div>
     </div>
@@ -305,27 +320,30 @@
     <section>
       <div class="section-head">
         <h1 data-lang="ar">الأخبار</h1>
-        <h1 data-lang="en" hidden>News</h1>
+        <h1 data-lang="en" hidden aria-hidden="true">News</h1>
       </div>
       <p class="muted" data-lang="ar">كل جديد عن مجلس طلاب خطوة: إعلانات، مبادرات، ونتائج فعاليات.</p>
-      <p class="muted" data-lang="en" hidden>All updates about Khotwa Student Council: announcements, initiatives, and recaps.</p>
+      <p class="muted" data-lang="en" hidden aria-hidden="true">All updates about Khotwa Student Council: announcements, initiatives, and recaps.</p>
 
       <div class="tools" style="margin-top:1rem">
         <div class="search" role="search">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
           <input id="q" type="search" placeholder="ابحث في الأخبار…" aria-label="ابحث في الأخبار">
         </div>
-        <button class="chip" data-filter="all" data-active="true" aria-pressed="true"><span data-lang="ar">الكل</span><span data-lang="en" hidden>All</span></button>
-        <button class="chip" data-filter="ann" aria-pressed="false"><span data-lang="ar">إعلانات</span><span data-lang="en" hidden>Announcements</span></button>
-        <button class="chip" data-filter="event" aria-pressed="false"><span data-lang="ar">فعاليات</span><span data-lang="en" hidden>Events</span></button>
-        <button class="chip" data-filter="media" aria-pressed="false"><span data-lang="ar">تغطيات</span><span data-lang="en" hidden>Media</span></button>
+        <button class="chip" data-filter="all" data-active="true" aria-pressed="true"><span data-lang="ar">الكل</span><span data-lang="en" hidden aria-hidden="true">All</span></button>
+        <button class="chip" data-filter="ann" aria-pressed="false"><span data-lang="ar">إعلانات</span><span data-lang="en" hidden aria-hidden="true">Announcements</span></button>
+        <button class="chip" data-filter="event" aria-pressed="false"><span data-lang="ar">فعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></button>
+        <button class="chip" data-filter="media" aria-pressed="false"><span data-lang="ar">تغطيات</span><span data-lang="en" hidden aria-hidden="true">Media</span></button>
       </div>
     </section>
 
     <!-- Posts -->
     <section aria-live="polite">
       <div class="grid grid-3" id="posts">
-        <!-- سيتم ملؤها تلقائيًا من data/news.json -->
+        <!-- هيكل تحميل مبدئي (Skeleton) -->
+        <div class="skeleton"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w60"></div><div class="sk-line w80"></div><div class="sk-line w40"></div></div></div>
+        <div class="skeleton"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w60"></div><div class="sk-line w80"></div><div class="sk-line w40"></div></div></div>
+        <div class="skeleton"><div class="sk-img"></div><div class="sk-body"><div class="sk-line w60"></div><div class="sk-line w80"></div><div class="sk-line w40"></div></div></div>
       </div>
     </section>
   </main>
@@ -338,94 +356,201 @@
   </footer>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const chips = Array.from(document.querySelectorAll('.chip'));
-      const qInput = document.getElementById('q');
+    (function(){
+      // سنة الحقوق
+      const y=document.getElementById('year'); if(y){ y.textContent=new Date().getFullYear(); }
+
+      // منيو الجوال + وصولية
       const menuBtn = document.getElementById('menu-toggle');
       const primaryNav = document.getElementById('primary-nav');
+      const mq = window.matchMedia('(min-width:901px)');
+      if(menuBtn && primaryNav){
+        function setMenu(open){
+          primaryNav.setAttribute('data-open', String(open));
+          menuBtn.setAttribute('aria-expanded', String(open));
+          primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
+          if(open){
+            const f = primaryNav.querySelector('a,button');
+            (f||menuBtn).focus();
+          }
+        }
+        function initMenu(){
+          setMenu(false);
+          primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
+        }
+        initMenu();
 
-      // قائمة العناصر
-      const applyFilter = () => {
+        menuBtn.addEventListener('click', ()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+        mq.addEventListener('change', e=>{ setMenu(false); primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true'); });
+        document.addEventListener('click', e=>{
+          const open = primaryNav.getAttribute('data-open')==='true';
+          const t=e.target;
+          if(!open) return;
+          if(t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)) setMenu(false);
+        });
+        document.addEventListener('keydown', e=>{ if(e.key==='Escape') setMenu(false); });
+        primaryNav.addEventListener('click', e=>{
+          const link = (e.target instanceof Element)? e.target.closest('a'):null;
+          if(link) setMenu(false);
+        });
+      }
+
+      // تبديل اللغة + تزامن العناوين <title>
+      const langBtn = document.getElementById('lang-toggle');
+      function currentLang(){ return localStorage.getItem('khotwa_lang')==='en' ? 'en' : 'ar'; }
+      function setLang(lang){
+        document.querySelectorAll('[data-lang]').forEach(el=>{
+          const want = el.getAttribute('data-lang')===lang;
+          el.hidden = !want;
+          el.setAttribute('aria-hidden', String(!want));
+        });
+        document.documentElement.lang = (lang==='ar')?'ar':'en';
+        document.documentElement.dir  = (lang==='ar')?'rtl':'ltr';
+        if(langBtn){
+          langBtn.textContent = (lang==='ar')?'English':'العربية';
+          langBtn.setAttribute('aria-pressed', String(lang!=='ar'));
+        }
+        // تحديث عنوان الصفحة (لأن وجود <title> مزدوج لا يبدّل تلقائيًا)
+        const titleEl = document.querySelector('title[data-lang="'+lang+'"]');
+        if(titleEl) document.title = titleEl.textContent.trim();
+        localStorage.setItem('khotwa_lang', lang);
+      }
+      setLang(currentLang());
+      langBtn?.addEventListener('click', ()=> setLang(currentLang()==='ar'?'en':'ar'));
+
+      // شريحة الفلاتر + البحث
+      const chips = Array.from(document.querySelectorAll('.chip'));
+      const qInput = document.getElementById('q');
+      function applyFilter(){
         const posts = Array.from(document.querySelectorAll('.post'));
         const activeBtn = chips.find(c => c.dataset.active === "true");
         const active = activeBtn?.dataset.filter || 'all';
-        const term = (qInput.value || '').trim().toLowerCase();
-        
-        posts.forEach(p => {
-          const tagOK = (active === 'all') || (p.dataset.tags || '').includes(active);
+        const term = (qInput?.value || '').trim().toLowerCase();
+        posts.forEach(p=>{
+          const tagOK = (active==='all') || (p.dataset.tags || '').includes(active);
           const txt = p.textContent.toLowerCase();
           const termOK = !term || txt.includes(term);
           p.style.display = (tagOK && termOK) ? '' : 'none';
         });
-
-        chips.forEach(b => b.setAttribute('aria-pressed', String(b === activeBtn)));
-      };
-
-      chips.forEach(ch => {
-        ch.addEventListener('click', () => {
-          chips.forEach(c => c.dataset.active = "false");
-          ch.dataset.active = "true";
-          applyFilter();
+        chips.forEach(b => b.setAttribute('aria-pressed', String(b===activeBtn)));
+      }
+      chips.forEach(ch=>{
+        ch.addEventListener('click', ()=>{
+          chips.forEach(c=> c.dataset.active="false");
+          ch.dataset.active="true"; applyFilter();
         });
+        // دعم لوحة المفاتيح
+        ch.tabIndex=0;
+        ch.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); ch.click(); }});
       });
+      qInput?.addEventListener('input', applyFilter);
 
-      qInput.addEventListener('input', applyFilter);
-            // تحميل الأخبار من /data/news.json
+      // تحميل الأخبار من /data/news.json + Fallback للصور + JSON-LD ديناميكي
       async function loadNews(){
-        try {
+        const postsEl = document.getElementById('posts');
+        try{
           const res = await fetch('/data/news.json', { cache: 'no-cache' });
-          if (!res.ok) throw new Error('فشل تحميل الأخبار');
+          if(!res.ok) throw new Error('فشل تحميل الأخبار');
           const data = await res.json();
-          const postsEl = document.getElementById('posts');
-          postsEl.innerHTML = '';
 
-          if (!Array.isArray(data) || data.length === 0) {
+          postsEl.innerHTML = '';
+          if(!Array.isArray(data) || data.length===0){
             postsEl.innerHTML = '<div class="muted">لا توجد أخبار حالياً.</div>';
             return;
           }
 
-          data.sort((a, b) => new Date(b.date) - new Date(a.date));
+          // ترتيب من الأحدث
+          data.sort((a,b)=> new Date(b.date) - new Date(a.date));
 
-          data.forEach(item => {
+          // إنشاء العناصر
+          const frag = document.createDocumentFragment();
+          data.forEach(item=>{
             const article = document.createElement('article');
             article.className = 'post';
 
-            // خذ تصنيف رئيسي (ann/event/media) إن وُجد
-            const tagsLower = (item.tags || []).map(t => String(t).toLowerCase());
-            const typeTag = tagsLower.find(t => ['ann', 'event', 'media'].includes(t)) || 'ann';
+            // نوع التصنيف (ann/event/media)
+            const tagsLower = (item.tags || []).map(t=> String(t).toLowerCase());
+            const typeTag = tagsLower.find(t=> ['ann','event','media'].includes(t)) || 'ann';
             article.dataset.tags = typeTag;
 
-            const arDate = new Date(item.date).toLocaleDateString('ar-EG');
-            const enDate = new Date(item.date).toLocaleDateString('en-AU');
+            const arDate = item.date ? new Date(item.date).toLocaleDateString('ar-EG') : '';
+            const enDate = item.date ? new Date(item.date).toLocaleDateString('en-AU') : '';
+
+            const titleAr = item.title?.ar || '';
+            const titleEn = item.title?.en || '';
 
             article.innerHTML = `
-              ${item.image ? `<img src="${item.image}" alt="${(item.title?.ar || '').replace(/"/g, '&quot;')}" loading="lazy" decoding="async">` : `<div style="aspect-ratio:16/9;background:#f3f4f6"></div>`}
+              ${item.image ? `<img src="${item.image}" alt="${(titleAr||titleEn).replace(/"/g,'&quot;')}" loading="lazy" decoding="async">`
+                            : `<div style="aspect-ratio:16/9;background:#f3f4f6"></div>`}
               <div class="body">
                 <div class="meta">
                   <span data-lang="ar">${arDate}</span>
-                  <span data-lang="en" hidden>${enDate}</span>
+                  <span data-lang="en" hidden aria-hidden="true">${enDate}</span>
                   <span>•</span>
-                  <span data-lang="ar">${(item.tags || []).join('، ')}</span>
-                  <span data-lang="en" hidden>${(item.tags || []).join(', ')}</span>
+                  <span data-lang="ar">${(item.tags||[]).join('، ')}</span>
+                  <span data-lang="en" hidden aria-hidden="true">${(item.tags||[]).join(', ')}</span>
                 </div>
-                <h3 data-lang="ar">${item.title?.ar || ''}</h3>
-                <h3 data-lang="en" hidden>${item.title?.en || ''}</h3>
+                <h3 data-lang="ar">${titleAr}</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">${titleEn}</h3>
                 <p class="muted" data-lang="ar">${item.summary?.ar || ''}</p>
-                <p class="muted" data-lang="en" hidden>${item.summary?.en || ''}</p>
-                <div class="tags">${(item.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
-                ${item.url ? `<a class="more" href="${item.url}" target="_blank" rel="noopener"><span data-lang="ar">المزيد</span><span data-lang="en" hidden>More</span></a>` : ''}
+                <p class="muted" data-lang="en" hidden aria-hidden="true">${item.summary?.en || ''}</p>
+                <div class="tags">${(item.tags||[]).map(t=> `<span class="tag">${t}</span>`).join('')}</div>
+                ${item.url ? `<a class="more" href="${item.url}" target="_blank" rel="noopener">
+                    <span data-lang="ar">المزيد</span>
+                    <span data-lang="en" hidden aria-hidden="true">More</span>
+                  </a>` : ''}
               </div>
             `;
-            postsEl.appendChild(article);
+
+            //fallback للصورة الخارجية
+            const img = article.querySelector('img');
+            if(img){
+              const FALLBACK='/assets/apple-touch-icon.png';
+              img.addEventListener('error', ()=>{
+                const abs = new URL(FALLBACK, location.origin).href;
+                if(img.src !== abs){ img.src = abs; }
+              }, { once:true });
+            }
+
+            frag.appendChild(article);
           });
+          postsEl.appendChild(frag);
+
+          // توليد JSON-LD لقائمة الأخبار (ItemList) لنتائج SEO
+          try{
+            const list = data.slice(0,20).map((it,idx)=>({
+              "@type":"ListItem",
+              "position": idx+1,
+              "url": it.url || (location.origin + location.pathname + '#post-'+(idx+1))
+            }));
+            const ld = document.createElement('script');
+            ld.type='application/ld+json';
+            ld.textContent = JSON.stringify({
+              "@context":"https://schema.org",
+              "@type":"ItemList",
+              "itemListElement": list
+            });
+            document.head.appendChild(ld);
+          }catch(e){ /* تجاهل بصمت */ }
+
+          // تفعيل اللغة الحالية على العناصر التي أُنشئت للتو
+          (function syncLangAfterRender(){
+            const lang = localStorage.getItem('khotwa_lang')==='en'?'en':'ar';
+            document.querySelectorAll('[data-lang]').forEach(el=>{
+              const want = el.getAttribute('data-lang')===lang;
+              el.hidden = !want;
+              el.setAttribute('aria-hidden', String(!want));
+            });
+          })();
 
           applyFilter();
-        } catch (err) {
+        }catch(err){
           console.error('فشل تحميل الأخبار:', err);
+          postsEl.innerHTML = '<div class="muted">تعذر تحميل الأخبار الآن. حاول لاحقاً.</div>';
         }
       }
       loadNews();
-    });
+    })();
   </script>
 
   <!-- يفعّل توصيل لوحة الإدارة (لا يغيّر الشكل) -->
