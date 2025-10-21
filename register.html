@@ -31,7 +31,7 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:var(--surface)}
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:var(--surface);line-height:1.6}
     a{color:inherit;text-decoration:none}
     .container{width:min(1120px,92%);margin-inline:auto}
 
@@ -77,11 +77,18 @@
     label{font-weight:700;margin-bottom:.25rem;display:block}
     .req{color:#ef4444}
     input,select,textarea{width:100%;padding:.7rem .8rem;border:1px solid var(--ring);border-radius:12px;background:#fff}
+    input[aria-invalid="true"],select[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#dc2626;outline-color:#dc2626}
     .help{color:var(--muted);font-size:.9rem;margin-top:.25rem}
+    .err{color:#dc2626;font-size:.9rem;margin-top:.25rem;display:none}
+    .err[aria-live]{display:block}
     .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.4rem}
     .btn{cursor:pointer;border:1px solid var(--ring);background:#fff;border-radius:12px;padding:.65rem 1rem}
     .btn-primary{background:var(--primary);color:#fff;border-color:transparent}
     .btn-primary:hover{background:var(--primary-600)}
+
+    /* Toast */
+    .toast{position:fixed;top:20px;right:20px;padding:.85rem 1.1rem;border-radius:12px;color:#fff;display:none;z-index:1000;box-shadow:0 10px 26px rgba(2,6,23,.22)}
+    .toast.ok{background:#16a34a}.toast.bad{background:#dc2626}
 
     /* Footer */
     footer{border-top:1px solid var(--ring);background:#fff}
@@ -99,7 +106,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-  <a class="skip-link" href="#main" data-lang="en" hidden>Skip to content</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
   <!-- NAVBAR -->
   <nav class="navbar" aria-label="الشريط العلوي">
@@ -107,24 +114,24 @@
       <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
         <img src="https://g.top4top.io/p_3516rfttb1.jpg" alt="شعار مجلس طلاب خطوة" class="logo" width="40" height="40" decoding="async" loading="lazy">
         <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden>Khotwa Student Council</span>
+        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
 
       <button id="menu-toggle" class="menu-toggle" type="button"
               aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        <span data-lang="ar">القائمة</span><span data-lang="en" hidden>Menu</span>
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
       </button>
 
       <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
-        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
-        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
-        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
-        <a href="/register.html" aria-current="page"><span data-lang="ar">العضوية</span><span data-lang="en" hidden>Membership</span></a>
-        <button id="lang-toggle" class="lang-toggle" type="button">English</button>
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden aria-hidden="true">Calendar</span></a>
+        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden aria-hidden="true">Resources</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        <a href="/register.html" aria-current="page"><span data-lang="ar">العضوية</span><span data-lang="en" hidden aria-hidden="true">Membership</span></a>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
       </div>
     </div>
   </nav>
@@ -133,66 +140,81 @@
     <section>
       <div class="section-head">
         <h1 data-lang="ar">التسجيل في عضوية المجلس</h1>
-        <h1 data-lang="en" hidden>Apply for Membership</h1>
+        <h1 data-lang="en" hidden aria-hidden="true">Apply for Membership</h1>
       </div>
       <p class="muted" data-lang="ar">عبّئ النموذج وسيتم التواصل معك من فريق مجلس طلاب خطوة.</p>
-      <p class="muted" data-lang="en" hidden>Fill the form and we’ll contact you shortly.</p>
+      <p class="muted" data-lang="en" hidden aria-hidden="true">Fill the form and we’ll contact you shortly.</p>
 
       <div class="card">
-        <form id="applyForm" novalidate>
+        <!-- ملاحظة: الإرسال عبر Formspree؛ بدّل المعرف إن أردت صندوقًا منفصلًا -->
+        <form id="applyForm" action="https://formspree.io/f/mblkegbr" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="طلب عضوية جديد | New Membership Application">
+          <!-- honeypot -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" aria-hidden="true">
+
           <div class="full">
-            <label for="fullName"><span data-lang="ar">الاسم الكامل</span><span data-lang="en" hidden>Full name</span> <span class="req">*</span></label>
+            <label for="fullName"><span data-lang="ar">الاسم الكامل</span><span data-lang="en" hidden aria-hidden="true">Full name</span> <span class="req">*</span></label>
             <input id="fullName" name="fullName" type="text" required
                    placeholder="محمد أحمد علي"
-                   data-ph-ar="محمد أحمد علي" data-ph-en="Your full name">
+                   data-ph-ar="محمد أحمد علي" data-ph-en="Your full name"
+                   aria-invalid="false" aria-describedby="e-fullName">
+            <div id="e-fullName" class="err" aria-live="polite"></div>
           </div>
 
           <div>
-            <label for="email"><span data-lang="ar">البريد الجامعي</span><span data-lang="en" hidden>University email</span> <span class="req">*</span></label>
-            <input id="email" name="email" type="email" required
+            <label for="email"><span data-lang="ar">البريد الجامعي</span><span data-lang="en" hidden aria-hidden="true">University email</span> <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required dir="ltr" inputmode="email"
                    placeholder="name@latrobe.edu.au"
-                   data-ph-ar="name@latrobe.edu.au" data-ph-en="name@latrobe.edu.au">
+                   data-ph-ar="name@latrobe.edu.au" data-ph-en="name@latrobe.edu.au"
+                   aria-invalid="false" aria-describedby="e-email">
             <div class="help" data-lang="ar">يُفضّل بريد ‎@latrobe.edu.au</div>
-            <div class="help" data-lang="en" hidden>Preferably use @latrobe.edu.au</div>
+            <div class="help" data-lang="en" hidden aria-hidden="true">Preferably use @latrobe.edu.au</div>
+            <div id="e-email" class="err" aria-live="polite"></div>
           </div>
 
           <div>
-            <label for="phone"><span data-lang="ar">رقم الجوال</span><span data-lang="en" hidden>Phone</span></label>
+            <label for="phone"><span data-lang="ar">رقم الجوال</span><span data-lang="en" hidden aria-hidden="true">Phone</span></label>
             <input id="phone" name="phone" type="tel"
                    placeholder="+61 4xx xxx xxx"
-                   data-ph-ar="+61 4xx xxx xxx" data-ph-en="+61 4xx xxx xxx">
+                   data-ph-ar="+61 4xx xxx xxx" data-ph-en="+61 4xx xxx xxx"
+                   aria-invalid="false" aria-describedby="e-phone">
+            <div id="e-phone" class="err" aria-live="polite"></div>
           </div>
 
           <div>
-            <label for="program"><span data-lang="ar">البرنامج</span><span data-lang="en" hidden>Program</span> <span class="req">*</span></label>
-            <select id="program" name="program" required>
+            <label for="program"><span data-lang="ar">البرنامج</span><span data-lang="en" hidden aria-hidden="true">Program</span> <span class="req">*</span></label>
+            <select id="program" name="program" required aria-invalid="false" aria-describedby="e-program">
               <option value="" data-lang="ar">اختر</option>
-              <option value="" data-lang="en" hidden>Select</option>
+              <option value="" data-lang="en" hidden aria-hidden="true">Select</option>
               <option>IT</option><option>Cybersecurity</option><option>Bioscience</option><option>Business</option><option>Foundation</option>
             </select>
+            <div id="e-program" class="err" aria-live="polite"></div>
           </div>
 
           <div>
-            <label for="intake"><span data-lang="ar">فصل الدراسة</span><span data-lang="en" hidden>Intake</span></label>
-            <select id="intake" name="intake">
+            <label for="intake"><span data-lang="ar">فصل الدراسة</span><span data-lang="en" hidden aria-hidden="true">Intake</span></label>
+            <select id="intake" name="intake" aria-invalid="false" aria-describedby="e-intake">
               <option value="" data-lang="ar">اختر</option>
-              <option value="" data-lang="en" hidden>Select</option>
+              <option value="" data-lang="en" hidden aria-hidden="true">Select</option>
               <option>Oct 2025</option><option>Mar 2026</option>
             </select>
+            <div id="e-intake" class="err" aria-live="polite"></div>
           </div>
 
           <div class="full">
-            <label for="interest"><span data-lang="ar">ليش حاب تنضم؟</span><span data-lang="en" hidden>Why do you want to join?</span></label>
+            <label for="interest"><span data-lang="ar">ليش حاب تنضم؟</span><span data-lang="en" hidden aria-hidden="true">Why do you want to join?</span></label>
             <textarea id="interest" name="interest" rows="4"
                       placeholder="اكتب باختصار"
-                      data-ph-ar="اكتب باختصار" data-ph-en="Write briefly"></textarea>
+                      data-ph-ar="اكتب باختصار" data-ph-en="Write briefly"
+                      aria-invalid="false" aria-describedby="e-interest"></textarea>
+            <div id="e-interest" class="err" aria-live="polite"></div>
           </div>
 
           <div class="actions full">
-            <button class="btn btn-primary" type="submit" data-lang="ar">إرسال الطلب</button>
-            <button class="btn btn-primary" type="submit" data-lang="en" hidden>Submit</button>
+            <button id="submitBtn" class="btn btn-primary" type="submit" data-lang="ar">إرسال الطلب</button>
+            <button class="btn btn-primary" type="submit" data-lang="en" hidden aria-hidden="true">Submit</button>
             <a class="btn" href="/index.html" data-lang="ar">العودة للرئيسية</a>
-            <a class="btn" href="/index.html" data-lang="en" hidden>Back to Home</a>
+            <a class="btn" href="/index.html" data-lang="en" hidden aria-hidden="true">Back to Home</a>
           </div>
         </form>
       </div>
@@ -205,28 +227,165 @@
     </div>
   </footer>
 
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
   <script>
-    // سنة الحقوق
-    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){
+      // سنة الحقوق
+      const y=document.getElementById('year'); if(y){ y.textContent=new Date().getFullYear(); }
 
-    // اللغة
-    const toggleBtn = document.getElementById('lang-toggle');
-    let isEn = localStorage.getItem('khotwa_lang') === 'en';
-    function setLang(en){
-      document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
-      document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
-      document.documentElement.lang = en ? 'en' : 'ar';
-      document.documentElement.dir  = en ? 'ltr' : 'rtl';
-      toggleBtn.textContent = en ? 'العربية' : 'English';
-      localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
-
-      // placeholders
-      document.querySelectorAll('[data-ph-ar]').forEach(input=>{
-        input.placeholder = en ? input.getAttribute('data-ph-en') : input.getAttribute('data-ph-ar');
+      // منيو الجوال + وصولية
+      const menuBtn = document.getElementById('menu-toggle');
+      const primaryNav = document.getElementById('primary-nav');
+      const mq = matchMedia('(min-width:901px)');
+      function setMenu(open){
+        if(!menuBtn || !primaryNav) return;
+        primaryNav.setAttribute('data-open', String(open));
+        menuBtn.setAttribute('aria-expanded', String(open));
+        primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
+        if(open){ (primaryNav.querySelector('a,button') || menuBtn).focus(); }
+      }
+      setMenu(false);
+      menuBtn?.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+      mq.addEventListener('change', e=>{ setMenu(false); primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true'); });
+      document.addEventListener('click', (e)=>{
+        const open = primaryNav.getAttribute('data-open')==='true';
+        const t=e.target;
+        if(open && t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)) setMenu(false);
       });
-    }
-    toggleBtn.addEventListener('click',()=> setLang(!(localStorage.getItem('khotwa_lang') === 'en')));
-    setLang(isEn);
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
+      primaryNav?.addEventListener('click', (e)=>{ const link=e.target.closest?.('a'); if(link) setMenu(false); });
+
+      // تبديل اللغة + placeholders + تحديث <title>
+      const langBtn = document.getElementById('lang-toggle');
+      function currentLang(){ return localStorage.getItem('khotwa_lang')==='en' ? 'en' : 'ar'; }
+      function setLang(lang){
+        document.querySelectorAll('[data-lang]').forEach(el=>{
+          const want = el.getAttribute('data-lang')===lang;
+          el.hidden = !want;
+          el.setAttribute('aria-hidden', String(!want));
+        });
+        document.documentElement.lang = (lang==='ar')?'ar':'en';
+        document.documentElement.dir  = (lang==='ar')?'rtl':'ltr';
+        langBtn?.setAttribute('aria-pressed', String(lang!=='ar'));
+        if(langBtn) langBtn.textContent = (lang==='ar')?'English':'العربية';
+        // placeholders
+        document.querySelectorAll('[data-ph-ar]').forEach(input=>{
+          input.placeholder = (lang==='ar') ? input.getAttribute('data-ph-ar') : input.getAttribute('data-ph-en');
+        });
+        // sync <title>
+        const t = document.querySelector('title[data-lang="'+lang+'"]');
+        if(t) document.title = t.textContent.trim();
+        localStorage.setItem('khotwa_lang', lang);
+      }
+      setLang(currentLang());
+      langBtn?.addEventListener('click', ()=> setLang(currentLang()==='ar'?'en':'ar'));
+
+      // توست
+      const toast = document.getElementById('toast');
+      function showToast(msg, ok=true){
+        toast.textContent = msg;
+        toast.className = 'toast ' + (ok?'ok':'bad');
+        toast.style.display = 'block';
+        setTimeout(()=> toast.style.display = 'none', 4200);
+      }
+
+      // تحقّق النموذج + إرسال
+      const form = document.getElementById('applyForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+      const auPhone = /^\+?61\s?4\d{2}[\s-]?\d{3}[\s-]?\d{3}$/; // رقم أسترالي جوّال شائع
+
+      function t(ar,en){ return (document.documentElement.lang==='ar')?ar:en; }
+      function setErr(id,msg){
+        const input = document.getElementById(id);
+        const err = document.getElementById('e-'+id);
+        if(!input||!err) return;
+        const has = !!msg;
+        input.setAttribute('aria-invalid', String(has));
+        err.textContent = msg||'';
+        if(has){ err.setAttribute('aria-live','polite'); } else { err.removeAttribute('aria-live'); }
+      }
+
+      function validate(){
+        let ok=true;
+        const fullName=document.getElementById('fullName').value.trim();
+        const email=document.getElementById('email').value.trim();
+        const phone=document.getElementById('phone').value.trim();
+        const program=document.getElementById('program').value;
+
+        setErr('fullName', fullName? '' : t('الرجاء كتابة الاسم الكامل','Please enter your full name')); ok = ok && !!fullName;
+        setErr('email', emailRe.test(email)? '' : t('بريد غير صالح','Invalid email')); ok = ok && emailRe.test(email);
+        setErr('program', program? '' : t('اختر البرنامج','Select your program')); ok = ok && !!program;
+
+        if(phone){
+          setErr('phone', auPhone.test(phone)? '' : t('صيغة رقم غير صحيحة (+61 4xx xxx xxx)','Invalid AU mobile format (+61 4xx xxx xxx)'));
+          ok = ok && auPhone.test(phone);
+        } else { setErr('phone',''); }
+
+        return ok;
+      }
+
+      form.addEventListener('input', (e)=>{
+        const id=e.target.id;
+        if(['fullName','email','phone','program','intake','interest'].includes(id)){ validate(); saveDraft(); }
+      });
+
+      // مسودة تلقائية لمنع ضياع البيانات
+      const DKEY='khotwa_apply_draft';
+      function saveDraft(){
+        const data={
+          fullName:document.getElementById('fullName').value,
+          email:document.getElementById('email').value,
+          phone:document.getElementById('phone').value,
+          program:document.getElementById('program').value,
+          intake:document.getElementById('intake').value,
+          interest:document.getElementById('interest').value
+        };
+        localStorage.setItem(DKEY, JSON.stringify(data));
+      }
+      function loadDraft(){
+        try{
+          const d=JSON.parse(localStorage.getItem(DKEY)||'null');
+          if(!d) return;
+          for(const k in d){ const el=document.getElementById(k); if(el) el.value=d[k]||''; }
+        }catch{}
+      }
+      loadDraft(); // يحمّل المسودة إن وجدت
+
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        if(!validate()){
+          const firstInvalid=form.querySelector('[aria-invalid="true"]');
+          if(firstInvalid) firstInvalid.focus();
+          return;
+        }
+        const fd = new FormData(form);
+        // honeypot
+        if(fd.get('_gotcha')){ showToast(t('تم حظر الإرسال (اشتباه سبام)','Submission blocked (spam suspected)'), false); return; }
+
+        submitBtn.disabled=true; submitBtn.style.opacity=.7;
+        try{
+          const res = await fetch(form.action, { method:'POST', body:fd, headers:{'Accept':'application/json'} });
+          if(res.ok){
+            showToast(t('تم إرسال الطلب بنجاح ✅','Application sent successfully ✅'), true);
+            localStorage.removeItem(DKEY);
+            form.reset();
+            ['fullName','email','phone','program','intake','interest'].forEach(id=> setErr(id,''));
+          }else{
+            showToast(t('تعذّر الإرسال ❌','Submission failed ❌'), false);
+          }
+        }catch{
+          showToast(t('خطأ بالشبكة ❌','Network error ❌'), false);
+        }finally{
+          submitBtn.disabled=false; submitBtn.style.opacity=1;
+        }
+      });
+    })();
+  </script>
+
+  <!-- CMS -->
   <script src="/assets/cms-boot.js" defer></script>
 </body>
 </html>
