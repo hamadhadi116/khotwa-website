@@ -9,27 +9,25 @@ locale: ar
 # publish_mode: editorial_workflow
 
 collections:
-  # 1) الإعدادات
   - label: "Settings"
     name: "settings"
     editor: { preview: false }
     files:
       - label: "Site Settings"
         name: "site"
-        file: "assets/data/settings.json"
+        file: "data/settings.json"   # ← بدل assets/data/...
         format: "json"
         fields:
           - { label: "Site Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
 
-  # 2) الفعاليات (JSON واحد)
   - label: "Events Data (JSON)"
-    name: "events_json"            # اسم فريد
+    name: "events_json"
     editor: { preview: false }
     files:
       - label: "Events List"
         name: "events"
-        file: "assets/data/events.json"
+        file: "data/events.json"     # ← بدل assets/data/...
         format: "json"
         fields:
           - label: "الفعّاليات"
@@ -40,7 +38,8 @@ collections:
             fields:
               - { label: "العنوان (AR)", name: "title", widget: "string" }
               - { label: "Title (EN)", name: "title_en", widget: "string", required: false }
-              - { label: "التاريخ والوقت", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
+              - { label: "التاريخ والوقت", name: "date", widget: "datetime",
+                  format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
               - { label: "المكان (AR)", name: "location", widget: "string", required: false }
               - { label: "Location (EN)", name: "location_en", widget: "string", required: false }
               - { label: "وصف مختصر (AR)", name: "summary", widget: "text", required: false }
@@ -48,14 +47,13 @@ collections:
               - { label: "صورة الغلاف", name: "image", widget: "image", required: false }
               - { label: "رابط التفاصيل", name: "link", widget: "string", required: false }
 
-  # 3) الأخبار (JSON واحد)
   - label: "News Data (JSON)"
-    name: "news_json"              # اسم فريد
+    name: "news_json"
     editor: { preview: false }
     files:
       - label: "News List"
         name: "news"
-        file: "assets/data/news.json"
+        file: "data/news.json"       # ← بدل assets/data/...
         format: "json"
         fields:
           - label: "Articles"
@@ -66,7 +64,8 @@ collections:
             fields:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Title (AR)", name: "title_ar", widget: "string", required: false }
-              - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
+              - { label: "Date", name: "date", widget: "datetime",
+                  format: "YYYY-MM-DDTHH:mm:ssZ", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
               - { label: "Summary", name: "summary", widget: "text", required: false }
               - { label: "Body", name: "body", widget: "markdown", required: false }
               - { label: "Image", name: "image", widget: "image", required: false }
