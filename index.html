@@ -186,18 +186,21 @@
       </div>
     </section>
 
-    <!-- Events -->
+    <!-- Events (ديناميكي من /data/events.json) -->
     <section aria-labelledby="events-ar" class="container">
       <div class="section-head">
         <h2 id="events-ar" data-lang="ar">الفعاليات القادمة</h2>
         <h2 id="events-en" data-lang="en" hidden aria-hidden="true">Upcoming Events</h2>
         <a class="muted" href="/events.html"><span data-lang="ar">تقويم الفعاليات</span><span data-lang="en" hidden aria-hidden="true">All events</span></a>
       </div>
-      <div class="grid grid-3">
-        <article class="card"><h3 data-lang="ar">ورشة تخصصات خطوة</h3><h3 data-lang="en" hidden aria-hidden="true">Khotwa Majors Workshop</h3><p class="muted" data-lang="ar">IT، الأمن السيبراني، العلوم الحيوية، الأعمال.</p><p class="muted" data-lang="en" hidden aria-hidden="true">IT, Cybersecurity, Biosciences, Business.</p></article>
-        <article class="card"><h3 data-lang="ar">بطولة البادل</h3><h3 data-lang="en" hidden aria-hidden="true">Padel Championship</h3><p class="muted" data-lang="ar">تنظيم رياضي طلابي – La Trobe Sports Centre.</p><p class="muted" data-lang="en" hidden aria-hidden="true">Student sports event – La Trobe Sports Centre.</p></article>
-        <article class="card"><h3 data-lang="ar">ماراثون داخل الحرم</h3><h3 data-lang="en" hidden aria-hidden="true">On-Campus Marathon</h3><p class="muted" data-lang="ar">مسارات 1K و2.5K و10K.</p><p class="muted" data-lang="en" hidden aria-hidden="true">1K, 2.5K, and 10K routes.</p></article>
+
+      <div class="grid grid-3" id="home-events" aria-live="polite">
+        <!-- يتم تعبئته عبر جافاسكربت -->
       </div>
+      <p id="home-events-empty" class="muted" hidden>
+        <span data-lang="ar">لا توجد فعاليات حالياً.</span>
+        <span data-lang="en" hidden aria-hidden="true">No upcoming events at the moment.</span>
+      </p>
     </section>
   </main>
 
@@ -291,6 +294,96 @@
       set(isEn()?'en':'ar');
       t.addEventListener('click',()=> set(isEn()?'ar':'en'));
     })();
+
+    // تحميل أقرب 3 فعاليات للصفحة الرئيسية من /data/events.json
+    (function(){
+      const container = document.getElementById('home-events');
+      const emptyMsg  = document.getElementById('home-events-empty');
+      if(!container) return;
+
+      function escapeHtml(str){
+        return String(str || '').replace(/[&<>"]/g, s=>(
+          {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s] || s
+        ));
+      }
+
+      async function loadHomeEvents(){
+        try{
+          const res = await fetch('/data/events.json?ts=' + Date.now(), { cache:'no-store' });
+          if(!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+
+          // يدعم إما { items:[...] } أو [ ... ]
+          const items = Array.isArray(data.items) ? data.items : (Array.isArray(data) ? data : []);
+          if(!items.length){
+            emptyMsg.hidden = false;
+            return;
+          }
+
+          const today = new Date();
+          const upcoming = items
+            .map(ev => ({ ...ev, _date: ev.date ? new Date(ev.date) : null }))
+            .filter(ev => ev._date && !isNaN(ev._date) && ev._date >= today)
+            .sort((a,b)=> a._date - b._date)
+            .slice(0,3);
+
+          if(!upcoming.length){
+            emptyMsg.hidden = false;
+            return;
+          }
+
+          const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
+          const isEn = langPref === 'en';
+
+          container.innerHTML = '';
+
+          upcoming.forEach(ev=>{
+            const d = ev._date;
+            const arDate = d ? d.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}) : '';
+            const enDate = d ? d.toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'}) : '';
+
+            const titleAr   = ev.title?.ar   || ev.title   || '';
+            const titleEn   = ev.title?.en   || ev.title   || '';
+            const summaryAr = ev.summary?.ar || ev.summary || '';
+            const summaryEn = ev.summary?.en || ev.summary || '';
+            const locAr     = ev.location    || '';
+            const locEn     = ev.location_en || ev.location || '';
+
+            const article = document.createElement('article');
+            article.className = 'card';
+            article.innerHTML = `
+              <h3>
+                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>${escapeHtml(titleAr)}</span>
+                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>${escapeHtml(titleEn)}</span>
+              </h3>
+              <p class="muted">
+                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>${escapeHtml(summaryAr)}</span>
+                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>${escapeHtml(summaryEn)}</span>
+              </p>
+              <p class="muted">
+                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>
+                  ${arDate ? 'التاريخ: '+escapeHtml(arDate) : ''}${locAr ? (arDate ? ' – ' : '') + 'المكان: '+escapeHtml(locAr) : ''}
+                </span>
+                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>
+                  ${enDate ? 'Date: '+escapeHtml(enDate) : ''}${locEn ? (enDate ? ' – ' : '') + 'Location: '+escapeHtml(locEn) : ''}
+                </span>
+              </p>
+            `;
+            container.appendChild(article);
+          });
+        }catch(err){
+          console.error('Failed to load home events', err);
+          if(emptyMsg){
+            emptyMsg.hidden = false;
+            emptyMsg.querySelector('[data-lang="ar"]').textContent = 'تعذّر تحميل الفعاليات.';
+            const enSpan = emptyMsg.querySelector('[data-lang="en"]');
+            if(enSpan) enSpan.textContent = 'Could not load events.';
+          }
+        }
+      }
+
+      loadHomeEvents();
+    })();
   </script>
 
   <!-- Netlify Identity widget + تحويل رابط الدعوة تلقائيًا -->
@@ -310,4 +403,3 @@
   <script src="/assets/cms-boot.js" defer></script>
 </body>
 </html>
-
