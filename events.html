@@ -22,7 +22,12 @@
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"CollectionPage","name":"Khotwa Events","url":"https://khotwastudentcouncil.com/events.html"}
+  {
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    "name":"Khotwa Events",
+    "url":"https://khotwastudentcouncil.com/events.html"
+  }
   </script>
 
   <style>
@@ -34,79 +39,240 @@
       --r-md:14px;--r-lg:16px;--r-xl:22px;
       --sh-sm:0 2px 10px rgba(2,6,23,.06);--sh-md:0 10px 26px rgba(2,6,23,.08);
     }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:var(--surface)}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
+      color:var(--text);
+      background:var(--surface);
+      line-height:1.6;
+    }
     a{color:inherit;text-decoration:none}
     .container{width:min(1120px,92%);margin-inline:auto}
 
     /* وصولية */
-    :where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
-    .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:10px;box-shadow:var(--sh-sm);z-index:1000}
+    :where(a,button,[role="button"],input,select,textarea):focus-visible{
+      outline:3px solid #2563eb;
+      outline-offset:3px;
+      border-radius:8px;
+    }
+    .skip-link{
+      position:absolute;
+      inset-inline-start:1rem;
+      inset-block-start:-100px;
+      background:#fff;
+      color:#000;
+      padding:.6rem .9rem;
+      border-radius:10px;
+      box-shadow:var(--sh-sm);
+      z-index:1000;
+    }
     .skip-link:focus{inset-block-start:1rem}
 
     /* Navbar */
-    .navbar{position:sticky;top:0;z-index:40;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);backdrop-filter:blur(8px)}
-    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
-    .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
-    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
-    .nav-links{display:flex;gap:.25rem;align-items:center}
-    .nav-links a{padding:.5rem .75rem;border-radius:var(--r-md)}
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:40;
+      background:color-mix(in oklab,#ffffff 80%,transparent);
+      border-bottom:1px solid var(--ring);
+      backdrop-filter:blur(8px);
+    }
+    .nav-inner{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:.8rem 0;
+      gap:.8rem;
+      position:relative;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+      font-weight:800;
+    }
+    .brand .logo{
+      width:40px;
+      height:40px;
+      object-fit:cover;
+      border-radius:12px;
+      box-shadow:0 2px 6px rgba(0,0,0,.06);
+    }
+    .nav-links{
+      display:flex;
+      gap:.25rem;
+      align-items:center;
+    }
+    .nav-links a{
+      padding:.5rem .75rem;
+      border-radius:var(--r-md);
+    }
     .nav-links a:hover{background:var(--card)}
     .nav-links a[aria-current="page"]{background:var(--card)}
-    .lang-toggle,.menu-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:var(--r-md);cursor:pointer;font-weight:600}
-    .menu-toggle{display:none;align-items:center;gap:.5rem}
+    .lang-toggle,.menu-toggle{
+      padding:.45rem .75rem;
+      border:1px solid var(--ring);
+      background:#fff;
+      border-radius:var(--r-md);
+      cursor:pointer;
+      font-weight:600;
+    }
+    .menu-toggle{
+      display:none;
+      align-items:center;
+      gap:.5rem;
+    }
     .menu-toggle svg{width:20px;height:20px}
 
     @media (max-width:900px){
       .menu-toggle{display:inline-flex}
       .nav-links{
-        position:absolute;inset-inline:0;top:calc(100% + 8px);
-        background:#fff;border:1px solid var(--ring);border-radius:var(--r-xl);
-        display:grid;gap:.2rem;padding:.4rem;box-shadow:0 20px 48px rgba(2,6,23,.1);
-        max-height:80vh;overflow:auto;opacity:1;transform:scale(1);transition:opacity .2s ease,transform .2s ease,padding .2s ease;
+        position:absolute;
+        inset-inline:0;
+        top:calc(100% + 8px);
+        background:#fff;
+        border:1px solid var(--ring);
+        border-radius:var(--r-xl);
+        display:grid;
+        gap:.2rem;
+        padding:.4rem;
+        box-shadow:0 20px 48px rgba(2,6,23,.1);
+        max-height:80vh;
+        overflow:auto;
+        opacity:1;
+        transform:scale(1);
+        transition:opacity .2s ease,transform .2s ease,padding .2s ease;
       }
-      .nav-links[aria-hidden="true"]{transform:scale(.98);opacity:0}
+      .nav-links[aria-hidden="true"]{
+        transform:scale(.98);
+        opacity:0;
+      }
       .nav-links a,.lang-toggle{padding:.7rem .9rem}
     }
 
     section{padding:2rem 0}
-    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
-    .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:1.2rem;
+    }
+    .section-head h1{
+      margin:0;
+      font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem);
+    }
     .muted{color:var(--muted)}
 
     .grid{display:grid;gap:1rem}
     .grid-3{grid-template-columns:repeat(3,1fr)}
     @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
 
-    .card{background:#fff;border:1px solid var(--ring);border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden;display:flex;flex-direction:column}
-    .thumb{aspect-ratio:16/10;background:#eef2ff;overflow:hidden}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .card-body{padding:1rem;display:grid;gap:.55rem}
-    .chip{display:inline-flex;align-items:center;gap:.45rem;padding:.25rem .6rem;border-radius:999px;background:var(--card);border:1px solid var(--ring);font-size:.85rem;color:var(--muted)}
-    .btn{display:inline-flex;justify-content:center;align-items:center;padding:.7rem 1rem;border-radius:12px;border:1px solid transparent;background:var(--primary);color:#fff;font-weight:700}
+    .card{
+      background:#fff;
+      border:1px solid var(--ring);
+      border-radius:var(--r-lg);
+      box-shadow:var(--sh-sm);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .thumb{
+      aspect-ratio:16/10;
+      background:#eef2ff;
+      overflow:hidden;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .card-body{
+      padding:1rem;
+      display:grid;
+      gap:.55rem;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      padding:.25rem .6rem;
+      border-radius:999px;
+      background:var(--card);
+      border:1px solid var(--ring);
+      font-size:.85rem;
+      color:var(--muted);
+    }
+    .btn{
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      padding:.7rem 1rem;
+      border-radius:12px;
+      border:1px solid transparent;
+      background:var(--primary);
+      color:#fff;
+      font-weight:700;
+    }
     .btn:hover{background:var(--primary-600)}
 
-    footer{border-top:1px solid var(--ring);background:#fff}
-    .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
+    footer{
+      border-top:1px solid var(--ring);
+      background:#fff;
+    }
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap:1rem;
+      align-items:center;
+      padding:1.2rem 0;
+    }
 
     @media (prefers-color-scheme: dark){
-      :root{--surface:#0a0f1a;--card:#0b1220;--ring:#1f2937;--text:#e5e7eb;--muted:#9ca3af}
-      .navbar,footer{background:#0c1220;border-color:var(--ring)}
-      .card,.lang-toggle,.menu-toggle,.btn{background:#0f172a;border-color:var(--ring);color:var(--text)}
+      :root{
+        --surface:#0a0f1a;
+        --card:#0b1220;
+        --ring:#1f2937;
+        --text:#e5e7eb;
+        --muted:#9ca3af;
+      }
+      .navbar,footer{
+        background:#0c1220;
+        border-color:var(--ring);
+      }
+      .card,.lang-toggle,.menu-toggle,.btn{
+        background:#0f172a;
+        border-color:var(--ring);
+        color:var(--text);
+      }
       .thumb{background:#0b1220}
-      .btn{background:#3b82f6;border-color:transparent}
+      .btn{
+        background:#3b82f6;
+        border-color:transparent;
+      }
       .btn:hover{background:#2563eb}
-      .nav-links a:hover,.nav-links a[aria-current="page"]{background:#0f172a}
+      .nav-links a:hover,
+      .nav-links a[aria-current="page"]{
+        background:#0f172a;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
-      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+      *{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+        scroll-behavior:auto !important;
+      }
     }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-  <a class="skip-link" href="#main" data-lang="en" hidden>Skip to content</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
   <!-- NAV -->
   <nav class="navbar" aria-label="الشريط العلوي">
@@ -114,22 +280,51 @@
       <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
         <img src="/assets/apple-touch-icon.png" alt="شعار مجلس طلاب خطوة" class="logo" width="40" height="40" decoding="async" loading="lazy">
         <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden>Khotwa Student Council</span>
+        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
 
-      <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        <span data-lang="ar">القائمة</span><span data-lang="en" hidden>Menu</span>
+      <button id="menu-toggle" class="menu-toggle" type="button"
+              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+        <span data-lang="ar">القائمة</span>
+        <span data-lang="en" hidden aria-hidden="true">Menu</span>
       </button>
 
       <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
-        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-        <a href="/events.html" aria-current="page"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
-        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden>Resources</span></a>
-        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden>Contact</span></a>
-        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
+        <a href="/about.html">
+          <span data-lang="ar">من نحن</span>
+          <span data-lang="en" hidden aria-hidden="true">About</span>
+        </a>
+        <a href="/news.html">
+          <span data-lang="ar">الأخبار</span>
+          <span data-lang="en" hidden aria-hidden="true">News</span>
+        </a>
+        <a href="/events.html" aria-current="page">
+          <span data-lang="ar">الفعاليات</span>
+          <span data-lang="en" hidden aria-hidden="true">Events</span>
+        </a>
+        <a href="/calendar.html">
+          <span data-lang="ar">التقويم</span>
+          <span data-lang="en" hidden aria-hidden="true">Calendar</span>
+        </a>
+        <a href="/resources.html">
+          <span data-lang="ar">الموارد</span>
+          <span data-lang="en" hidden aria-hidden="true">Resources</span>
+        </a>
+        <a href="/contact.html">
+          <span data-lang="ar">تواصل</span>
+          <span data-lang="en" hidden aria-hidden="true">Contact</span>
+        </a>
+        <button
+          id="lang-toggle"
+          class="lang-toggle"
+          type="button"
+          aria-label="تبديل اللغة"
+          aria-pressed="false">
+          English
+        </button>
       </div>
     </div>
   </nav>
@@ -137,11 +332,17 @@
   <main class="container" id="main">
     <section>
       <div class="section-head">
-        <h1 data-lang="ar">الفعاليات القادمة</h1>
-        <h1 data-lang="en" hidden>Upcoming Events</h1>
+        <h1>
+          <span data-lang="ar" lang="ar">الفعاليات القادمة</span>
+          <span data-lang="en" lang="en" hidden aria-hidden="true">Upcoming Events</span>
+        </h1>
       </div>
-      <p class="muted" data-lang="ar">تابع آخر ورش العمل، البطولات، والأنشطة.</p>
-      <p class="muted" data-lang="en" hidden>Follow our latest workshops, tournaments, and activities.</p>
+      <p class="muted" data-lang="ar">
+        تابع آخر ورش العمل، البطولات، والأنشطة.
+      </p>
+      <p class="muted" data-lang="en" lang="en" hidden aria-hidden="true">
+        Follow our latest workshops, tournaments, and activities.
+      </p>
 
       <!-- القائمة الديناميكية -->
       <div id="events-list" class="grid grid-3" role="list" aria-live="polite"></div>
@@ -149,83 +350,132 @@
       <!-- قالب البطاقة -->
       <template id="event-card-tpl">
         <article class="card" role="listitem">
-          <div class="thumb"><img alt=""></div>
+          <div class="thumb">
+            <img alt="">
+          </div>
           <div class="card-body">
             <span class="chip">
-              <span class="ev-meta-ar"></span>
-              <span class="ev-meta-en" hidden></span>
+              <span class="ev-meta-ar" data-lang="ar"></span>
+              <span class="ev-meta-en" data-lang="en" lang="en" hidden aria-hidden="true"></span>
             </span>
-            <h3 class="ev-title-ar"></h3>
-            <h3 class="ev-title-en" hidden></h3>
-            <p class="muted ev-summary-ar"></p>
-            <p class="muted ev-summary-en" hidden></p>
-            <a class="btn ev-link" target="_blank" rel="noopener" hidden>التفاصيل</a>
+            <h3>
+              <span class="ev-title-ar" data-lang="ar"></span>
+              <span class="ev-title-en" data-lang="en" lang="en" hidden aria-hidden="true"></span>
+            </h3>
+            <p class="muted">
+              <span class="ev-summary-ar" data-lang="ar"></span>
+              <span class="ev-summary-en" data-lang="en" lang="en" hidden aria-hidden="true"></span>
+            </p>
+            <a class="btn ev-link" target="_blank" rel="noopener" hidden>
+              <span data-lang="ar">التفاصيل</span>
+              <span data-lang="en" lang="en" hidden aria-hidden="true">Details</span>
+            </a>
           </div>
         </article>
       </template>
 
       <!-- رسالة فارغة -->
-      <p id="events-empty" class="muted" hidden>لا توجد فعاليات حالياً.</p>
+      <p id="events-empty" class="muted" data-lang="ar" hidden>لا توجد فعاليات حالياً.</p>
+      <p class="muted" data-lang="en" lang="en" hidden aria-hidden="true">There are no events at the moment.</p>
     </section>
   </main>
 
   <footer aria-label="تذييل الموقع">
     <div class="container foot">
       <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </footer>
 
+  <!-- منيو + اللغة (عام) -->
   <script>
     // سنة الحقوق
-    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){
+      const y = document.getElementById('year');
+      if(y){ y.textContent = new Date().getFullYear(); }
+    })();
 
     // منيو الموبايل + وصولية
-    const menuBtn = document.getElementById('menu-toggle');
-    const primaryNav = document.getElementById('primary-nav');
-    const mq = matchMedia('(min-width:901px)');
-    function setMenu(open){
-      primaryNav.setAttribute('data-open', String(open));
-      menuBtn.setAttribute('aria-expanded', String(open));
-      primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
-      if(open){ (primaryNav.querySelector('a,button')||menuBtn).focus(); }
-    }
-    function initMenu(){
-      primaryNav.setAttribute('data-open','false');
-      menuBtn.setAttribute('aria-expanded','false');
-      primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
-    }
-    initMenu();
-    menuBtn.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
-    mq.addEventListener('change', e=>{
-      primaryNav.setAttribute('data-open','false');
-      menuBtn.setAttribute('aria-expanded','false');
-      primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
-    });
-    document.addEventListener('click', (e)=>{
-      const open = primaryNav.getAttribute('data-open')==='true';
-      if(open && !primaryNav.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
-    });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
+    (function(){
+      const menuBtn = document.getElementById('menu-toggle');
+      const primaryNav = document.getElementById('primary-nav');
+      if(!menuBtn || !primaryNav) return;
 
-    // اللغة + حفظ التفضيل
-    const toggleBtn = document.getElementById('lang-toggle');
-    function isEn(){ return localStorage.getItem('khotwa_lang') === 'en'; }
-    function setLang(en){
-      document.querySelectorAll('[data-lang="ar"]').forEach(el => el.hidden = en);
-      document.querySelectorAll('[data-lang="en"]').forEach(el => el.hidden = !en);
-      document.documentElement.lang = en ? 'en' : 'ar';
-      document.documentElement.dir  = en ? 'ltr' : 'rtl';
-      toggleBtn.textContent = en ? 'العربية' : 'English';
-      toggleBtn.setAttribute('aria-pressed', String(en));
-      localStorage.setItem('khotwa_lang', en ? 'en' : 'ar');
+      const mq = window.matchMedia('(min-width:901px)');
 
-      // اخفاء/إظهار عناصر البطاقات المولدة
-      document.querySelectorAll('.ev-title-ar,.ev-summary-ar,.ev-meta-ar').forEach(el => el.hidden = en);
-      document.querySelectorAll('.ev-title-en,.ev-summary-en,.ev-meta-en').forEach(el => el.hidden = !en);
+      function setMenu(open){
+        primaryNav.setAttribute('data-open', String(open));
+        menuBtn.setAttribute('aria-expanded', String(open));
+        primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
+        if(open){
+          const focusable = primaryNav.querySelector('a,button');
+          (focusable || menuBtn).focus();
+        }
+      }
+      function initMenu(){
+        setMenu(false);
+        primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
+      }
+      initMenu();
+
+      menuBtn.addEventListener('click', ()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+
+      mq.addEventListener('change', e=>{
+        setMenu(false);
+        primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
+      });
+
+      document.addEventListener('click', e=>{
+        const open = primaryNav.getAttribute('data-open')==='true';
+        const t = e.target;
+        if(!open) return;
+        if(t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)){
+          setMenu(false);
+        }
+      });
+
+      document.addEventListener('keydown', e=>{
+        if(e.key==='Escape') setMenu(false);
+      });
+
+      primaryNav.addEventListener('click', e=>{
+        const link = (e.target instanceof Element) ? e.target.closest('a') : null;
+        if(link) setMenu(false);
+      });
+    })();
+
+    // اللغة (نفس منطق صفحة الأخبار)
+    const langBtn = document.getElementById('lang-toggle');
+
+    function currentLang(){
+      return localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
     }
-    toggleBtn.addEventListener('click',()=> setLang(!isEn()));
-    setLang(isEn());
+
+    function setLang(lang){ // 'ar' | 'en'
+      document.querySelectorAll('[data-lang]').forEach(el=>{
+        const want = el.getAttribute('data-lang') === lang;
+        el.hidden = !want;
+        el.setAttribute('aria-hidden', String(!want));
+      });
+
+      document.documentElement.lang = (lang === 'ar') ? 'ar' : 'en';
+      document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
+
+      if(langBtn){
+        langBtn.textContent = (lang === 'ar') ? 'English' : 'العربية';
+        langBtn.setAttribute('aria-pressed', String(lang !== 'ar'));
+      }
+
+      // عنوان الصفحة حسب اللغة
+      document.title = (lang === 'ar') ? 'الفعاليات – Khotwa' : 'Events – Khotwa';
+
+      localStorage.setItem('khotwa_lang', lang);
+    }
+
+    setLang(currentLang());
+    langBtn?.addEventListener('click', ()=>{
+      setLang(currentLang() === 'ar' ? 'en' : 'ar');
+    });
   </script>
 
   <!-- تحميل الفعاليات من JSON وبناء البطاقات -->
@@ -236,9 +486,10 @@
     const EMPTY = document.getElementById('events-empty');
 
     try {
-      // المسار الصحيح بعد التعديل إلى /data/events.json
+      // تحميل الفعاليات من /data/events.json
       const res = await fetch('/data/events.json?ts=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
+
       const data = await res.json();
       const items = Array.isArray(data.items) ? data.items : [];
 
@@ -254,57 +505,87 @@
         return;
       }
 
-      const fmtAr = new Intl.DateTimeFormat('ar', { weekday:'short', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
-      const fmtEn = new Intl.DateTimeFormat('en', { weekday:'short', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+      const fmtAr = new Intl.DateTimeFormat('ar', {
+        weekday:'short', year:'numeric', month:'long', day:'numeric',
+        hour:'2-digit', minute:'2-digit'
+      });
+      const fmtEn = new Intl.DateTimeFormat('en', {
+        weekday:'short', year:'numeric', month:'long', day:'numeric',
+        hour:'2-digit', minute:'2-digit'
+      });
+
+      const frag = document.createDocumentFragment();
 
       upcoming.forEach(ev => {
         const node = TPL.content.cloneNode(true);
 
         // عنوان
-        node.querySelector('.ev-title-ar').textContent = ev.title || 'فعالية';
-        node.querySelector('.ev-title-en').textContent = ev.title_en || ev.title || 'Event';
+        const titleArEl = node.querySelector('.ev-title-ar');
+        const titleEnEl = node.querySelector('.ev-title-en');
+        const titleAr = ev.title || 'فعالية';
+        const titleEn = ev.title_en || ev.title || 'Event';
+        if(titleArEl) titleArEl.textContent = titleAr;
+        if(titleEnEl) titleEnEl.textContent = titleEn;
 
         // ملخص
-        node.querySelector('.ev-summary-ar').textContent = ev.summary || '';
-        node.querySelector('.ev-summary-en').textContent = ev.summary_en || ev.summary || '';
+        const sumArEl = node.querySelector('.ev-summary-ar');
+        const sumEnEl = node.querySelector('.ev-summary-en');
+        if(sumArEl) sumArEl.textContent = ev.summary || '';
+        if(sumEnEl) sumEnEl.textContent = ev.summary_en || ev.summary || '';
 
         // ميتا (المكان + التاريخ)
-        const metaAr = [
+        const metaArEl = node.querySelector('.ev-meta-ar');
+        const metaEnEl = node.querySelector('.ev-meta-en');
+
+        const metaArParts = [
           ev.location ? `المكان: ${ev.location}` : null,
           ev._date ? `التاريخ: ${fmtAr.format(ev._date)}` : null
-        ].filter(Boolean).join(' | ');
-        const metaEn = [
+        ].filter(Boolean);
+        const metaEnParts = [
           (ev.location_en || ev.location) ? `Location: ${ev.location_en || ev.location}` : null,
           ev._date ? `Date: ${fmtEn.format(ev._date)}` : null
-        ].filter(Boolean).join(' | ');
-        node.querySelector('.ev-meta-ar').textContent = metaAr;
-        node.querySelector('.ev-meta-en').textContent = metaEn;
+        ].filter(Boolean);
+
+        if(metaArEl) metaArEl.textContent = metaArParts.join(' | ');
+        if(metaEnEl) metaEnEl.textContent = metaEnParts.join(' | ');
 
         // صورة (اختيارية)
         const thumb = node.querySelector('.thumb');
-        if (ev.image) {
-          const img = thumb.querySelector('img');
+        const img = thumb ? thumb.querySelector('img') : null;
+        if (img && ev.image) {
           img.src = ev.image;
-          img.alt = ev.title || 'Event';
+          img.alt = titleAr || titleEn || 'Event';
           img.loading = 'lazy';
           img.decoding = 'async';
-        } else {
-          thumb.remove();
+          // fallback
+          const FALLBACK = '/assets/apple-touch-icon.png';
+          img.addEventListener('error', ()=>{
+            const absoluteFallback = new URL(FALLBACK, location.origin).href;
+            if(img.src !== absoluteFallback){
+              img.src = absoluteFallback;
+            }
+          }, { once:true });
+        } else if (thumb && !ev.image) {
+          // لو ما في صورة، نخلي مساحة بسيطة بلون الخلفية
+          thumb.innerHTML = '';
         }
 
         // رابط (اختياري)
         if (ev.link) {
           const a = node.querySelector('.ev-link');
-          a.href = ev.link;
-          a.hidden = false;
-          a.textContent = isEn() ? 'Details' : 'التفاصيل';
+          if(a){
+            a.href = ev.link;
+            a.hidden = false;
+          }
         }
 
-        LIST.appendChild(node);
+        frag.appendChild(node);
       });
 
-      // اضبط اللغة الحالية على العناصر المضافة
-      setLang(isEn());
+      LIST.appendChild(frag);
+
+      // احترام اللغة الحالية للعناصر المضافة
+      setLang(currentLang());
     } catch (err) {
       console.error('Failed to load events.json', err);
       EMPTY.hidden = false;
