@@ -1,322 +1,511 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title data-lang="ar">التقويم – Khotwa</title>
-<title data-lang="en" hidden>Calendar – Khotwa</title>
-<meta name="description" content="تقويم فعاليات مجلس طلاب خطوة في جامعة لا تروب: ورش، بطولات، وماراثون داخل الحرم.">
-<link rel="canonical" href="https://khotwastudentcouncil.com/calendar.html"/>
-<meta name="robots" content="index,follow"/>
-<meta name="color-scheme" content="light dark"/>
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-<!-- OG/Twitter -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Khotwa Student Council">
-<meta property="og:title" content="التقويم – Khotwa">
-<meta property="og:description" content="جدول الفعاليات القادمة لطلاب خطوة.">
-<meta property="og:url" content="https://khotwastudentcouncil.com/calendar.html">
-<meta property="og:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="التقويم – Khotwa">
-<meta name="twitter:description" content="جدول الفعاليات القادمة لطلاب خطوة.">
-<meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
+  <!-- عنوان ديناميكي حسب اللغة -->
+  <title data-lang="ar">التقويم – Khotwa</title>
+  <title data-lang="en" hidden>Calendar – Khotwa</title>
 
-<!-- JSON-LD (placeholder؛ سيتم حقنه ديناميكيًا) -->
-<script type="application/ld+json">{ "@context":"https://schema.org", "@graph":[] }</script>
+  <meta name="description" content="تقويم فعاليات مجلس طلاب خطوة في جامعة لا تروب: ورش، بطولات، وماراثون داخل الحرم.">
+  <link rel="canonical" href="https://khotwastudentcouncil.com/calendar.html"/>
+  <meta name="robots" content="index,follow"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
-<style>
-  :root{
-    --primary:#1e40af;--primary-600:#1d4ed8;
-    --ring:#e5e7eb;--card:#f8fafc;
-    --text:#0f172a;--muted:#6b7280;
-    --shadow:0 10px 26px rgba(2,6,23,.08)
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff;line-height:1.6}
-  a{color:inherit;text-decoration:none} a:visited{color:inherit}
-  .container{width:min(1120px,92%);margin-inline:auto}
+  <!-- OG/Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Khotwa Student Council">
+  <meta property="og:title" content="التقويم – Khotwa">
+  <meta property="og:description" content="جدول الفعاليات القادمة لطلاب خطوة.">
+  <meta property="og:url" content="https://khotwastudentcouncil.com/calendar.html">
+  <meta property="og:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="التقويم – Khotwa">
+  <meta name="twitter:description" content="جدول الفعاليات القادمة لطلاب خطوة.">
+  <meta name="twitter:image" content="https://g.top4top.io/p_3516rfttb1.jpg">
 
-  :where(a,button,[role="button"],input,select,textarea):focus-visible{
-    outline:3px solid #2563eb;outline-offset:3px;border-radius:8px
-  }
-  .skip-link{
-    position:absolute;inset-inline-start:1rem;inset-block-start:-100px;
-    background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;
-    box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000
-  }
-  .skip-link:focus{inset-block-start:1rem}
+  <!-- JSON-LD placeholder؛ بنحقن واحد جديد ديناميكي -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[]}
+  </script>
 
-  .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-  .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
-  .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-  .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
-  .nav-links{display:flex;gap:1rem;align-items:center}
-  .nav-links a{padding:.5rem .75rem;border-radius:10px}
-  .nav-links a:hover{background:var(--card)}
-  .nav-links a[aria-current="page"]{background:var(--card)}
-  .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-  .menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-  .menu-toggle svg{width:20px;height:20px}
-  @media (max-width:900px){
-    .menu-toggle{display:inline-flex}
+  <style>
+    :root{
+      --primary:#1e40af;--primary-600:#1d4ed8;
+      --ring:#e5e7eb;--card:#f8fafc;
+      --text:#0f172a;--muted:#6b7280;
+      --shadow:0 10px 26px rgba(2,6,23,.08)
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
+      color:var(--text);
+      background:#fff;
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    a:visited{color:inherit}
+    .container{width:min(1120px,92%);margin-inline:auto}
+
+    /* وصولية */
+    :where(a,button,[role="button"],input,select,textarea):focus-visible{
+      outline:3px solid #2563eb;
+      outline-offset:3px;
+      border-radius:8px;
+    }
+    .skip-link{
+      position:absolute;
+      inset-inline-start:1rem;
+      inset-block-start:-100px;
+      background:#fff;
+      color:#000;
+      padding:.6rem .9rem;
+      border-radius:.5rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.15);
+      z-index:1000;
+    }
+    .skip-link:focus{inset-block-start:1rem}
+
+    /* Navbar */
+    .navbar{
+      position:sticky;
+      top:0;
+      background:#fff;
+      border-bottom:1px solid var(--ring);
+      z-index:40;
+    }
+    .nav-inner{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:.8rem 0;
+      gap:.8rem;
+      position:relative;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+      font-weight:700;
+    }
+    .brand .logo{
+      width:40px;
+      height:40px;
+      object-fit:cover;
+      border-radius:8px;
+    }
     .nav-links{
-      position:absolute; inset-inline:0; top:calc(100% + 8px);
-      background:#fff; border:1px solid var(--ring); border-radius:12px;
-      display:grid; gap:.2rem; padding:.4rem;
-      box-shadow:0 12px 30px rgba(2,6,23,.10);
-      max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
-      transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
+      display:flex;
+      gap:1rem;
+      align-items:center;
     }
-    .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
-    .nav-links a,.lang-toggle{padding:.7rem .9rem}
-  }
-
-  section{padding:2rem 0}
-  .section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
-  .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
-  .muted{color:var(--muted)}
-
-  .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem;box-shadow:var(--shadow)}
-  .events-list{margin:0;padding-right:1rem;line-height:1.9;list-style: none}
-  .events-list li{margin:.2rem 0}
-  .events-list time{font-variant-numeric:tabular-nums}
-
-  /* Skeleton */
-  .sk{display:grid;gap:.6rem}
-  .sk .bar{height:12px;background:#e5e7eb;border-radius:8px;animation:fade 1.2s infinite alternate}
-  .sk .bar.w50{width:50%}.sk .bar.w70{width:70%}.sk .bar.w30{width:30%}
-  @keyframes fade{from{opacity:.5}to{opacity:1}}
-
-  footer{border-top:1px solid var(--ring);background:#fff}
-  .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
-
-  @media (prefers-color-scheme: dark){
-    :root{--card:#0b1220; --ring:#1f2937; --text:#e5e7eb; --muted:#9ca3af; --shadow:0 10px 26px rgba(2,6,23,.3)}
-    body{ background:#0a0f1a; }
-    .navbar, footer{ background:#0c1220; border-color:var(--ring); }
-    .card{ background:#0f172a; border-color:var(--ring); }
-    .nav-links a:hover, .nav-links a[aria-current="page"]{ background:#0f172a; }
-    .lang-toggle,.menu-toggle{ background:transparent; color:var(--text); }
-    .sk .bar{background:#1f2937}
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
-  }
-</style>
-</head>
-<body>
-<a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-<a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
-
-<nav class="navbar" aria-label="الشريط العلوي">
-  <div class="container nav-inner">
-    <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-      <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80" decoding="async" loading="lazy">
-      <span data-lang="ar">مجلس طلاب خطوة</span>
-      <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
-    </a>
-
-    <button id="menu-toggle" class="menu-toggle" type="button"
-            aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      <span data-lang="ar">القائمة</span>
-      <span data-lang="en" hidden aria-hidden="true">Menu</span>
-    </button>
-
-    <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-      <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
-      <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
-      <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
-      <a href="/calendar.html" aria-current="page"><span data-lang="ar">التقويم</span><span data-lang="en" hidden aria-hidden="true">Calendar</span></a>
-      <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden aria-hidden="true">Resources</span></a>
-      <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
-      <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
-    </div>
-  </div>
-</nav>
-
-<main class="container" id="main">
-  <section>
-    <div class="section-head">
-      <h1 data-lang="ar">تقويم الفعاليات</h1>
-      <h1 data-lang="en" hidden aria-hidden="true">Events Calendar</h1>
-    </div>
-    <p class="muted" data-lang="ar">جدول الفعاليات القادمة.</p>
-    <p class="muted" data-lang="en" hidden aria-hidden="true">Schedule of upcoming events.</p>
-
-    <div class="card">
-      <ul class="events-list" id="events" aria-live="polite" aria-busy="true">
-        <!-- Skeleton أثناء التحميل -->
-        <li class="sk">
-          <div class="bar w50"></div>
-          <div class="bar w70"></div>
-          <div class="bar w30"></div>
-        </li>
-        <li class="sk">
-          <div class="bar w50"></div>
-          <div class="bar w70"></div>
-          <div class="bar w30"></div>
-        </li>
-      </ul>
-    </div>
-  </section>
-</main>
-
-<footer aria-label="تذييل الموقع">
-  <div class="container foot">
-    <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-    <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
-  </div>
-</footer>
-
-<script>
-  (function(){
-    // سنة الحقوق
-    const y=document.getElementById('year'); if(y){ y.textContent = new Date().getFullYear(); }
-
-    // منيو الموبايل + وصولية
-    const menuBtn = document.getElementById('menu-toggle');
-    const primaryNav = document.getElementById('primary-nav');
-    const mq = window.matchMedia('(min-width:901px)');
-
-    function setMenu(open){
-      if(!menuBtn || !primaryNav) return;
-      primaryNav.setAttribute('data-open', String(open));
-      menuBtn.setAttribute('aria-expanded', String(open));
-      primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
-      if(open){ (primaryNav.querySelector('a,button') || menuBtn).focus(); }
+    .nav-links a{
+      padding:.5rem .75rem;
+      border-radius:10px;
     }
-    function initMenu(){
-      setMenu(false);
-      if(primaryNav){ primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true'); }
+    .nav-links a:hover{background:var(--card)}
+    .nav-links a[aria-current="page"]{background:var(--card)}
+    .lang-toggle{
+      padding:.45rem .75rem;
+      border:1px solid var(--ring);
+      background:#fff;
+      border-radius:10px;
+      cursor:pointer;
     }
-    initMenu();
-
-    menuBtn?.addEventListener('click',()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
-    mq.addEventListener('change', e=>{ setMenu(false); primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true'); });
-    document.addEventListener('click', (e)=>{
-      const open = primaryNav.getAttribute('data-open')==='true';
-      const t=e.target;
-      if(open && t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)) setMenu(false);
-    });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
-    primaryNav.addEventListener('click', (e)=>{
-      const link = (e.target instanceof Element)? e.target.closest('a'):null;
-      if(link) setMenu(false);
-    });
-
-    // اللغة + حفظ التفضيل + تزامن العنوان
-    const langBtn = document.getElementById('lang-toggle');
-    function currentLang(){ return localStorage.getItem('khotwa_lang')==='en' ? 'en' : 'ar'; }
-    function setLang(lang){
-      document.querySelectorAll('[data-lang]').forEach(el=>{
-        const want = el.getAttribute('data-lang')===lang;
-        el.hidden = !want;
-        el.setAttribute('aria-hidden', String(!want));
-      });
-      document.documentElement.lang = (lang==='ar')?'ar':'en';
-      document.documentElement.dir  = (lang==='ar')?'rtl':'ltr';
-      langBtn?.setAttribute('aria-pressed', String(lang!=='ar'));
-      if(langBtn) langBtn.textContent = (lang==='ar') ? 'English' : 'العربية';
-      // تحديث <title>
-      const t = document.querySelector('title[data-lang="'+lang+'"]');
-      if(t) document.title = t.textContent.trim();
-      localStorage.setItem('khotwa_lang', lang);
-      // إعادة تحميل التقويم لتنسيق التاريخ
-      loadEvents();
+    .menu-toggle{
+      display:none;
+      align-items:center;
+      gap:.5rem;
+      padding:.5rem .7rem;
+      border:1px solid var(--ring);
+      background:#fff;
+      border-radius:10px;
+      cursor:pointer;
     }
-    setLang(currentLang());
-    langBtn?.addEventListener('click', ()=> setLang(currentLang()==='ar'?'en':'ar'));
+    .menu-toggle svg{width:20px;height:20px}
+    @media (max-width:900px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{
+        position:absolute;
+        inset-inline:0;
+        top:calc(100% + 8px);
+        background:#fff;
+        border:1px solid var(--ring);
+        border-radius:12px;
+        display:grid;
+        gap:.2rem;
+        padding:.4rem;
+        box-shadow:0 12px 30px rgba(2,6,23,.10);
+        max-height:0;
+        overflow:hidden;
+        opacity:0;
+        transform:scale(.98);
+        transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
+      }
+      .nav-links[data-open="true"]{
+        max-height:80vh;
+        opacity:1;
+        transform:scale(1);
+        padding:.6rem;
+      }
+      .nav-links a,.lang-toggle{padding:.7rem .9rem}
+    }
 
-    // تحميل الفعاليات من /data/events.json
-    async function loadEvents(){
-      const list = document.getElementById('events');
-      if(!list) return;
-      list.setAttribute('aria-busy','true');
-      try{
-        const res = await fetch('/data/events.json', {cache:'no-cache'});
-        if(!res.ok) throw new Error('Failed to load events');
-        const data = await res.json();
+    section{padding:2rem 0}
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:1.2rem;
+    }
+    .section-head h1{
+      margin:0;
+      font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem);
+    }
+    .muted{color:var(--muted)}
 
-        list.innerHTML = '';
-        if(!Array.isArray(data) || data.length===0){
-          list.innerHTML = '<li class="muted" data-lang="ar">لا توجد فعاليات حالياً.</li><li class="muted" data-lang="en" hidden aria-hidden="true">No events at the moment.</li>';
-          list.setAttribute('aria-busy','false');
-          injectEventsLD([]);
-          return;
-        }
+    .card{
+      background:#fff;
+      border:1px solid var(--ring);
+      border-radius:16px;
+      padding:1rem;
+      box-shadow:var(--shadow);
+    }
+    .events-list{
+      margin:0;
+      padding-right:1rem;
+      list-style:none;
+      line-height:1.9;
+    }
+    .events-list li{margin:.2rem 0}
+    .events-list time{font-variant-numeric:tabular-nums}
 
-        // ترتيب حسب الأحدث القادم
-        data.sort((a,b)=> new Date(a.startDate) - new Date(b.startDate));
+    /* Skeleton */
+    .sk{display:grid;gap:.6rem}
+    .sk .bar{
+      height:12px;
+      background:#e5e7eb;
+      border-radius:8px;
+      animation:fade 1.2s infinite alternate;
+    }
+    .sk .bar.w50{width:50%}
+    .sk .bar.w70{width:70%}
+    .sk .bar.w30{width:30%}
+    @keyframes fade{
+      from{opacity:.5}
+      to{opacity:1}
+    }
 
-        const lang = document.documentElement.lang || 'ar';
-        const isEn = lang==='en';
-        const monthFmt = new Intl.DateTimeFormat(isEn?'en-AU':'ar-EG',{month:'long'});
-        const dateFmt  = new Intl.DateTimeFormat(isEn?'en-AU':'ar-EG',{year:'numeric',month:'2-digit',day:'2-digit'});
+    footer{
+      border-top:1px solid var(--ring);
+      background:#fff;
+    }
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap:1rem;
+      align-items:center;
+      padding:1.2rem 0;
+    }
 
-        const frag = document.createDocumentFragment();
-        data.forEach((ev, idx)=>{
-          const d = new Date(ev.startDate);
-          const end = ev.endDate ? new Date(ev.endDate) : null;
-          const li = document.createElement('li');
-          li.innerHTML = `
-            <strong data-lang="ar" ${isEn?'hidden':''}>${monthFmt.format(d)}</strong>
-            <strong data-lang="en" ${isEn?'':'hidden'}>${new Intl.DateTimeFormat('en-AU',{month:'long'}).format(d)}</strong>
-            — 
-            <span data-lang="ar" ${isEn?'hidden':''}>${ev.title?.ar||''} – </span>
-            <span data-lang="en" ${isEn?'':'hidden'}>${ev.title?.en||''} – </span>
-            <time datetime="${ev.startDate}">${dateFmt.format(d)}</time>
-            ${end ? ` <span>→</span> <time datetime="${ev.endDate}">${dateFmt.format(end)}</time>` : ''}
-            ${ev.location ? `<span> · ${ev.location}</span>` : ''}
-            ${ev.url ? ` · <a href="${ev.url}" target="_blank" rel="noopener">${isEn?'Details':'التفاصيل'}</a>` : ''}
-          `;
-          frag.appendChild(li);
-        });
-        list.appendChild(frag);
-        list.setAttribute('aria-busy','false');
+    @media (prefers-color-scheme: dark){
+      :root{
+        --card:#0b1220;
+        --ring:#1f2937;
+        --text:#e5e7eb;
+        --muted:#9ca3af;
+        --shadow:0 10px 26px rgba(2,6,23,.3);
+      }
+      body{background:#0a0f1a;}
+      .navbar,footer{
+        background:#0c1220;
+        border-color:var(--ring);
+      }
+      .card{
+        background:#0f172a;
+        border-color:var(--ring);
+      }
+      .nav-links a:hover,
+      .nav-links a[aria-current="page"]{
+        background:#0f172a;
+      }
+      .lang-toggle,
+      .menu-toggle{
+        background:transparent;
+        color:var(--text);
+      }
+      .sk .bar{background:#1f2937}
+    }
 
-        // حقن JSON-LD @type Event لكل العناصر (SEO)
-        injectEventsLD(data);
-      }catch(err){
-        console.error('فشل تحميل الفعاليات:', err);
-        list.innerHTML = '<li class="muted" data-lang="ar">تعذّر تحميل الفعاليات. حاول لاحقاً.</li><li class="muted" data-lang="en" hidden aria-hidden="true">Could not load events. Please try again later.</li>';
-        list.setAttribute('aria-busy','false');
-        injectEventsLD([]);
+    @media (prefers-reduced-motion: reduce){
+      *{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+        scroll-behavior:auto !important;
       }
     }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
-    // توليد مخطط JSON-LD للأحداث
-    function injectEventsLD(events){
-      try{
-        // تنظيف أي سكريبت سابق أضفناه
-        document.querySelectorAll('script[data-gen="events-ld"]').forEach(s=> s.remove());
-        if(!Array.isArray(events) || events.length===0) return;
-        const graph = events.map(ev=>({
-          "@context":"https://schema.org",
-          "@type":"Event",
-          "name": ev.title?.ar || ev.title?.en || "Khotwa Event",
-          "startDate": ev.startDate,
-          ...(ev.endDate? {"endDate": ev.endDate} : {}),
-          ...(ev.location? {"location":{"@type":"Place","name": ev.location}} : {}),
-          ...(ev.url? {"url": ev.url} : {})
-        }));
-        const s=document.createElement('script');
-        s.type='application/ld+json'; s.dataset.gen='events-ld';
-        s.textContent = JSON.stringify({"@context":"https://schema.org","@graph":graph});
-        document.head.appendChild(s);
-      }catch(_){/* تجاهل */}
-    }
+  <nav class="navbar" aria-label="الشريط العلوي">
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+        <img src="https://g.top4top.io/p_3516rfttb1.jpg" class="logo" alt="شعار مجلس طلاب خطوة" width="80" height="80" decoding="async" loading="lazy">
+        <span data-lang="ar">مجلس طلاب خطوة</span>
+        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
+      </a>
 
-    // بدء التحميل
-    loadEvents();
-  })();
-</script>
+      <button id="menu-toggle" class="menu-toggle" type="button"
+              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+        <span data-lang="ar">القائمة</span>
+        <span data-lang="en" hidden aria-hidden="true">Menu</span>
+      </button>
 
-<!-- CMS/لوحة الإدارة -->
-<script src="/assets/cms-boot.js" defer></script>
+      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+        <a href="/calendar.html" aria-current="page"><span data-lang="ar">التقويم</span><span data-lang="en" hidden aria-hidden="true">Calendar</span></a>
+        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden aria-hidden="true">Resources</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" id="main">
+    <section>
+      <div class="section-head">
+        <h1>
+          <span data-lang="ar" lang="ar">تقويم الفعاليات</span>
+          <span data-lang="en" lang="en" hidden aria-hidden="true">Events Calendar</span>
+        </h1>
+      </div>
+      <p class="muted" data-lang="ar">جدول الفعاليات القادمة.</p>
+      <p class="muted" data-lang="en" lang="en" hidden aria-hidden="true">Schedule of upcoming events.</p>
+
+      <div class="card">
+        <ul class="events-list" id="events" aria-live="polite" aria-busy="true">
+          <!-- Skeleton أثناء التحميل -->
+          <li class="sk">
+            <div class="bar w50"></div>
+            <div class="bar w70"></div>
+            <div class="bar w30"></div>
+          </li>
+          <li class="sk">
+            <div class="bar w50"></div>
+            <div class="bar w70"></div>
+            <div class="bar w30"></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer aria-label="تذييل الموقع">
+    <div class="container foot">
+      <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      // سنة الحقوق
+      const y = document.getElementById('year');
+      if(y){ y.textContent = new Date().getFullYear(); }
+
+      // منيو الموبايل + وصولية
+      const menuBtn = document.getElementById('menu-toggle');
+      const primaryNav = document.getElementById('primary-nav');
+      const mq = window.matchMedia('(min-width:901px)');
+
+      function setMenu(open){
+        if(!menuBtn || !primaryNav) return;
+        primaryNav.setAttribute('data-open', String(open));
+        menuBtn.setAttribute('aria-expanded', String(open));
+        primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
+        if(open){
+          const focusable = primaryNav.querySelector('a,button');
+          (focusable || menuBtn).focus();
+        }
+      }
+      function initMenu(){
+        setMenu(false);
+        if(primaryNav){
+          primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
+        }
+      }
+      initMenu();
+
+      menuBtn?.addEventListener('click', ()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+      mq.addEventListener('change', e=>{
+        setMenu(false);
+        primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
+      });
+      document.addEventListener('click', (e)=>{
+        const open = primaryNav.getAttribute('data-open')==='true';
+        const t = e.target;
+        if(open && t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)){
+          setMenu(false);
+        }
+      });
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape') setMenu(false); });
+      primaryNav.addEventListener('click', e=>{
+        const link = (e.target instanceof Element)? e.target.closest('a'):null;
+        if(link) setMenu(false);
+      });
+
+      // اللغة + تزامن العنوان + حفظ التفضيل
+      const langBtn = document.getElementById('lang-toggle');
+      function currentLang(){ return localStorage.getItem('khotwa_lang')==='en' ? 'en' : 'ar'; }
+
+      function setLang(lang){
+        document.querySelectorAll('[data-lang]').forEach(el=>{
+          const want = el.getAttribute('data-lang')===lang;
+          el.hidden = !want;
+          el.setAttribute('aria-hidden', String(!want));
+        });
+        document.documentElement.lang = (lang==='ar')?'ar':'en';
+        document.documentElement.dir  = (lang==='ar')?'rtl':'ltr';
+        if(langBtn){
+          langBtn.textContent = (lang==='ar') ? 'English' : 'العربية';
+          langBtn.setAttribute('aria-pressed', String(lang!=='ar'));
+        }
+        const t = document.querySelector('title[data-lang="'+lang+'"]');
+        if(t) document.title = t.textContent.trim();
+        localStorage.setItem('khotwa_lang', lang);
+
+        // بعد تغيير اللغة، نحدّث تنسيق التاريخ في التقويم
+        loadEvents();
+      }
+
+      setLang(currentLang());
+      langBtn?.addEventListener('click', ()=> setLang(currentLang()==='ar' ? 'en' : 'ar'));
+
+      // تحميل الفعاليات من /data/events.json بنفس هيكل صفحة events/news: { items: [...] }
+      async function loadEvents(){
+        const list = document.getElementById('events');
+        if(!list) return;
+        list.setAttribute('aria-busy','true');
+        try{
+          const res = await fetch('/data/events.json?ts=' + Date.now(), {cache:'no-store'});
+          if(!res.ok) throw new Error('HTTP ' + res.status);
+
+          const data = await res.json();
+          const items = Array.isArray(data.items) ? data.items : [];
+
+          list.innerHTML = '';
+          if(items.length===0){
+            list.innerHTML = `
+              <li class="muted" data-lang="ar">لا توجد فعاليات حالياً.</li>
+              <li class="muted" data-lang="en" lang="en" hidden aria-hidden="true">No events at the moment.</li>
+            `;
+            list.setAttribute('aria-busy','false');
+            injectEventsLD([]);
+            return;
+          }
+
+          // أختار اليوم + أرتب حسب الأحدث القادم
+          const today = new Date();
+          const upcoming = items
+            .map(ev => ({ ...ev, _start: ev.date ? new Date(ev.date) : null }))
+            .filter(ev => ev._start && !isNaN(ev._start))
+            .sort((a,b)=> a._start - b._start)
+            .filter(ev => ev._start >= today);
+
+          if(upcoming.length===0){
+            list.innerHTML = `
+              <li class="muted" data-lang="ar">لا توجد فعاليات حالياً.</li>
+              <li class="muted" data-lang="en" lang="en" hidden aria-hidden="true">No events at the moment.</li>
+            `;
+            list.setAttribute('aria-busy','false');
+            injectEventsLD([]);
+            return;
+          }
+
+          const lang = document.documentElement.lang || 'ar';
+          const isEn = (lang === 'en');
+          const monthFmt = new Intl.DateTimeFormat(isEn?'en-AU':'ar-EG',{month:'long'});
+          const dateFmt  = new Intl.DateTimeFormat(isEn?'en-AU':'ar-EG',{year:'numeric',month:'2-digit',day:'2-digit'});
+
+          const frag = document.createDocumentFragment();
+          upcoming.forEach(ev=>{
+            const d = ev._start;
+            const li = document.createElement('li');
+
+            const titleAr = ev.title_ar || ev.title || '';
+            const titleEn = ev.title_en || ev.title || '';
+
+            li.innerHTML = `
+              <strong data-lang="ar" ${isEn?'hidden':''} lang="ar">${monthFmt.format(d)}</strong>
+              <strong data-lang="en" ${isEn?'':'hidden'} lang="en">${new Intl.DateTimeFormat('en-AU',{month:'long'}).format(d)}</strong>
+              —
+              <span data-lang="ar" ${isEn?'hidden':''} lang="ar">${titleAr}</span>
+              <span data-lang="en" ${isEn?'':'hidden'} lang="en">${titleEn}</span>
+              ·
+              <time datetime="${ev.date}">${dateFmt.format(d)}</time>
+              ${ev.location ? ` · <span>${ev.location}</span>` : ''}
+              ${ev.link ? ` · <a href="${ev.link}" target="_blank" rel="noopener">${isEn?'Details':'التفاصيل'}</a>` : ''}
+            `;
+            frag.appendChild(li);
+          });
+
+          list.appendChild(frag);
+          list.setAttribute('aria-busy','false');
+
+          // حقن JSON-LD منسّق للأحداث (SEO)
+          injectEventsLD(upcoming);
+        }catch(err){
+          console.error('فشل تحميل الفعاليات:', err);
+          list.innerHTML = `
+            <li class="muted" data-lang="ar">تعذّر تحميل الفعاليات. حاول لاحقاً.</li>
+            <li class="muted" data-lang="en" lang="en" hidden aria-hidden="true">Could not load events. Please try again later.</li>
+          `;
+          list.setAttribute('aria-busy','false');
+          injectEventsLD([]);
+        }
+      }
+
+      // توليد JSON-LD للأحداث
+      function injectEventsLD(events){
+        try{
+          document.querySelectorAll('script[data-gen="events-ld"]').forEach(s => s.remove());
+          if(!Array.isArray(events) || events.length===0) return;
+          const graph = events.map(ev=>({
+            "@type":"Event",
+            "name": ev.title_ar || ev.title_en || ev.title || "Khotwa Event",
+            "startDate": ev.date,
+            ...(ev.location ? { "location": { "@type":"Place", "name": ev.location } } : {}),
+            ...(ev.link ? { "url": ev.link } : {})
+          }));
+          const s = document.createElement('script');
+          s.type='application/ld+json';
+          s.dataset.gen='events-ld';
+          s.textContent = JSON.stringify({ "@context":"https://schema.org", "@graph": graph });
+          document.head.appendChild(s);
+        }catch(e){}
+      }
+
+      // أول تحميل
+      loadEvents();
+    })();
+  </script>
+
+  <!-- CMS/لوحة الإدارة -->
+  <script src="/assets/cms-boot.js" defer></script>
 </body>
 </html>
