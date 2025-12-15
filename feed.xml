@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>أخبار مجلس طلاب خطوة - Khotwa Student Council News</title>
+    <link>https://khotwastudentcouncil.com/news.html</link>
+    <description>آخر أخبار وإعلانات مجلس طلاب خطوة في جامعة لا تروب - ملبورن</description>
+    <language>ar</language>
+    <lastBuildDate>Sun, 14 Dec 2025 23:04:56 +1100</lastBuildDate>
+    <generator>Khotwa Website</generator>
+    <webMaster>info@khotwastudentcouncil.com (Khotwa Student Council)</webMaster>
+    <atom:link href="https://khotwastudentcouncil.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>انطلاق فعاليات مجلس طلاب خطوة للفصل الدراسي الجديد</title>
+      <link>https://khotwastudentcouncil.com/news.html#2025-10-22T13:01:00+11:00</link>
+      <description>يسر مجلس طلاب خطوة أن يعلن عن انطلاق فعاليات الفصل الدراسي الجديد مع مجموعة متنوعة من الأنشطة الأكاديمية والاجتماعية.</description>
+      <pubDate>Wed, 22 Oct 2025 13:01:00 +1100</pubDate>
+      <guid isPermaLink="false">khotwa-news-2025-10-22T13:01:00+11:00</guid>
+      <category>إعلانات</category>
+      <dc:creator>Khotwa Student Council</dc:creator>
+      <enclosure url="https://khotwastudentcouncil.com/assets/img/photo-2025-04-26-21-25-14.jpg" type="image/jpeg"/>
+    </item>
+  </channel>
+</rss>

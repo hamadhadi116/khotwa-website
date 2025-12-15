@@ -1,0 +1,139 @@
+/* Advanced Filters Styles */
+
+.advanced-filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  background: var(--card);
+  border: 1px solid var(--ring);
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.filter-label svg {
+  color: var(--primary);
+}
+
+.filter-select {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ring);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-select:hover {
+  border-color: var(--primary);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+}
+
+.filter-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--ring);
+  background: var(--card);
+  color: var(--muted);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.filter-reset-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.filter-reset-btn svg {
+  transition: transform 0.3s;
+}
+
+.filter-reset-btn:hover svg {
+  transform: rotate(180deg);
+}
+
+.filter-results-count {
+  margin-inline-start: auto;
+  padding: 0.5rem 1rem;
+  background: var(--bg);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .advanced-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 100%;
+  }
+  
+  .filter-label {
+    justify-content: flex-start;
+  }
+  
+  .filter-results-count {
+    margin-inline-start: 0;
+    text-align: center;
+  }
+}
+
+/* Animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.advanced-filters {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Active state */
+.filter-select:not([value="all"]):not([value="date-desc"]) {
+  border-color: var(--primary);
+  background: rgba(30, 64, 175, 0.05);
+}

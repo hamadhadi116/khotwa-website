@@ -1,9 +1,13 @@
-[
-  {"ar":"من نحن","en":"About","href":"/about.html","order":1,"visible":true},
-  {"ar":"الأخبار","en":"News","href":"/news.html","order":2,"visible":true},
-  {"ar":"الفعاليات","en":"Events","href":"/events.html","order":3,"visible":true},
-  {"ar":"التقويم","en":"Calendar","href":"/calendar.html","order":4,"visible":true},
-  {"ar":"الموارد","en":"Resources","href":"/resources.html","order":5,"visible":true},
-  {"ar":"الأسئلة الشائعة","en":"FAQ","href":"/faq.html","order":6,"visible":true},
-  {"ar":"تواصل","en":"Contact","href":"/contact.html","order":7,"visible":true}
-]
+{
+  "items": [
+    {"title_ar": "الرئيسية", "title_en": "Home", "url": "/index.html"},
+    {"title_ar": "من نحن", "title_en": "About", "url": "/about.html"},
+    {"title_ar": "الأخبار", "title_en": "News", "url": "/news.html"},
+    {"title_ar": "الفعاليات", "title_en": "Events", "url": "/events.html"},
+    {"title_ar": "التقويم", "title_en": "Calendar", "url": "/calendar.html"},
+    {"title_ar": "معرض الصور", "title_en": "Gallery", "url": "/gallery.html"},
+    {"title_ar": "الموارد", "title_en": "Resources", "url": "/resources.html"},
+    {"title_ar": "الأسئلة الشائعة", "title_en": "FAQ", "url": "/faq.html"},
+    {"title_ar": "تواصل", "title_en": "Contact", "url": "/contact.html"}
+  ]
+}
