@@ -222,7 +222,7 @@
       
       // Send to Backend API
       try {
-        const BACKEND_API = 'https://khotwa-backend.manus.space/api/trpc';
+        const BACKEND_API = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
         const response = await fetch(`${BACKEND_API}/complaints.create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

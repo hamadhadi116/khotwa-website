@@ -11,7 +11,7 @@
 const KhotwaAPI = (function() {
     // ==================== الإعدادات ====================
     // غيّر هذا الرابط بعد نشر Backend
-    const API_BASE = 'https://YOUR-BACKEND-URL.manus.space/api/trpc';
+    const API_BASE = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
     
     // ==================== دوال مساعدة ====================
     
