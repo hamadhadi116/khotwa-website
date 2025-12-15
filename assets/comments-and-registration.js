@@ -25,16 +25,18 @@ async function apiCall(endpoint, input = null, method = 'GET') {
     };
     
     if (method === 'GET' && input) {
-      url += `?input=${encodeURIComponent(JSON.stringify(input))}`;
+      // tRPC expects input wrapped in json object
+      url += `?input=${encodeURIComponent(JSON.stringify({ json: input }))}`;
     } else if (method === 'POST' && input) {
-      options.body = JSON.stringify(input);
+      // tRPC expects input wrapped in json object
+      options.body = JSON.stringify({ json: input });
     }
     
     const response = await fetch(url, options);
     const data = await response.json();
     
-    if (data.error) throw new Error(data.error.message || 'حدث خطأ');
-    return data.result?.data;
+    if (data.error) throw new Error(data.error.json?.message || data.error.message || 'حدث خطأ');
+    return data.result?.data?.json || data.result?.data;
   } catch (error) {
     console.error('API Error:', error);
     throw error;

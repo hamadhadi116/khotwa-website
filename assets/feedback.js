@@ -227,11 +227,13 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            type: feedback.category === 'suggestion' ? 'suggestion' : 'complaint',
-            name: null,
-            email: feedback.email || null,
-            subject: feedback.category || 'ملاحظة',
-            content: feedback.message || feedback.value || ''
+            json: {
+              type: feedback.category === 'suggestion' ? 'suggestion' : 'complaint',
+              name: null,
+              email: feedback.email || null,
+              subject: feedback.category || 'ملاحظة',
+              content: feedback.message || feedback.value || ''
+            }
           })
         });
         const data = await response.json();
