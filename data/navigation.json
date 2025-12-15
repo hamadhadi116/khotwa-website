@@ -4,5 +4,6 @@
   {"ar":"الفعاليات","en":"Events","href":"/events.html","order":3,"visible":true},
   {"ar":"التقويم","en":"Calendar","href":"/calendar.html","order":4,"visible":true},
   {"ar":"الموارد","en":"Resources","href":"/resources.html","order":5,"visible":true},
-  {"ar":"تواصل","en":"Contact","href":"/contact.html","order":6,"visible":true}
+  {"ar":"الأسئلة الشائعة","en":"FAQ","href":"/faq.html","order":6,"visible":true},
+  {"ar":"تواصل","en":"Contact","href":"/contact.html","order":7,"visible":true}
 ]

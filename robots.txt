@@ -1,0 +1,9 @@
+# Khotwa Student Council - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://khotwastudentcouncil.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
