@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <title>الصفحة غير موجودة – 404 | Khotwa</title>
+  <meta name="description" content="عذراً، الصفحة التي تبحث عنها غير موجودة. عد إلى الصفحة الرئيسية أو تصفح أقسام الموقع الأخرى.">
+  <meta name="robots" content="noindex,nofollow"/>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" href="/assets/favicon.ico">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/main.min.css">
+  
+  <style>
+    .error-page {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .error-content {
+      max-width: 600px;
+    }
+    .error-code {
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--primary);
+      margin: 0;
+      opacity: 0.3;
+    }
+    .error-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 1rem 0;
+      color: var(--text);
+    }
+    .error-description {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin: 1rem 0 2rem;
+      line-height: 1.6;
+    }
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: 2px solid var(--primary);
+    }
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--ring);
+    }
+    .btn-secondary:hover {
+      background: var(--card);
+      border-color: var(--primary);
+    }
+    .helpful-links {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--ring);
+    }
+    .helpful-links h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .link-card {
+      padding: 1rem;
+      background: var(--card);
+      border: 1px solid var(--ring);
+      border-radius: 0.5rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .link-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .link-card-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .link-card-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+  </style>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCS6PYK04X"></script>
+  <script src="/assets/analytics.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+
+  <!-- Navbar -->
+  <nav class="navbar" aria-label="الشريط العلوي">
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40" decoding="async" loading="eager">
+        <span data-lang="ar">مجلس طلاب خطوة</span>
+        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
+      </a>
+
+      <button id="menu-toggle" class="menu-toggle" type="button"
+              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
+      </button>
+
+      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden aria-hidden="true">Calendar</span></a>
+        <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden aria-hidden="true">Resources</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main" class="container">
+    <div class="error-page">
+      <div class="error-content">
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">
+          <span data-lang="ar">عذراً، الصفحة غير موجودة</span>
+          <span data-lang="en" hidden aria-hidden="true">Sorry, Page Not Found</span>
+        </h2>
+        <p class="error-description">
+          <span data-lang="ar">
+            الصفحة التي تبحث عنها قد تكون تم نقلها أو حذفها أو أن الرابط غير صحيح. 
+            يمكنك العودة إلى الصفحة الرئيسية أو تصفح الأقسام الأخرى.
+          </span>
+          <span data-lang="en" hidden aria-hidden="true">
+            The page you're looking for might have been moved, deleted, or the link is incorrect. 
+            You can return to the homepage or browse other sections.
+          </span>
+        </p>
+
+        <div class="error-actions">
+          <a href="/index.html" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span data-lang="ar">العودة للرئيسية</span>
+            <span data-lang="en" hidden aria-hidden="true">Back to Home</span>
+          </a>
+          <button onclick="history.back()" class="btn btn-secondary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"/>
+              <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            <span data-lang="ar">العودة للخلف</span>
+            <span data-lang="en" hidden aria-hidden="true">Go Back</span>
+          </button>
+        </div>
+
+        <div class="helpful-links">
+          <h3>
+            <span data-lang="ar">روابط مفيدة</span>
+            <span data-lang="en" hidden aria-hidden="true">Helpful Links</span>
+          </h3>
+          <div class="link-grid">
+            <a href="/about.html" class="link-card">
+              <div class="link-card-title" data-lang="ar">من نحن</div>
+              <div class="link-card-title" data-lang="en" hidden>About</div>
+              <div class="link-card-desc" data-lang="ar">تعرف على المجلس</div>
+              <div class="link-card-desc" data-lang="en" hidden>Learn about us</div>
+            </a>
+            <a href="/events.html" class="link-card">
+              <div class="link-card-title" data-lang="ar">الفعاليات</div>
+              <div class="link-card-title" data-lang="en" hidden>Events</div>
+              <div class="link-card-desc" data-lang="ar">الأنشطة القادمة</div>
+              <div class="link-card-desc" data-lang="en" hidden>Upcoming activities</div>
+            </a>
+            <a href="/news.html" class="link-card">
+              <div class="link-card-title" data-lang="ar">الأخبار</div>
+              <div class="link-card-title" data-lang="en" hidden>News</div>
+              <div class="link-card-desc" data-lang="ar">آخر الأخبار</div>
+              <div class="link-card-desc" data-lang="en" hidden>Latest news</div>
+            </a>
+            <a href="/contact.html" class="link-card">
+              <div class="link-card-title" data-lang="ar">تواصل</div>
+              <div class="link-card-title" data-lang="en" hidden>Contact</div>
+              <div class="link-card-desc" data-lang="ar">اتصل بنا</div>
+              <div class="link-card-desc" data-lang="en" hidden>Get in touch</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <p class="muted">© <span id="year"></span> Khotwa Student Council</p>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/assets/cms-boot.min.js" defer></script>
+  <script>
+    // Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const primaryNav = document.getElementById('primary-nav');
+    menuToggle?.addEventListener('click', () => {
+      const isOpen = primaryNav.dataset.open === 'true';
+      primaryNav.dataset.open = !isOpen;
+      menuToggle.setAttribute('aria-expanded', !isOpen);
+      primaryNav.setAttribute('aria-hidden', isOpen);
+    });
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

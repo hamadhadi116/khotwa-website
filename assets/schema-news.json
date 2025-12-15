@@ -1,0 +1,29 @@
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "انطلاق فعاليات مجلس طلاب خطوة للفصل الدراسي الجديد",
+  "alternativeHeadline": "Khotwa Student Council Launches New Semester Activities",
+  "image": "https://khotwastudentcouncil.com/assets/img/photo-2025-04-26-21-25-14.webp",
+  "author": {
+    "@type": "Organization",
+    "name": "Khotwa Student Council",
+    "url": "https://khotwastudentcouncil.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Khotwa Student Council",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://khotwastudentcouncil.com/assets/apple-touch-icon.png"
+    }
+  },
+  "datePublished": "2025-10-22T10:00:00+11:00",
+  "dateModified": "2025-10-22T10:00:00+11:00",
+  "description": "يسرنا أن نعلن عن انطلاق فعاليات مجلس طلاب خطوة للفصل الدراسي الجديد. نحن متحمسون لتقديم مجموعة متنوعة من الأنشطة والفعاليات التي تهدف إلى دعم الطلاب أكاديمياً واجتماعياً وثقافياً.",
+  "articleBody": "يسرنا أن نعلن عن انطلاق فعاليات مجلس طلاب خطوة للفصل الدراسي الجديد. نحن متحمسون لتقديم مجموعة متنوعة من الأنشطة والفعاليات التي تهدف إلى دعم الطلاب أكاديمياً واجتماعياً وثقافياً.",
+  "inLanguage": "ar",
+  "about": {
+    "@type": "Thing",
+    "name": "Student Activities"
+  }
+}
