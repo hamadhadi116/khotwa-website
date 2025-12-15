@@ -317,7 +317,8 @@
   window.KhotwaFeatures = {
     createShareButtons,
     createCalendarButton,
-    addToGoogleCalendar
+    addToGoogleCalendar,
+    checkUpcomingEvents
   };
 
 })();
