@@ -1,9 +1,48 @@
 /**
- * All Additional Features
- * جميع الميزات الإضافية
+ * All Additional Features - Connected to Backend API
+ * جميع الميزات الإضافية - مربوطة بنظام Backend
  */
 
-// 3. Social Media Integration
+// ==================== Backend API Configuration ====================
+// سيتم تحديث هذا الرابط بعد نشر Backend
+const BACKEND_API = 'https://khotwa-backend.manus.space/api/trpc';
+
+// ==================== Helper Functions ====================
+function getVisitorId() {
+  let id = localStorage.getItem('khotwa_visitor_id');
+  if (!id) {
+    id = 'v_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('khotwa_visitor_id', id);
+  }
+  return id;
+}
+
+async function apiCall(endpoint, input = null, method = 'GET') {
+  try {
+    let url = `${BACKEND_API}/${endpoint}`;
+    const options = {
+      method: method,
+      headers: { 'Content-Type': 'application/json' }
+    };
+    
+    if (method === 'GET' && input) {
+      url += `?input=${encodeURIComponent(JSON.stringify(input))}`;
+    } else if (method === 'POST' && input) {
+      options.body = JSON.stringify(input);
+    }
+    
+    const response = await fetch(url, options);
+    const data = await response.json();
+    
+    if (data.error) throw new Error(data.error.message || 'حدث خطأ');
+    return data.result?.data;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+}
+
+// ==================== Social Media Integration ====================
 const socialLinks = {
   twitter: 'https://twitter.com/khotwa_council',
   instagram: 'https://instagram.com/khotwa_council',
@@ -32,7 +71,7 @@ function addSocialMediaWidget() {
   }
 }
 
-// 4. Advanced Search
+// ==================== Advanced Search ====================
 function initAdvancedSearch() {
   const searchHTML = `
     <div class="advanced-search-panel" id="advanced-search">
@@ -59,67 +98,94 @@ function initAdvancedSearch() {
   document.body.insertAdjacentHTML('beforeend', searchHTML);
 }
 
-// 5. Achievements Page Data
-const achievements = [
-  { year: 2025, title: 'جائزة أفضل مجلس طلابي', icon: '🏆' },
-  { year: 2024, title: 'المركز الأول في المسابقة الوطنية', icon: '🥇' },
-  { year: 2024, title: 'شهادة تقدير من الجامعة', icon: '📜' }
-];
-
-// 6. Polls System
-let polls = [];
-
-function createPoll(question, options) {
-  const poll = {
-    id: Date.now(),
-    question,
-    options: options.map(opt => ({ text: opt, votes: 0 })),
-    voters: []
-  };
-  polls.push(poll);
-  savePollsToStorage();
-  return poll;
-}
-
-function votePoll(pollId, optionIndex) {
-  const poll = polls.find(p => p.id === pollId);
-  if (!poll) return;
-  
-  const voterId = localStorage.getItem('voter_id') || generateVoterId();
-  
-  if (poll.voters.includes(voterId)) {
-    alert('لقد صوّت مسبقاً!');
-    return;
+// ==================== Achievements - From Backend ====================
+async function loadAchievements() {
+  try {
+    const achievements = await apiCall('achievements.list');
+    return achievements;
+  } catch (error) {
+    console.error('Error loading achievements:', error);
+    // Fallback to static data
+    return [
+      { year: 2025, titleAr: 'جائزة أفضل مجلس طلابي', icon: '🏆' },
+      { year: 2024, titleAr: 'المركز الأول في المسابقة الوطنية', icon: '🥇' }
+    ];
   }
-  
-  poll.options[optionIndex].votes++;
-  poll.voters.push(voterId);
-  savePollsToStorage();
 }
 
-function generateVoterId() {
-  const id = 'voter_' + Math.random().toString(36).substr(2, 9);
-  localStorage.setItem('voter_id', id);
-  return id;
-}
-
-function savePollsToStorage() {
-  localStorage.setItem('khotwa_polls', JSON.stringify(polls));
-}
-
-// 7. Jobs Section Data
-const jobs = [
-  {
-    id: 1,
-    title: 'منسق فعاليات',
-    type: 'تطوعي',
-    description: 'نبحث عن منسق فعاليات متحمس',
-    requirements: ['مهارات تنظيمية', 'عمل جماعي'],
-    deadline: '2026-01-31'
+// ==================== Polls System - From Backend ====================
+async function loadActivePolls() {
+  try {
+    return await apiCall('polls.listActive');
+  } catch (error) {
+    console.error('Error loading polls:', error);
+    return [];
   }
-];
+}
 
-// 8. Push Notifications (Browser Notifications)
+async function votePoll(pollId, optionId) {
+  try {
+    const result = await apiCall('polls.vote', {
+      pollId: pollId,
+      optionId: optionId,
+      visitorId: getVisitorId()
+    }, 'POST');
+    
+    // Show success message
+    if (result.points) {
+      showNotification('تم التصويت!', `حصلت على ${result.points.pointsEarned} نقطة`);
+    }
+    
+    return result;
+  } catch (error) {
+    if (error.message.includes('Already voted')) {
+      alert('لقد صوّت مسبقاً في هذا الاستطلاع!');
+    } else {
+      alert('حدث خطأ: ' + error.message);
+    }
+    throw error;
+  }
+}
+
+async function getPollResults(pollId) {
+  try {
+    return await apiCall('polls.results', { pollId: pollId });
+  } catch (error) {
+    console.error('Error getting poll results:', error);
+    return [];
+  }
+}
+
+// ==================== Jobs - From Backend ====================
+async function loadJobs() {
+  try {
+    return await apiCall('jobs.list');
+  } catch (error) {
+    console.error('Error loading jobs:', error);
+    return [];
+  }
+}
+
+async function applyForJob(jobId, fullName, email, phone, university, coverLetter) {
+  try {
+    const result = await apiCall('jobs.submitApplication', {
+      jobId: jobId,
+      fullName: fullName,
+      email: email,
+      phone: phone,
+      university: university,
+      coverLetter: coverLetter
+    }, 'POST');
+    
+    alert('تم إرسال طلبك بنجاح!');
+    return result;
+  } catch (error) {
+    alert('حدث خطأ: ' + error.message);
+    throw error;
+  }
+}
+
+// ==================== Push Notifications ====================
 function requestNotificationPermission() {
   if ('Notification' in window) {
     Notification.requestPermission().then(permission => {
@@ -130,14 +196,14 @@ function requestNotificationPermission() {
   }
 }
 
-function sendNotification(title, body) {
-  if (Notification.permission === 'granted') {
+function showNotification(title, body) {
+  if ('Notification' in window && Notification.permission === 'granted') {
     new Notification(title, { body, icon: '/assets/img/apple-touch-icon.png' });
   }
 }
 
-// 9. Interactive FAQ
-function makeF AQInteractive() {
+// ==================== Interactive FAQ ====================
+function makeFAQInteractive() {
   const faqs = document.querySelectorAll('.faq-item');
   faqs.forEach(faq => {
     const question = faq.querySelector('.faq-question');
@@ -149,111 +215,256 @@ function makeF AQInteractive() {
   });
 }
 
-// 10. Points/Badges System
-const userPoints = {
-  points: 0,
-  badges: [],
-  level: 1
-};
-
-function addPoints(amount, reason) {
-  userPoints.points += amount;
-  checkLevelUp();
-  checkBadges(reason);
-  saveUserPoints();
-}
-
-function checkLevelUp() {
-  const newLevel = Math.floor(userPoints.points / 100) + 1;
-  if (newLevel > userPoints.level) {
-    userPoints.level = newLevel;
-    sendNotification('مستوى جديد!', `وصلت إلى المستوى ${newLevel}`);
+// ==================== Points/Badges System - From Backend ====================
+async function getMyPoints() {
+  try {
+    const result = await apiCall('gamification.getPoints', { visitorId: getVisitorId() });
+    return result || { totalPoints: 0, level: 1 };
+  } catch (error) {
+    console.error('Error getting points:', error);
+    return { totalPoints: 0, level: 1 };
   }
 }
 
-function checkBadges(reason) {
-  const badges = {
-    'first_comment': { name: 'المعلق الأول', icon: '💬' },
-    'event_attendee': { name: 'حضور فعال', icon: '🎉' },
-    'top_voter': { name: 'صوت نشط', icon: '🗳️' }
-  };
-  
-  if (badges[reason] && !userPoints.badges.includes(reason)) {
-    userPoints.badges.push(reason);
-    sendNotification('شارة جديدة!', `حصلت على شارة "${badges[reason].name}"`);
+async function getMyBadges() {
+  try {
+    return await apiCall('gamification.getBadges', { visitorId: getVisitorId() });
+  } catch (error) {
+    console.error('Error getting badges:', error);
+    return [];
   }
 }
 
-function saveUserPoints() {
-  localStorage.setItem('khotwa_user_points', JSON.stringify(userPoints));
+async function getAllBadges() {
+  try {
+    return await apiCall('gamification.getAllBadges');
+  } catch (error) {
+    console.error('Error getting all badges:', error);
+    return [];
+  }
 }
 
-// 11. Statistics Page Data
-const statistics = {
-  totalEvents: 45,
-  totalNews: 120,
-  totalMembers: 250,
-  totalRegistrations: 890
-};
+// Display user points in UI
+async function displayUserPoints() {
+  const points = await getMyPoints();
+  const pointsDisplay = document.getElementById('user-points-display');
+  if (pointsDisplay) {
+    pointsDisplay.innerHTML = `
+      <span class="points">🏆 ${points.totalPoints} نقطة</span>
+      <span class="level">المستوى ${points.level}</span>
+    `;
+  }
+}
 
-function renderStatistics() {
+// ==================== Statistics - From Backend ====================
+async function loadStatistics() {
+  try {
+    return await apiCall('statistics.get');
+  } catch (error) {
+    console.error('Error loading statistics:', error);
+    return { news: 0, events: 0, comments: 0, registrations: 0, users: 0, complaints: 0 };
+  }
+}
+
+async function renderStatistics() {
+  const stats = await loadStatistics();
   return `
     <div class="stats-grid">
       <div class="stat-card">
-        <h3>${statistics.totalEvents}</h3>
+        <h3>${stats.events}</h3>
         <p>فعالية منظمة</p>
       </div>
       <div class="stat-card">
-        <h3>${statistics.totalNews}</h3>
+        <h3>${stats.news}</h3>
         <p>خبر منشور</p>
       </div>
       <div class="stat-card">
-        <h3>${statistics.totalMembers}</h3>
-        <p>عضو نشط</p>
+        <h3>${stats.users}</h3>
+        <p>مستخدم نشط</p>
       </div>
       <div class="stat-card">
-        <h3>${statistics.totalRegistrations}</h3>
+        <h3>${stats.registrations}</h3>
         <p>تسجيل في الفعاليات</p>
       </div>
     </div>
   `;
 }
 
-// 12. Complaints System
-function submitComplaint(data) {
-  const complaints = JSON.parse(localStorage.getItem('khotwa_complaints') || '[]');
-  complaints.push({
-    id: Date.now(),
-    ...data,
-    date: new Date().toISOString(),
-    status: 'pending'
-  });
-  localStorage.setItem('khotwa_complaints', JSON.stringify(complaints));
-  return true;
+// ==================== Complaints System - To Backend ====================
+async function submitComplaint(data) {
+  try {
+    const result = await apiCall('complaints.create', {
+      type: data.type || 'complaint',
+      name: data.name,
+      email: data.email,
+      subject: data.subject,
+      content: data.content
+    }, 'POST');
+    
+    alert('تم إرسال ' + (data.type === 'suggestion' ? 'اقتراحك' : 'شكواك') + ' بنجاح!');
+    return result;
+  } catch (error) {
+    alert('حدث خطأ: ' + error.message);
+    throw error;
+  }
 }
 
-// Initialize all features
+// ==================== News - From Backend ====================
+async function loadNews() {
+  try {
+    return await apiCall('news.list');
+  } catch (error) {
+    console.error('Error loading news:', error);
+    return [];
+  }
+}
+
+async function getNewsById(id) {
+  try {
+    return await apiCall('news.getById', { id: id });
+  } catch (error) {
+    console.error('Error getting news:', error);
+    return null;
+  }
+}
+
+// ==================== Events - From Backend ====================
+async function loadEvents() {
+  try {
+    return await apiCall('events.list');
+  } catch (error) {
+    console.error('Error loading events:', error);
+    return [];
+  }
+}
+
+async function getEventById(id) {
+  try {
+    return await apiCall('events.getById', { id: id });
+  } catch (error) {
+    console.error('Error getting event:', error);
+    return null;
+  }
+}
+
+// ==================== Comments - From Backend ====================
+async function loadComments(contentType, contentId) {
+  try {
+    return await apiCall('comments.list', {
+      contentType: contentType,
+      contentId: contentId
+    });
+  } catch (error) {
+    console.error('Error loading comments:', error);
+    return [];
+  }
+}
+
+async function addComment(contentType, contentId, authorName, content, authorEmail = null) {
+  try {
+    const result = await apiCall('comments.create', {
+      contentType: contentType,
+      contentId: contentId,
+      authorName: authorName,
+      authorEmail: authorEmail,
+      content: content,
+      visitorId: getVisitorId()
+    }, 'POST');
+    
+    if (result.points) {
+      showNotification('تم إضافة التعليق!', `حصلت على ${result.points.pointsEarned} نقطة`);
+    }
+    
+    return result;
+  } catch (error) {
+    alert('حدث خطأ: ' + error.message);
+    throw error;
+  }
+}
+
+// ==================== Event Registration - To Backend ====================
+async function registerForEvent(eventId, fullName, email, phone, university, notes) {
+  try {
+    const result = await apiCall('registrations.create', {
+      eventId: eventId,
+      fullName: fullName,
+      email: email,
+      phone: phone,
+      university: university,
+      notes: notes,
+      visitorId: getVisitorId()
+    }, 'POST');
+    
+    if (result.points) {
+      showNotification('تم التسجيل!', `حصلت على ${result.points.pointsEarned} نقطة`);
+    }
+    
+    alert('تم تسجيلك بنجاح في الفعالية!');
+    return result;
+  } catch (error) {
+    if (error.message.includes('Already registered')) {
+      alert('أنت مسجل مسبقاً في هذه الفعالية');
+    } else {
+      alert('حدث خطأ: ' + error.message);
+    }
+    throw error;
+  }
+}
+
+// ==================== Initialize ====================
 document.addEventListener('DOMContentLoaded', () => {
   addSocialMediaWidget();
   requestNotificationPermission();
   makeFAQInteractive();
-  
-  // Load user points
-  const saved = localStorage.getItem('khotwa_user_points');
-  if (saved) {
-    Object.assign(userPoints, JSON.parse(saved));
-  }
+  displayUserPoints();
 });
 
-// Export functions
+// ==================== Export Functions ====================
 window.KhotwaFeatures = {
+  // Config
+  getVisitorId,
+  
+  // Social
   socialLinks,
-  createPoll,
+  
+  // News
+  loadNews,
+  getNewsById,
+  
+  // Events
+  loadEvents,
+  getEventById,
+  registerForEvent,
+  
+  // Comments
+  loadComments,
+  addComment,
+  
+  // Polls
+  loadActivePolls,
   votePoll,
-  jobs,
-  sendNotification,
-  addPoints,
-  statistics,
+  getPollResults,
+  
+  // Jobs
+  loadJobs,
+  applyForJob,
+  
+  // Achievements
+  loadAchievements,
+  
+  // Gamification
+  getMyPoints,
+  getMyBadges,
+  getAllBadges,
+  displayUserPoints,
+  
+  // Statistics
+  loadStatistics,
   renderStatistics,
-  submitComplaint
+  
+  // Complaints
+  submitComplaint,
+  
+  // Notifications
+  showNotification
 };

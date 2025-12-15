@@ -1,11 +1,45 @@
 /**
- * Comments and Event Registration System
- * نظام التعليقات والتسجيل في الفعاليات
+ * Comments and Event Registration System - Connected to Backend
+ * نظام التعليقات والتسجيل في الفعاليات - مربوط بـ Backend
  */
 
-// Storage Keys
-const COMMENTS_KEY = 'khotwa_comments';
-const REGISTRATIONS_KEY = 'khotwa_event_registrations';
+// Backend API Configuration
+const BACKEND_API = 'https://khotwa-backend.manus.space/api/trpc';
+
+// Helper Functions
+function getVisitorId() {
+  let id = localStorage.getItem('khotwa_visitor_id');
+  if (!id) {
+    id = 'v_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('khotwa_visitor_id', id);
+  }
+  return id;
+}
+
+async function apiCall(endpoint, input = null, method = 'GET') {
+  try {
+    let url = `${BACKEND_API}/${endpoint}`;
+    const options = {
+      method: method,
+      headers: { 'Content-Type': 'application/json' }
+    };
+    
+    if (method === 'GET' && input) {
+      url += `?input=${encodeURIComponent(JSON.stringify(input))}`;
+    } else if (method === 'POST' && input) {
+      options.body = JSON.stringify(input);
+    }
+    
+    const response = await fetch(url, options);
+    const data = await response.json();
+    
+    if (data.error) throw new Error(data.error.message || 'حدث خطأ');
+    return data.result?.data;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,11 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Comments System
- * نظام التعليقات
+ * Comments System - Connected to Backend
+ * نظام التعليقات - مربوط بـ Backend
  */
 function initializeCommentsSystem() {
-  // Check if we're on a news or event page
   const newsId = getNewsIdFromURL();
   const eventId = getEventIdFromURL();
   
@@ -28,15 +61,13 @@ function initializeCommentsSystem() {
 }
 
 function getNewsIdFromURL() {
-  // Extract news ID from URL or page
   const match = window.location.search.match(/news=(\d+)/);
-  return match ? match[1] : null;
+  return match ? parseInt(match[1]) : null;
 }
 
 function getEventIdFromURL() {
-  // Extract event ID from URL or page
   const match = window.location.search.match(/event=(\d+)/);
-  return match ? match[1] : null;
+  return match ? parseInt(match[1]) : null;
 }
 
 function renderCommentsSection(itemId, type) {
@@ -50,17 +81,17 @@ function renderCommentsSection(itemId, type) {
       <!-- Add Comment Form -->
       <div class="add-comment-form">
         <h3>أضف تعليقك</h3>
-        <form id="comment-form">
+        <form id="comment-form" data-content-type="${type}" data-content-id="${itemId}">
           <div class="form-group">
-            <input type="text" id="comment-name" placeholder="الاسم" required/>
+            <input type="text" id="comment-name" placeholder="الاسم *" required/>
           </div>
           <div class="form-group">
             <input type="email" id="comment-email" placeholder="البريد الإلكتروني (اختياري)"/>
           </div>
           <div class="form-group">
-            <textarea id="comment-text" rows="4" placeholder="اكتب تعليقك هنا..." required></textarea>
+            <textarea id="comment-text" rows="4" placeholder="اكتب تعليقك هنا... *" required></textarea>
           </div>
-          <button type="submit" class="btn-primary">إرسال التعليق</button>
+          <button type="submit" class="btn-primary" id="submit-comment-btn">إرسال التعليق</button>
         </form>
       </div>
       
@@ -73,85 +104,98 @@ function renderCommentsSection(itemId, type) {
   
   container.insertAdjacentHTML('beforeend', commentsHTML);
   
-  // Load and display comments
-  loadComments(itemId, type);
+  // Load comments from Backend
+  loadCommentsFromBackend(itemId, type);
   
   // Handle form submission
   document.getElementById('comment-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    addComment(itemId, type);
+    addCommentToBackend(itemId, type);
   });
 }
 
-function loadComments(itemId, type) {
-  const allComments = JSON.parse(localStorage.getItem(COMMENTS_KEY) || '{}');
-  const key = `${type}_${itemId}`;
-  const comments = allComments[key] || [];
-  
+async function loadCommentsFromBackend(itemId, type) {
   const container = document.getElementById('comments-list');
   
-  if (comments.length === 0) {
-    container.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد. كن أول من يعلق!</p>';
-    return;
+  try {
+    const comments = await apiCall('comments.list', {
+      contentType: type,
+      contentId: itemId
+    });
+    
+    if (!comments || comments.length === 0) {
+      container.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد. كن أول من يعلق!</p>';
+      return;
+    }
+    
+    container.innerHTML = comments.map(comment => `
+      <div class="comment-item">
+        <div class="comment-header">
+          <strong class="comment-author">${escapeHtml(comment.authorName)}</strong>
+          <span class="comment-date">${formatDate(comment.createdAt)}</span>
+        </div>
+        <div class="comment-body">
+          ${escapeHtml(comment.content)}
+        </div>
+      </div>
+    `).join('');
+  } catch (error) {
+    container.innerHTML = '<p class="error">حدث خطأ في تحميل التعليقات. حاول مرة أخرى.</p>';
+    console.error('Error loading comments:', error);
   }
-  
-  container.innerHTML = comments.map(comment => `
-    <div class="comment-item">
-      <div class="comment-header">
-        <strong class="comment-author">${comment.name}</strong>
-        <span class="comment-date">${formatDate(comment.date)}</span>
-      </div>
-      <div class="comment-body">
-        ${comment.text}
-      </div>
-    </div>
-  `).join('');
 }
 
-function addComment(itemId, type) {
+async function addCommentToBackend(itemId, type) {
   const name = document.getElementById('comment-name').value.trim();
   const email = document.getElementById('comment-email').value.trim();
   const text = document.getElementById('comment-text').value.trim();
+  const submitBtn = document.getElementById('submit-comment-btn');
   
   if (!name || !text) {
     alert('الرجاء ملء جميع الحقول المطلوبة');
     return;
   }
   
-  const comment = {
-    id: Date.now(),
-    name,
-    email,
-    text,
-    date: new Date().toISOString()
-  };
+  // Disable button during submission
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'جاري الإرسال...';
   
-  const allComments = JSON.parse(localStorage.getItem(COMMENTS_KEY) || '{}');
-  const key = `${type}_${itemId}`;
-  
-  if (!allComments[key]) {
-    allComments[key] = [];
+  try {
+    const result = await apiCall('comments.create', {
+      contentType: type,
+      contentId: itemId,
+      authorName: name,
+      authorEmail: email || null,
+      content: text,
+      visitorId: getVisitorId()
+    }, 'POST');
+    
+    // Clear form
+    document.getElementById('comment-form').reset();
+    
+    // Reload comments
+    await loadCommentsFromBackend(itemId, type);
+    
+    // Show success message with points
+    let message = 'تم إضافة تعليقك بنجاح!';
+    if (result.points && result.points.pointsEarned > 0) {
+      message += ` حصلت على ${result.points.pointsEarned} نقطة! 🎉`;
+    }
+    showMessage(message, 'success');
+    
+  } catch (error) {
+    showMessage('حدث خطأ: ' + error.message, 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'إرسال التعليق';
   }
-  
-  allComments[key].unshift(comment);
-  localStorage.setItem(COMMENTS_KEY, JSON.stringify(allComments));
-  
-  // Clear form
-  document.getElementById('comment-form').reset();
-  
-  // Reload comments
-  loadComments(itemId, type);
-  
-  // Show success message
-  showMessage('تم إضافة تعليقك بنجاح! شكراً لمشاركتك.', 'success');
 }
 
 /**
- * Event Registration System
- * نظام التسجيل في الفعاليات
+ * Event Registration System - Connected to Backend
+ * نظام التسجيل في الفعاليات - مربوط بـ Backend
  */
 function initializeEventRegistration() {
-  // Add registration buttons to event cards
   const eventCards = document.querySelectorAll('.event-card, .event-item');
   
   eventCards.forEach(card => {
@@ -170,27 +214,19 @@ function initializeEventRegistration() {
 }
 
 function extractEventId(card) {
-  // Try to extract ID from various sources
   const link = card.querySelector('a[href*="event"]');
   if (link) {
     const match = link.href.match(/event=(\d+)/);
-    if (match) return match[1];
+    if (match) return parseInt(match[1]);
   }
-  
-  // Generate ID from title
-  const title = card.querySelector('h3, h2, .event-title');
-  if (title) {
-    return btoa(title.textContent.trim()).substring(0, 10);
-  }
-  
   return null;
 }
 
 function createRegistrationButton(eventId) {
   const btn = document.createElement('button');
   btn.className = 'btn-register';
-  btn.textContent = isRegistered(eventId) ? '✓ مسجل' : '📝 سجل الآن';
-  btn.disabled = isRegistered(eventId);
+  btn.dataset.eventId = eventId;
+  btn.textContent = '📝 سجل الآن';
   
   btn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -199,11 +235,6 @@ function createRegistrationButton(eventId) {
   });
   
   return btn;
-}
-
-function isRegistered(eventId) {
-  const registrations = JSON.parse(localStorage.getItem(REGISTRATIONS_KEY) || '{}');
-  return registrations[eventId] !== undefined;
 }
 
 function openRegistrationModal(eventId) {
@@ -215,7 +246,7 @@ function openRegistrationModal(eventId) {
           <button class="modal-close" onclick="closeRegistrationModal()">&times;</button>
         </div>
         <div class="modal-body">
-          <form id="registration-form">
+          <form id="registration-form" data-event-id="${eventId}">
             <div class="form-group">
               <label>الاسم الكامل *</label>
               <input type="text" id="reg-name" required/>
@@ -225,8 +256,8 @@ function openRegistrationModal(eventId) {
               <input type="email" id="reg-email" required/>
             </div>
             <div class="form-group">
-              <label>رقم الهاتف *</label>
-              <input type="tel" id="reg-phone" required/>
+              <label>رقم الهاتف</label>
+              <input type="tel" id="reg-phone"/>
             </div>
             <div class="form-group">
               <label>الجامعة/الكلية</label>
@@ -237,7 +268,7 @@ function openRegistrationModal(eventId) {
               <textarea id="reg-notes" rows="3"></textarea>
             </div>
             <div class="modal-actions">
-              <button type="submit" class="btn-primary">تأكيد التسجيل</button>
+              <button type="submit" class="btn-primary" id="submit-reg-btn">تأكيد التسجيل</button>
               <button type="button" class="btn-secondary" onclick="closeRegistrationModal()">إلغاء</button>
             </div>
           </form>
@@ -250,7 +281,7 @@ function openRegistrationModal(eventId) {
   
   document.getElementById('registration-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    submitRegistration(eventId);
+    submitRegistrationToBackend(eventId);
   });
 }
 
@@ -259,31 +290,65 @@ function closeRegistrationModal() {
   if (modal) modal.remove();
 }
 
-function submitRegistration(eventId) {
+async function submitRegistrationToBackend(eventId) {
+  const submitBtn = document.getElementById('submit-reg-btn');
+  
   const registration = {
-    eventId,
-    name: document.getElementById('reg-name').value.trim(),
+    eventId: parseInt(eventId),
+    fullName: document.getElementById('reg-name').value.trim(),
     email: document.getElementById('reg-email').value.trim(),
-    phone: document.getElementById('reg-phone').value.trim(),
-    university: document.getElementById('reg-university').value.trim(),
-    notes: document.getElementById('reg-notes').value.trim(),
-    date: new Date().toISOString()
+    phone: document.getElementById('reg-phone').value.trim() || null,
+    university: document.getElementById('reg-university').value.trim() || null,
+    notes: document.getElementById('reg-notes').value.trim() || null,
+    visitorId: getVisitorId()
   };
   
-  const registrations = JSON.parse(localStorage.getItem(REGISTRATIONS_KEY) || '{}');
-  registrations[eventId] = registration;
-  localStorage.setItem(REGISTRATIONS_KEY, JSON.stringify(registrations));
-  
-  closeRegistrationModal();
-  
-  // Update button
-  const btn = document.querySelector(`.btn-register[data-event-id="${eventId}"]`);
-  if (btn) {
-    btn.textContent = '✓ مسجل';
-    btn.disabled = true;
+  if (!registration.fullName || !registration.email) {
+    alert('الرجاء ملء الحقول المطلوبة');
+    return;
   }
   
-  showMessage('✅ تم تسجيلك بنجاح! سنتواصل معك قريباً.', 'success');
+  // Disable button during submission
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'جاري التسجيل...';
+  
+  try {
+    const result = await apiCall('registrations.create', registration, 'POST');
+    
+    closeRegistrationModal();
+    
+    // Update button
+    const btn = document.querySelector(`.btn-register[data-event-id="${eventId}"]`);
+    if (btn) {
+      btn.textContent = '✓ مسجل';
+      btn.disabled = true;
+      btn.classList.add('registered');
+    }
+    
+    // Show success message with points
+    let message = '✅ تم تسجيلك بنجاح! سنتواصل معك قريباً.';
+    if (result.points && result.points.pointsEarned > 0) {
+      message += ` حصلت على ${result.points.pointsEarned} نقطة! 🎉`;
+    }
+    showMessage(message, 'success');
+    
+  } catch (error) {
+    if (error.message.includes('Already registered')) {
+      showMessage('أنت مسجل مسبقاً في هذه الفعالية', 'warning');
+      closeRegistrationModal();
+      
+      // Update button
+      const btn = document.querySelector(`.btn-register[data-event-id="${eventId}"]`);
+      if (btn) {
+        btn.textContent = '✓ مسجل مسبقاً';
+        btn.disabled = true;
+      }
+    } else {
+      showMessage('حدث خطأ: ' + error.message, 'error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'تأكيد التسجيل';
+    }
+  }
 }
 
 /**
@@ -310,6 +375,12 @@ function formatDate(dateString) {
   });
 }
 
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 function showMessage(text, type = 'info') {
   const existing = document.querySelector('.toast-message');
   if (existing) existing.remove();
@@ -324,18 +395,10 @@ function showMessage(text, type = 'info') {
   setTimeout(() => {
     toast.classList.remove('show');
     setTimeout(() => toast.remove(), 300);
-  }, 3000);
+  }, 4000);
 }
 
 // Make functions globally accessible
 window.closeRegistrationModal = closeRegistrationModal;
-
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    loadComments,
-    addComment,
-    isRegistered,
-    submitRegistration
-  };
-}
+window.loadCommentsFromBackend = loadCommentsFromBackend;
+window.submitRegistrationToBackend = submitRegistrationToBackend;

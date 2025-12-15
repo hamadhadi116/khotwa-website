@@ -214,12 +214,31 @@
       }, 3000);
     }
 
-    saveFeedback(feedback) {
+    async saveFeedback(feedback) {
+      // Save to localStorage as backup
       const saved = JSON.parse(localStorage.getItem('khotwa_feedback') || '[]');
       saved.push(feedback);
       localStorage.setItem('khotwa_feedback', JSON.stringify(saved));
       
-      console.log('Feedback saved:', feedback);
+      // Send to Backend API
+      try {
+        const BACKEND_API = 'https://khotwa-backend.manus.space/api/trpc';
+        const response = await fetch(`${BACKEND_API}/complaints.create`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: feedback.category === 'suggestion' ? 'suggestion' : 'complaint',
+            name: null,
+            email: feedback.email || null,
+            subject: feedback.category || 'ملاحظة',
+            content: feedback.message || feedback.value || ''
+          })
+        });
+        const data = await response.json();
+        console.log('Feedback sent to backend:', data);
+      } catch (error) {
+        console.error('Error sending feedback to backend:', error);
+      }
     }
 
     loadSavedFeedback() {
