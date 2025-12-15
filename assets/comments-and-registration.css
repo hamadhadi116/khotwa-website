@@ -1,0 +1,352 @@
+/* Comments and Registration System Styles */
+
+/* Comments Section */
+.comments-section {
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.comments-section h2 {
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Add Comment Form */
+.add-comment-form {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.add-comment-form h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.add-comment-form .form-group {
+  margin-bottom: 15px;
+}
+
+.add-comment-form input,
+.add-comment-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.add-comment-form input:focus,
+.add-comment-form textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.add-comment-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Comments List */
+.comments-list {
+  margin-top: 30px;
+}
+
+.no-comments {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+  font-style: italic;
+}
+
+.comment-item {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+
+.comment-item:hover {
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  transform: translateY(-2px);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.comment-author {
+  color: #667eea;
+  font-size: 16px;
+}
+
+.comment-date {
+  color: #999;
+  font-size: 13px;
+}
+
+.comment-body {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Registration Button */
+.btn-register {
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+.btn-register:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-register:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Registration Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s;
+}
+
+.modal-dialog {
+  background: white;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  padding: 20px 25px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.modal-body .form-group {
+  margin-bottom: 20px;
+}
+
+.modal-body label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.modal-body input,
+.modal-body textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.modal-body input:focus,
+.modal-body textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.modal-body textarea {
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: #667eea;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+/* Toast Messages */
+.toast-message {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  z-index: 10000;
+  transition: bottom 0.3s;
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast-message.show {
+  bottom: 30px;
+}
+
+.toast-success {
+  background: #28a745;
+}
+
+.toast-error {
+  background: #dc3545;
+}
+
+.toast-info {
+  background: #17a2b8;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .comments-section {
+    margin-top: 30px;
+    padding-top: 20px;
+  }
+  
+  .add-comment-form {
+    padding: 20px;
+  }
+  
+  .comment-item {
+    padding: 15px;
+  }
+  
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .modal-dialog {
+    width: 95%;
+  }
+  
+  .modal-header,
+  .modal-body {
+    padding: 15px 20px;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+}

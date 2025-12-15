@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>الشكاوى والاقتراحات - مجلس طلاب خطوة</title>
+  <link rel="stylesheet" href="/assets/main.min.css"/>
+  <link rel="icon" href="/assets/img/favicon-32.png"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html">مجلس طلاب خطوة</a>
+      <div class="nav-links">
+        <a href="/about.html">من نحن</a>
+        <a href="/news.html">الأخبار</a>
+        <a href="/events.html">الفعاليات</a>
+        <a href="/contact.html">تواصل</a>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="container" style="padding: 60px 20px; max-width: 600px;">
+    <h1>📝 الشكاوى والاقتراحات</h1>
+    <form id="complaint-form" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-top: 40px;">
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">النوع</label>
+        <select required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;">
+          <option value="complaint">شكوى</option>
+          <option value="suggestion">اقتراح</option>
+        </select>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">الاسم</label>
+        <input type="text" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"/>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">البريد الإلكتروني</label>
+        <input type="email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"/>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">التفاصيل</label>
+        <textarea rows="6" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"></textarea>
+      </div>
+      <button type="submit" style="width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: 600; cursor: pointer;">إرسال</button>
+    </form>
+  </main>
+  
+  <script src="/assets/cms-boot.min.js"></script>
+  <script src="/assets/analytics.js"></script>
+  <script src="/assets/all-features.js"></script>
+  <script>
+    document.getElementById('complaint-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('تم إرسال طلبك بنجاح! سنتواصل معك قريباً.');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
