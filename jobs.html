@@ -4,8 +4,81 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>الوظائف والفرص - مجلس طلاب خطوة</title>
-  <link rel="stylesheet" href="/assets/main.min.css"/>
-  <link rel="icon" href="/assets/img/favicon-32.png"/>
+  <link rel="stylesheet" href="/assets/main.css"/>
+  <link rel="icon" href="/assets/favicon-32.png"/>
+  <style>
+    .jobs-list {
+      margin-top: 40px;
+    }
+    .job-card {
+      background: var(--card, white);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      border: 1px solid var(--ring, #e5e7eb);
+      transition: transform 0.2s;
+    }
+    .job-card:hover {
+      transform: translateY(-3px);
+    }
+    .job-card h3 {
+      margin: 0 0 15px 0;
+      color: var(--text, #0f172a);
+    }
+    .job-card p {
+      margin: 8px 0;
+      color: var(--muted, #666);
+    }
+    .job-card ul {
+      margin: 10px 0;
+      padding-right: 20px;
+    }
+    .job-card li {
+      margin: 5px 0;
+      color: var(--muted, #666);
+    }
+    .job-type {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .job-type.volunteer {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .job-type.paid {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .apply-btn {
+      padding: 12px 24px;
+      background: #1e40af;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.2s;
+    }
+    .apply-btn:hover {
+      background: #1e3a8a;
+    }
+    .loading-message {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted, #666);
+    }
+    .empty-message {
+      text-align: center;
+      padding: 60px;
+      background: var(--card, white);
+      border-radius: 12px;
+      border: 1px dashed var(--ring, #e5e7eb);
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -25,24 +98,83 @@
   
   <main class="container" style="padding: 60px 20px;">
     <h1>💼 الوظائف والفرص التطوعية</h1>
-    <div class="jobs-list" style="margin-top: 40px;">
-      <div class="job-card" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px;">
-        <h3>منسق فعاليات</h3>
-        <p><strong>النوع:</strong> تطوعي</p>
-        <p><strong>الوصف:</strong> نبحث عن منسق فعاليات متحمس للانضمام إلى فريقنا</p>
-        <p><strong>المتطلبات:</strong></p>
-        <ul>
-          <li>مهارات تنظيمية قوية</li>
-          <li>القدرة على العمل ضمن فريق</li>
-          <li>الالتزام بالمواعيد</li>
-        </ul>
-        <p><strong>آخر موعد للتقديم:</strong> 31 يناير 2026</p>
-        <button style="padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 15px;">تقدم الآن</button>
-      </div>
+    <p style="color: var(--muted, #666);">انضم إلى فريق مجلس طلاب خطوة</p>
+    
+    <div id="jobs-container" class="jobs-list">
+      <div class="loading-message">جاري تحميل الوظائف...</div>
     </div>
   </main>
   
-  <script src="/assets/cms-boot.min.js"></script>
   <script src="/assets/analytics.js"></script>
+  <script>
+    const BACKEND_API = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
+    
+    async function loadJobs() {
+      const container = document.getElementById('jobs-container');
+      
+      try {
+        const response = await fetch(`${BACKEND_API}/jobs.list`);
+        const data = await response.json();
+        
+        if (data.result && data.result.data && data.result.data.json) {
+          const jobs = data.result.data.json;
+          
+          if (jobs.length === 0) {
+            container.innerHTML = `
+              <div class="empty-message">
+                <div style="font-size: 64px; margin-bottom: 20px;">💼</div>
+                <h3>لا توجد وظائف متاحة حالياً</h3>
+                <p>تابعنا للحصول على أحدث الفرص</p>
+              </div>
+            `;
+            return;
+          }
+          
+          container.innerHTML = jobs.map(job => `
+            <div class="job-card">
+              <span class="job-type ${job.type === 'volunteer' ? 'volunteer' : 'paid'}">
+                ${job.type === 'volunteer' ? 'تطوعي' : 'مدفوع'}
+              </span>
+              <h3>${job.title}</h3>
+              <p>${job.description || ''}</p>
+              ${job.requirements ? `
+                <p><strong>المتطلبات:</strong></p>
+                <ul>
+                  ${job.requirements.split(',').map(req => `<li>${req.trim()}</li>`).join('')}
+                </ul>
+              ` : ''}
+              ${job.deadline ? `<p><strong>آخر موعد للتقديم:</strong> ${new Date(job.deadline).toLocaleDateString('ar-SA')}</p>` : ''}
+              <button class="apply-btn" onclick="applyForJob(${job.id})">تقدم الآن</button>
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading jobs:', error);
+        // عرض وظيفة افتراضية في حالة الخطأ
+        container.innerHTML = `
+          <div class="job-card">
+            <span class="job-type volunteer">تطوعي</span>
+            <h3>منسق فعاليات</h3>
+            <p>نبحث عن منسق فعاليات متحمس للانضمام إلى فريقنا</p>
+            <p><strong>المتطلبات:</strong></p>
+            <ul>
+              <li>مهارات تنظيمية قوية</li>
+              <li>القدرة على العمل ضمن فريق</li>
+              <li>الالتزام بالمواعيد</li>
+            </ul>
+            <p><strong>آخر موعد للتقديم:</strong> 31 يناير 2026</p>
+            <button class="apply-btn">تقدم الآن</button>
+          </div>
+        `;
+      }
+    }
+    
+    function applyForJob(jobId) {
+      alert('سيتم فتح نموذج التقديم قريباً. للتقديم حالياً، يرجى التواصل معنا عبر صفحة التواصل.');
+      window.location.href = '/contact.html';
+    }
+    
+    loadJobs();
+  </script>
 </body>
 </html>

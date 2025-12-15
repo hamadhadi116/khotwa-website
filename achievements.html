@@ -4,8 +4,50 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>الإنجازات والجوائز - مجلس طلاب خطوة</title>
-  <link rel="stylesheet" href="/assets/main.min.css"/>
-  <link rel="icon" href="/assets/img/favicon-32.png"/>
+  <link rel="stylesheet" href="/assets/main.css"/>
+  <link rel="icon" href="/assets/favicon-32.png"/>
+  <style>
+    .achievements-grid {
+      display: grid;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .achievement-card {
+      background: var(--card, white);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border: 1px solid var(--ring, #e5e7eb);
+      transition: transform 0.2s;
+    }
+    .achievement-card:hover {
+      transform: translateY(-3px);
+    }
+    .achievement-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    .achievement-card h3 {
+      margin: 0 0 10px 0;
+      color: var(--text, #0f172a);
+    }
+    .achievement-card p {
+      margin: 0;
+      color: var(--muted, #666);
+    }
+    .loading-message {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted, #666);
+    }
+    .empty-message {
+      text-align: center;
+      padding: 60px;
+      background: var(--card, white);
+      border-radius: 12px;
+      border: 1px dashed var(--ring, #e5e7eb);
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -25,26 +67,74 @@
   
   <main class="container" style="padding: 60px 20px;">
     <h1>🏆 إنجازاتنا وجوائزنا</h1>
-    <div class="achievements-grid" style="display: grid; gap: 30px; margin-top: 40px;">
-      <div class="achievement-card" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-        <div style="font-size: 48px; margin-bottom: 15px;">🏆</div>
-        <h3>جائزة أفضل مجلس طلابي</h3>
-        <p>2025 - على مستوى الجامعات السعودية</p>
-      </div>
-      <div class="achievement-card" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-        <div style="font-size: 48px; margin-bottom: 15px;">🥇</div>
-        <h3>المركز الأول في المسابقة الوطنية</h3>
-        <p>2024 - مسابقة الابتكار الطلابي</p>
-      </div>
-      <div class="achievement-card" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-        <div style="font-size: 48px; margin-bottom: 15px;">📜</div>
-        <h3>شهادة تقدير من الجامعة</h3>
-        <p>2024 - للإنجازات المتميزة</p>
-      </div>
+    <p style="color: var(--muted, #666);">إنجازات مجلس طلاب خطوة على مر السنين</p>
+    
+    <div id="achievements-container" class="achievements-grid">
+      <div class="loading-message">جاري تحميل الإنجازات...</div>
     </div>
   </main>
   
-  <script src="/assets/cms-boot.min.js"></script>
   <script src="/assets/analytics.js"></script>
+  <script>
+    const BACKEND_API = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
+    
+    async function loadAchievements() {
+      const container = document.getElementById('achievements-container');
+      
+      try {
+        const response = await fetch(`${BACKEND_API}/achievements.list`);
+        const data = await response.json();
+        
+        if (data.result && data.result.data && data.result.data.json) {
+          const achievements = data.result.data.json;
+          
+          if (achievements.length === 0) {
+            container.innerHTML = `
+              <div class="empty-message">
+                <div style="font-size: 64px; margin-bottom: 20px;">🏆</div>
+                <h3>لا توجد إنجازات حالياً</h3>
+                <p>سيتم إضافة الإنجازات قريباً</p>
+              </div>
+            `;
+            return;
+          }
+          
+          container.innerHTML = achievements.map(achievement => `
+            <div class="achievement-card">
+              <div class="achievement-icon">${achievement.icon || '🏆'}</div>
+              <h3>${achievement.title}</h3>
+              <p>${achievement.description || ''}</p>
+              ${achievement.year ? `<p style="margin-top: 10px; font-size: 14px;"><strong>${achievement.year}</strong></p>` : ''}
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading achievements:', error);
+        // عرض إنجازات افتراضية في حالة الخطأ
+        container.innerHTML = `
+          <div class="achievement-card">
+            <div class="achievement-icon">🏆</div>
+            <h3>جائزة أفضل مجلس طلابي</h3>
+            <p>على مستوى الجامعات السعودية</p>
+            <p style="margin-top: 10px; font-size: 14px;"><strong>2025</strong></p>
+          </div>
+          <div class="achievement-card">
+            <div class="achievement-icon">🥇</div>
+            <h3>المركز الأول في المسابقة الوطنية</h3>
+            <p>مسابقة الابتكار الطلابي</p>
+            <p style="margin-top: 10px; font-size: 14px;"><strong>2024</strong></p>
+          </div>
+          <div class="achievement-card">
+            <div class="achievement-icon">📜</div>
+            <h3>شهادة تقدير من الجامعة</h3>
+            <p>للإنجازات المتميزة</p>
+            <p style="margin-top: 10px; font-size: 14px;"><strong>2024</strong></p>
+          </div>
+        `;
+      }
+    }
+    
+    loadAchievements();
+  </script>
 </body>
 </html>
