@@ -73,18 +73,8 @@ applyLang();
    Fetch from tRPC API
 ================================ */
 async function fetchEventsFromAPI() {
-  const res = await fetch(
-    'https://khotwabknd-gj8oeubw.manus.space/api/trpc/events.getAll',
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ json: null })
-    }
-  );
-
-  if (!res.ok) throw new Error('API error');
-  const data = await res.json();
-  return data.result.data;
+  // استخدام KhotwaAPI لتحميل الفعاليات
+  return await KhotwaAPI.getEvents();
 }
 
 /* ===============================
@@ -107,6 +97,7 @@ async function fetchEventsFromAPI() {
   const today = new Date();
   today.setHours(0,0,0,0);
 
+  // تحويل التواريخ وفلترة الفعاليات القادمة
   events = events
     .map(ev => ({ ...ev, _date: new Date(ev.date) }))
     .filter(ev => !isNaN(ev._date) && ev._date >= today)
@@ -119,16 +110,20 @@ async function fetchEventsFromAPI() {
 
   const lang = currentLang();
 
+  if (events.length === 0) {
+    empty.hidden = false;
+    return;
+  }
+
+  empty.hidden = true;
   container.innerHTML = events.map(ev => `
     <article class="card">
       ${ev.image ? `<img src="${ev.image}" alt="">` : ''}
       <div class="card-body">
-        <h3>${lang === 'ar' ? ev.title_ar : ev.title_en}</h3>
-        <p>${lang === 'ar' ? ev.summary : ev.summary_en}</p>
+        <h3>${ev.title}</h3>
+        <p>${ev.description || ''}</p>
         <div class="meta">
-          ${lang === 'ar'
-            ? `📍 ${ev.location_ar} <br> 📅 ${ev._date.toLocaleString('ar')}`
-            : `📍 ${ev.location_en} <br> 📅 ${ev._date.toLocaleString('en')}`}
+          📍 ${ev.location || 'غير محدد'} <br> 📅 ${ev._date ? ev._date.toLocaleString('ar') : ''}
         </div>
       </div>
     </article>
