@@ -67,7 +67,19 @@ const KhotwaAPI = (function() {
     // ==================== الأخبار ====================
     
     async function getNews() {
-        return await apiCall('news.list');
+        const response = await apiCall('news.list');
+        // تحويل البيانات من هيكل Backend إلى هيكل الواجهة
+        if (response && response.json) {
+            return response.json.map(item => ({
+                id: item.id,
+                title: item.titleAr || item.titleEn,
+                image: item.imageUrl,
+                createdAt: item.createdAt,
+                tags: item.category ? [item.category] : [],
+                content: item.contentAr || item.contentEn
+            }));
+        }
+        return [];
     }
     
     async function getNewsById(id) {
@@ -77,7 +89,20 @@ const KhotwaAPI = (function() {
     // ==================== الفعاليات ====================
     
     async function getEvents() {
-        return await apiCall('events.list');
+        const response = await apiCall('events.list');
+        // تحويل البيانات من هيكل Backend إلى هيكل الواجهة
+        if (response && response.json) {
+            return response.json.map(item => ({
+                id: item.id,
+                title: item.titleAr || item.titleEn,
+                image: item.imageUrl,
+                date: item.eventDate,
+                location: item.location,
+                description: item.descriptionAr || item.descriptionEn,
+                createdAt: item.createdAt
+            }));
+        }
+        return [];
     }
     
     async function getEventById(id) {
@@ -175,13 +200,39 @@ const KhotwaAPI = (function() {
     // ==================== الإنجازات ====================
     
     async function getAchievements() {
-        return await apiCall('achievements.list');
+        const response = await apiCall('achievements.list');
+        // تحويل البيانات من هيكل Backend إلى هيكل الواجهة
+        if (response && response.json) {
+            return response.json.map(item => ({
+                id: item.id,
+                title: item.titleAr || item.titleEn,
+                description: item.descriptionAr || item.descriptionEn,
+                image: item.imageUrl,
+                date: item.achievementDate,
+                createdAt: item.createdAt
+            }));
+        }
+        return [];
     }
     
     // ==================== الوظائف ====================
     
     async function getJobs() {
-        return await apiCall('jobs.list');
+        const response = await apiCall('jobs.list');
+        // تحويل البيانات من هيكل Backend إلى هيكل الواجهة
+        if (response && response.json) {
+            return response.json.map(item => ({
+                id: item.id,
+                title: item.titleAr || item.titleEn,
+                description: item.descriptionAr || item.descriptionEn,
+                department: item.department,
+                requirements: item.requirementsAr || item.requirementsEn,
+                deadline: item.applicationDeadline,
+                isOpen: item.isOpen,
+                createdAt: item.createdAt
+            }));
+        }
+        return [];
     }
     
     async function getJobById(id) {
