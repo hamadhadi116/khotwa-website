@@ -260,6 +260,7 @@
   <link rel="stylesheet" href="/assets/pagination.css">
   <link rel="stylesheet" href="/assets/advanced-filters.css">
   <link rel="stylesheet" href="/assets/feedback.css">
+  <script src="/assets/khotwa-api.js?v=1765938212"></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
@@ -404,17 +405,13 @@
       setLang(currentLang());
       langBtn?.addEventListener('click', ()=> setLang(currentLang()==='ar' ? 'en' : 'ar'));
 
-      // تحميل الفعاليات من /data/events.json بنفس هيكل صفحة events/news: { items: [...] }
+      // تحميل الفعاليات من Backend API
       async function loadEvents(){
         const list = document.getElementById('events');
         if(!list) return;
         list.setAttribute('aria-busy','true');
         try{
-          const res = await fetch('/data/events.json?ts=' + Date.now(), {cache:'no-store'});
-          if(!res.ok) throw new Error('HTTP ' + res.status);
-
-          const data = await res.json();
-          const items = Array.isArray(data.items) ? data.items : [];
+          const items = await KhotwaAPI.getEvents();
 
           list.innerHTML = '';
           if(items.length===0){
