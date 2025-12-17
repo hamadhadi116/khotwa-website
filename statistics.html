@@ -94,32 +94,29 @@
   
   <script src="/assets/analytics.js"></script>
   <script>
-    const BACKEND_API = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
-    
     async function loadStatistics() {
       try {
-        const response = await fetch(`${BACKEND_API}/statistics.get`);
-        const data = await response.json();
+        const stats = await KhotwaAPI.getStatistics();
         
-        if (data.result && data.result.data && data.result.data.json) {
-          const stats = data.result.data.json;
+        if (stats && stats.json) {
+          const data = stats.json;
           
-          document.getElementById('stat-news').textContent = stats.news || 0;
+          document.getElementById('stat-news').textContent = data.news || 0;
           document.getElementById('stat-news').classList.remove('loading');
           
-          document.getElementById('stat-events').textContent = stats.events || 0;
+          document.getElementById('stat-events').textContent = data.events || 0;
           document.getElementById('stat-events').classList.remove('loading');
           
-          document.getElementById('stat-comments').textContent = stats.comments || 0;
+          document.getElementById('stat-comments').textContent = data.comments || 0;
           document.getElementById('stat-comments').classList.remove('loading');
           
-          document.getElementById('stat-registrations').textContent = stats.registrations || 0;
+          document.getElementById('stat-registrations').textContent = data.registrations || 0;
           document.getElementById('stat-registrations').classList.remove('loading');
           
-          document.getElementById('stat-complaints').textContent = stats.complaints || 0;
+          document.getElementById('stat-complaints').textContent = data.complaints || 0;
           document.getElementById('stat-complaints').classList.remove('loading');
           
-          document.getElementById('stat-users').textContent = stats.users || 0;
+          document.getElementById('stat-users').textContent = data.users || 0;
           document.getElementById('stat-users').classList.remove('loading');
         }
       } catch (error) {

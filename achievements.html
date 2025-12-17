@@ -77,19 +77,13 @@
   
   <script src="/assets/analytics.js"></script>
   <script>
-    const BACKEND_API = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
-    
     async function loadAchievements() {
       const container = document.getElementById('achievements-container');
       
       try {
-        const response = await fetch(`${BACKEND_API}/achievements.list`);
-        const data = await response.json();
+        const achievements = await KhotwaAPI.getAchievements();
         
-        if (data.result && data.result.data && data.result.data.json) {
-          const achievements = data.result.data.json;
-          
-          if (achievements.length === 0) {
+        if (achievements.length === 0) {
             container.innerHTML = `
               <div class="empty-message">
                 <div style="font-size: 64px; margin-bottom: 20px;">🏆</div>
@@ -102,13 +96,12 @@
           
           container.innerHTML = achievements.map(achievement => `
             <div class="achievement-card">
-              <div class="achievement-icon">${achievement.icon || '🏆'}</div>
+              ${achievement.image ? `<img src="${achievement.image}" alt="${achievement.title}" style="width: 100%; border-radius: 8px; margin-bottom: 15px;">` : `<div class="achievement-icon">🏆</div>`}
               <h3>${achievement.title}</h3>
               <p>${achievement.description || ''}</p>
-              ${achievement.year ? `<p style="margin-top: 10px; font-size: 14px;"><strong>${achievement.year}</strong></p>` : ''}
+              ${achievement.date ? `<p style="margin-top: 10px; font-size: 14px;"><strong>${new Date(achievement.date).toLocaleDateString('ar')}</strong></p>` : ''}
             </div>
           `).join('');
-        }
       } catch (error) {
         console.error('Error loading achievements:', error);
         // عرض إنجازات افتراضية في حالة الخطأ

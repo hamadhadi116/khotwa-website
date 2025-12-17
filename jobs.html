@@ -108,19 +108,13 @@
   
   <script src="/assets/analytics.js"></script>
   <script>
-    const BACKEND_API = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
-    
     async function loadJobs() {
       const container = document.getElementById('jobs-container');
       
       try {
-        const response = await fetch(`${BACKEND_API}/jobs.list`);
-        const data = await response.json();
+        const jobs = await KhotwaAPI.getJobs();
         
-        if (data.result && data.result.data && data.result.data.json) {
-          const jobs = data.result.data.json;
-          
-          if (jobs.length === 0) {
+        if (jobs.length === 0) {
             container.innerHTML = `
               <div class="empty-message">
                 <div style="font-size: 64px; margin-bottom: 20px;">💼</div>
@@ -131,24 +125,21 @@
             return;
           }
           
-          container.innerHTML = jobs.map(job => `
-            <div class="job-card">
-              <span class="job-type ${job.type === 'volunteer' ? 'volunteer' : 'paid'}">
-                ${job.type === 'volunteer' ? 'تطوعي' : 'مدفوع'}
-              </span>
-              <h3>${job.title}</h3>
-              <p>${job.description || ''}</p>
-              ${job.requirements ? `
-                <p><strong>المتطلبات:</strong></p>
-                <ul>
-                  ${job.requirements.split(',').map(req => `<li>${req.trim()}</li>`).join('')}
-                </ul>
-              ` : ''}
-              ${job.deadline ? `<p><strong>آخر موعد للتقديم:</strong> ${new Date(job.deadline).toLocaleDateString('ar-SA')}</p>` : ''}
-              <button class="apply-btn" onclick="applyForJob(${job.id})">تقدم الآن</button>
-            </div>
-          `).join('');
-        }
+        container.innerHTML = jobs.map(job => `
+          <div class="job-card">
+            <span class="job-type ${job.isOpen ? 'volunteer' : 'paid'}">
+              ${job.isOpen ? 'مفتوح' : 'مغلق'}
+            </span>
+            <h3>${job.title}</h3>
+            <p>${job.description || ''}</p>
+            ${job.requirements ? `
+              <p><strong>المتطلبات:</strong></p>
+              <p>${job.requirements}</p>
+            ` : ''}
+            ${job.deadline ? `<p><strong>آخر موعد للتقديم:</strong> ${new Date(job.deadline).toLocaleDateString('ar-SA')}</p>` : ''}
+            <button class="apply-btn" onclick="applyForJob(${job.id})">تقدم الآن</button>
+          </div>
+        `).join('');
       } catch (error) {
         console.error('Error loading jobs:', error);
         // عرض وظيفة افتراضية في حالة الخطأ
