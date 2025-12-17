@@ -220,24 +220,19 @@
       saved.push(feedback);
       localStorage.setItem('khotwa_feedback', JSON.stringify(saved));
       
-      // Send to Backend API
+      // Send to Backend API using KhotwaAPI
       try {
-        const BACKEND_API = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
-        const response = await fetch(`${BACKEND_API}/complaints.create`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            json: {
-              type: feedback.category === 'suggestion' ? 'suggestion' : 'complaint',
-              name: null,
-              email: feedback.email || null,
-              subject: feedback.category || 'ملاحظة',
-              content: feedback.message || feedback.value || ''
-            }
-          })
-        });
-        const data = await response.json();
-        console.log('Feedback sent to backend:', data);
+        const subject = feedback.category || 'ملاحظة';
+        const content = feedback.message || feedback.value || '';
+        const email = feedback.email || null;
+        
+        if (feedback.category === 'suggestion') {
+          await KhotwaAPI.submitSuggestion(subject, content, null, email);
+        } else {
+          await KhotwaAPI.submitComplaint(subject, content, null, email);
+        }
+        
+        console.log('Feedback sent to backend successfully');
       } catch (error) {
         console.error('Error sending feedback to backend:', error);
       }

@@ -138,6 +138,7 @@
   <link rel="stylesheet" href="/assets/feedback.css">
   <link rel="alternate" type="application/rss+xml" title="أخبار مجلس طلاب خطوة" href="/feed.xml">
   <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
+  <script src="/assets/khotwa-api.js?v=1765938212"></script>
 </head>
 <body>
   <!-- Skip link (لغتين) -->
@@ -329,7 +330,7 @@
       t.addEventListener('click',()=> set(isEn()?'ar':'en'));
     })();
 
-    // تحميل أقرب 3 فعاليات للصفحة الرئيسية من /data/events.json
+    // تحميل أقرب 3 فعاليات للصفحة الرئيسية من Backend API
     (function(){
       const container = document.getElementById('home-events');
       const emptyMsg  = document.getElementById('home-events-empty');
@@ -343,21 +344,20 @@
 
       async function loadHomeEvents(){
         try{
-          const res = await fetch('/data/events.json?ts=' + Date.now(), { cache:'no-store' });
-          if(!res.ok) throw new Error('HTTP ' + res.status);
-          const data = await res.json();
-
-          // يدعم إما { items:[...] } أو [ ... ]
-          const items = Array.isArray(data.items) ? data.items : (Array.isArray(data) ? data : []);
-          if(!items.length){
+          // استخدام KhotwaAPI بدلاً من fetch
+          const items = await KhotwaAPI.getEvents();
+          
+          if(!items || !items.length){
             emptyMsg.hidden = false;
             return;
           }
 
           const today = new Date();
+          today.setHours(0,0,0,0);
+          
           const upcoming = items
-            .map(ev => ({ ...ev, _date: ev.date ? new Date(ev.date) : null }))
-            .filter(ev => ev._date && !isNaN(ev._date) && ev._date >= today)
+            .map(ev => ({ ...ev, _date: new Date(ev.date) }))
+            .filter(ev => !isNaN(ev._date) && ev._date >= today)
             .sort((a,b)=> a._date - b._date)
             .slice(0,3);
 
@@ -376,30 +376,28 @@
             const arDate = d ? d.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}) : '';
             const enDate = d ? d.toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'}) : '';
 
-            const titleAr   = ev.title?.ar   || ev.title   || '';
-            const titleEn   = ev.title?.en   || ev.title   || '';
-            const summaryAr = ev.summary?.ar || ev.summary || '';
-            const summaryEn = ev.summary?.en || ev.summary || '';
-            const locAr     = ev.location    || '';
-            const locEn     = ev.location_en || ev.location || '';
+            // Backend يرجع: title, location, description
+            const titleText = ev.title || '';
+            const descText = ev.description || '';
+            const locText = ev.location || '';
 
             const article = document.createElement('article');
             article.className = 'card';
             article.innerHTML = `
               <h3>
-                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>${escapeHtml(titleAr)}</span>
-                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>${escapeHtml(titleEn)}</span>
+                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>${escapeHtml(titleText)}</span>
+                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>${escapeHtml(titleText)}</span>
               </h3>
               <p class="muted">
-                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>${escapeHtml(summaryAr)}</span>
-                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>${escapeHtml(summaryEn)}</span>
+                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>${escapeHtml(descText.substring(0, 100))}${descText.length > 100 ? '...' : ''}</span>
+                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>${escapeHtml(descText.substring(0, 100))}${descText.length > 100 ? '...' : ''}</span>
               </p>
               <p class="muted">
                 <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>
-                  ${arDate ? 'التاريخ: '+escapeHtml(arDate) : ''}${locAr ? (arDate ? ' – ' : '') + 'المكان: '+escapeHtml(locAr) : ''}
+                  ${arDate ? '📅 '+escapeHtml(arDate) : ''}${locText ? (arDate ? ' – ' : '') + '📍 '+escapeHtml(locText) : ''}
                 </span>
                 <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>
-                  ${enDate ? 'Date: '+escapeHtml(enDate) : ''}${locEn ? (enDate ? ' – ' : '') + 'Location: '+escapeHtml(locEn) : ''}
+                  ${enDate ? '📅 '+escapeHtml(enDate) : ''}${locText ? (enDate ? ' – ' : '') + '📍 '+escapeHtml(locText) : ''}
                 </span>
               </p>
             `;
