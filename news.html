@@ -626,11 +626,12 @@
       async function loadNews(){
         const postsEl = document.getElementById('posts');
         try{
-          const res = await fetch('/data/news.json?ts=' + Date.now(), { cache: 'no-store' });
-          if(!res.ok) throw new Error('HTTP ' + res.status);
-
-          const data = await res.json();
-          const items = Array.isArray(data.items) ? data.items : [];
+          // Load from Backend API using KhotwaAPI
+          const items = await KhotwaAPI.getNews();
+          
+          if (!items) {
+            throw new Error('Failed to load news');
+          }
 
           postsEl.innerHTML = '';
 
@@ -640,7 +641,7 @@
           }
 
           // ترتيب من الأحدث
-          items.sort((a,b)=> new Date(b.date) - new Date(a.date));
+          items.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
 
           const frag = document.createDocumentFragment();
 
@@ -653,15 +654,15 @@
             article.dataset.tags = typeTag;
             article.id = 'post-' + (idx + 1);
 
-            const arDate = item.date
-              ? new Date(item.date).toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'})
+            const arDate = item.createdAt
+              ? new Date(item.createdAt).toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'})
               : '';
-            const enDate = item.date
-              ? new Date(item.date).toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'})
+            const enDate = item.createdAt
+              ? new Date(item.createdAt).toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'})
               : '';
 
-            const titleAr = item.title?.ar || item.title || '';
-            const titleEn = item.title?.en || item.title || '';
+            const titleAr = item.title || '';
+            const titleEn = item.title || '';
 
             article.innerHTML = `
               ${item.image
@@ -677,17 +678,11 @@
                 </div>
                 <h3 data-lang="ar">${titleAr}</h3>
                 <h3 data-lang="en" lang="en" hidden aria-hidden="true">${titleEn}</h3>
-                <p class="muted" data-lang="ar">${item.summary?.ar || ''}</p>
-                <p class="muted" data-lang="en" lang="en" hidden aria-hidden="true">${item.summary?.en || ''}</p>
+                <p class="muted" data-lang="ar">${item.content?.substring(0, 150) || ''}...</p>
+                <p class="muted" data-lang="en" lang="en" hidden aria-hidden="true">${item.content?.substring(0, 150) || ''}...</p>
                 <div class="tags">
-                  ${(item.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}
+                  <span class="tag">${item.category || 'إعلان'}</span>
                 </div>
-                ${item.url
-                  ? `<a class="more" href="${item.url}" target="_blank" rel="noopener">
-                       <span data-lang="ar">المزيد</span>
-                       <span data-lang="en" lang="en" hidden aria-hidden="true">More</span>
-                     </a>`
-                  : ''}
               </div>
             `;
 

@@ -50,10 +50,28 @@
   <script src="/assets/analytics.js"></script>
   <script src="/assets/all-features.js"></script>
   <script>
-    document.getElementById('complaint-form').addEventListener('submit', (e) => {
+    document.getElementById('complaint-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      alert('تم إرسال طلبك بنجاح! سنتواصل معك قريباً.');
-      e.target.reset();
+      
+      const formData = new FormData(e.target);
+      const subject = formData.get('subject');
+      const content = formData.get('content');
+      const name = formData.get('name');
+      const email = formData.get('email');
+      
+      if (!subject || !content || !name) {
+        alert('الرجاء ملء جميع الحقول المطلوبة');
+        return;
+      }
+      
+      try {
+        await KhotwaAPI.submitComplaint(subject, content, name, email || '');
+        alert('تم إرسال شكواك بنجاح! سنتواصل معك قريباً.');
+        e.target.reset();
+      } catch (error) {
+        console.error('Error submitting complaint:', error);
+        alert('حدث خطأ أثناء إرسال الشكوى. الرجاء المحاولة مرة أخرى.');
+      }
     });
   </script>
 </body>
