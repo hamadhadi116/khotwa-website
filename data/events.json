@@ -4,96 +4,175 @@
       "title": "أسبوع الترحيب بالطلاب الجدد",
       "title_ar": "أسبوع الترحيب بالطلاب الجدد",
       "title_en": "Welcome Week for New Students",
+
       "date": "2026-02-16T09:00:00+11:00",
+
       "location": "Main Plaza, Bundoora Campus",
       "location_ar": "الساحة الرئيسية، حرم Bundoora",
+      "location_en": "Main Plaza, Bundoora Campus",
+
       "category": "اجتماعي",
-      "summary": "ندعو جميع الطلاب الجدد لحضور فعاليات أسبوع الترحيب. ستتضمن الفعاليات جولات في الحرم الجامعي، ورش عمل تعريفية، ولقاءات اجتماعية للتعارف.",
-      "body": "يسر مجلس طلاب خطوة أن يرحب بجميع الطلاب الجدد ويدعوهم لحضور فعاليات أسبوع الترحيب.\n\nالبرنامج يشمل:\n- جولات إرشادية في الحرم الجامعي\n- ورش عمل تعريفية بالخدمات الجامعية\n- لقاءات اجتماعية للتعارف\n- نصائح من الطلاب القدامى\n- وجبات ترحيبية مجانية\n\nفرصة رائعة للبدء بداية قوية في رحلتك الجامعية!",
+
+      "summary": "ندعو جميع الطلاب الجدد لحضور فعاليات أسبوع الترحيب.",
+      "summary_en": "We invite all new students to attend Welcome Week activities.",
+
+      "body": "يسر مجلس طلاب خطوة أن يرحب بجميع الطلاب الجدد...",
+      "body_en": "Khotwa Student Council is pleased to welcome all new students...",
+
       "image": "/assets/img/photo-2025-04-26-21-25-14.jpg"
     },
+
     {
       "title": "ورشة عمل: مقدمة في البرمجة بلغة Python",
       "title_ar": "ورشة عمل: مقدمة في البرمجة بلغة Python",
       "title_en": "Workshop: Introduction to Python Programming",
+
       "date": "2026-03-05T14:00:00+11:00",
+
       "location": "IT Building, Room 301",
       "location_ar": "مبنى تكنولوجيا المعلومات، القاعة 301",
+      "location_en": "IT Building, Room 301",
+
       "category": "أكاديمي",
-      "summary": "ورشة عمل تفاعلية للمبتدئين في البرمجة. سنتعلم أساسيات Python وكيفية كتابة برامج بسيطة. الورشة مجانية ومفتوحة لجميع الطلاب.",
-      "body": "انضم إلينا في ورشة عمل عملية لتعلم أساسيات البرمجة بلغة Python!\n\nما ستتعلمه:\n- أساسيات لغة Python\n- المتغيرات وأنواع البيانات\n- الحلقات والشروط\n- كتابة برامج بسيطة\n- نصائح للمبتدئين\n\nلا يشترط أي خبرة سابقة في البرمجة. أحضر جهازك المحمول!",
+
+      "summary": "ورشة عمل تفاعلية للمبتدئين في البرمجة.",
+      "summary_en": "An interactive workshop for beginners in programming.",
+
+      "body": "انضم إلينا في ورشة عمل عملية لتعلم أساسيات البرمجة...",
+      "body_en": "Join us for a hands-on workshop to learn Python basics...",
+
       "image": "/assets/img/photo-2025-04-26-21-25-14.jpg"
     },
+
     {
       "title": "بطولة كرة القدم السنوية",
       "title_ar": "بطولة كرة القدم السنوية",
       "title_en": "Annual Football Tournament",
+
       "date": "2026-03-20T10:00:00+11:00",
+
       "location": "Main Sports Field",
       "location_ar": "الملعب الرياضي الرئيسي",
+      "location_en": "Main Sports Field",
+
       "category": "رياضي",
-      "summary": "بطولة كرة قدم ودية بين طلاب الجامعة. التسجيل مفتوح للفرق (5 لاعبين + احتياطي). الفريق الفائز سيحصل على كأس البطولة وجوائز قيمة.",
-      "body": "استعدوا للبطولة الرياضية الأكبر في الجامعة!\n\nتفاصيل البطولة:\n- نظام 5 ضد 5\n- مباريات نصف ساعة\n- حكام محترفون\n- جوائز للفائزين\n- كأس البطولة للفريق الأول\n\nسجل فريقك الآن! الأماكن محدودة.",
+
+      "summary": "بطولة كرة قدم ودية بين طلاب الجامعة.",
+      "summary_en": "A friendly football tournament between university students.",
+
+      "body": "استعدوا للبطولة الرياضية الأكبر في الجامعة...",
+      "body_en": "Get ready for the biggest sports tournament at the university...",
+
       "image": "/assets/img/photo-2025-04-26-21-25-14.jpg"
     },
+
     {
       "title": "لقاء القهوة الأسبوعي",
       "title_ar": "لقاء القهوة الأسبوعي",
       "title_en": "Weekly Coffee Meetup",
+
       "date": "2026-02-28T16:00:00+11:00",
+
       "location": "University Cafe, Ground Floor",
       "location_ar": "مقهى الجامعة، الطابق الأرضي",
+      "location_en": "University Cafe, Ground Floor",
+
       "category": "اجتماعي",
-      "summary": "لقاء اجتماعي غير رسمي للتعارف وتبادل الأفكار حول الحياة الجامعية. فرصة رائعة للقاء طلاب جدد وبناء صداقات. القهوة والمشروبات مجانية!",
-      "body": "انضم إلينا في لقاء القهوة الأسبوعي!\n\nما يميز هذا اللقاء:\n- أجواء ودية وغير رسمية\n- فرصة للتعارف على طلاب جدد\n- مناقشات حرة عن الحياة الجامعية\n- قهوة ومشروبات مجانية\n- ألعاب وأنشطة ترفيهية\n\nالحضور مفتوح للجميع، لا يشترط التسجيل المسبق!",
+
+      "summary": "لقاء اجتماعي غير رسمي للتعارف.",
+      "summary_en": "An informal social meetup to connect with others.",
+
+      "body": "انضم إلينا في لقاء القهوة الأسبوعي...",
+      "body_en": "Join us for our weekly coffee meetup...",
+
       "image": "/assets/img/photo-2025-04-26-21-25-14.jpg"
     },
+
     {
       "title": "ندوة: كيف تبني مسيرتك المهنية في أستراليا",
       "title_ar": "ندوة: كيف تبني مسيرتك المهنية في أستراليا",
       "title_en": "Seminar: Building Your Career in Australia",
+
       "date": "2026-04-15T13:00:00+11:00",
+
       "location": "Grand Conference Hall",
       "location_ar": "قاعة المؤتمرات الكبرى",
+      "location_en": "Grand Conference Hall",
+
       "category": "أكاديمي",
-      "summary": "ندوة مع متحدثين من الصناعة حول فرص العمل والتدريب للطلاب الدوليين. سنناقش كيفية كتابة السيرة الذاتية، التحضير للمقابلات، وبناء شبكة علاقات مهنية.",
-      "body": "ندوة شاملة حول بناء المسيرة المهنية في أستراليا!\n\nالمحاور الرئيسية:\n- كتابة السيرة الذاتية الاحترافية\n- التحضير للمقابلات الوظيفية\n- بناء شبكة علاقات مهنية (Networking)\n- فرص التدريب والعمل للطلاب الدوليين\n- قصص نجاح من خريجين سابقين\n\nمع متحدثين من شركات رائدة في أستراليا.",
+
+      "summary": "ندوة مع متحدثين من الصناعة.",
+      "summary_en": "A seminar with industry professionals.",
+
+      "body": "ندوة شاملة حول بناء المسيرة المهنية...",
+      "body_en": "A comprehensive seminar on career building...",
+
       "image": "/assets/img/photo-2025-04-26-21-25-14.jpg"
     },
+
     {
       "title": "إفطار رمضان الجماعي",
       "title_ar": "إفطار رمضان الجماعي",
       "title_en": "Ramadan Iftar Gathering",
+
       "date": "2026-03-25T18:30:00+11:00",
+
       "location": "Main Dining Hall",
       "location_ar": "قاعة الطعام الرئيسية",
+      "location_en": "Main Dining Hall",
+
       "category": "اجتماعي",
-      "summary": "دعوة لجميع الطلاب لحضور إفطار رمضان الجماعي في الحرم الجامعي. سنقدم وجبة إفطار تقليدية ونستمتع بأجواء رمضانية دافئة. الحضور مفتوح للجميع.",
-      "body": "يسر مجلس طلاب خطوة دعوتكم لإفطار رمضان الجماعي!\n\nما ننتظره:\n- وجبة إفطار تقليدية شاملة\n- أجواء رمضانية دافئة\n- فرصة للتعارف والتواصل\n- برنامج ديني قصير\n- هدايا رمضانية للحضور\n\nالحضور مفتوح لجميع الطلاب بغض النظر عن الخلفية الدينية. نرحب بالجميع!",
+
+      "summary": "دعوة لحضور إفطار رمضان الجماعي.",
+      "summary_en": "An invitation to attend a communal Ramadan Iftar.",
+
+      "body": "يسر مجلس طلاب خطوة دعوتكم...",
+      "body_en": "Khotwa Student Council is pleased to invite you...",
+
       "image": "/assets/img/photo-2025-04-26-21-25-14.jpg"
     },
+
     {
       "title": "ورشة عمل: مهارات الدراسة الفعالة",
       "title_ar": "ورشة عمل: مهارات الدراسة الفعالة",
       "title_en": "Workshop: Effective Study Skills",
+
       "date": "2026-03-10T15:00:00+11:00",
+
       "location": "Learning Center, Level 2",
       "location_ar": "مركز التعلم، الطابق الثاني",
+      "location_en": "Learning Center, Level 2",
+
       "category": "أكاديمي",
-      "summary": "تعلم تقنيات الدراسة الفعالة، إدارة الوقت، والتحضير للامتحانات. ورشة عملية مع نصائح من طلاب متفوقين وأساتذة متخصصين.",
-      "body": "ورشة عمل شاملة لتطوير مهارات الدراسة!\n\nما ستتعلمه:\n- تقنيات الدراسة الفعالة\n- إدارة الوقت والأولويات\n- التحضير للامتحانات\n- التعامل مع ضغط الدراسة\n- استراتيجيات الحفظ والفهم\n- نصائح من طلاب متفوقين\n\nورشة عملية مع تمارين تطبيقية!",
+
+      "summary": "تعلم تقنيات الدراسة الفعالة.",
+      "summary_en": "Learn effective study techniques.",
+
+      "body": "ورشة عمل شاملة لتطوير مهارات الدراسة...",
+      "body_en": "A comprehensive workshop to enhance study skills...",
+
       "image": "/assets/img/photo-2025-04-26-21-25-14.jpg"
     },
+
     {
       "title": "ليلة ثقافية: احتفال بالتنوع",
       "title_ar": "ليلة ثقافية: احتفال بالتنوع",
       "title_en": "Cultural Night: Celebrating Diversity",
+
       "date": "2026-04-25T18:00:00+11:00",
+
       "location": "Grand Hall, Student Center",
       "location_ar": "القاعة الكبرى، مركز الطلاب",
+      "location_en": "Grand Hall, Student Center",
+
       "category": "اجتماعي",
-      "summary": "احتفال بالتنوع الثقافي في الجامعة. سيقدم الطلاب من مختلف الجنسيات عروضاً فنية، أطعمة تقليدية، وعروض موسيقية. ندعو الجميع للمشاركة والاحتفال معنا!",
-      "body": "احتفل معنا بالتنوع الثقافي في جامعة لا تروب!\n\nفقرات الليلة:\n- عروض فنية من مختلف الثقافات\n- أطعمة تقليدية من حول العالم\n- عروض موسيقية ورقصات شعبية\n- معرض للأزياء التقليدية\n- ألعاب وأنشطة تفاعلية\n\nفرصة رائعة للتعرف على ثقافات مختلفة والاحتفال بالتنوع!",
+
+      "summary": "احتفال بالتنوع الثقافي في الجامعة.",
+      "summary_en": "A celebration of cultural diversity at the university.",
+
+      "body": "احتفل معنا بالتنوع الثقافي...",
+      "body_en": "Celebrate cultural diversity with us...",
+
       "image": "/assets/img/photo-2025-04-26-21-25-14.jpg"
     }
   ]
