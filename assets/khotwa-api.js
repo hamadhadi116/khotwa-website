@@ -64,6 +64,35 @@ const KhotwaAPI = (function() {
         return await apiCall('statistics.get');
     }
     
+    // ==================== البحث ====================
+    
+    /**
+     * البحث في الأخبار
+     * @param {string} query - نص البحث
+     * @param {string} category - الفئة (اختياري)
+     * @param {string} sortBy - الترتيب: 'newest', 'oldest' (افتراضي: 'newest')
+     * @returns {Promise<Array>} قائمة الأخبار
+     */
+    async function searchNews(query = '', category = null, sortBy = 'newest') {
+        const input = { query, category, sortBy };
+        const result = await apiCall('news.search', input, 'GET');
+        return result.map(transformNews);
+    }
+    
+    /**
+     * البحث في الفعاليات
+     * @param {string} query - نص البحث
+     * @param {string} dateFrom - من تاريخ (YYYY-MM-DD)
+     * @param {string} dateTo - إلى تاريخ (YYYY-MM-DD)
+     * @param {string} sortBy - الترتيب: 'newest', 'oldest', 'date' (افتراضي: 'date')
+     * @returns {Promise<Array>} قائمة الفعاليات
+     */
+    async function searchEvents(query = '', dateFrom = null, dateTo = null, sortBy = 'date') {
+        const input = { query, dateFrom, dateTo, sortBy };
+        const result = await apiCall('events.search', input, 'GET');
+        return result.map(transformEvent);
+    }
+    
     // ==================== الأخبار ====================
     
     async function getNews() {
@@ -262,6 +291,10 @@ const KhotwaAPI = (function() {
         
         // الإحصائيات
         getStatistics: getStatistics,
+        
+        // البحث
+        searchNews: searchNews,
+        searchEvents: searchEvents,
         
         // الأخبار
         getNews: getNews,
