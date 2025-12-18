@@ -279,6 +279,42 @@ const KhotwaAPI = (function() {
         }, 'POST');
     }
     
+    // ==================== معرض الصور ====================
+    
+    /**
+     * الحصول على قائمة الصور
+     * @param {string} album - الألبوم (اختياري)
+     * @returns {Promise<Array>} قائمة الصور
+     */
+    async function getGallery(album = null) {
+        const input = album ? { album } : undefined;
+        return await apiCall('gallery.list', input, 'GET');
+    }
+    
+    /**
+     * الحصول على قائمة الألبومات
+     * @returns {Promise<Array>} قائمة الألبومات
+     */
+    async function getGalleryAlbums() {
+        return await apiCall('gallery.albums', null, 'GET');
+    }
+    
+    // ==================== الحضور بـ QR ====================
+    
+    /**
+     * تسجيل الحضور بواسطة QR Code
+     * @param {string} eventId - معرف الفعالية
+     * @param {string} name - الاسم
+     * @param {string} email - البريد الإلكتروني
+     * @param {string} phone - رقم الهاتف
+     * @returns {Promise<Object>} نتيجة التسجيل
+     */
+    async function checkInAttendance(eventId, name, email, phone) {
+        const visitorId = getVisitorId();
+        const input = { eventId, visitorId, name, email, phone };
+        return await apiCall('attendance.checkIn', input, 'POST');
+    }
+    
     // ==================== تصدير الدوال ====================
     
     return {
@@ -331,7 +367,25 @@ const KhotwaAPI = (function() {
         // الوظائف
         getJobs: getJobs,
         getJobById: getJobById,
-        applyForJob: applyForJob
+        applyForJob: applyForJob,
+        
+        // معرض الصور
+        getGallery: getGallery,
+        getGalleryAlbums: getGalleryAlbums,
+        
+        // الحضور
+        checkInAttendance: checkInAttendance,
+        
+        // إشعارات Push
+        getVapidPublicKey: async function() {
+            return await apiCall('push.getPublicKey', null, 'GET');
+        },
+        subscribeToPush: async function(subscription) {
+            return await apiCall('push.subscribe', subscription, 'POST');
+        },
+        unsubscribeFromPush: async function(data) {
+            return await apiCall('push.unsubscribe', data, 'POST');
+        }
     };
 })();
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -11,6 +11,31 @@
   <link rel="stylesheet" href="/assets/main.css">
   
   <style>
+    .filter-section {
+      margin: 2rem 0;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .filter-chip {
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      border: 2px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    
+    .filter-chip:hover,
+    .filter-chip.active {
+      background: var(--primary);
+      color: white;
+    }
+    
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -25,10 +50,12 @@
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.3s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
     
     .gallery-item:hover {
       transform: scale(1.05);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
     }
     
     .gallery-item img {
@@ -45,16 +72,98 @@
       padding: 1rem;
       background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
       color: white;
+    }
+    
+    .gallery-caption h3 {
+      margin: 0;
+      font-size: 1rem;
       font-weight: 600;
+    }
+    
+    .gallery-caption p {
+      margin: 0.25rem 0 0;
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+    
+    .gallery-album-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: rgba(255,255,255,0.2);
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .lightbox.active {
+      display: flex;
+    }
+    
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+    
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+    
+    .lightbox-caption {
+      color: white;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    
+    .lightbox-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
     }
   </style>
   
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCS6PYK04X"></script>
   <script src="/assets/analytics.js"></script>
-  <link rel="stylesheet" href="/assets/pagination.css">
-  <link rel="stylesheet" href="/assets/advanced-filters.css">
-  <link rel="stylesheet" href="/assets/feedback.css">
+  <script src="/assets/khotwa-api.js"></script>
 </head>
 <body>
   <nav class="navbar">
@@ -84,15 +193,29 @@
       <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">معرض الصور</h1>
       <p style="color: var(--muted); margin-bottom: 2rem;">صور من فعاليات وأنشطة مجلس طلاب خطوة</p>
 
-      <div class="gallery-grid">
-        <div class="gallery-item">
-          <img loading="lazy" src="/assets/img/photo-2025-04-26-21-25-14.webp" alt="لقاء تعارفي">
-          <div class="gallery-caption">لقاء التعارف الأسبوعي</div>
-        </div>
-        <!-- المزيد من الصور ستضاف هنا -->
+      <!-- Album Filters -->
+      <div class="filter-section" id="album-filters">
+        <button class="filter-chip active" data-album="">الكل</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div id="gallery-container">
+        <div class="loading">جاري تحميل الصور...</div>
       </div>
     </section>
   </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+      <div class="lightbox-caption">
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-description"></p>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <div class="container foot">
@@ -100,10 +223,132 @@
     </div>
   </footer>
 
-  <script src="/assets/pagination.js"></script>
-  <script src="/assets/advanced-filters.js"></script>
-  <script src="/assets/feedback.js"></script>
-  <script src="/assets/newsletter.js"></script>
-  <script src="/assets/form-validation.js"></script>
+  <script>
+    let currentAlbum = '';
+    let allGalleryItems = [];
+
+    // Load albums
+    async function loadAlbums() {
+      try {
+        const albums = await KhotwaAPI.getGalleryAlbums();
+        const filtersContainer = document.getElementById('album-filters');
+        
+        albums.forEach(album => {
+          const chip = document.createElement('button');
+          chip.className = 'filter-chip';
+          chip.textContent = album;
+          chip.dataset.album = album;
+          chip.onclick = () => filterByAlbum(album);
+          filtersContainer.appendChild(chip);
+        });
+      } catch (error) {
+        console.error('Error loading albums:', error);
+      }
+    }
+
+    // Load gallery
+    async function loadGallery(album = '') {
+      try {
+        const container = document.getElementById('gallery-container');
+        container.innerHTML = '<div class="loading">جاري تحميل الصور...</div>';
+        
+        const items = await KhotwaAPI.getGallery(album);
+        allGalleryItems = items;
+        
+        if (items.length === 0) {
+          container.innerHTML = '<div class="empty-state">لا توجد صور في هذا الألبوم</div>';
+          return;
+        }
+        
+        const grid = document.createElement('div');
+        grid.className = 'gallery-grid';
+        
+        items.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'gallery-item';
+          div.onclick = () => openLightbox(item);
+          
+          const img = document.createElement('img');
+          img.src = item.imageUrl;
+          img.alt = item.titleAr;
+          img.loading = 'lazy';
+          
+          const caption = document.createElement('div');
+          caption.className = 'gallery-caption';
+          
+          const title = document.createElement('h3');
+          title.textContent = item.titleAr;
+          caption.appendChild(title);
+          
+          if (item.descriptionAr) {
+            const desc = document.createElement('p');
+            desc.textContent = item.descriptionAr;
+            caption.appendChild(desc);
+          }
+          
+          if (item.album) {
+            const badge = document.createElement('span');
+            badge.className = 'gallery-album-badge';
+            badge.textContent = item.album;
+            caption.appendChild(badge);
+          }
+          
+          div.appendChild(img);
+          div.appendChild(caption);
+          grid.appendChild(div);
+        });
+        
+        container.innerHTML = '';
+        container.appendChild(grid);
+      } catch (error) {
+        console.error('Error loading gallery:', error);
+        document.getElementById('gallery-container').innerHTML = 
+          '<div class="empty-state">حدث خطأ في تحميل الصور</div>';
+      }
+    }
+
+    // Filter by album
+    function filterByAlbum(album) {
+      currentAlbum = album;
+      
+      // Update active chip
+      document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.album === album);
+      });
+      
+      loadGallery(album);
+    }
+
+    // Open lightbox
+    function openLightbox(item) {
+      document.getElementById('lightbox-img').src = item.imageUrl;
+      document.getElementById('lightbox-title').textContent = item.titleAr;
+      document.getElementById('lightbox-description').textContent = item.descriptionAr || '';
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close lightbox
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Close on background click
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target.id === 'lightbox') closeLightbox();
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAlbums();
+      loadGallery();
+    });
+  </script>
 </body>
 </html>
