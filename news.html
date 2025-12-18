@@ -609,7 +609,7 @@
         ch.addEventListener('click', ()=>{
           chips.forEach(c => c.dataset.active = "false");
           ch.dataset.active = "true";
-          applyFilter();
+          // Filters already applied via API search
         });
         ch.tabIndex = 0;
         ch.addEventListener('keydown', e=>{
@@ -620,14 +620,51 @@
         });
       });
 
-      qInput?.addEventListener('input', applyFilter);
+      // Update search functionality to use API
+      let searchTimeout;
+      qInput?.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          currentQuery = e.target.value.trim();
+          loadNews();
+        }, 500); // Debounce 500ms
+      });
+      
+      // Update filter buttons to trigger API search
+      document.querySelectorAll('[data-filter]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update active state
+          document.querySelectorAll('[data-filter]').forEach(b => {
+            b.dataset.active = 'false';
+            b.setAttribute('aria-pressed', 'false');
+          });
+          btn.dataset.active = 'true';
+          btn.setAttribute('aria-pressed', 'true');
+          
+          // Update category and reload
+          currentCategory = btn.dataset.filter;
+          loadNews();
+        });
+      });
 
-      // تحميل الأخبار من /data/news.json (هيكل: { items: [...] })
+      // تحميل الأخبار من Backend API
+      let currentQuery = '';
+      let currentCategory = 'all';
+      
       async function loadNews(){
         const postsEl = document.getElementById('posts');
         try{
-          // Load from Backend API using KhotwaAPI
-          const items = await KhotwaAPI.getNews();
+          // Use search API if there's a query, otherwise get all news
+          let items;
+          if (currentQuery || currentCategory !== 'all') {
+            items = await KhotwaAPI.searchNews({
+              query: currentQuery,
+              category: currentCategory === 'all' ? undefined : currentCategory,
+              sortBy: 'newest'
+            });
+          } else {
+            items = await KhotwaAPI.getNews();
+          }
           
           if (!items) {
             throw new Error('Failed to load news');
@@ -730,7 +767,7 @@
             });
           })();
 
-          applyFilter();
+          // Filters already applied via API search
         }catch(err){
           console.error('فشل تحميل الأخبار:', err);
           postsEl.innerHTML = '<div class="muted">تعذر تحميل الأخبار الآن. حاول لاحقاً.</div>';

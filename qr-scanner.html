@@ -1,0 +1,364 @@
+<!-- qr-scanner.html -->
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>مسح QR للحضور – Khotwa</title>
+  <meta name="description" content="امسح رمز QR لتسجيل حضورك في فعاليات مجلس طلاب خطوة.">
+  <link rel="canonical" href="https://khotwastudentcouncil.com/qr-scanner.html"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <meta name="color-scheme" content="light dark"/>
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+
+  <style>
+    :root {
+      --primary:#1e40af; --primary-600:#1d4ed8; --text:#0f172a; --muted:#64748b;
+      --surface:#ffffff; --card:#f8fafc; --ring:#e6eaf2; --success:#10b981; --error:#ef4444;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
+      color:var(--text);
+      background:var(--surface);
+      line-height:1.6;
+      display:flex;
+      flex-direction:column;
+    }
+    .container{width:min(600px,92%);margin-inline:auto;padding:2rem 0}
+    
+    header{
+      text-align:center;
+      margin-bottom:2rem;
+    }
+    h1{
+      font-size:1.8rem;
+      margin-bottom:.5rem;
+      color:var(--primary);
+    }
+    .subtitle{
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    
+    .card{
+      background:#fff;
+      border:1px solid var(--ring);
+      border-radius:16px;
+      padding:1.5rem;
+      box-shadow:0 2px 10px rgba(2,6,23,.06);
+      margin-bottom:1.5rem;
+    }
+    
+    #reader{
+      width:100%;
+      border-radius:12px;
+      overflow:hidden;
+      background:#000;
+      margin-bottom:1rem;
+    }
+    
+    .form-group{
+      margin-bottom:1rem;
+    }
+    .form-group label{
+      display:block;
+      margin-bottom:.4rem;
+      font-weight:600;
+      color:var(--text);
+    }
+    .form-group input{
+      width:100%;
+      padding:.7rem;
+      border:1px solid var(--ring);
+      border-radius:8px;
+      font-size:.95rem;
+      font-family:inherit;
+    }
+    .form-group input:focus{
+      outline:2px solid var(--primary);
+      outline-offset:2px;
+    }
+    
+    .btn{
+      width:100%;
+      padding:.8rem;
+      border:none;
+      border-radius:8px;
+      font-size:1rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:.2s;
+    }
+    .btn-primary{
+      background:var(--primary);
+      color:#fff;
+    }
+    .btn-primary:hover{
+      background:var(--primary-600);
+    }
+    .btn-primary:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+    
+    .alert{
+      padding:1rem;
+      border-radius:8px;
+      margin-bottom:1rem;
+      display:none;
+    }
+    .alert.show{
+      display:block;
+    }
+    .alert-success{
+      background:#d1fae5;
+      color:#065f46;
+      border:1px solid #10b981;
+    }
+    .alert-error{
+      background:#fee2e2;
+      color:#991b1b;
+      border:1px solid #ef4444;
+    }
+    .alert-info{
+      background:#dbeafe;
+      color:#1e40af;
+      border:1px solid #3b82f6;
+    }
+    
+    .status{
+      text-align:center;
+      padding:1rem;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+    
+    #visitor-form{
+      display:none;
+    }
+    #visitor-form.show{
+      display:block;
+    }
+    
+    .back-link{
+      display:inline-block;
+      margin-top:1rem;
+      color:var(--primary);
+      text-decoration:none;
+    }
+    .back-link:hover{
+      text-decoration:underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎫 مسح QR للحضور</h1>
+      <p class="subtitle">امسح رمز QR لتسجيل حضورك في الفعالية</p>
+    </header>
+
+    <div class="alert" id="alert"></div>
+
+    <div class="card">
+      <div id="reader"></div>
+      <div class="status" id="status">جاري تحميل الكاميرا...</div>
+    </div>
+
+    <div class="card" id="visitor-form">
+      <h2 style="margin-bottom:1rem">معلومات الحضور</h2>
+      <form id="checkin-form">
+        <input type="hidden" id="event-id" name="eventId">
+        
+        <div class="form-group">
+          <label for="name">الاسم الكامل *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">البريد الإلكتروني *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">رقم الهاتف *</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="submit-btn">
+          ✅ تأكيد الحضور
+        </button>
+      </form>
+    </div>
+
+    <div style="text-align:center">
+      <a href="/events.html" class="back-link">← العودة للفعاليات</a>
+    </div>
+  </div>
+
+  <!-- html5-qrcode library -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  
+  <!-- KhotwaAPI -->
+  <script src="/assets/khotwa-api.js"></script>
+
+  <script>
+    (function(){
+      const readerEl = document.getElementById('reader');
+      const statusEl = document.getElementById('status');
+      const alertEl = document.getElementById('alert');
+      const visitorForm = document.getElementById('visitor-form');
+      const checkinForm = document.getElementById('checkin-form');
+      const eventIdInput = document.getElementById('event-id');
+      const submitBtn = document.getElementById('submit-btn');
+      
+      let html5QrCode;
+      let scannedEventId = null;
+      let isProcessing = false;
+
+      function showAlert(message, type = 'info') {
+        alertEl.textContent = message;
+        alertEl.className = `alert alert-${type} show`;
+        setTimeout(() => {
+          alertEl.classList.remove('show');
+        }, 5000);
+      }
+
+      function onScanSuccess(decodedText, decodedResult) {
+        if (isProcessing) return;
+        isProcessing = true;
+
+        try {
+          // Parse QR code data
+          const data = JSON.parse(decodedText);
+          
+          if (data.type !== 'event_checkin') {
+            showAlert('رمز QR غير صحيح. يرجى مسح رمز خاص بالحضور.', 'error');
+            isProcessing = false;
+            return;
+          }
+
+          scannedEventId = data.eventId;
+          eventIdInput.value = scannedEventId;
+          
+          // Stop scanning
+          html5QrCode.stop().then(() => {
+            statusEl.textContent = 'تم مسح الرمز بنجاح! ✅';
+            showAlert('تم مسح رمز QR بنجاح. يرجى إدخال معلوماتك.', 'success');
+            visitorForm.classList.add('show');
+          });
+
+        } catch (err) {
+          console.error('خطأ في معالجة QR:', err);
+          showAlert('خطأ في قراءة رمز QR. يرجى المحاولة مرة أخرى.', 'error');
+          isProcessing = false;
+        }
+      }
+
+      function onScanError(errorMessage) {
+        // Ignore scan errors (they happen frequently)
+      }
+
+      // Initialize QR scanner
+      function initScanner() {
+        html5QrCode = new Html5Qrcode("reader");
+        
+        Html5Qrcode.getCameras().then(cameras => {
+          if (cameras && cameras.length) {
+            statusEl.textContent = 'جاهز للمسح 📷';
+            
+            // Start scanning with back camera if available
+            const cameraId = cameras.length > 1 ? cameras[1].id : cameras[0].id;
+            
+            html5QrCode.start(
+              cameraId,
+              {
+                fps: 10,
+                qrbox: { width: 250, height: 250 }
+              },
+              onScanSuccess,
+              onScanError
+            ).catch(err => {
+              console.error('خطأ في بدء المسح:', err);
+              statusEl.textContent = 'فشل في تشغيل الكاميرا';
+              showAlert('تعذر الوصول للكاميرا. يرجى السماح بالوصول للكاميرا.', 'error');
+            });
+          } else {
+            statusEl.textContent = 'لم يتم العثور على كاميرا';
+            showAlert('لم يتم العثور على كاميرا على هذا الجهاز.', 'error');
+          }
+        }).catch(err => {
+          console.error('خطأ في الحصول على الكاميرات:', err);
+          statusEl.textContent = 'فشل في الوصول للكاميرا';
+          showAlert('تعذر الوصول للكاميرا. يرجى السماح بالوصول للكاميرا.', 'error');
+        });
+      }
+
+      // Handle form submission
+      checkinForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!scannedEventId) {
+          showAlert('يرجى مسح رمز QR أولاً.', 'error');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'جاري التسجيل...';
+
+        try {
+          const formData = new FormData(checkinForm);
+          const data = {
+            eventId: parseInt(scannedEventId),
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            visitorId: `visitor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+          };
+
+          // Call attendance check-in API
+          const response = await fetch(KhotwaAPI.API_BASE_URL + '/attendance.checkIn', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+
+          if (result.success || response.ok) {
+            showAlert('✅ تم تسجيل حضورك بنجاح! شكراً لمشاركتك.', 'success');
+            checkinForm.reset();
+            visitorForm.classList.remove('show');
+            
+            // Restart scanning after 3 seconds
+            setTimeout(() => {
+              scannedEventId = null;
+              isProcessing = false;
+              initScanner();
+            }, 3000);
+          } else {
+            throw new Error(result.error?.message || 'فشل تسجيل الحضور');
+          }
+
+        } catch (err) {
+          console.error('خطأ في تسجيل الحضور:', err);
+          showAlert('حدث خطأ أثناء تسجيل الحضور. يرجى المحاولة مرة أخرى.', 'error');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '✅ تأكيد الحضور';
+        }
+      });
+
+      // Initialize on page load
+      initScanner();
+    })();
+  </script>
+</body>
+</html>
