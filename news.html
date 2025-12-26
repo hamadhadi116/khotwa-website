@@ -1,794 +1,149 @@
-<!DOCTYPE html>
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الأخبار – Khotwa</title>
-    <meta name="keywords" content="أخبار خطوة, إعلانات المجلس, فعاليات خطوة, أخبار الطلاب, جامعة لا تروب, ملبورن">
-  <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة. تابع أحدث الفعاليات، الإنجازات، والتغطيات الإخبارية لأنشطة المجلس في ملبورن.">
+
+  <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة في ملبورن.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/news.html"/>
   <meta name="robots" content="index,follow"/>
   <meta name="color-scheme" content="light dark"/>
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
-  <!-- OG/Twitter -->
   <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Khotwa Student Council"/>
   <meta property="og:title" content="الأخبار – Khotwa"/>
-  <meta property="og:description" content="آخر أخبار مجلس طلاب خطوة في ملبورن."/>
-  <meta property="og:url" content="https://khotwastudentcouncil.com/news.html"/>
+  <meta property="og:site_name" content="Khotwa Student Council"/>
   <meta property="og:image" content="/assets/apple-touch-icon.png"/>
-  <meta name="twitter:card" content="summary_large_image"/>
 
-  <!-- JSON-LD (قائمة مقالات) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Blog",
-    "name":"Khotwa News",
-    "url":"https://khotwastudentcouncil.com/news.html",
-    "inLanguage":"ar",
-    "publisher":{
-      "@type":"Organization",
-      "name":"Khotwa Student Council",
-      "url":"https://khotwastudentcouncil.com/"
-    }
-  }
-  </script>
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <!-- API -->
+  <script src="/assets/khotwa-api.js"></script>
 
   <style>
-    :root {
-      --primary:#1e40af; --primary-600:#1d4ed8; --text:#0f172a; --muted:#64748b;
-      --surface:#ffffff; --card:#f8fafc; --ring:#e6eaf2; --r-md:14px; --r-lg:16px; --r-xl:22px;
-      --sh-sm:0 2px 10px rgba(2,6,23,.06); --sh-md:0 10px 26px rgba(2,6,23,.08);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
-      color:var(--text);
-      background:var(--surface);
+      font-family:"Segoe UI",system-ui,Tahoma,Arial,sans-serif;
+      background:#fff;
+      color:#0f172a;
       line-height:1.6;
     }
-    a{color:inherit;text-decoration:none}
-    .container{width:min(1120px,92%);margin-inline:auto}
-
-    /* وصولية */
-    :where(a,button,input,select,textarea,[role="button"]):focus-visible{
-      outline:3px solid #2563eb;
-      outline-offset:3px;
-      border-radius:8px;
-    }
-    .skip-link{
-      position:absolute;
-      inset-inline-start:1rem;
-      inset-block-start:-100px;
-      background:#fff;
-      color:#000;
-      padding:.6rem .9rem;
-      border-radius:10px;
-      box-shadow:var(--sh-sm);
-      z-index:1000;
-    }
-    .skip-link:focus{inset-block-start:1rem}
-
-    /* NAV */
-    .navbar{
-      position:sticky;
-      top:0;
-      z-index:40;
-      background:color-mix(in oklab,#ffffff 80%,transparent);
-      border-bottom:1px solid var(--ring);
-      backdrop-filter:blur(8px);
-    }
-    .nav-inner{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:.8rem 0;
-      gap:.8rem;
-      position:relative;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:.8rem;
-      font-weight:800;
-    }
-    .brand .logo{
-      width:40px;
-      height:40px;
-      object-fit:cover;
-      border-radius:12px;
-      box-shadow:0 2px 6px rgba(0,0,0,.06);
-    }
-    .nav-links{
-      display:flex;
-      gap:.25rem;
-      align-items:center;
-    }
-    .nav-links a{
-      padding:.5rem .75rem;
-      border-radius:var(--r-md);
-    }
-    .nav-links a:hover{background:var(--card)}
-    .nav-links a[aria-current="page"]{background:var(--card)}
-    .lang-toggle,.menu-toggle{
-      padding:.45rem .75rem;
-      border:1px solid var(--ring);
-      background:#fff;
-      border-radius:var(--r-md);
-      cursor:pointer;
-      font-weight:600;
-    }
-    .menu-toggle{
-      display:none;
-      align-items:center;
-      gap:.5rem;
-    }
-    .menu-toggle svg{width:20px;height:20px}
-
-    @media (max-width:900px){
-      .menu-toggle{display:inline-flex}
-      .nav-links{
-        position:absolute;
-        inset-inline:0;
-        top:calc(100% + 8px);
-        background:#fff;
-        border:1px solid var(--ring);
-        border-radius:var(--r-xl);
-        display:grid;
-        gap:.2rem;
-        padding:.4rem;
-        box-shadow:0 20px 48px rgba(2,6,23,.1);
-        max-height:80vh;
-        overflow:auto;
-        opacity:1;
-        transform:scale(1);
-        transition:opacity .2s,transform .2s,padding .2s;
-      }
-      .nav-links[aria-hidden="true"]{
-        transform:scale(.98);
-        opacity:0;
-      }
-      .nav-links a,.lang-toggle{padding:.7rem .9rem}
-    }
-
-    section{padding:2rem 0}
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:1rem;
-      margin-bottom:1.2rem;
-    }
-    .section-head h1{
-      margin:0;
-      font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem);
-    }
-    .muted{color:var(--muted)}
-
-    /* Tools */
-    .tools{
-      display:flex;
-      gap:.6rem;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-top:1rem;
-    }
-    .chip{
-      border:1px solid var(--ring);
-      background:#fff;
-      border-radius:999px;
-      padding:.45rem .8rem;
-      font-size:.9rem;
-      cursor:pointer;
-    }
-    .chip[data-active="true"]{
-      background:var(--primary);
-      color:#fff;
-      border-color:transparent;
-    }
-    .search{
-      display:flex;
-      align-items:center;
-      gap:.5rem;
-      border:1px solid var(--ring);
-      border-radius:12px;
-      padding:.45rem .6rem;
-      background:#fff;
-      min-width:240px;
-    }
-    .search input{
-      border:0;
-      outline:0;
-      background:transparent;
-      width:100%;
-    }
-
-    /* Cards */
-    .grid{display:grid;gap:1rem}
-    .grid-3{grid-template-columns:repeat(3,1fr)}
-    @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
-    .post{
-      background:#fff;
-      border:1px solid var(--ring);
-      border-radius:16px;
-      overflow:hidden;
-      box-shadow:var(--sh-sm);
-      display:flex;
-      flex-direction:column;
-    }
-    .post img{
-      width:100%;
-      height:auto;
-      aspect-ratio:16/9;
-      object-fit:cover;
-      background:#f3f4f6;
-    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1120px,92%);margin:auto}
+    .navbar{border-bottom:1px solid #e5e7eb}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+    .nav-links{display:flex;gap:1rem}
+    .nav-links a{padding:.4rem .6rem}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    .post{border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
+    .post img{width:100%;aspect-ratio:16/9;object-fit:cover}
     .post .body{padding:1rem}
-    .post h3{
-      margin:0 0 .4rem;
-      font-size:1.05rem;
-    }
-    .meta{
-      display:flex;
-      gap:.6rem;
-      align-items:center;
-      color:var(--muted);
-      font-size:.9rem;
-      margin-bottom:.6rem;
-    }
-    .tags{display:flex;gap:.4rem;flex-wrap:wrap}
-    .tag{
-      background:var(--card);
-      border:1px solid var(--ring);
-      padding:.2rem .5rem;
-      border-radius:999px;
-      font-size:.8rem;
-      color:#334155;
-    }
-    .post a.more{
-      margin-top:auto;
-      display:inline-block;
-      border:1px solid var(--ring);
-      padding:.6rem .8rem;
-      border-radius:12px;
-    }
-    .post:hover{
-      transform:translateY(-2px);
-      box-shadow:0 14px 34px rgba(2,6,23,.10);
-      transition:.18s;
-    }
-
-    /* Skeleton */
-    .skeleton{
-      border:1px solid var(--ring);
-      border-radius:16px;
-      overflow:hidden;
-      background:#fff;
-    }
-    .sk-img{
-      aspect-ratio:16/9;
-      background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 37%,#f1f5f9 63%);
-      background-size:400% 100%;
-      animation:sk 1.2s infinite;
-    }
-    .sk-body{padding:1rem}
-    .sk-line{
-      height:12px;
-      background:#e2e8f0;
-      border-radius:8px;
-      margin:.4rem 0;
-    }
-    .sk-line.w60{width:60%}
-    .sk-line.w80{width:80%}
-    .sk-line.w40{width:40%}
-    @keyframes sk{
-      0%{background-position:100% 0}
-      100%{background-position:-100% 0}
-    }
-
-    /* Footer */
-    footer{
-      border-top:1px solid var(--ring);
-      background:#fff;
-    }
-    .foot{
-      display:flex;
-      justify-content:space-between;
-      gap:1rem;
-      align-items:center;
-      padding:1.2rem 0;
-    }
-
-    /* Dark */
-    @media (prefers-color-scheme: dark){
-      :root{
-        --surface:#0a0f1a;
-        --card:#0b1220;
-        --ring:#1f2937;
-        --text:#e5e7eb;
-        --muted:#9ca3af;
-      }
-      .navbar,footer{
-        background:#0c1220;
-        border-color:var(--ring);
-      }
-      .post,.search,.chip,.skeleton{
-        background:#0f172a;
-        border-color:var(--ring);
-      }
-      .nav-links a:hover,
-      .nav-links a[aria-current="page"]{
-        background:#0f172a;
-      }
-      .lang-toggle,.menu-toggle{
-        background:transparent;
-        color:var(--text);
-      }
-      .sk-img{
-        background:linear-gradient(90deg,#111827 25%,#1f2937 37%,#111827 63%);
-      }
-      .sk-line{background:#1f2937}
-      .tag{color:#cbd5e1}
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      *{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        transition-duration:.01ms !important;
-        scroll-behavior:auto !important;
-      }
-    }
+    footer{border-top:1px solid #e5e7eb;margin-top:2rem}
   </style>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCS6PYK04X"></script>
-  <script src="/assets/analytics.js"></script>
-  <link rel="stylesheet" href="/assets/pagination.css">
-  <link rel="stylesheet" href="/assets/advanced-filters.css">
-  <link rel="stylesheet" href="/assets/feedback.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
-  <script src="/assets/khotwa-api.js?v=1765938212"></script>
 </head>
+
 <body>
-  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
-  <!-- NAVBAR -->
-  <nav class="navbar" aria-label="الشريط العلوي">
-    <div class="container nav-inner">
-      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img src="/assets/apple-touch-icon.png" alt="شعار مجلس طلاب خطوة" class="logo" width="40" height="40" decoding="async" loading="lazy">
-        <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
-      </a>
-
-      <button id="menu-toggle" class="menu-toggle" type="button"
-              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M4 7h16M4 12h16M4 17h16"/>
-        </svg>
-        <span data-lang="ar">القائمة</span>
-        <span data-lang="en" hidden aria-hidden="true">Menu</span>
-      </button>
-
-      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-        <a href="/about.html">
-          <span data-lang="ar">من نحن</span>
-          <span data-lang="en" hidden aria-hidden="true">About</span>
-        </a>
-        <a href="/news.html" aria-current="page">
-          <span data-lang="ar">الأخبار</span>
-          <span data-lang="en" hidden aria-hidden="true">News</span>
-        </a>
-        <a href="/events.html">
-          <span data-lang="ar">الفعاليات</span>
-          <span data-lang="en" hidden aria-hidden="true">Events</span>
-        </a>
-        <a href="/calendar.html">
-        <a href="/gallery.html"><span data-lang="ar">معرض الصور</span><span data-lang="en" hidden aria-hidden="true">Gallery</span></a>
-        <a href="/faq.html"><span data-lang="ar">الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">FAQ</span></a>
-          <span data-lang="ar">التقويم</span>
-          <span data-lang="en" hidden aria-hidden="true">Calendar</span>
-        </a>
-        <a href="/resources.html">
-          <span data-lang="ar">الموارد</span>
-          <span data-lang="en" hidden aria-hidden="true">Resources</span>
-        </a>
-        <a href="/contact.html">
-          <span data-lang="ar">تواصل</span>
-          <span data-lang="en" hidden aria-hidden="true">Contact</span>
-        </a>
-        <button
-          id="lang-toggle"
-          class="lang-toggle"
-          type="button"
-          aria-label="تبديل اللغة"
-          aria-pressed="false">
-          English
-        </button>
-      </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="/index.html">
+      <img src="/assets/apple-touch-icon.png" width="36" alt="">
+      مجلس طلاب خطوة
+    </a>
+    <div class="nav-links">
+      <a href="/about.html">من نحن</a>
+      <a href="/news.html" aria-current="page">الأخبار</a>
+      <a href="/events.html">الفعاليات</a>
+      <a href="/calendar.html">التقويم</a>
+      <a href="/gallery.html">معرض الصور</a>
+      <a href="/contact.html">تواصل</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <main class="container" id="main">
-    <!-- Header -->
-    <section>
-      <div class="section-head">
-        <h1>
-          <span data-lang="ar" lang="ar">الأخبار</span>
-          <span data-lang="en" lang="en" hidden aria-hidden="true">News</span>
-        </h1>
-      </div>
-      <p class="muted" data-lang="ar">
-        كل جديد عن مجلس طلاب خطوة: إعلانات، مبادرات، ونتائج فعاليات.
-      </p>
-      <p class="muted" data-lang="en" lang="en" hidden aria-hidden="true">
-        All updates about Khotwa Student Council: announcements, initiatives, and recaps.
-      </p>
+<main class="container" id="main">
 
-      <div class="tools">
-        <div class="search" role="search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-            <circle cx="11" cy="11" r="7"/>
-            <path d="m21 21-4.3-4.3"/>
-          </svg>
-          <input id="q" type="search" placeholder="ابحث في الأخبار…" aria-label="ابحث في الأخبار">
-        </div>
-        <button class="chip" data-filter="all" data-active="true" aria-pressed="true">
-          <span data-lang="ar">الكل</span>
-          <span data-lang="en" hidden aria-hidden="true">All</span>
-        </button>
-        <button class="chip" data-filter="ann" aria-pressed="false">
-          <span data-lang="ar">إعلانات</span>
-          <span data-lang="en" hidden aria-hidden="true">Announcements</span>
-        </button>
-        <button class="chip" data-filter="event" aria-pressed="false">
-          <span data-lang="ar">فعاليات</span>
-          <span data-lang="en" hidden aria-hidden="true">Events</span>
-        </button>
-        <button class="chip" data-filter="media" aria-pressed="false">
-          <span data-lang="ar">تغطيات</span>
-          <span data-lang="en" hidden aria-hidden="true">Media</span>
-        </button>
-      </div>
-    </section>
+  <h1>الأخبار</h1>
+  <p>آخر أخبار وإعلانات مجلس طلاب خطوة</p>
 
-    <!-- Posts -->
-    <section aria-live="polite">
-      <div class="grid grid-3" id="posts">
-        <!-- Skeleton -->
-        <div class="skeleton">
-          <div class="sk-img"></div>
-          <div class="sk-body">
-            <div class="sk-line w60"></div>
-            <div class="sk-line w80"></div>
-            <div class="sk-line w40"></div>
+  <!-- SEARCH -->
+  <input id="q" type="search" placeholder="ابحث في الأخبار…" style="width:100%;padding:.6rem;margin:1rem 0">
+
+  <!-- POSTS -->
+  <div class="grid" id="posts">
+    <p>جاري التحميل…</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    © <span id="year"></span> Khotwa Student Council
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  let currentQuery = '';
+  let currentCategory = 'all';
+  const postsEl = document.getElementById('posts');
+  const qInput = document.getElementById('q');
+
+  async function loadNews(){
+    try{
+      let items;
+
+      if(currentQuery){
+        items = await KhotwaAPI.searchNews(
+          currentQuery,
+          null,
+          'newest'
+        );
+      }else{
+        items = await KhotwaAPI.getNews();
+      }
+
+      postsEl.innerHTML = '';
+
+      if(!items || items.length === 0){
+        postsEl.innerHTML = '<p>لا توجد أخبار حالياً.</p>';
+        return;
+      }
+
+      items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+      items.forEach(item=>{
+        const el = document.createElement('article');
+        el.className = 'post';
+        el.innerHTML = `
+          ${item.image ? `<img src="${item.image}" alt="">` : ''}
+          <div class="body">
+            <h3>${item.title}</h3>
+            <p>${(item.content||'').substring(0,150)}...</p>
           </div>
-        </div>
-        <div class="skeleton">
-          <div class="sk-img"></div>
-          <div class="sk-body">
-            <div class="sk-line w60"></div>
-            <div class="sk-line w80"></div>
-            <div class="sk-line w40"></div>
-          </div>
-        </div>
-        <div class="skeleton">
-          <div class="sk-img"></div>
-          <div class="sk-body">
-            <div class="sk-line w60"></div>
-            <div class="sk-line w80"></div>
-            <div class="sk-line w40"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer aria-label="تذييل الموقع">
-    <div class="container foot">
-      <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </div>
-  </footer>
-
-  <script>
-    (function(){
-      // سنة الحقوق
-      const y = document.getElementById('year');
-      if(y){ y.textContent = new Date().getFullYear(); }
-
-      // منيو الجوال + وصولية
-      const menuBtn = document.getElementById('menu-toggle');
-      const primaryNav = document.getElementById('primary-nav');
-      const mq = window.matchMedia('(min-width:901px)');
-
-      if(menuBtn && primaryNav){
-        function setMenu(open){
-          primaryNav.setAttribute('data-open', String(open));
-          menuBtn.setAttribute('aria-expanded', String(open));
-          primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
-          if(open){
-            (primaryNav.querySelector('a,button') || menuBtn).focus();
-          }
-        }
-        function initMenu(){
-          setMenu(false);
-          primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
-        }
-        initMenu();
-
-        menuBtn.addEventListener('click', ()=>{
-          setMenu(primaryNav.getAttribute('data-open')!=='true');
-        });
-
-        mq.addEventListener('change', e=>{
-          setMenu(false);
-          primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
-        });
-
-        document.addEventListener('click', e=>{
-          const open = primaryNav.getAttribute('data-open')==='true';
-          const t = e.target;
-          if(!open) return;
-          if(t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)){
-            setMenu(false);
-          }
-        });
-
-        document.addEventListener('keydown', e=>{
-          if(e.key==='Escape') setMenu(false);
-        });
-
-        primaryNav.addEventListener('click', e=>{
-          const link = (e.target instanceof Element) ? e.target.closest('a') : null;
-          if(link) setMenu(false);
-        });
-      }
-
-      // تبديل اللغة + تزامن <title>
-      const langBtn = document.getElementById('lang-toggle');
-
-      function currentLang(){
-        return localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
-      }
-
-      function setLang(lang){
-        document.querySelectorAll('[data-lang]').forEach(el=>{
-          const want = el.getAttribute('data-lang') === lang;
-          el.hidden = !want;
-          el.setAttribute('aria-hidden', String(!want));
-        });
-
-        document.documentElement.lang = (lang === 'ar') ? 'ar' : 'en';
-        document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
-
-        if(langBtn){
-          langBtn.textContent = (lang === 'ar') ? 'English' : 'العربية';
-          langBtn.setAttribute('aria-pressed', String(lang !== 'ar'));
-        }
-
-        // تغيير عنوان الصفحة حسب اللغة
-        document.title = (lang === 'ar') ? 'الأخبار – Khotwa' : 'News – Khotwa';
-
-        localStorage.setItem('khotwa_lang', lang);
-      }
-
-      setLang(currentLang());
-      langBtn?.addEventListener('click', ()=>{
-        setLang(currentLang() === 'ar' ? 'en' : 'ar');
+        `;
+        postsEl.appendChild(el);
       });
 
-      // فلاتر + بحث
-      const chips = Array.from(document.querySelectorAll('.chip'));
-      const qInput = document.getElementById('q');
+    }catch(err){
+      console.error(err);
+      postsEl.innerHTML = '<p>تعذر تحميل الأخبار.</p>';
+    }
+  }
 
-      function applyFilter(){
-        const posts = Array.from(document.querySelectorAll('.post'));
-        const activeBtn = chips.find(c => c.dataset.active === "true");
-        const active = activeBtn?.dataset.filter || 'all';
-        const term = (qInput?.value || '').trim().toLowerCase();
+  qInput.addEventListener('input', e=>{
+    currentQuery = e.target.value.trim();
+    loadNews();
+  });
 
-        posts.forEach(p=>{
-          const tagOK = (active === 'all') || (p.dataset.tags || '').includes(active);
-          const txt = p.textContent.toLowerCase();
-          const termOK = !term || txt.includes(term);
-          p.style.display = (tagOK && termOK) ? '' : 'none';
-        });
+  loadNews();
+})();
+</script>
 
-        chips.forEach(b => b.setAttribute('aria-pressed', String(b === activeBtn)));
-      }
-
-      chips.forEach(ch=>{
-        ch.addEventListener('click', ()=>{
-          chips.forEach(c => c.dataset.active = "false");
-          ch.dataset.active = "true";
-          // Filters already applied via API search
-        });
-        ch.tabIndex = 0;
-        ch.addEventListener('keydown', e=>{
-          if(e.key === 'Enter' || e.key === ' '){
-            e.preventDefault();
-            ch.click();
-          }
-        });
-      });
-
-      // Update search functionality to use API
-      let searchTimeout;
-      qInput?.addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-          currentQuery = e.target.value.trim();
-          loadNews();
-        }, 500); // Debounce 500ms
-      });
-      
-      // Update filter buttons to trigger API search
-      document.querySelectorAll('[data-filter]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          // Update active state
-          document.querySelectorAll('[data-filter]').forEach(b => {
-            b.dataset.active = 'false';
-            b.setAttribute('aria-pressed', 'false');
-          });
-          btn.dataset.active = 'true';
-          btn.setAttribute('aria-pressed', 'true');
-          
-          // Update category and reload
-          currentCategory = btn.dataset.filter;
-          loadNews();
-        });
-      });
-
-      // تحميل الأخبار من Backend API
-      let currentQuery = '';
-      let currentCategory = 'all';
-      
-      async function loadNews(){
-        const postsEl = document.getElementById('posts');
-        try{
-          // Use search API if there's a query, otherwise get all news
-          let items;
-          if (currentQuery || currentCategory !== 'all') {
-            items = await KhotwaAPI.searchNews({
-              query: currentQuery,
-              category: currentCategory === 'all' ? undefined : currentCategory,
-              sortBy: 'newest'
-            });
-          } else {
-            items = await KhotwaAPI.getNews();
-          }
-          
-          if (!items) {
-            throw new Error('Failed to load news');
-          }
-
-          postsEl.innerHTML = '';
-
-          if(items.length === 0){
-            postsEl.innerHTML = '<div class="muted">لا توجد أخبار حالياً.</div>';
-            return;
-          }
-
-          // ترتيب من الأحدث
-          items.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
-
-          const frag = document.createDocumentFragment();
-
-          items.forEach((item, idx)=>{
-            const article = document.createElement('article');
-            article.className = 'post';
-
-            const tagsLower = (item.tags || []).map(t => String(t).toLowerCase());
-            const typeTag = tagsLower.find(t => ['ann','event','media'].includes(t)) || 'ann';
-            article.dataset.tags = typeTag;
-            article.id = 'post-' + (idx + 1);
-
-            const arDate = item.createdAt
-              ? new Date(item.createdAt).toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'})
-              : '';
-            const enDate = item.createdAt
-              ? new Date(item.createdAt).toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'})
-              : '';
-
-            const titleAr = item.title || '';
-            const titleEn = item.title || '';
-
-            article.innerHTML = `
-              ${item.image
-                ? `<img src="${item.image}" alt="${(titleAr || titleEn).replace(/"/g,'&quot;')}" loading="lazy" decoding="async">`
-                : `<div style="aspect-ratio:16/9;background:#f3f4f6"></div>`}
-              <div class="body">
-                <div class="meta">
-                  <span data-lang="ar">${arDate}</span>
-                  <span data-lang="en" lang="en" hidden aria-hidden="true">${enDate}</span>
-                  <span>•</span>
-                  <span data-lang="ar">${(item.tags || []).join('، ')}</span>
-                  <span data-lang="en" lang="en" hidden aria-hidden="true">${(item.tags || []).join(', ')}</span>
-                </div>
-                <h3 data-lang="ar">${titleAr}</h3>
-                <h3 data-lang="en" lang="en" hidden aria-hidden="true">${titleEn}</h3>
-                <p class="muted" data-lang="ar">${item.content?.substring(0, 150) || ''}...</p>
-                <p class="muted" data-lang="en" lang="en" hidden aria-hidden="true">${item.content?.substring(0, 150) || ''}...</p>
-                <div class="tags">
-                  <span class="tag">${item.category || 'إعلان'}</span>
-                </div>
-              </div>
-            `;
-
-            // fallback للصورة
-            const img = article.querySelector('img');
-            if(img){
-              const FALLBACK = '/assets/apple-touch-icon.png';
-              img.addEventListener('error', ()=>{
-                const absoluteFallback = new URL(FALLBACK, location.origin).href;
-                if(img.src !== absoluteFallback){
-                  img.src = absoluteFallback;
-                }
-              }, { once:true });
-            }
-
-            frag.appendChild(article);
-          });
-
-          postsEl.appendChild(frag);
-
-          // JSON-LD ديناميكي لقائمة العناصر
-          try{
-            const list = items.slice(0,20).map((it,idx)=>({
-              "@type":"ListItem",
-              "position":idx+1,
-              "url": it.url || (location.origin + location.pathname + '#post-'+(idx+1))
-            }));
-            const ld = document.createElement('script');
-            ld.type = 'application/ld+json';
-            ld.textContent = JSON.stringify({
-              "@context":"https://schema.org",
-              "@type":"ItemList",
-              "itemListElement": list
-            });
-            document.head.appendChild(ld);
-          }catch(e){}
-
-          // احترام اللغة الحالية للعناصر المضافة
-          (function syncLangAfterRender(){
-            const lang = localStorage.getItem('khotwa_lang')==='en' ? 'en' : 'ar';
-            document.querySelectorAll('[data-lang]').forEach(el=>{
-              const want = el.getAttribute('data-lang')===lang;
-              el.hidden = !want;
-              el.setAttribute('aria-hidden', String(!want));
-            });
-          })();
-
-          // Filters already applied via API search
-        }catch(err){
-          console.error('فشل تحميل الأخبار:', err);
-          postsEl.innerHTML = '<div class="muted">تعذر تحميل الأخبار الآن. حاول لاحقاً.</div>';
-        }
-      }
-
-      loadNews();
-    })();
-  </script>
-
-  <!-- يوصل لوحة الإدارة (لا يغيّر الشكل) -->
-  
-  <!-- الميزات المحسّنة -->
-  <link rel="stylesheet" href="/assets/features.css">
-  <script src="/assets/features.js" defer></script>
-  <script src="/assets/pagination.js"></script>
-  <script src="/assets/advanced-filters.js"></script>
-  <script src="/assets/feedback.js"></script>
-  <script src="/assets/newsletter.js"></script>
-  <script src="/assets/form-validation.js"></script>
-  <script src="/assets/comments-and-registration.js"></script>
-  <script src="/assets/all-features.js"></script>
 </body>
 </html>
