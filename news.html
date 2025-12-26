@@ -8,10 +8,15 @@
   <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة في ملبورن.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/news.html"/>
   <meta name="robots" content="index,follow"/>
+  <meta name="color-scheme" content="light dark"/>
 
+  <!-- CSS (كما كان) -->
   <link rel="stylesheet" href="/assets/feedback.css">
   <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
+  <link rel="stylesheet" href="/assets/pagination.css">
+  <link rel="stylesheet" href="/assets/advanced-filters.css">
 
+  <!-- API -->
   <script src="/assets/khotwa-api.js"></script>
 </head>
 
@@ -19,13 +24,22 @@
 
 <main class="container" id="main">
   <section>
-    <h1>الأخبار</h1>
+    <h1 data-lang="ar">الأخبار</h1>
+    <h1 data-lang="en" hidden>News</h1>
 
-    <!-- البحث -->
-    <input id="q" type="search" placeholder="ابحث في الأخبار…" aria-label="بحث">
+    <p class="muted" data-lang="ar">
+      كل جديد عن مجلس طلاب خطوة: إعلانات، مبادرات، وتغطيات.
+    </p>
+    <p class="muted" data-lang="en" hidden>
+      Latest announcements and updates from Khotwa Student Council.
+    </p>
 
-    <!-- الفلاتر -->
-    <div>
+    <!-- أدوات البحث -->
+    <div class="tools">
+      <div class="search" role="search">
+        <input id="q" type="search" placeholder="ابحث في الأخبار…" aria-label="بحث">
+      </div>
+
       <button class="chip" data-filter="all" data-active="true">الكل</button>
       <button class="chip" data-filter="ann">إعلانات</button>
       <button class="chip" data-filter="event">فعاليات</button>
@@ -34,28 +48,29 @@
   </section>
 
   <!-- الأخبار -->
-  <section>
-    <div id="posts"></div>
+  <section aria-live="polite">
+    <div class="grid grid-3" id="posts">
+      <div class="muted">جارٍ تحميل الأخبار…</div>
+    </div>
   </section>
 </main>
 
 <script>
 (function () {
   if (!window.KhotwaAPI) {
-    console.error('KhotwaAPI غير محمّل');
+    console.error('❌ KhotwaAPI غير محمّل');
     return;
   }
 
   const postsEl = document.getElementById('posts');
   const qInput = document.getElementById('q');
-  const chips = document.querySelectorAll('.chip');
+  const chips = Array.from(document.querySelectorAll('.chip'));
 
   let currentQuery = '';
   let currentCategory = 'all';
 
-  // تحميل الأخبار
   async function loadNews() {
-    postsEl.innerHTML = 'جارٍ التحميل…';
+    postsEl.innerHTML = '<div class="muted">جارٍ التحميل…</div>';
 
     try {
       let items;
@@ -73,31 +88,34 @@
       postsEl.innerHTML = '';
 
       if (!items || items.length === 0) {
-        postsEl.textContent = 'لا توجد أخبار حالياً.';
+        postsEl.innerHTML = '<div class="muted">لا توجد أخبار حالياً.</div>';
         return;
       }
 
-      items.forEach(item => {
+      items.forEach((item, idx) => {
         const article = document.createElement('article');
         article.className = 'post';
+        article.id = 'post-' + (idx + 1);
 
         article.innerHTML = `
-          ${item.image ? `<img src="${item.image}" alt="">` : ''}
-          <h3>${item.title}</h3>
-          <p>${item.content?.substring(0,150) || ''}</p>
+          ${item.image ? `<img src="${item.image}" alt="${item.title}">` : ''}
+          <div class="body">
+            <h3>${item.title}</h3>
+            <p class="muted">${item.content?.substring(0,150) || ''}...</p>
+          </div>
         `;
 
         postsEl.appendChild(article);
       });
 
     } catch (err) {
-      console.error(err);
-      postsEl.textContent = 'تعذر تحميل الأخبار.';
+      console.error('❌ خطأ تحميل الأخبار:', err);
+      postsEl.innerHTML = '<div class="muted">تعذر تحميل الأخبار.</div>';
     }
   }
 
   // البحث
-  qInput.addEventListener('input', e => {
+  qInput?.addEventListener('input', (e) => {
     currentQuery = e.target.value.trim();
     loadNews();
   });
@@ -112,9 +130,7 @@
     });
   });
 
-  // أول تحميل
   loadNews();
-
 })();
 </script>
 
