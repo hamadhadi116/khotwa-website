@@ -614,9 +614,10 @@
               ? event._date.toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'})
               : '';
 
-            const title = event.title || '';
+            const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
+            const title = langPref === 'en' ? (event.titleEn || event.titleAr || '') : (event.titleAr || event.titleEn || '');
+            const description = langPref === 'en' ? (event.descriptionEn || event.descriptionAr || '') : (event.descriptionAr || event.descriptionEn || '');
             const location = event.location || 'غير محدد';
-            const description = event.description || '';
 
             article.innerHTML = `
               ${event.image

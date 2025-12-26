@@ -112,11 +112,15 @@
         const article = document.createElement('article');
         article.className = 'post';
 
+        const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
+        const title = langPref === 'en' ? (item.titleEn || item.titleAr || '') : (item.titleAr || item.titleEn || '');
+        const content = langPref === 'en' ? (item.contentEn || item.contentAr || '') : (item.contentAr || item.contentEn || '');
+        
         article.innerHTML = `
-          ${item.image ? `<img src="${item.image}" alt="">` : ''}
+          ${item.image ? `<img src="${item.image}" alt="${title}">` : ''}
           <div class="body">
-            <h3>${item.title}</h3>
-            <p class="muted">${item.content?.substring(0,150) || ''}</p>
+            <h3>${title}</h3>
+            <p class="muted">${content.substring(0,150)}${content.length > 150 ? '...' : ''}</p>
           </div>
         `;
 

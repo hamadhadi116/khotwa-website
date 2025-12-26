@@ -376,9 +376,9 @@
             const arDate = d ? d.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}) : '';
             const enDate = d ? d.toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'}) : '';
 
-            // Backend يرجع: title, location, description
-            const titleText = ev.title || '';
-            const descText = ev.description || '';
+            // Backend يرجع: titleAr, titleEn, descriptionAr, descriptionEn, location
+            const titleText = isEn ? (ev.titleEn || ev.titleAr || '') : (ev.titleAr || ev.titleEn || '');
+            const descText = isEn ? (ev.descriptionEn || ev.descriptionAr || '') : (ev.descriptionAr || ev.descriptionEn || '');
             const locText = ev.location || '';
 
             const article = document.createElement('article');
