@@ -1,0 +1,43 @@
+{
+  "name": "Khotwa Student Council",
+  "short_name": "Khotwa",
+  "description": "مجلس طلاب خطوة - نظام إدارة المحتوى والتفاعل مع الزوار",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/assets/favicon-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "social", "community"],
+  "screenshots": [
+    {
+      "src": "/assets/img/photo-2025-04-26-21-25-14.webp",
+      "sizes": "1280x720",
+      "type": "image/webp"
+    }
+  ]
+}
