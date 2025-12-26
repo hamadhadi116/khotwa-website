@@ -1,4 +1,4 @@
-/* Feedback Widget Styles */
+/* ================= Feedback Widget ================= */
 
 .feedback-widget {
   position: fixed;
@@ -12,26 +12,28 @@
   right: 2rem;
 }
 
+/* Toggle Button */
 .feedback-toggle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.25rem;
   background: var(--primary);
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 2rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
   font-weight: 600;
+  transition: all .3s;
 }
 
 .feedback-toggle:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(0,0,0,.2);
 }
 
+/* Panel */
 .feedback-panel {
   position: absolute;
   bottom: 4.5rem;
@@ -41,8 +43,8 @@
   background: var(--card);
   border: 1px solid var(--ring);
   border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  animation: slideUp 0.3s ease-out;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  animation: slideUp .25s ease-out;
 }
 
 [dir="rtl"] .feedback-panel {
@@ -51,42 +53,25 @@
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Header */
 .feedback-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--ring);
 }
 
-.feedback-header h3 {
-  margin: 0;
-  font-size: 1.125rem;
-  color: var(--text);
-}
-
 .feedback-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: none;
   background: transparent;
+  border: none;
   color: var(--muted);
   cursor: pointer;
-  border-radius: 0.5rem;
-  transition: all 0.2s;
+  border-radius: .5rem;
 }
 
 .feedback-close:hover {
@@ -94,75 +79,33 @@
   color: var(--text);
 }
 
+/* Body */
 .feedback-body {
   padding: 1.25rem;
 }
 
-/* Rating Buttons */
-.feedback-rating {
-  margin-bottom: 1.5rem;
-}
-
-.feedback-question {
-  margin-bottom: 0.75rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
+/* Rating */
 .rating-buttons {
   display: flex;
-  gap: 0.75rem;
-  justify-content: center;
+  gap: .75rem;
+  margin-bottom: 1.25rem;
 }
 
 .rating-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem;
+  flex: 1;
+  padding: .75rem;
   border: 2px solid var(--ring);
   background: var(--card);
-  color: var(--muted);
-  border-radius: 0.75rem;
+  border-radius: .75rem;
   cursor: pointer;
-  transition: all 0.2s;
-  flex: 1;
-}
-
-.rating-btn:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-  transform: translateY(-2px);
+  text-align: center;
+  transition: .2s;
 }
 
 .rating-btn.active {
-  border-color: var(--primary);
   background: var(--primary);
-  color: white;
-}
-
-.rating-btn[data-rating="excellent"]:hover,
-.rating-btn[data-rating="excellent"].active {
-  border-color: #10b981;
-  background: #10b981;
-}
-
-.rating-btn[data-rating="good"]:hover,
-.rating-btn[data-rating="good"].active {
-  border-color: #f59e0b;
-  background: #f59e0b;
-}
-
-.rating-btn[data-rating="poor"]:hover,
-.rating-btn[data-rating="poor"].active {
-  border-color: #ef4444;
-  background: #ef4444;
-}
-
-.rating-btn span {
-  font-size: 0.75rem;
-  font-weight: 600;
+  color: #fff;
+  border-color: var(--primary);
 }
 
 /* Form */
@@ -172,129 +115,84 @@
   gap: 1rem;
 }
 
+.feedback-form.hidden {
+  display: none;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: .5rem;
 }
 
-.form-group label {
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--text);
-}
-
-.form-group select,
 .form-group input,
+.form-group select,
 .form-group textarea {
-  padding: 0.625rem;
+  padding: .6rem;
+  border-radius: .5rem;
   border: 1px solid var(--ring);
   background: var(--bg);
   color: var(--text);
-  border-radius: 0.5rem;
-  font-family: inherit;
-  font-size: 0.875rem;
-  transition: all 0.2s;
 }
 
-.form-group select:focus,
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-}
-
-.form-group textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
+/* Buttons */
 .feedback-actions {
   display: flex;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
-}
-
-.btn-submit,
-.btn-cancel {
-  flex: 1;
-  padding: 0.625rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
+  gap: .75rem;
 }
 
 .btn-submit {
   background: var(--primary);
-  color: white;
-}
-
-.btn-submit:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  color: #fff;
+  border: none;
+  padding: .6rem;
+  border-radius: .5rem;
+  cursor: pointer;
 }
 
 .btn-cancel {
   background: var(--ring);
-  color: var(--text);
+  border: none;
+  padding: .6rem;
+  border-radius: .5rem;
+  cursor: pointer;
 }
 
-.btn-cancel:hover {
-  background: var(--muted);
-  color: white;
-}
-
-/* Success Message */
+/* Success */
 .feedback-success {
+  display: none;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.feedback-success.active {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 2rem 1rem;
-  text-align: center;
 }
 
 .feedback-success svg {
   color: #10b981;
 }
 
-.feedback-success h4 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: var(--text);
-}
-
-.feedback-success p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.875rem;
-}
-
-/* Responsive */
+/* Mobile */
 @media (max-width: 640px) {
   .feedback-widget {
     bottom: 1rem;
     left: 1rem;
   }
-  
+
   [dir="rtl"] .feedback-widget {
     left: auto;
     right: 1rem;
   }
-  
+
   .feedback-panel {
     width: calc(100vw - 2rem);
   }
-  
+
   .rating-buttons {
     flex-direction: column;
-  }
-  
-  .rating-btn {
-    flex-direction: row;
-    justify-content: center;
   }
 }
