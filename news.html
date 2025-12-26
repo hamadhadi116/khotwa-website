@@ -8,140 +8,113 @@
   <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة في ملبورن.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/news.html"/>
   <meta name="robots" content="index,follow"/>
-  <meta name="color-scheme" content="light dark"/>
 
-  <meta property="og:type" content="website"/>
-  <meta property="og:title" content="الأخبار – Khotwa"/>
-  <meta property="og:site_name" content="Khotwa Student Council"/>
-  <meta property="og:image" content="/assets/apple-touch-icon.png"/>
+  <link rel="stylesheet" href="/assets/feedback.css">
+  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
 
-  <link rel="icon" href="/assets/favicon.ico">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-
-  <!-- API -->
   <script src="/assets/khotwa-api.js"></script>
-
-  <style>
-    body{
-      margin:0;
-      font-family:"Segoe UI",system-ui,Tahoma,Arial,sans-serif;
-      background:#fff;
-      color:#0f172a;
-      line-height:1.6;
-    }
-    a{text-decoration:none;color:inherit}
-    .container{width:min(1120px,92%);margin:auto}
-    .navbar{border-bottom:1px solid #e5e7eb}
-    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
-    .nav-links{display:flex;gap:1rem}
-    .nav-links a{padding:.4rem .6rem}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
-    .post{border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
-    .post img{width:100%;aspect-ratio:16/9;object-fit:cover}
-    .post .body{padding:1rem}
-    footer{border-top:1px solid #e5e7eb;margin-top:2rem}
-  </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="container nav-inner">
-    <a href="/index.html">
-      <img src="/assets/apple-touch-icon.png" width="36" alt="">
-      مجلس طلاب خطوة
-    </a>
-    <div class="nav-links">
-      <a href="/about.html">من نحن</a>
-      <a href="/news.html" aria-current="page">الأخبار</a>
-      <a href="/events.html">الفعاليات</a>
-      <a href="/calendar.html">التقويم</a>
-      <a href="/gallery.html">معرض الصور</a>
-      <a href="/contact.html">تواصل</a>
-    </div>
-  </div>
-</nav>
-
 <main class="container" id="main">
+  <section>
+    <h1>الأخبار</h1>
 
-  <h1>الأخبار</h1>
-  <p>آخر أخبار وإعلانات مجلس طلاب خطوة</p>
+    <!-- البحث -->
+    <input id="q" type="search" placeholder="ابحث في الأخبار…" aria-label="بحث">
 
-  <!-- SEARCH -->
-  <input id="q" type="search" placeholder="ابحث في الأخبار…" style="width:100%;padding:.6rem;margin:1rem 0">
+    <!-- الفلاتر -->
+    <div>
+      <button class="chip" data-filter="all" data-active="true">الكل</button>
+      <button class="chip" data-filter="ann">إعلانات</button>
+      <button class="chip" data-filter="event">فعاليات</button>
+      <button class="chip" data-filter="media">تغطيات</button>
+    </div>
+  </section>
 
-  <!-- POSTS -->
-  <div class="grid" id="posts">
-    <p>جاري التحميل…</p>
-  </div>
-
+  <!-- الأخبار -->
+  <section>
+    <div id="posts"></div>
+  </section>
 </main>
 
-<footer>
-  <div class="container">
-    © <span id="year"></span> Khotwa Student Council
-  </div>
-</footer>
-
 <script>
-(function(){
-  document.getElementById('year').textContent = new Date().getFullYear();
+(function () {
+  if (!window.KhotwaAPI) {
+    console.error('KhotwaAPI غير محمّل');
+    return;
+  }
+
+  const postsEl = document.getElementById('posts');
+  const qInput = document.getElementById('q');
+  const chips = document.querySelectorAll('.chip');
 
   let currentQuery = '';
   let currentCategory = 'all';
-  const postsEl = document.getElementById('posts');
-  const qInput = document.getElementById('q');
 
-  async function loadNews(){
-    try{
+  // تحميل الأخبار
+  async function loadNews() {
+    postsEl.innerHTML = 'جارٍ التحميل…';
+
+    try {
       let items;
 
-      if(currentQuery){
+      if (currentQuery || currentCategory !== 'all') {
         items = await KhotwaAPI.searchNews(
           currentQuery,
-          null,
+          currentCategory === 'all' ? null : currentCategory,
           'newest'
         );
-      }else{
+      } else {
         items = await KhotwaAPI.getNews();
       }
 
       postsEl.innerHTML = '';
 
-      if(!items || items.length === 0){
-        postsEl.innerHTML = '<p>لا توجد أخبار حالياً.</p>';
+      if (!items || items.length === 0) {
+        postsEl.textContent = 'لا توجد أخبار حالياً.';
         return;
       }
 
-      items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      items.forEach(item => {
+        const article = document.createElement('article');
+        article.className = 'post';
 
-      items.forEach(item=>{
-        const el = document.createElement('article');
-        el.className = 'post';
-        el.innerHTML = `
+        article.innerHTML = `
           ${item.image ? `<img src="${item.image}" alt="">` : ''}
-          <div class="body">
-            <h3>${item.title}</h3>
-            <p>${(item.content||'').substring(0,150)}...</p>
-          </div>
+          <h3>${item.title}</h3>
+          <p>${item.content?.substring(0,150) || ''}</p>
         `;
-        postsEl.appendChild(el);
+
+        postsEl.appendChild(article);
       });
 
-    }catch(err){
+    } catch (err) {
       console.error(err);
-      postsEl.innerHTML = '<p>تعذر تحميل الأخبار.</p>';
+      postsEl.textContent = 'تعذر تحميل الأخبار.';
     }
   }
 
-  qInput.addEventListener('input', e=>{
+  // البحث
+  qInput.addEventListener('input', e => {
     currentQuery = e.target.value.trim();
     loadNews();
   });
 
+  // الفلاتر
+  chips.forEach(btn => {
+    btn.addEventListener('click', () => {
+      chips.forEach(b => b.dataset.active = 'false');
+      btn.dataset.active = 'true';
+      currentCategory = btn.dataset.filter;
+      loadNews();
+    });
+  });
+
+  // أول تحميل
   loadNews();
+
 })();
 </script>
 
