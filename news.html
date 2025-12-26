@@ -31,7 +31,7 @@
 
 <body>
 
-<nav class="navbar">
+<nav class="navbar" aria-label="الشريط العلوي">
   <div class="container nav-inner">
     <a class="brand" href="/index.html">
       <img src="/assets/apple-touch-icon.png" class="logo" width="40" height="40" alt="">
@@ -128,7 +128,7 @@
         const content = langPref === 'en' ? (item.contentEn || item.contentAr || '') : (item.contentAr || item.contentEn || '');
         
         article.innerHTML = `
-          ${item.image ? `<img src="${item.image}" alt="${title}">` : ''}
+          ${item.imageUrl ? `<img src="${item.imageUrl}" alt="${title}" style="width:100%;height:auto;border-radius:8px">` : ''}
           <div class="body">
             <h3>${title}</h3>
             <p class="muted">${content.substring(0,150)}${content.length > 150 ? '...' : ''}</p>
