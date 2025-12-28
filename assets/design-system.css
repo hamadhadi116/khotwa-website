@@ -87,6 +87,7 @@
   --font-medium: 500;
   --font-semibold: 600;
   --font-bold: 700;
+  --font-extrabold: 800;
 
   /* Typography - Line Heights */
   --leading-tight: 1.25;
@@ -109,6 +110,8 @@
   --space-16: 4rem;     /* 64px */
   --space-20: 5rem;     /* 80px */
   --space-24: 6rem;     /* 96px */
+  --space-28: 7rem;     /* 112px */
+  --space-30: 7.5rem;   /* 120px */
 
   /* Border Radius */
   --radius-none: 0;
@@ -121,10 +124,10 @@
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-base: 0 2px 4px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px 0 rgba(0, 0, 0, 0.12), 0 4px 8px 0 rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 40px 0 rgba(0, 0, 0, 0.15), 0 10px 20px 0 rgba(0, 0, 0, 0.1);
 
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
@@ -188,11 +191,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: var(--text-4xl);
+  font-size: var(--text-5xl); /* 48px - كما في موقع البعثة */
+  font-weight: var(--font-bold);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--text-4xl); /* 36px على Mobile */
+  }
 }
 
 h2 {
-  font-size: var(--text-3xl);
+  font-size: 2.125rem; /* 34px - كما في موقع البعثة */
+  font-weight: var(--font-bold);
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: var(--text-2xl); /* 24px على Mobile */
+  }
 }
 
 h3 {
@@ -254,14 +271,14 @@ a:hover {
 }
 
 .section {
-  padding-top: var(--space-16);
-  padding-bottom: var(--space-16);
+  padding-top: var(--space-20); /* 80px على Mobile */
+  padding-bottom: var(--space-20);
 }
 
 @media (min-width: 1024px) {
   .section {
-    padding-top: var(--space-24);
-    padding-bottom: var(--space-24);
+    padding-top: var(--space-30); /* 120px على Desktop - كما في موقع البعثة */
+    padding-bottom: var(--space-30);
   }
 }
 
@@ -274,17 +291,17 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
-  font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  padding: 1rem 2rem; /* 16px 32px - كما في موقع البعثة */
+  font-size: var(--text-lg); /* 18px */
+  font-weight: var(--font-semibold); /* 600 */
   line-height: 1;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md); /* 12px */
   border: none;
   cursor: pointer;
   transition: all var(--transition-base);
   text-decoration: none;
   white-space: nowrap;
-  min-height: 44px; /* Touch target */
+  min-height: 52px; /* Touch target */
 }
 
 .btn-primary {
@@ -295,8 +312,8 @@ a:hover {
 
 .btn-primary:hover {
   background-color: var(--color-primary-700);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(91, 79, 255, 0.4);
+  transform: translateY(-2px);
 }
 
 .btn-secondary {
@@ -341,8 +358,8 @@ a:hover {
 
 .card {
   background-color: var(--color-bg-primary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-base);
+  border-radius: var(--radius-lg); /* 16px - كما في موقع البعثة */
+  box-shadow: var(--shadow-md); /* أوضح */
   overflow: hidden;
   transition: all var(--transition-base);
 }
@@ -359,7 +376,7 @@ a:hover {
 }
 
 .card-body {
-  padding: var(--space-6);
+  padding: var(--space-8); /* 32px - كما في موقع البعثة */
 }
 
 .card-title {

@@ -1,0 +1,324 @@
+/**
+ * Enhanced Navbar - Inspired by Khotwa Official Website
+ * Created: Dec 28, 2025
+ * Purpose: Clean, professional, and responsive navigation
+ */
+
+/* ========================================
+   NAVBAR - ENHANCED
+   ======================================== */
+
+.navbar {
+  position: fixed !important; /* Fixed position - يبقى في الأعلى */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: var(--color-bg-white, #ffffff);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Shadow أوضح */
+  backdrop-filter: saturate(140%) blur(12px);
+  transition: all 0.3s ease-in-out;
+  height: 80px; /* Fixed height */
+}
+
+/* إضافة padding-top للـ body لتعويض Fixed navbar */
+body {
+  padding-top: 80px;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0;
+  max-width: 1200px; /* كما في موقع البعثة */
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Logo & Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  font-size: 1.125rem; /* 18px */
+  color: var(--color-text-primary, #1a1a1a);
+  transition: opacity 0.3s ease;
+}
+
+.brand:hover {
+  opacity: 0.8;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation Links - Desktop */
+.nav-links {
+  display: flex;
+  gap: 2rem; /* 32px - مسافة كبيرة */
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
+  color: var(--color-text-primary, #1a1a1a);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: var(--color-primary-600, #5B4FFF);
+  background-color: var(--color-primary-50, #f5f3ff);
+}
+
+/* Active link indicator */
+.nav-links a[aria-current="page"] {
+  color: var(--color-primary-600, #5B4FFF);
+  font-weight: 600;
+}
+
+.nav-links a[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 2px;
+  background-color: var(--color-primary-600, #5B4FFF);
+  border-radius: 2px;
+}
+
+/* Language Toggle */
+.lang-toggle {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 500;
+  color: var(--color-text-primary, #1a1a1a);
+  background-color: transparent;
+  border: 2px solid var(--color-neutral-200, #e5e5e5);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 44px;
+}
+
+.lang-toggle:hover {
+  background-color: var(--color-primary-50, #f5f3ff);
+  border-color: var(--color-primary-600, #5B4FFF);
+  color: var(--color-primary-600, #5B4FFF);
+}
+
+/* Menu Toggle (Hamburger) - Mobile */
+.menu-toggle {
+  display: none; /* Hidden on desktop */
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: 2px solid var(--color-neutral-200, #e5e5e5);
+  color: var(--color-text-primary, #1a1a1a);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 44px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.menu-toggle:hover {
+  background-color: var(--color-primary-50, #f5f3ff);
+  border-color: var(--color-primary-600, #5B4FFF);
+  color: var(--color-primary-600, #5B4FFF);
+}
+
+.menu-toggle svg {
+  transition: transform 0.3s ease;
+}
+
+.menu-toggle[aria-expanded="true"] svg {
+  transform: rotate(90deg);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 960px) {
+  .navbar {
+    height: 70px;
+  }
+  
+  body {
+    padding-top: 70px;
+  }
+  
+  .nav-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .menu-toggle {
+    display: inline-flex; /* Show on mobile */
+  }
+  
+  /* Mobile Menu */
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--color-bg-white, #ffffff);
+    border-bottom: 1px solid var(--color-neutral-200, #e5e5e5);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 1.5rem 1rem;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    
+    /* Animation */
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .nav-links[data-open="true"] {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .nav-links a {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.125rem; /* 18px - أكبر على Mobile */
+    border-radius: 0.5rem;
+    text-align: right;
+  }
+  
+  .nav-links a[aria-current="page"]::after {
+    display: none; /* Hide underline on mobile */
+  }
+  
+  .nav-links a[aria-current="page"] {
+    background-color: var(--color-primary-50, #f5f3ff);
+  }
+  
+  .lang-toggle {
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .brand {
+    font-size: 1rem;
+  }
+}
+
+/* ========================================
+   TABLET
+   ======================================== */
+
+@media (min-width: 961px) and (max-width: 1200px) {
+  .nav-links {
+    gap: 1.5rem; /* 24px على Tablet */
+  }
+  
+  .nav-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* ========================================
+   SCROLL BEHAVIOR
+   ======================================== */
+
+/* Navbar يصغر عند التمرير (optional) */
+.navbar.scrolled {
+  height: 70px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 960px) {
+  .navbar.scrolled {
+    height: 60px;
+  }
+  
+  body {
+    padding-top: 60px;
+  }
+  
+  .nav-links {
+    top: 60px;
+    max-height: calc(100vh - 60px);
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* Focus states */
+.nav-links a:focus-visible,
+.lang-toggle:focus-visible,
+.menu-toggle:focus-visible {
+  outline: 2px solid var(--color-primary-600, #5B4FFF);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .nav-links,
+  .nav-links a,
+  .menu-toggle svg {
+    transition: none;
+  }
+}
+
+/* ========================================
+   DARK MODE SUPPORT (Optional)
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .navbar {
+    background-color: rgba(15, 23, 42, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .nav-links {
+    background-color: rgba(15, 23, 42, 0.98);
+  }
+  
+  .brand,
+  .nav-links a,
+  .menu-toggle {
+    color: #e5e7eb;
+  }
+  
+  .menu-toggle,
+  .lang-toggle {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
