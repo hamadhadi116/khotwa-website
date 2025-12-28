@@ -413,9 +413,15 @@
 
     // منيو الجوال + وصولية
     (function(){
+      console.log('🔧 Menu toggle IIFE started');
       const btn = document.getElementById('menu-toggle');
       const nav = document.getElementById('primary-nav');
-      if(!btn || !nav) return;
+      console.log('🔧 btn:', btn, 'nav:', nav);
+      if(!btn || !nav) {
+        console.log('❌ Menu toggle: btn or nav not found!');
+        return;
+      }
+      console.log('✅ Menu toggle: Elements found, setting up...');
 
       const mq  = window.matchMedia('(min-width:961px)');
 
@@ -437,7 +443,11 @@
       }
       init();
 
-      btn.addEventListener('click', ()=> setMenu(nav.getAttribute('data-open')!=='true'));
+      btn.addEventListener('click', ()=> {
+        console.log('🔧 Menu button clicked!');
+        setMenu(nav.getAttribute('data-open')!=='true');
+      });
+      console.log('✅ Menu toggle: Event listener registered!');
 
       mq.addEventListener('change', (e)=>{
         // عند الانتقال بين الشاشات نغلق القائمة على الجوال ونُظهرها على الديسكتوب
