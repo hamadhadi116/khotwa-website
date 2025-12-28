@@ -65,16 +65,19 @@ async function loadCouncilMembers() {
     if (data.result && data.result.data) {
       const members = data.result.data;
       const currentLang = localStorage.getItem('language') || 'ar';
-      const membersContainer = document.querySelector('.members');
+      const membersContainer = document.getElementById('council-members-container');
       
       if (membersContainer && members.length > 0) {
         membersContainer.innerHTML = members.map(member => `
           <div class="member-card">
-            <img src="${member.photoUrl || '/assets/apple-touch-icon.png'}" alt="${currentLang === 'ar' ? member.nameAr : member.nameEn}">
-            <div style="padding:1rem">
-              <h3 style="margin:0 0 .4rem;font-size:1.05rem">${currentLang === 'ar' ? member.nameAr : member.nameEn}</h3>
-              <p class="muted" style="margin:0;font-size:.9rem">${currentLang === 'ar' ? member.positionAr : member.positionEn}</p>
-            </div>
+            <img src="${member.photoUrl || '/assets/apple-touch-icon.png'}" 
+                 alt="${currentLang === 'ar' ? member.nameAr : member.nameEn}" 
+                 width="360" height="240"
+                 loading="lazy" decoding="async" referrerpolicy="no-referrer">
+            <h3 data-lang="ar">${member.nameAr}</h3>
+            <h3 data-lang="en" hidden aria-hidden="true">${member.nameEn}</h3>
+            <p class="muted" data-lang="ar">${member.positionAr}</p>
+            <p class="muted" data-lang="en" hidden aria-hidden="true">${member.positionEn}</p>
           </div>
         `).join('');
       }
