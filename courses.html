@@ -1,0 +1,255 @@
+<!-- courses.html -->
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <title>الدورات والورش – مجلس طلاب خطوة</title>
+  <meta name="description" content="تصفح الدورات والورش التدريبية المقدمة من مجلس طلاب خطوة">
+  <link rel="canonical" href="https://khotwastudentcouncil.com/courses.html"/>
+  
+  <!-- Theme color -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a"   media="(prefers-color-scheme: dark)">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" href="/assets/favicon.ico">
+  
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/khotwa-theme.css">
+  <link rel="stylesheet" href="/assets/features.css">
+  <link rel="stylesheet" href="/assets/courses-volunteers.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">انتقل إلى المحتوى</a>
+
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="التنقل الرئيسي">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="brand">
+          <img src="/assets/img/logo.webp" alt="شعار خطوة" width="48" height="48" class="logo">
+          <span>مجلس طلاب خطوة</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html">الرئيسية</a>
+          <a href="about.html">من نحن</a>
+          <a href="news.html">الأخبار</a>
+          <a href="events.html">الفعاليات</a>
+          <a href="courses.html" aria-current="page">الدورات</a>
+          <a href="volunteers.html">التطوع</a>
+          <a href="contact.html">اتصل بنا</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="container">
+        <h1>الدورات والورش التدريبية</h1>
+        <p>اكتشف الدورات والورش التي نقدمها لتطوير مهاراتك الأكاديمية والمهنية</p>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters-section">
+      <div class="container">
+        <div class="filters">
+          <select id="categoryFilter" class="filter-select">
+            <option value="">جميع الفئات</option>
+            <option value="academic">أكاديمي</option>
+            <option value="professional">مهني</option>
+            <option value="personal">شخصي</option>
+            <option value="technical">تقني</option>
+          </select>
+          
+          <select id="levelFilter" class="filter-select">
+            <option value="">جميع المستويات</option>
+            <option value="beginner">مبتدئ</option>
+            <option value="intermediate">متوسط</option>
+            <option value="advanced">متقدم</option>
+          </select>
+          
+          <select id="formatFilter" class="filter-select">
+            <option value="">جميع الأنواع</option>
+            <option value="online">أونلاين</option>
+            <option value="in-person">حضوري</option>
+            <option value="hybrid">هجين</option>
+          </select>
+          
+          <select id="statusFilter" class="filter-select">
+            <option value="">جميع الحالات</option>
+            <option value="upcoming">قادمة</option>
+            <option value="ongoing">جارية</option>
+            <option value="completed">منتهية</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Courses Grid -->
+    <section class="courses-section">
+      <div class="container">
+        <div id="coursesGrid" class="courses-grid">
+          <!-- Loading state -->
+          <div class="loading">
+            <div class="spinner"></div>
+            <p>جاري تحميل الدورات...</p>
+          </div>
+        </div>
+        
+        <!-- Empty state -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          <h3>لا توجد دورات متاحة</h3>
+          <p>لم نجد أي دورات تطابق معايير البحث</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>مجلس طلاب خطوة</h3>
+          <p>نمثل طلاب برنامج خطوة في جامعة لا تروب</p>
+        </div>
+        <div class="footer-section">
+          <h4>روابط سريعة</h4>
+          <ul>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="about.html">من نحن</a></li>
+            <li><a href="contact.html">اتصل بنا</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>تابعنا</h4>
+          <div class="social-links">
+            <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 مجلس طلاب خطوة. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_URL = 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/api/trpc';
+    
+    // Fetch courses from backend
+    async function fetchCourses() {
+      try {
+        const response = await fetch(`${API_URL}/courses.list`);
+        const data = await response.json();
+        return data.result?.data || [];
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+        return [];
+      }
+    }
+    
+    // Render course card
+    function renderCourseCard(course) {
+      const statusBadge = {
+        draft: 'مسودة',
+        published: 'منشور',
+        archived: 'مؤرشف'
+      }[course.status] || course.status;
+      
+      const levelBadge = {
+        beginner: 'مبتدئ',
+        intermediate: 'متوسط',
+        advanced: 'متقدم'
+      }[course.level] || course.level;
+      
+      const formatBadge = {
+        online: 'أونلاين',
+        'in-person': 'حضوري',
+        hybrid: 'هجين'
+      }[course.format] || course.format;
+      
+      return `
+        <article class="course-card">
+          ${course.thumbnailUrl ? `<img src="${course.thumbnailUrl}" alt="${course.titleAr}" class="course-image">` : ''}
+          <div class="course-content">
+            <div class="course-badges">
+              <span class="badge badge-${course.status}">${statusBadge}</span>
+              <span class="badge badge-level">${levelBadge}</span>
+              <span class="badge badge-format">${formatBadge}</span>
+            </div>
+            <h3>${course.titleAr}</h3>
+            <p class="course-description">${course.descriptionAr || 'لا يوجد وصف'}</p>
+            <div class="course-meta">
+              <span>📅 ${course.duration || 'غير محدد'}</span>
+              <span>👥 ${course.maxParticipants || '∞'} مقعد</span>
+              ${course.price ? `<span>💰 $${course.price}</span>` : '<span>🆓 مجاني</span>'}
+            </div>
+            <a href="course-details.html?id=${course.id}" class="btn btn-primary">عرض التفاصيل</a>
+          </div>
+        </article>
+      `;
+    }
+    
+    // Filter courses
+    function filterCourses(courses) {
+      const category = document.getElementById('categoryFilter').value;
+      const level = document.getElementById('levelFilter').value;
+      const format = document.getElementById('formatFilter').value;
+      const status = document.getElementById('statusFilter').value;
+      
+      return courses.filter(course => {
+        if (category && course.category !== category) return false;
+        if (level && course.level !== level) return false;
+        if (format && course.format !== format) return false;
+        if (status && course.status !== status) return false;
+        return true;
+      });
+    }
+    
+    // Render courses
+    async function renderCourses() {
+      const coursesGrid = document.getElementById('coursesGrid');
+      const emptyState = document.getElementById('emptyState');
+      
+      const allCourses = await fetchCourses();
+      const filteredCourses = filterCourses(allCourses);
+      
+      if (filteredCourses.length === 0) {
+        coursesGrid.style.display = 'none';
+        emptyState.style.display = 'flex';
+      } else {
+        coursesGrid.style.display = 'grid';
+        emptyState.style.display = 'none';
+        coursesGrid.innerHTML = filteredCourses.map(renderCourseCard).join('');
+      }
+    }
+    
+    // Event listeners
+    document.getElementById('categoryFilter').addEventListener('change', renderCourses);
+    document.getElementById('levelFilter').addEventListener('change', renderCourses);
+    document.getElementById('formatFilter').addEventListener('change', renderCourses);
+    document.getElementById('statusFilter').addEventListener('change', renderCourses);
+    
+    // Initial load
+    renderCourses();
+  </script>
+</body>
+</html>
