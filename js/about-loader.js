@@ -64,7 +64,7 @@ async function loadCouncilMembers() {
     const data = await response.json();
     
     if (data.result && data.result.data) {
-      const members = data.result.data;
+      const members = data.result.data.json || data.result.data;
       const currentLang = localStorage.getItem('language') || 'ar';
       const membersContainer = document.getElementById('council-members-container');
       
