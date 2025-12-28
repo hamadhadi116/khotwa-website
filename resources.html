@@ -147,36 +147,76 @@
   <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
   <!-- Navbar -->
+  <!-- Navbar -->
+  <!-- Navbar -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
       <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img
-          src="https://g.top4top.io/p_3516rfttb1.jpg"
-          class="logo"
-          alt="شعار مجلس طلاب خطوة"
-          width="80" height="80"
-          decoding="async" loading="lazy">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40" decoding="async" loading="lazy">
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
 
       <button id="menu-toggle" class="menu-toggle" type="button"
               aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        <span data-lang="ar">القائمة</span>
-        <span data-lang="en" hidden aria-hidden="true">Menu</span>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
       </button>
 
       <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
-        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
-        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
-        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden aria-hidden="true">Calendar</span></a>
-        <a href="/gallery.html"><span data-lang="ar">معرض الصور</span><span data-lang="en" hidden aria-hidden="true">Gallery</span></a>
-        <a href="/faq.html"><span data-lang="ar">الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">FAQ</span></a>
-        <a href="/resources.html" aria-current="page"><span data-lang="ar">الموارد</span><span data-lang="en" hidden aria-hidden="true">Resources</span></a>
-        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
-        <button id="lang-toggle" class="lang-toggle" type="button" aria-pressed="false" aria-label="تبديل اللغة">English</button>
+        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden aria-hidden="true">Home</span></a>
+        
+        <!-- Mega Menu: البرامج -->
+        <div class="nav-item-mega" data-mega="programs">
+          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-programs">
+            <span data-lang="ar">البرامج</span>
+            <span data-lang="en" hidden aria-hidden="true">Programs</span>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </button>
+          <div class="mega-menu" id="mega-programs" hidden>
+            <div class="mega-menu-inner">
+              <div class="mega-column">
+                <h3 data-lang="ar">الأخبار والفعاليات</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">News & Events</h3>
+                <a href="/news.html"><span data-lang="ar">📰 الأخبار</span><span data-lang="en" hidden aria-hidden="true">📰 News</span></a>
+                <a href="/events.html"><span data-lang="ar">📅 الفعاليات</span><span data-lang="en" hidden aria-hidden="true">📅 Events</span></a>
+                <a href="/calendar.html"><span data-lang="ar">🗓️ التقويم</span><span data-lang="en" hidden aria-hidden="true">🗓️ Calendar</span></a>
+              </div>
+              <div class="mega-column">
+                <h3 data-lang="ar">التطوير والتدريب</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">Development & Training</h3>
+                <a href="/courses.html"><span data-lang="ar">🎓 الدورات والورش</span><span data-lang="en" hidden aria-hidden="true">🎓 Courses & Workshops</span></a>
+                <a href="/volunteers.html"><span data-lang="ar">❤️ الفرص التطوعية</span><span data-lang="en" hidden aria-hidden="true">❤️ Volunteer Opportunities</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mega Menu: عن المجلس -->
+        <div class="nav-item-mega" data-mega="council">
+          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-council">
+            <span data-lang="ar">عن المجلس</span>
+            <span data-lang="en" hidden aria-hidden="true">About Council</span>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </button>
+          <div class="mega-menu" id="mega-council" hidden>
+            <div class="mega-menu-inner">
+              <div class="mega-column">
+                <h3 data-lang="ar">معلومات عنا</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">About Us</h3>
+                <a href="/about.html"><span data-lang="ar">👥 من نحن</span><span data-lang="en" hidden aria-hidden="true">👥 About Us</span></a>
+                <a href="/gallery.html"><span data-lang="ar">📸 معرض الصور</span><span data-lang="en" hidden aria-hidden="true">📸 Gallery</span></a>
+                <a href="/faq.html"><span data-lang="ar">❓ الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">❓ FAQ</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        
+        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="تغيير اللغة">
+          <span data-lang="ar">English</span><span data-lang="en" hidden aria-hidden="true">عربي</span>
+        </button>
       </div>
     </div>
   </nav>
