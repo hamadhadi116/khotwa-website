@@ -10,7 +10,7 @@
 
 const KhotwaAPI = (function () {
   // ==================== الإعدادات ====================
-  const API_BASE = "https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/api/trpc";
+  const API_BASE = window.KHOTWA_CONFIG?.API_BASE || "https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/api/trpc";
 
   // ==================== Visitor ID ====================
   function getVisitorId() {
