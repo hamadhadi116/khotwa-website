@@ -374,7 +374,54 @@
     </div>
   </footer>
 
-  <script>
+<script>
+// Mega Menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const megaItems = document.querySelectorAll('.nav-item-mega');
+  
+  megaItems.forEach(item => {
+    const button = item.querySelector('.nav-link-mega');
+    const menu = item.querySelector('.mega-menu');
+    
+    if (!button || !menu) return;
+    
+    // Desktop: hover
+    item.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 980) {
+        menu.hidden = false;
+        button.setAttribute('aria-expanded', 'true');
+      }
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      if (window.innerWidth > 980) {
+        menu.hidden = true;
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    // Mobile: click
+    button.addEventListener('click', (e) => {
+      if (window.innerWidth <= 980) {
+        e.preventDefault();
+        const isOpen = !menu.hidden;
+        menu.hidden = isOpen;
+        button.setAttribute('aria-expanded', !isOpen);
+      }
+    });
+  });
+  
+  // Close all menus on resize
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.mega-menu').forEach(menu => {
+      menu.hidden = true;
+    });
+    document.querySelectorAll('.nav-link-mega').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+});
+</script>
     (function(){
       // سنة الحقوق
       const y = document.getElementById('year');

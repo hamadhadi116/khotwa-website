@@ -531,7 +531,7 @@
 <script src="js/menu-toggle.js"></script>
 <script>
 // Mega Menu functionality
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   const megaItems = document.querySelectorAll('.nav-item-mega');
   
   megaItems.forEach(item => {
@@ -541,36 +541,41 @@
     if (!button || !menu) return;
     
     // Desktop: hover
-    if (window.innerWidth > 980) {
-      item.addEventListener('mouseenter', () => {
+    item.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 980) {
         menu.hidden = false;
         button.setAttribute('aria-expanded', 'true');
-      });
-      
-      item.addEventListener('mouseleave', () => {
+      }
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      if (window.innerWidth > 980) {
         menu.hidden = true;
         button.setAttribute('aria-expanded', 'false');
-      });
-    }
+      }
+    });
     
     // Mobile: click
     button.addEventListener('click', (e) => {
       if (window.innerWidth <= 980) {
         e.preventDefault();
-        const isOpen = menu.hidden === false;
-        menu.hidden = !isOpen;
+        const isOpen = !menu.hidden;
+        menu.hidden = isOpen;
         button.setAttribute('aria-expanded', !isOpen);
       }
     });
   });
   
-  // Close on window resize
+  // Close all menus on resize
   window.addEventListener('resize', () => {
     document.querySelectorAll('.mega-menu').forEach(menu => {
       menu.hidden = true;
     });
+    document.querySelectorAll('.nav-link-mega').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
   });
-})();
+});
 </script>
 </body>
 </html>
