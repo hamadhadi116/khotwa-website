@@ -413,15 +413,15 @@
 
     // منيو الجوال + وصولية
     (function(){
-      console.log('🔧 Menu toggle IIFE started');
+      console.log('[DEBUG] Menu toggle IIFE started');
       const btn = document.getElementById('menu-toggle');
       const nav = document.getElementById('primary-nav');
-      console.log('🔧 btn:', btn, 'nav:', nav);
+      console.log('[DEBUG] btn:', btn, 'nav:', nav);
       if(!btn || !nav) {
-        console.log('❌ Menu toggle: btn or nav not found!');
+        console.log('[ERROR] Menu toggle: btn or nav not found!');
         return;
       }
-      console.log('✅ Menu toggle: Elements found, setting up...');
+      console.log('[DEBUG] Menu toggle: Elements found, setting up...');
 
       const mq  = window.matchMedia('(min-width:961px)');
 
@@ -444,10 +444,10 @@
       init();
 
       btn.addEventListener('click', ()=> {
-        console.log('🔧 Menu button clicked!');
+        console.log('[DEBUG] Menu button clicked!');
         setMenu(nav.getAttribute('data-open')!=='true');
       });
-      console.log('✅ Menu toggle: Event listener registered!');
+      console.log('[DEBUG] Menu toggle: Event listener registered!');
 
       mq.addEventListener('change', (e)=>{
         // عند الانتقال بين الشاشات نغلق القائمة على الجوال ونُظهرها على الديسكتوب
