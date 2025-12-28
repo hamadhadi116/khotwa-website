@@ -122,6 +122,8 @@
       items.forEach(item => {
         const article = document.createElement('article');
         article.className = 'post';
+        article.style.cursor = 'pointer';
+        article.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
 
         const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
         const title = langPref === 'en' ? (item.titleEn || item.titleAr || '') : (item.titleAr || item.titleEn || '');
@@ -132,8 +134,25 @@
           <div class="body">
             <h3>${title}</h3>
             <p class="muted">${content.substring(0,150)}${content.length > 150 ? '...' : ''}</p>
+            <span style="color: #10b981; font-weight: 600; font-size: 0.9rem;">اقرأ المزيد ←</span>
           </div>
         `;
+
+        // Add click handler
+        article.addEventListener('click', () => {
+          window.location.href = `/news-detail.html?id=${item.id}`;
+        });
+
+        // Add hover effect
+        article.addEventListener('mouseenter', () => {
+          article.style.transform = 'translateY(-4px)';
+          article.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+        });
+
+        article.addEventListener('mouseleave', () => {
+          article.style.transform = 'translateY(0)';
+          article.style.boxShadow = '';
+        });
 
         postsEl.appendChild(article);
       });

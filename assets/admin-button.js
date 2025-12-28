@@ -17,7 +17,35 @@
     init();
   }
 
-  function init() {
+  async function init() {
+    // Check if user is authenticated as admin
+    // For security, we hide the button from non-admins
+    // Even if someone manually accesses the URL, Backend OAuth will protect it
+    try {
+      // Check if user has admin access by testing a simple API call
+      // If this fails, user is not logged in or not admin
+      const response = await fetch(ADMIN_URL.replace('/admin', '/api/trpc/auth.me'), {
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        // User not authenticated, don't show button
+        return;
+      }
+      
+      const data = await response.json();
+      const user = data?.result?.data;
+      
+      // Only show button for admin users
+      if (!user || user.role !== 'admin') {
+        return;
+      }
+    } catch (err) {
+      // If check fails, don't show button
+      console.log('Admin check failed, button hidden');
+      return;
+    }
+
     // Find nav-links container
     const navLinks = document.querySelector('.nav-links');
     if (!navLinks) {

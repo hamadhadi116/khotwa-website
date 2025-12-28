@@ -606,6 +606,8 @@
             const article = document.createElement('article');
             article.className = 'event-card';
             article.id = 'event-' + (idx + 1);
+            article.style.cursor = 'pointer';
+            article.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
 
             const arDate = event._date
               ? event._date.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'})
@@ -633,8 +635,25 @@
                 </div>
                 <h3>${title}</h3>
                 <p class="muted">${description.substring(0, 150)}${description.length > 150 ? '...' : ''}</p>
+                <span style="color: #8b5cf6; font-weight: 600; font-size: 0.9rem;">عرض التفاصيل ←</span>
               </div>
             `;
+
+            // Add click handler
+            article.addEventListener('click', () => {
+              window.location.href = `/event-detail.html?id=${event.id}`;
+            });
+
+            // Add hover effect
+            article.addEventListener('mouseenter', () => {
+              article.style.transform = 'translateY(-4px)';
+              article.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+            });
+
+            article.addEventListener('mouseleave', () => {
+              article.style.transform = 'translateY(0)';
+              article.style.boxShadow = '';
+            });
 
             // fallback للصورة
             const img = article.querySelector('img');
