@@ -221,6 +221,23 @@
       </div>
     </section>
 
+    <!-- Latest News -->
+    <section aria-labelledby="news-ar" class="container">
+      <div class="section-head">
+        <h2 id="news-ar" data-lang="ar">آخر الأخبار</h2>
+        <h2 id="news-en" data-lang="en" hidden aria-hidden="true">Latest News</h2>
+        <a class="muted" href="/news.html"><span data-lang="ar">جميع الأخبار</span><span data-lang="en" hidden aria-hidden="true">All news</span></a>
+      </div>
+
+      <div class="grid grid-3" id="home-news" aria-live="polite">
+        <!-- يتم تعبئته عبر جافاسكربت -->
+      </div>
+      <p id="home-news-empty" class="muted" hidden>
+        <span data-lang="ar">لا توجد أخبار حالياً.</span>
+        <span data-lang="en" hidden aria-hidden="true">No news at the moment.</span>
+      </p>
+    </section>
+
     <!-- Events (ديناميكي من /data/events.json) -->
     <section aria-labelledby="events-ar" class="container">
       <div class="section-head">
@@ -356,7 +373,7 @@
           today.setHours(0,0,0,0);
           
           const upcoming = items
-            .map(ev => ({ ...ev, _date: new Date(ev.date) }))
+            .map(ev => ({ ...ev, _date: new Date(ev.eventDate || ev.date) }))
             .filter(ev => !isNaN(ev._date) && ev._date >= today)
             .sort((a,b)=> a._date - b._date)
             .slice(0,3);
@@ -416,6 +433,76 @@
 
       loadHomeEvents();
     })();
+
+    // تحميل آخر 3 أخبار للصفحة الرئيسية
+    (function(){
+      const container = document.getElementById('home-news');
+      const emptyMsg  = document.getElementById('home-news-empty');
+      if(!container) return;
+
+      function escapeHtml(str){
+        return String(str || '').replace(/[&<>"]/g, s=>(
+          {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s] || s
+        ));
+      }
+
+      async function loadHomeNews(){
+        try{
+          const items = await KhotwaAPI.getNews();
+          
+          if(!items || !items.length){
+            emptyMsg.hidden = false;
+            return;
+          }
+
+          const latest = items
+            .sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0,3);
+
+          if(!latest.length){
+            emptyMsg.hidden = false;
+            return;
+          }
+
+          const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
+          const isEn = langPref === 'en';
+
+          container.innerHTML = '';
+
+          latest.forEach(item=>{
+            const titleText = isEn ? (item.titleEn || item.titleAr || '') : (item.titleAr || item.titleEn || '');
+            const contentText = isEn ? (item.contentEn || item.contentAr || '') : (item.contentAr || item.contentEn || '');
+            const category = item.category || '';
+
+            const article = document.createElement('article');
+            article.className = 'card';
+            article.innerHTML = `
+              ${item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(titleText)}" loading="lazy" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:1rem;">` : ''}
+              <h3>
+                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>${escapeHtml(titleText)}</span>
+                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>${escapeHtml(titleText)}</span>
+              </h3>
+              <p class="muted">
+                <span data-lang="ar" ${isEn?'hidden aria-hidden="true"':''}>${escapeHtml(contentText.substring(0, 120))}${contentText.length > 120 ? '...' : ''}</span>
+                <span data-lang="en" ${!isEn?'hidden aria-hidden="true"':''}>${escapeHtml(contentText.substring(0, 120))}${contentText.length > 120 ? '...' : ''}</span>
+              </p>
+              ${category ? `<p class="muted">🏷️ ${escapeHtml(category)}</p>` : ''}
+            `;
+            container.appendChild(article);
+          });
+        }catch(err){
+          console.error('Failed to load home news', err);
+          if(emptyMsg){
+            emptyMsg.hidden = false;
+            emptyMsg.querySelector('[data-lang="ar"]').textContent = 'تعذّر تحميل الأخبار.';
+            const enSpan = emptyMsg.querySelector('[data-lang="en"]');
+            if(enSpan) enSpan.textContent = 'Could not load news.';
+          }
+        }
+      }
+
+      loadHomeNews();
+    })();
   </script>
 
   <!-- Netlify Identity widget + تحويل رابط الدعوة تلقائيًا -->
@@ -443,5 +530,7 @@
   <script src="/assets/form-validation.js"></script>
   <script src="/assets/comments-and-registration.js"></script>
   <script src="/assets/all-features.js"></script>
+  <script src="/assets/admin-button.js"></script>
+  <script src="/assets/feedback-button.js"></script>
 </body>
 </html>
