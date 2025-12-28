@@ -93,24 +93,31 @@
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
-      <div class="nav-links">
-        <a href="/about.html">من نحن</a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/achievements.html">الإنجازات</a>
-        <a href="/jobs.html" class="active">الوظائف</a>
-        <a href="/statistics.html">الإحصائيات</a>
-        <a href="/contact.html">تواصل</a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
+      </button>
+      <div class="nav-links" id="primary-nav">
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+        <a href="/achievements.html"><span data-lang="ar">الإنجازات</span><span data-lang="en" hidden aria-hidden="true">Achievements</span></a>
+        <a href="/jobs.html" class="active"><span data-lang="ar">الوظائف</span><span data-lang="en" hidden aria-hidden="true">Jobs</span></a>
+        <a href="/statistics.html"><span data-lang="ar">الإحصائيات</span><span data-lang="en" hidden aria-hidden="true">Statistics</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        <button class="lang-toggle" id="lang-toggle">English</button>
       </div>
     </div>
   </nav>
   
   <main class="container" style="padding: 60px 20px;">
-    <h1>💼 الوظائف والفرص التطوعية</h1>
-    <p style="color: var(--muted, #666);">انضم إلى فريق مجلس طلاب خطوة</p>
+    <h1 data-lang="ar">💼 الوظائف والفرص التطوعية</h1>
+    <h1 data-lang="en" hidden aria-hidden="true">💼 Jobs & Volunteer Opportunities</h1>
+    <p style="color: var(--muted, #666);" data-lang="ar">انضم إلى فريق مجلس طلاب خطوة</p>
+    <p style="color: var(--muted, #666);" data-lang="en" hidden aria-hidden="true">Join the Khotwa Student Council team</p>
     
     <div id="jobs-container" class="jobs-list">
-      <div class="loading-message">جاري تحميل الوظائف...</div>
+      <div class="loading-message" data-lang="ar">جاري تحميل الوظائف...</div>
+      <div class="loading-message" data-lang="en" hidden aria-hidden="true">Loading jobs...</div>
     </div>
   </main>
   
@@ -118,6 +125,16 @@
   <script>
     async function loadJobs() {
       const container = document.getElementById('jobs-container');
+      const currentLang = localStorage.getItem('language') || 'ar';
+      
+      const loadingText = currentLang === 'ar' ? 'جاري تحميل الوظائف...' : 'Loading jobs...';
+      const noJobsTitle = currentLang === 'ar' ? 'لا توجد وظائف متاحة حالياً' : 'No jobs available at the moment';
+      const noJobsDesc = currentLang === 'ar' ? 'سنعلن عن الفرص الجديدة قريباً' : 'We will announce new opportunities soon';
+      const openText = currentLang === 'ar' ? 'مفتوح' : 'Open';
+      const closedText = currentLang === 'ar' ? 'مغلق' : 'Closed';
+      const requirementsText = currentLang === 'ar' ? 'المتطلبات:' : 'Requirements:';
+      const deadlineText = currentLang === 'ar' ? 'آخر موعد للتقديم:' : 'Application Deadline:';
+      const applyNowText = currentLang === 'ar' ? 'تقدم الآن' : 'Apply Now';
       
       try {
         const jobs = await KhotwaAPI.getJobs();
@@ -126,51 +143,79 @@
             container.innerHTML = `
               <div class="empty-message">
                 <div style="font-size: 64px; margin-bottom: 20px;">💼</div>
-                <h3>لا توجد وظائف متاحة حالياً</h3>
-                <p>سنعلن عن الفرص الجديدة قريباً</p>
+                <h3>${noJobsTitle}</h3>
+                <p>${noJobsDesc}</p>
               </div>
             `;
             return;
           }
           
-        container.innerHTML = jobs.map(job => `
-          <div class="job-card">
-            <span class="job-type ${job.isOpen ? 'volunteer' : 'paid'}">
-              ${job.isOpen ? 'مفتوح' : 'مغلق'}
-            </span>
-            <h3>${job.title}</h3>
-            <p>${job.description || ''}</p>
-            ${job.requirements ? `
-              <p><strong>المتطلبات:</strong></p>
-              <p>${job.requirements}</p>
-            ` : ''}
-            ${job.deadline ? `<p><strong>آخر موعد للتقديم:</strong> ${new Date(job.deadline).toLocaleDateString('ar-SA')}</p>` : ''}
-            <button class="apply-btn" onclick="applyForJob(${job.id})">تقدم الآن</button>
-          </div>
-        `).join('');
+        container.innerHTML = jobs.map(job => {
+          const title = currentLang === 'en' ? (job.titleEn || job.titleAr || job.title) : (job.titleAr || job.titleEn || job.title);
+          const description = currentLang === 'en' ? (job.descriptionEn || job.descriptionAr || job.description) : (job.descriptionAr || job.descriptionEn || job.description);
+          const requirements = currentLang === 'en' ? (job.requirementsEn || job.requirementsAr || job.requirements) : (job.requirementsAr || job.requirementsEn || job.requirements);
+          
+          return `
+            <div class="job-card">
+              <span class="job-type ${job.isOpen ? 'volunteer' : 'paid'}">
+                ${job.isOpen ? openText : closedText}
+              </span>
+              <h3>${title}</h3>
+              <p>${description || ''}</p>
+              ${requirements ? `
+                <p><strong>${requirementsText}</strong></p>
+                <p>${requirements}</p>
+              ` : ''}
+              ${job.deadline ? `<p><strong>${deadlineText}</strong> ${new Date(job.deadline).toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US')}</p>` : ''}
+              <button class="apply-btn" onclick="applyForJob(${job.id})">${applyNowText}</button>
+            </div>
+          `;
+        }).join('');
       } catch (error) {
         console.error('Error loading jobs:', error);
-        // عرض وظيفة افتراضية في حالة الخطأ
-        container.innerHTML = `
-          <div class="job-card">
-            <span class="job-type volunteer">تطوعي</span>
-            <h3>منسق فعاليات</h3>
-            <p>نبحث عن منسق فعاليات متحمس للانضمام إلى فريقنا</p>
-            <p><strong>المتطلبات:</strong></p>
-            <ul>
-              <li>مهارات تنظيمية قوية</li>
-              <li>القدرة على العمل ضمن فريق</li>
-              <li>الالتزام بالمواعيد</li>
-            </ul>
-            <p><strong>آخر موعد للتقديم:</strong> 31 يناير 2026</p>
-            <button class="apply-btn">تقدم الآن</button>
-          </div>
-        `;
+        // Default job in case of error
+        if (currentLang === 'ar') {
+          container.innerHTML = `
+            <div class="job-card">
+              <span class="job-type volunteer">تطوعي</span>
+              <h3>منسق فعاليات</h3>
+              <p>نبحث عن منسق فعاليات متحمس للانضمام إلى فريقنا</p>
+              <p><strong>المتطلبات:</strong></p>
+              <ul>
+                <li>مهارات تنظيمية قوية</li>
+                <li>القدرة على العمل ضمن فريق</li>
+                <li>الالتزام بالمواعيد</li>
+              </ul>
+              <p><strong>آخر موعد للتقديم:</strong> 31 يناير 2026</p>
+              <button class="apply-btn">تقدم الآن</button>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <div class="job-card">
+              <span class="job-type volunteer">Volunteer</span>
+              <h3>Events Coordinator</h3>
+              <p>We are looking for an enthusiastic events coordinator to join our team</p>
+              <p><strong>Requirements:</strong></p>
+              <ul>
+                <li>Strong organizational skills</li>
+                <li>Ability to work in a team</li>
+                <li>Commitment to deadlines</li>
+              </ul>
+              <p><strong>Application Deadline:</strong> January 31, 2026</p>
+              <button class="apply-btn">Apply Now</button>
+            </div>
+          `;
+        }
       }
     }
     
     function applyForJob(jobId) {
-      alert('سيتم فتح نموذج التقديم قريباً. للتقديم حالياً، يرجى التواصل معنا عبر صفحة التواصل.');
+      const currentLang = localStorage.getItem('language') || 'ar';
+      const alertMsg = currentLang === 'ar' 
+        ? 'سيتم فتح نموذج التقديم قريباً. للتقديم حالياً، يرجى التواصل معنا عبر صفحة التواصل.' 
+        : 'Application form will be available soon. To apply now, please contact us via the contact page.';
+      alert(alertMsg);
       window.location.href = '/contact.html';
     }
     

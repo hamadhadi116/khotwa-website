@@ -56,46 +56,58 @@
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
-      <div class="nav-links">
-        <a href="/about.html">من نحن</a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/achievements.html">الإنجازات</a>
-        <a href="/jobs.html">الوظائف</a>
-        <a href="/statistics.html" class="active">الإحصائيات</a>
-        <a href="/contact.html">تواصل</a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
+      </button>
+      <div class="nav-links" id="primary-nav">
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+        <a href="/achievements.html"><span data-lang="ar">الإنجازات</span><span data-lang="en" hidden aria-hidden="true">Achievements</span></a>
+        <a href="/jobs.html"><span data-lang="ar">الوظائف</span><span data-lang="en" hidden aria-hidden="true">Jobs</span></a>
+        <a href="/statistics.html" class="active"><span data-lang="ar">الإحصائيات</span><span data-lang="en" hidden aria-hidden="true">Statistics</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        <button class="lang-toggle" id="lang-toggle">English</button>
       </div>
     </div>
   </nav>
   
   <main class="container" style="padding: 60px 20px;">
-    <h1>📊 الإحصائيات الحية</h1>
-    <p style="color: var(--muted, #666);">بيانات حقيقية من قاعدة البيانات - تتحدث تلقائياً</p>
+    <h1 data-lang="ar">📊 الإحصائيات الحية</h1>
+    <h1 data-lang="en" hidden aria-hidden="true">📊 Live Statistics</h1>
+    <p style="color: var(--muted, #666);" data-lang="ar">بيانات حقيقية من قاعدة البيانات - تتحدث تلقائياً</p>
+    <p style="color: var(--muted, #666);" data-lang="en" hidden aria-hidden="true">Real data from the database - updates automatically</p>
     
     <div class="stats-grid">
       <div class="stat-card">
         <h2 id="stat-news" class="loading">-</h2>
-        <p>خبر منشور</p>
+        <p data-lang="ar">خبر منشور</p>
+        <p data-lang="en" hidden aria-hidden="true">Published News</p>
       </div>
       <div class="stat-card">
         <h2 id="stat-events" class="loading">-</h2>
-        <p>فعالية</p>
+        <p data-lang="ar">فعالية</p>
+        <p data-lang="en" hidden aria-hidden="true">Events</p>
       </div>
       <div class="stat-card">
         <h2 id="stat-comments" class="loading">-</h2>
-        <p>تعليق</p>
+        <p data-lang="ar">تعليق</p>
+        <p data-lang="en" hidden aria-hidden="true">Comments</p>
       </div>
       <div class="stat-card">
         <h2 id="stat-registrations" class="loading">-</h2>
-        <p>تسجيل في الفعاليات</p>
+        <p data-lang="ar">تسجيل في الفعاليات</p>
+        <p data-lang="en" hidden aria-hidden="true">Event Registrations</p>
       </div>
       <div class="stat-card">
         <h2 id="stat-complaints" class="loading">-</h2>
-        <p>شكوى/اقتراح</p>
+        <p data-lang="ar">شكوى/اقتراح</p>
+        <p data-lang="en" hidden aria-hidden="true">Complaints/Suggestions</p>
       </div>
       <div class="stat-card">
         <h2 id="stat-users" class="loading">-</h2>
-        <p>مستخدم نشط</p>
+        <p data-lang="ar">مستخدم نشط</p>
+        <p data-lang="en" hidden aria-hidden="true">Active Users</p>
       </div>
     </div>
   </main>

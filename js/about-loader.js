@@ -3,7 +3,7 @@
  * Loads "About Us" content and Council Members from Backend API
  */
 
-const BACKEND_URL = 'https://khotwabknd-gj8oeubw.manus-asia.computer';
+const BACKEND_URL = 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer';
 
 // Load About Content
 async function loadAboutContent() {

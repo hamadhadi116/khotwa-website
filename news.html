@@ -39,18 +39,24 @@
   <div class="container nav-inner">
     <a class="brand" href="/index.html">
       <img src="/assets/apple-touch-icon.png" class="logo" width="40" height="40" alt="">
-      <span>مجلس طلاب خطوة</span>
+      <span data-lang="ar">مجلس طلاب خطوة</span>
+      <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
     </a>
 
+    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
+    </button>
+
     <div class="nav-links" id="primary-nav">
-      <a href="/about.html">من نحن</a>
-      <a href="/news.html" aria-current="page">الأخبار</a>
-      <a href="/events.html">الفعاليات</a>
-      <a href="/calendar.html">التقويم</a>
-      <a href="/gallery.html">معرض الصور</a>
-      <a href="/faq.html">الأسئلة الشائعة</a>
-      <a href="/resources.html">الموارد</a>
-      <a href="/contact.html">تواصل</a>
+      <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+      <a href="/news.html" aria-current="page"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+      <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+      <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden aria-hidden="true">Calendar</span></a>
+      <a href="/gallery.html"><span data-lang="ar">معرض الصور</span><span data-lang="en" hidden aria-hidden="true">Gallery</span></a>
+      <a href="/faq.html"><span data-lang="ar">الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">FAQ</span></a>
+      <a href="/resources.html"><span data-lang="ar">الموارد</span><span data-lang="en" hidden aria-hidden="true">Resources</span></a>
+      <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+      <button class="lang-toggle" id="lang-toggle">English</button>
     </div>
   </div>
 </nav>
@@ -58,16 +64,30 @@
 <main class="container" id="main">
 
 <section>
-  <h1>الأخبار</h1>
-  <p class="muted">كل جديد عن مجلس طلاب خطوة</p>
+  <h1 data-lang="ar">الأخبار</h1>
+  <h1 data-lang="en" hidden aria-hidden="true">News</h1>
+  <p class="muted" data-lang="ar">كل جديد عن مجلس طلاب خطوة</p>
+  <p class="muted" data-lang="en" hidden aria-hidden="true">All the latest from Khotwa Student Council</p>
 
   <div class="tools">
-    <input id="q" type="search" placeholder="ابحث في الأخبار…">
+    <input id="q" type="search" data-lang-placeholder-ar="ابحث في الأخبار…" data-lang-placeholder-en="Search news…" placeholder="ابحث في الأخبار…">
 
-    <button class="chip" data-filter="all" data-active="true">الكل</button>
-    <button class="chip" data-filter="ann">إعلانات</button>
-    <button class="chip" data-filter="event">فعاليات</button>
-    <button class="chip" data-filter="media">تغطيات</button>
+    <button class="chip" data-filter="all" data-active="true">
+      <span data-lang="ar">الكل</span>
+      <span data-lang="en" hidden aria-hidden="true">All</span>
+    </button>
+    <button class="chip" data-filter="ann">
+      <span data-lang="ar">إعلانات</span>
+      <span data-lang="en" hidden aria-hidden="true">Announcements</span>
+    </button>
+    <button class="chip" data-filter="event">
+      <span data-lang="ar">فعاليات</span>
+      <span data-lang="en" hidden aria-hidden="true">Events</span>
+    </button>
+    <button class="chip" data-filter="media">
+      <span data-lang="ar">تغطيات</span>
+      <span data-lang="en" hidden aria-hidden="true">Coverage</span>
+    </button>
   </div>
 </section>
 
@@ -100,13 +120,18 @@
   let currentCategory = 'all';
 
   async function loadNews() {
-    postsEl.innerHTML = '<div class="muted">جارٍ التحميل…</div>';
+    const currentLang = localStorage.getItem('language') || 'ar';
+    const loadingText = currentLang === 'ar' ? 'جارٍ التحميل…' : 'Loading…';
+    const noNewsText = currentLang === 'ar' ? 'لا توجد أخبار.' : 'No news found.';
+    const errorText = currentLang === 'ar' ? 'تعذر تحميل الأخبار.' : 'Failed to load news.';
+    const readMoreText = currentLang === 'ar' ? 'اقرأ المزيد ←' : 'Read More →';
+
+    postsEl.innerHTML = `<div class="muted">${loadingText}</div>`;
 
     try {
       let items;
 
       if (currentQuery || currentCategory !== 'all') {
-        // ✅ التصحيح المهم
         items = await KhotwaAPI.searchNews(
           currentQuery,
           currentCategory === 'all' ? null : currentCategory,
@@ -119,7 +144,7 @@
       postsEl.innerHTML = '';
 
       if (!items || items.length === 0) {
-        postsEl.innerHTML = '<div class="muted">لا توجد أخبار.</div>';
+        postsEl.innerHTML = `<div class="muted">${noNewsText}</div>`;
         return;
       }
 
@@ -129,25 +154,22 @@
         article.style.cursor = 'pointer';
         article.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
 
-        const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
-        const title = langPref === 'en' ? (item.titleEn || item.titleAr || '') : (item.titleAr || item.titleEn || '');
-        const content = langPref === 'en' ? (item.contentEn || item.contentAr || '') : (item.contentAr || item.contentEn || '');
+        const title = currentLang === 'en' ? (item.titleEn || item.titleAr || '') : (item.titleAr || item.titleEn || '');
+        const content = currentLang === 'en' ? (item.contentEn || item.contentAr || '') : (item.contentAr || item.contentEn || '');
         
         article.innerHTML = `
           ${item.imageUrl ? `<img src="${item.imageUrl}" alt="${title}" style="width:100%;height:auto;border-radius:8px">` : ''}
           <div class="body">
             <h3>${title}</h3>
             <p class="muted">${content.substring(0,150)}${content.length > 150 ? '...' : ''}</p>
-            <span style="color: #10b981; font-weight: 600; font-size: 0.9rem;">اقرأ المزيد ←</span>
+            <span style="color: #10b981; font-weight: 600; font-size: 0.9rem;">${readMoreText}</span>
           </div>
         `;
 
-        // Add click handler
         article.addEventListener('click', () => {
           window.location.href = `/news-detail.html?id=${item.id}`;
         });
 
-        // Add hover effect
         article.addEventListener('mouseenter', () => {
           article.style.transform = 'translateY(-4px)';
           article.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
@@ -163,7 +185,7 @@
 
     } catch (err) {
       console.error(err);
-      postsEl.innerHTML = '<div class="muted">تعذر تحميل الأخبار.</div>';
+      postsEl.innerHTML = `<div class="muted">${errorText}</div>`;
     }
   }
 
@@ -182,6 +204,15 @@
   });
 
   loadNews();
+
+  // Update placeholder on language change
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'language') {
+      const currentLang = e.newValue || 'ar';
+      qInput.placeholder = currentLang === 'ar' ? 'ابحث في الأخبار…' : 'Search news…';
+      loadNews();
+    }
+  });
 
 })();
 </script>

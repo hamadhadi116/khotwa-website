@@ -4,7 +4,7 @@
  */
 
 // Backend API Configuration
-const BACKEND_API = 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
+const BACKEND_API = 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/api/trpc';
 
 // Helper Functions
 function getVisitorId() {

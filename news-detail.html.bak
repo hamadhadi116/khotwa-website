@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>تفاصيل الخبر – Khotwa</title>
+
+  <meta name="keywords" content="أخبار خطوة, إعلانات المجلس, فعاليات خطوة, أخبار الطلاب, جامعة لا تروب, ملبورن">
+  <meta name="description" content="تفاصيل الخبر من مجلس طلاب خطوة.">
+  <link rel="canonical" href="https://khotwastudentcouncil.com/news-detail.html"/>
+  <meta name="robots" content="index,follow"/>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" href="/assets/favicon.ico">
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/feedback.css">
+  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
+
+  <script src="/assets/khotwa-api.js"></script>
+
+  <style>
+    .news-detail {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .news-detail-header {
+      margin-bottom: 2rem;
+    }
+
+    .news-detail-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .news-detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .news-detail-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .news-detail-category {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .news-detail-image {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .news-detail-content {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #1e293b;
+      margin-bottom: 3rem;
+    }
+
+    .news-detail-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #f1f5f9;
+      color: #475569;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      margin-bottom: 2rem;
+    }
+
+    .back-button:hover {
+      background: #e2e8f0;
+      transform: translateX(5px);
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .share-btn-twitter {
+      background: #1da1f2;
+      color: white;
+    }
+
+    .share-btn-facebook {
+      background: #1877f2;
+      color: white;
+    }
+
+    .share-btn-whatsapp {
+      background: #25d366;
+      color: white;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #64748b;
+    }
+
+    .error {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #ef4444;
+    }
+
+    @media (max-width: 768px) {
+      .news-detail-title {
+        font-size: 2rem;
+      }
+
+      .news-detail-content {
+        font-size: 1rem;
+      }
+
+      .share-buttons {
+        flex-direction: column;
+      }
+
+      .share-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/design-system.css">
+  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
+    <link rel="stylesheet" href="assets/enhanced-navbar.css">
+</head>
+
+<body>
+
+<nav class="navbar" aria-label="الشريط العلوي">
+  <div class="container nav-inner">
+    <a class="brand" href="/index.html">
+      <img src="/assets/apple-touch-icon.png" class="logo" width="40" height="40" alt="">
+      <span>مجلس طلاب خطوة</span>
+    </a>
+
+    <button id="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="فتح وإغلاق القائمة">
+      القائمة
+    </button>
+
+    <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
+      <a href="/about.html">من نحن</a>
+      <a href="/news.html">الأخبار</a>
+      <a href="/events.html">الفعاليات</a>
+      <a href="/calendar.html">التقويم</a>
+      <a href="/gallery.html">معرض الصور</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/resources.html">الموارد</a>
+      <a href="/contact.html">تواصل</a>
+      <button id="lang-toggle" aria-pressed="false" aria-label="تبديل اللغة">English</button>
+    </div>
+  </div>
+</nav>
+
+<main class="container" id="main">
+  <div id="news-container" class="loading">
+    <p>جارٍ تحميل الخبر...</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container foot">
+    <span>© <span id="year"></span> Khotwa Student Council</span>
+    <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Get news ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const newsId = urlParams.get('id');
+
+  if (!newsId) {
+    document.getElementById('news-container').innerHTML = `
+      <div class="error">
+        <h2>خطأ</h2>
+        <p>لم يتم تحديد الخبر</p>
+        <a href="/news.html" class="back-button">← العودة للأخبار</a>
+      </div>
+    `;
+    return;
+  }
+
+  async function loadNewsDetail() {
+    try {
+      const allNews = await KhotwaAPI.getNews();
+      const news = allNews.find(n => n.id === parseInt(newsId));
+
+      if (!news) {
+        throw new Error('News not found');
+      }
+
+      const container = document.getElementById('news-container');
+      const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
+      const isEn = langPref === 'en';
+
+      const title = isEn ? (news.titleEn || news.titleAr) : (news.titleAr || news.titleEn);
+      const content = isEn ? (news.contentEn || news.contentAr) : (news.contentAr || news.contentEn);
+      const category = news.category || '';
+      const createdAt = new Date(news.createdAt).toLocaleDateString('ar-EG', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      const shareUrl = encodeURIComponent(window.location.href);
+      const shareTitle = encodeURIComponent(title);
+
+      container.innerHTML = `
+        <div class="news-detail">
+          <a href="/news.html" class="back-button">← العودة للأخبار</a>
+          
+          <div class="news-detail-header">
+            <h1 class="news-detail-title">${escapeHtml(title)}</h1>
+            
+            <div class="news-detail-meta">
+              <span>📅 ${createdAt}</span>
+              ${category ? `<span class="news-detail-category">🏷️ ${escapeHtml(category)}</span>` : ''}
+            </div>
+          </div>
+
+          ${news.imageUrl ? `<img src="${escapeHtml(news.imageUrl)}" alt="${escapeHtml(title)}" class="news-detail-image">` : ''}
+
+          <div class="news-detail-content">
+            ${escapeHtml(content).split('\\n').map(p => `<p>${p}</p>`).join('')}
+          </div>
+
+          <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-twitter">
+              🐦 مشاركة على Twitter
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-facebook">
+              📘 مشاركة على Facebook
+            </a>
+            <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-whatsapp">
+              💬 مشاركة على WhatsApp
+            </a>
+          </div>
+        </div>
+      `;
+
+    } catch (error) {
+      console.error('Error loading news:', error);
+      document.getElementById('news-container').innerHTML = `
+        <div class="error">
+          <h2>خطأ</h2>
+          <p>تعذر تحميل الخبر</p>
+          <a href="/news.html" class="back-button">← العودة للأخبار</a>
+        </div>
+      `;
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  loadNewsDetail();
+
+  // Menu toggle
+  const menuBtn = document.getElementById('menu-toggle');
+  const nav = document.getElementById('primary-nav');
+  
+  if (menuBtn && nav) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = nav.getAttribute('data-open') === 'true';
+      nav.setAttribute('data-open', String(!isOpen));
+      menuBtn.setAttribute('aria-expanded', String(!isOpen));
+      nav.setAttribute('aria-hidden', String(isOpen));
+    });
+  }
+
+  // Language toggle
+  const langToggle = document.getElementById('lang-toggle');
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
+      const newLang = currentLang === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('khotwa_lang', newLang);
+      location.reload();
+    });
+  }
+})();
+</script>
+
+<script src="/assets/feedback-button.js"></script>
+<script src="/assets/admin-button.js"></script>
+
+    <script src="js/settings-loader.js"></script>
+    <script src="/js/language-toggle.js"></script>
+</body>
+</html>

@@ -62,24 +62,31 @@
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
-      <div class="nav-links">
-        <a href="/about.html">من نحن</a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/achievements.html" class="active">الإنجازات</a>
-        <a href="/jobs.html">الوظائف</a>
-        <a href="/statistics.html">الإحصائيات</a>
-        <a href="/contact.html">تواصل</a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
+      </button>
+      <div class="nav-links" id="primary-nav">
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+        <a href="/achievements.html" class="active"><span data-lang="ar">الإنجازات</span><span data-lang="en" hidden aria-hidden="true">Achievements</span></a>
+        <a href="/jobs.html"><span data-lang="ar">الوظائف</span><span data-lang="en" hidden aria-hidden="true">Jobs</span></a>
+        <a href="/statistics.html"><span data-lang="ar">الإحصائيات</span><span data-lang="en" hidden aria-hidden="true">Statistics</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        <button class="lang-toggle" id="lang-toggle">English</button>
       </div>
     </div>
   </nav>
   
   <main class="container" style="padding: 60px 20px;">
-    <h1>🏆 إنجازاتنا وجوائزنا</h1>
-    <p style="color: var(--muted, #666);">إنجازات مجلس طلاب خطوة على مر السنين</p>
+    <h1 data-lang="ar">🏆 إنجازاتنا وجوائزنا</h1>
+    <h1 data-lang="en" hidden aria-hidden="true">🏆 Our Achievements & Awards</h1>
+    <p style="color: var(--muted, #666);" data-lang="ar">إنجازات مجلس طلاب خطوة على مر السنين</p>
+    <p style="color: var(--muted, #666);" data-lang="en" hidden aria-hidden="true">Khotwa Student Council achievements over the years</p>
     
     <div id="achievements-container" class="achievements-grid">
-      <div class="loading-message">جاري تحميل الإنجازات...</div>
+      <div class="loading-message" data-lang="ar">جاري تحميل الإنجازات...</div>
+      <div class="loading-message" data-lang="en" hidden aria-hidden="true">Loading achievements...</div>
     </div>
   </main>
   
@@ -87,6 +94,11 @@
   <script>
     async function loadAchievements() {
       const container = document.getElementById('achievements-container');
+      const currentLang = localStorage.getItem('language') || 'ar';
+      
+      const loadingText = currentLang === 'ar' ? 'جاري تحميل الإنجازات...' : 'Loading achievements...';
+      const noAchievementsTitle = currentLang === 'ar' ? 'لا توجد إنجازات حالياً' : 'No achievements yet';
+      const noAchievementsDesc = currentLang === 'ar' ? 'سيتم إضافة الإنجازات قريباً' : 'Achievements will be added soon';
       
       try {
         const achievements = await KhotwaAPI.getAchievements();
@@ -95,44 +107,72 @@
             container.innerHTML = `
               <div class="empty-message">
                 <div style="font-size: 64px; margin-bottom: 20px;">🏆</div>
-                <h3>لا توجد إنجازات حالياً</h3>
-                <p>سيتم إضافة الإنجازات قريباً</p>
+                <h3>${noAchievementsTitle}</h3>
+                <p>${noAchievementsDesc}</p>
               </div>
             `;
             return;
           }
           
-          container.innerHTML = achievements.map(achievement => `
-            <div class="achievement-card">
-              ${achievement.image ? `<img src="${achievement.image}" alt="${achievement.title}" style="width: 100%; border-radius: 8px; margin-bottom: 15px;">` : `<div class="achievement-icon">🏆</div>`}
-              <h3>${achievement.title}</h3>
-              <p>${achievement.description || ''}</p>
-              ${achievement.date ? `<p style="margin-top: 10px; font-size: 14px;"><strong>${new Date(achievement.date).toLocaleDateString('ar')}</strong></p>` : ''}
-            </div>
-          `).join('');
+          container.innerHTML = achievements.map(achievement => {
+            const title = currentLang === 'en' ? (achievement.titleEn || achievement.titleAr || achievement.title) : (achievement.titleAr || achievement.titleEn || achievement.title);
+            const description = currentLang === 'en' ? (achievement.descriptionEn || achievement.descriptionAr || achievement.description) : (achievement.descriptionAr || achievement.descriptionEn || achievement.description);
+            
+            return `
+              <div class="achievement-card">
+                ${achievement.image ? `<img src="${achievement.image}" alt="${title}" style="width: 100%; border-radius: 8px; margin-bottom: 15px;">` : `<div class="achievement-icon">🏆</div>`}
+                <h3>${title}</h3>
+                <p>${description || ''}</p>
+                ${achievement.date ? `<p style="margin-top: 10px; font-size: 14px;"><strong>${new Date(achievement.date).toLocaleDateString(currentLang === 'ar' ? 'ar' : 'en')}</strong></p>` : ''}
+              </div>
+            `;
+          }).join('');
       } catch (error) {
         console.error('Error loading achievements:', error);
-        // عرض إنجازات افتراضية في حالة الخطأ
-        container.innerHTML = `
-          <div class="achievement-card">
-            <div class="achievement-icon">🏆</div>
-            <h3>جائزة أفضل مجلس طلابي</h3>
-            <p>على مستوى الجامعات السعودية</p>
-            <p style="margin-top: 10px; font-size: 14px;"><strong>2025</strong></p>
-          </div>
-          <div class="achievement-card">
-            <div class="achievement-icon">🥇</div>
-            <h3>المركز الأول في المسابقة الوطنية</h3>
-            <p>مسابقة الابتكار الطلابي</p>
-            <p style="margin-top: 10px; font-size: 14px;"><strong>2024</strong></p>
-          </div>
-          <div class="achievement-card">
-            <div class="achievement-icon">📜</div>
-            <h3>شهادة تقدير من الجامعة</h3>
-            <p>للإنجازات المتميزة</p>
-            <p style="margin-top: 10px; font-size: 14px;"><strong>2024</strong></p>
-          </div>
-        `;
+        // Default achievements in case of error
+        if (currentLang === 'ar') {
+          container.innerHTML = `
+            <div class="achievement-card">
+              <div class="achievement-icon">🏆</div>
+              <h3>جائزة أفضل مجلس طلابي</h3>
+              <p>على مستوى الجامعات السعودية</p>
+              <p style="margin-top: 10px; font-size: 14px;"><strong>2025</strong></p>
+            </div>
+            <div class="achievement-card">
+              <div class="achievement-icon">🥇</div>
+              <h3>المركز الأول في المسابقة الوطنية</h3>
+              <p>مسابقة الابتكار الطلابي</p>
+              <p style="margin-top: 10px; font-size: 14px;"><strong>2024</strong></p>
+            </div>
+            <div class="achievement-card">
+              <div class="achievement-icon">📜</div>
+              <h3>شهادة تقدير من الجامعة</h3>
+              <p>للإنجازات المتميزة</p>
+              <p style="margin-top: 10px; font-size: 14px;"><strong>2024</strong></p>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <div class="achievement-card">
+              <div class="achievement-icon">🏆</div>
+              <h3>Best Student Council Award</h3>
+              <p>At Saudi Universities Level</p>
+              <p style="margin-top: 10px; font-size: 14px;"><strong>2025</strong></p>
+            </div>
+            <div class="achievement-card">
+              <div class="achievement-icon">🥇</div>
+              <h3>First Place in National Competition</h3>
+              <p>Student Innovation Competition</p>
+              <p style="margin-top: 10px; font-size: 14px;"><strong>2024</strong></p>
+            </div>
+            <div class="achievement-card">
+              <div class="achievement-icon">📜</div>
+              <h3>Certificate of Appreciation from University</h3>
+              <p>For Outstanding Achievements</p>
+              <p style="margin-top: 10px; font-size: 14px;"><strong>2024</strong></p>
+            </div>
+          `;
+        }
       }
     }
     

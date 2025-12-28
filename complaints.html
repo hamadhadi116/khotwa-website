@@ -20,44 +20,72 @@
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
-      <div class="nav-links">
-        <a href="/about.html">من نحن</a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/contact.html">تواصل</a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
+      </button>
+      <div class="nav-links" id="primary-nav">
+        <a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden aria-hidden="true">About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        <button class="lang-toggle" id="lang-toggle">English</button>
       </div>
     </div>
   </nav>
   
   <main class="container" style="padding: 60px 20px; max-width: 600px;">
-    <h1>📝 الشكاوى والاقتراحات</h1>
+    <h1 data-lang="ar">📝 الشكاوى والاقتراحات</h1>
+    <h1 data-lang="en" hidden aria-hidden="true">📝 Complaints & Suggestions</h1>
     <form id="complaint-form" style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-top: 40px;">
       <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: 600;">النوع</label>
-        <select required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;">
-          <option value="complaint">شكوى</option>
-          <option value="suggestion">اقتراح</option>
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;" data-lang="ar">النوع</label>
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;" data-lang="en" hidden aria-hidden="true">Type</label>
+        <select name="subject" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;">
+          <option value="complaint" data-lang-text-ar="شكوى" data-lang-text-en="Complaint">شكوى</option>
+          <option value="suggestion" data-lang-text-ar="اقتراح" data-lang-text-en="Suggestion">اقتراح</option>
         </select>
       </div>
       <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: 600;">الاسم</label>
-        <input type="text" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"/>
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;" data-lang="ar">الاسم</label>
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;" data-lang="en" hidden aria-hidden="true">Name</label>
+        <input name="name" type="text" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"/>
       </div>
       <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: 600;">البريد الإلكتروني</label>
-        <input type="email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"/>
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;" data-lang="ar">البريد الإلكتروني</label>
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;" data-lang="en" hidden aria-hidden="true">Email</label>
+        <input name="email" type="email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"/>
       </div>
       <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: 600;">التفاصيل</label>
-        <textarea rows="6" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"></textarea>
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;" data-lang="ar">التفاصيل</label>
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;" data-lang="en" hidden aria-hidden="true">Details</label>
+        <textarea name="content" rows="6" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px;"></textarea>
       </div>
-      <button type="submit" style="width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: 600; cursor: pointer;">إرسال</button>
+      <button type="submit" style="width: 100%; padding: 12px; background: #667eea; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: 600; cursor: pointer;">
+        <span data-lang="ar">إرسال</span>
+        <span data-lang="en" hidden aria-hidden="true">Submit</span>
+      </button>
     </form>
   </main>
   
   <script src="/assets/analytics.js"></script>
   <script src="/assets/all-features.js"></script>
   <script>
+    const currentLang = localStorage.getItem('language') || 'ar';
+    
+    // Update select options based on language
+    function updateSelectOptions() {
+      const lang = localStorage.getItem('language') || 'ar';
+      document.querySelectorAll('select option').forEach(option => {
+        const arText = option.getAttribute('data-lang-text-ar');
+        const enText = option.getAttribute('data-lang-text-en');
+        if (arText && enText) {
+          option.textContent = lang === 'ar' ? arText : enText;
+        }
+      });
+    }
+    
+    updateSelectOptions();
+    
     document.getElementById('complaint-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -67,18 +95,23 @@
       const name = formData.get('name');
       const email = formData.get('email');
       
+      const lang = localStorage.getItem('language') || 'ar';
+      const fillAllFieldsMsg = lang === 'ar' ? 'الرجاء ملء جميع الحقول المطلوبة' : 'Please fill all required fields';
+      const successMsg = lang === 'ar' ? 'تم إرسال شكواك بنجاح! سنتواصل معك قريباً.' : 'Your complaint has been submitted successfully! We will contact you soon.';
+      const errorMsg = lang === 'ar' ? 'حدث خطأ أثناء إرسال الشكوى. الرجاء المحاولة مرة أخرى.' : 'An error occurred while submitting the complaint. Please try again.';
+      
       if (!subject || !content || !name) {
-        alert('الرجاء ملء جميع الحقول المطلوبة');
+        alert(fillAllFieldsMsg);
         return;
       }
       
       try {
         await KhotwaAPI.submitComplaint(subject, content, name, email || '');
-        alert('تم إرسال شكواك بنجاح! سنتواصل معك قريباً.');
+        alert(successMsg);
         e.target.reset();
       } catch (error) {
         console.error('Error submitting complaint:', error);
-        alert('حدث خطأ أثناء إرسال الشكوى. الرجاء المحاولة مرة أخرى.');
+        alert(errorMsg);
       }
     });
   </script>

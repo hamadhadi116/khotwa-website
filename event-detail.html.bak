@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>تفاصيل الفعالية – Khotwa</title>
+
+  <meta name="keywords" content="فعاليات خطوة, أنشطة المجلس, فعاليات الطلاب, جامعة لا تروب, ملبورن">
+  <meta name="description" content="تفاصيل الفعالية من مجلس طلاب خطوة.">
+  <link rel="canonical" href="https://khotwastudentcouncil.com/event-detail.html"/>
+  <meta name="robots" content="index,follow"/>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" href="/assets/favicon.ico">
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/feedback.css">
+  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
+
+  <script src="/assets/khotwa-api.js"></script>
+
+  <style>
+    .event-detail {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .event-detail-header {
+      margin-bottom: 2rem;
+    }
+
+    .event-detail-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .event-detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .event-detail-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #64748b;
+      font-size: 1rem;
+    }
+
+    .event-detail-meta-item strong {
+      color: #1e293b;
+    }
+
+    .event-detail-category {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .event-detail-image {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-detail-description {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #1e293b;
+      margin-bottom: 2rem;
+    }
+
+    .event-detail-description p {
+      margin-bottom: 1.5rem;
+    }
+
+    .register-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.125rem;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .register-button:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .register-button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #f1f5f9;
+      color: #475569;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      margin-bottom: 2rem;
+    }
+
+    .back-button:hover {
+      background: #e2e8f0;
+      transform: translateX(5px);
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .share-btn-twitter {
+      background: #1da1f2;
+      color: white;
+    }
+
+    .share-btn-facebook {
+      background: #1877f2;
+      color: white;
+    }
+
+    .share-btn-whatsapp {
+      background: #25d366;
+      color: white;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #64748b;
+    }
+
+    .error {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: #ef4444;
+    }
+
+    .event-status {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    .event-status-upcoming {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .event-status-past {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    @media (max-width: 768px) {
+      .event-detail-title {
+        font-size: 2rem;
+      }
+
+      .event-detail-description {
+        font-size: 1rem;
+      }
+
+      .event-detail-meta {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .share-buttons {
+        flex-direction: column;
+      }
+
+      .share-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .register-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/design-system.css">
+  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
+    <link rel="stylesheet" href="assets/enhanced-navbar.css">
+</head>
+
+<body>
+
+<nav class="navbar" aria-label="الشريط العلوي">
+  <div class="container nav-inner">
+    <a class="brand" href="/index.html">
+      <img src="/assets/apple-touch-icon.png" class="logo" width="40" height="40" alt="">
+      <span>مجلس طلاب خطوة</span>
+    </a>
+
+    <button id="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="فتح وإغلاق القائمة">
+      القائمة
+    </button>
+
+    <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
+      <a href="/about.html">من نحن</a>
+      <a href="/news.html">الأخبار</a>
+      <a href="/events.html">الفعاليات</a>
+      <a href="/calendar.html">التقويم</a>
+      <a href="/gallery.html">معرض الصور</a>
+      <a href="/faq.html">الأسئلة الشائعة</a>
+      <a href="/resources.html">الموارد</a>
+      <a href="/contact.html">تواصل</a>
+      <button id="lang-toggle" aria-pressed="false" aria-label="تبديل اللغة">English</button>
+    </div>
+  </div>
+</nav>
+
+<main class="container" id="main">
+  <div id="event-container" class="loading">
+    <p>جارٍ تحميل الفعالية...</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container foot">
+    <span>© <span id="year"></span> Khotwa Student Council</span>
+    <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Get event ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const eventId = urlParams.get('id');
+
+  if (!eventId) {
+    document.getElementById('event-container').innerHTML = `
+      <div class="error">
+        <h2>خطأ</h2>
+        <p>لم يتم تحديد الفعالية</p>
+        <a href="/events.html" class="back-button">← العودة للفعاليات</a>
+      </div>
+    `;
+    return;
+  }
+
+  async function loadEventDetail() {
+    try {
+      const allEvents = await KhotwaAPI.getEvents();
+      const event = allEvents.find(e => e.id === parseInt(eventId));
+
+      if (!event) {
+        throw new Error('Event not found');
+      }
+
+      const container = document.getElementById('event-container');
+      const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
+      const isEn = langPref === 'en';
+
+      const title = isEn ? (event.titleEn || event.titleAr) : (event.titleAr || event.titleEn);
+      const description = isEn ? (event.descriptionEn || event.descriptionAr) : (event.descriptionAr || event.descriptionEn);
+      const category = event.category || '';
+      const location = event.location || '';
+      const eventDate = new Date(event.eventDate);
+      const formattedDate = eventDate.toLocaleDateString('ar-EG', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        weekday: 'long'
+      });
+      const formattedTime = eventDate.toLocaleTimeString('ar-EG', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const isPast = eventDate < new Date();
+      const statusClass = isPast ? 'event-status-past' : 'event-status-upcoming';
+      const statusText = isPast ? 'فعالية منتهية' : 'فعالية قادمة';
+
+      const shareUrl = encodeURIComponent(window.location.href);
+      const shareTitle = encodeURIComponent(title);
+
+      container.innerHTML = `
+        <div class="event-detail">
+          <a href="/events.html" class="back-button">← العودة للفعاليات</a>
+          
+          <div class="event-detail-header">
+            <h1 class="event-detail-title">${escapeHtml(title)}</h1>
+            
+            <div class="event-detail-meta">
+              <div class="event-detail-meta-item">
+                <span>📅</span>
+                <div>
+                  <strong>التاريخ:</strong> ${formattedDate}
+                </div>
+              </div>
+              <div class="event-detail-meta-item">
+                <span>🕐</span>
+                <div>
+                  <strong>الوقت:</strong> ${formattedTime}
+                </div>
+              </div>
+              ${location ? `
+                <div class="event-detail-meta-item">
+                  <span>📍</span>
+                  <div>
+                    <strong>المكان:</strong> ${escapeHtml(location)}
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <div>
+              ${category ? `<span class="event-detail-category">🏷️ ${escapeHtml(category)}</span>` : ''}
+              <span class="event-status ${statusClass}">${statusText}</span>
+            </div>
+          </div>
+
+          ${event.imageUrl ? `<img src="${escapeHtml(event.imageUrl)}" alt="${escapeHtml(title)}" class="event-detail-image">` : ''}
+
+          <div class="event-detail-description">
+            ${escapeHtml(description).split('\\n').map(p => `<p>${p}</p>`).join('')}
+          </div>
+
+          ${!isPast ? `
+            <button class="register-button" onclick="registerForEvent()">
+              ✅ سجّل للفعالية
+            </button>
+          ` : ''}
+
+          <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-twitter">
+              🐦 مشاركة على Twitter
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-facebook">
+              📘 مشاركة على Facebook
+            </a>
+            <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-whatsapp">
+              💬 مشاركة على WhatsApp
+            </a>
+          </div>
+        </div>
+      `;
+
+    } catch (error) {
+      console.error('Error loading event:', error);
+      document.getElementById('event-container').innerHTML = `
+        <div class="error">
+          <h2>خطأ</h2>
+          <p>تعذر تحميل الفعالية</p>
+          <a href="/events.html" class="back-button">← العودة للفعاليات</a>
+        </div>
+      `;
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  window.registerForEvent = async function() {
+    const name = prompt('الاسم الكامل:');
+    if (!name) return;
+
+    const email = prompt('البريد الإلكتروني:');
+    if (!email) return;
+
+    try {
+      await KhotwaAPI.registerForEvent(parseInt(eventId), name, email);
+      alert('✅ تم التسجيل بنجاح! سنرسل لك تأكيداً عبر البريد الإلكتروني.');
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('❌ حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى.');
+    }
+  };
+
+  loadEventDetail();
+
+  // Menu toggle
+  const menuBtn = document.getElementById('menu-toggle');
+  const nav = document.getElementById('primary-nav');
+  
+  if (menuBtn && nav) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = nav.getAttribute('data-open') === 'true';
+      nav.setAttribute('data-open', String(!isOpen));
+      menuBtn.setAttribute('aria-expanded', String(!isOpen));
+      nav.setAttribute('aria-hidden', String(isOpen));
+    });
+  }
+
+  // Language toggle
+  const langToggle = document.getElementById('lang-toggle');
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
+      const newLang = currentLang === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('khotwa_lang', newLang);
+      location.reload();
+    });
+  }
+})();
+</script>
+
+<script src="/assets/feedback-button.js"></script>
+<script src="/assets/admin-button.js"></script>
+
+    <script src="js/settings-loader.js"></script>
+    <script src="/js/language-toggle.js"></script>
+</body>
+</html>
