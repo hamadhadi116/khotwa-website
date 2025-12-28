@@ -488,10 +488,10 @@
         }
         
         // تحديث القيم مع رسوم متحركة
-        animateValue('stat-news', 0, stats.newsCount || 0, 1500);
-        animateValue('stat-events', 0, stats.eventsCount || 0, 1500);
-        animateValue('stat-registrations', 0, stats.registrationsCount || 0, 1500);
-        animateValue('stat-comments', 0, stats.commentsCount || 0, 1500);
+        animateValue('stat-news', 0, stats.news || 0, 1500);
+        animateValue('stat-events', 0, stats.events || 0, 1500);
+        animateValue('stat-registrations', 0, stats.registrations || 0, 1500);
+        animateValue('stat-comments', 0, stats.comments || 0, 1500);
       }catch(err){
         console.error('Failed to load statistics', err);
       }
