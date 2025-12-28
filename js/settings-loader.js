@@ -7,7 +7,7 @@
 (function() {
   'use strict';
 
-  const BACKEND_URL = 'https://khotwabknd-gj8oeubw.manus.space';
+  const BACKEND_URL = 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus.computer';
   const CACHE_KEY = 'khotwa_settings';
   const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
@@ -53,9 +53,16 @@
 
       // Convert array to object for easier access
       const settingsObj = {};
-      settings.forEach(setting => {
-        settingsObj[setting.key] = setting.value;
-      });
+      
+      // Handle both array and object responses
+      if (Array.isArray(settings)) {
+        settings.forEach(setting => {
+          settingsObj[setting.key] = setting.value;
+        });
+      } else if (typeof settings === 'object' && settings !== null) {
+        // If already an object, use it directly
+        Object.assign(settingsObj, settings);
+      }
 
       // Update cache
       settingsCache = settingsObj;
