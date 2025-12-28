@@ -1,0 +1,429 @@
+<!-- volunteer-details.html -->
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <title>تفاصيل الفرصة التطوعية – مجلس طلاب خطوة</title>
+  <meta name="description" content="تفاصيل الفرصة التطوعية">
+  
+  <!-- Theme color -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a"   media="(prefers-color-scheme: dark)">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" href="/assets/favicon.ico">
+  
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/khotwa-theme.css">
+  <link rel="stylesheet" href="/assets/features.css">
+  <link rel="stylesheet" href="/assets/courses-volunteers.css">
+  
+  <style>
+    .details-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .details-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    @media (max-width: 968px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .main-content {
+      background: var(--card);
+      border: 1px solid var(--ring);
+      border-radius: 1rem;
+      padding: 2rem;
+    }
+    
+    .sidebar {
+      position: sticky;
+      top: 1rem;
+      height: fit-content;
+    }
+    
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--ring);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--ring);
+    }
+    
+    .info-item:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      color: var(--muted);
+      font-weight: 500;
+    }
+    
+    .info-value {
+      color: var(--text);
+      font-weight: 600;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--ring);
+      border-radius: 0.5rem;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-submit:hover:not(:disabled) {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .success-message {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    
+    .error-message {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    
+    .benefits-box {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">انتقل إلى المحتوى</a>
+
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="التنقل الرئيسي">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="brand">
+          <img src="/assets/img/logo.webp" alt="شعار خطوة" width="48" height="48" class="logo">
+          <span>مجلس طلاب خطوة</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html">الرئيسية</a>
+          <a href="about.html">من نحن</a>
+          <a href="news.html">الأخبار</a>
+          <a href="events.html">الفعاليات</a>
+          <a href="courses.html">الدورات</a>
+          <a href="volunteers.html">التطوع</a>
+          <a href="contact.html">اتصل بنا</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main">
+    <div class="details-container">
+      <!-- Loading state -->
+      <div id="loadingState" class="loading">
+        <div class="spinner"></div>
+        <p>جاري تحميل تفاصيل الفرصة...</p>
+      </div>
+      
+      <!-- Opportunity not found -->
+      <div id="notFoundState" class="empty-state" style="display: none;">
+        <h2>الفرصة غير موجودة</h2>
+        <p>عذراً، لم نتمكن من العثور على هذه الفرصة التطوعية</p>
+        <a href="volunteers.html" class="btn btn-primary">العودة إلى الفرص التطوعية</a>
+      </div>
+      
+      <!-- Opportunity details -->
+      <div id="opportunityDetails" style="display: none;">
+        <div class="details-grid">
+          <!-- Main Content -->
+          <div class="main-content">
+            <div id="opportunityHeader"></div>
+            <div id="opportunityDescription"></div>
+          </div>
+          
+          <!-- Sidebar -->
+          <div class="sidebar">
+            <div class="info-card">
+              <h3>معلومات الفرصة</h3>
+              <div id="opportunityInfo"></div>
+            </div>
+            
+            <div class="info-card">
+              <h3>التقديم على الفرصة</h3>
+              <div id="successMessage" class="success-message"></div>
+              <div id="errorMessage" class="error-message"></div>
+              <form id="applicationForm">
+                <div class="form-group">
+                  <label class="form-label" for="fullName">الاسم الكامل *</label>
+                  <input type="text" id="fullName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="email">البريد الإلكتروني *</label>
+                  <input type="email" id="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="phone">رقم الهاتف *</label>
+                  <input type="tel" id="phone" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="experience">الخبرات السابقة</label>
+                  <textarea id="experience" class="form-textarea"></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="motivation">لماذا تريد التطوع؟ *</label>
+                  <textarea id="motivation" class="form-textarea" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="availability">الأوقات المتاحة *</label>
+                  <textarea id="availability" class="form-textarea" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="submitBtn">
+                  تقديم الطلب
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>مجلس طلاب خطوة</h3>
+          <p>نمثل طلاب برنامج خطوة في جامعة لا تروب</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 مجلس طلاب خطوة. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_URL = 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/api/trpc';
+    
+    // Get opportunity ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const opportunityId = urlParams.get('id');
+    
+    if (!opportunityId) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('notFoundState').style.display = 'flex';
+    } else {
+      loadOpportunityDetails();
+    }
+    
+    // Fetch opportunity details
+    async function loadOpportunityDetails() {
+      try {
+        const response = await fetch(`${API_URL}/volunteers.getOpportunityById?input=${encodeURIComponent(JSON.stringify({ id: parseInt(opportunityId) }))}`);
+        const data = await response.json();
+        const opportunity = data.result?.data;
+        
+        if (!opportunity) {
+          document.getElementById('loadingState').style.display = 'none';
+          document.getElementById('notFoundState').style.display = 'flex';
+          return;
+        }
+        
+        renderOpportunityDetails(opportunity);
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('opportunityDetails').style.display = 'block';
+      } catch (error) {
+        console.error('Error loading opportunity:', error);
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('notFoundState').style.display = 'flex';
+      }
+    }
+    
+    // Render opportunity details
+    function renderOpportunityDetails(opp) {
+      // Header
+      document.getElementById('opportunityHeader').innerHTML = `
+        ${opp.imageUrl ? `<img src="${opp.imageUrl}" alt="${opp.titleAr}" style="width: 100%; border-radius: 1rem; margin-bottom: 1.5rem;">` : ''}
+        <h1>${opp.titleAr}</h1>
+        ${opp.titleEn ? `<p style="color: var(--muted); font-size: 1.2rem;">${opp.titleEn}</p>` : ''}
+      `;
+      
+      // Description
+      document.getElementById('opportunityDescription').innerHTML = `
+        <h2>عن الفرصة</h2>
+        <p>${opp.descriptionAr || 'لا يوجد وصف'}</p>
+        ${opp.descriptionEn ? `<p style="color: var(--muted);">${opp.descriptionEn}</p>` : ''}
+        ${opp.responsibilities ? `<h3>المسؤوليات</h3><p>${opp.responsibilities}</p>` : ''}
+        ${opp.requirements ? `<h3>المتطلبات</h3><p>${opp.requirements}</p>` : ''}
+        ${opp.benefits ? `<div class="benefits-box"><h3>🎁 المزايا</h3><p>${opp.benefits}</p></div>` : ''}
+      `;
+      
+      // Info
+      const commitmentMap = { 'one-time': 'مرة واحدة', weekly: 'أسبوعي', monthly: 'شهري', flexible: 'مرن' };
+      
+      document.getElementById('opportunityInfo').innerHTML = `
+        <div class="info-item">
+          <span class="info-label">الالتزام</span>
+          <span class="info-value">${commitmentMap[opp.timeCommitment] || opp.timeCommitment}</span>
+        </div>
+        ${opp.startDate ? `
+        <div class="info-item">
+          <span class="info-label">تاريخ البدء</span>
+          <span class="info-value">${new Date(opp.startDate).toLocaleDateString('ar-SA')}</span>
+        </div>
+        ` : ''}
+        ${opp.endDate ? `
+        <div class="info-item">
+          <span class="info-label">تاريخ الانتهاء</span>
+          <span class="info-value">${new Date(opp.endDate).toLocaleDateString('ar-SA')}</span>
+        </div>
+        ` : ''}
+        <div class="info-item">
+          <span class="info-label">المقاعد المتاحة</span>
+          <span class="info-value">${opp.spotsAvailable || 0}</span>
+        </div>
+        ${opp.hoursRequired ? `
+        <div class="info-item">
+          <span class="info-label">الساعات المطلوبة</span>
+          <span class="info-value">${opp.hoursRequired} ساعة</span>
+        </div>
+        ` : ''}
+      `;
+    }
+    
+    // Handle form submission
+    document.getElementById('applicationForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const successMsg = document.getElementById('successMessage');
+      const errorMsg = document.getElementById('errorMessage');
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'جاري إرسال الطلب...';
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+      
+      try {
+        const formData = {
+          opportunityId: parseInt(opportunityId),
+          fullName: document.getElementById('fullName').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          experience: document.getElementById('experience').value,
+          motivation: document.getElementById('motivation').value,
+          availability: document.getElementById('availability').value
+        };
+        
+        const response = await fetch(`${API_URL}/volunteers.apply`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.result) {
+          successMsg.textContent = 'تم إرسال طلبك بنجاح! سنتواصل معك قريباً.';
+          successMsg.style.display = 'block';
+          document.getElementById('applicationForm').reset();
+        } else {
+          throw new Error(data.error?.message || 'فشل إرسال الطلب');
+        }
+      } catch (error) {
+        errorMsg.textContent = error.message || 'حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.';
+        errorMsg.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'تقديم الطلب';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!-- course-details.html -->
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <title>تفاصيل الدورة – مجلس طلاب خطوة</title>
+  <meta name="description" content="تفاصيل الدورة التدريبية">
+  
+  <!-- Theme color -->
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0f1a"   media="(prefers-color-scheme: dark)">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" href="/assets/favicon.ico">
+  
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/khotwa-theme.css">
+  <link rel="stylesheet" href="/assets/features.css">
+  <link rel="stylesheet" href="/assets/courses-volunteers.css">
+  
+  <style>
+    .details-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .details-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    @media (max-width: 968px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .main-content {
+      background: var(--card);
+      border: 1px solid var(--ring);
+      border-radius: 1rem;
+      padding: 2rem;
+    }
+    
+    .sidebar {
+      position: sticky;
+      top: 1rem;
+      height: fit-content;
+    }
+    
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--ring);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--ring);
+    }
+    
+    .info-item:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      color: var(--muted);
+      font-weight: 500;
+    }
+    
+    .info-value {
+      color: var(--text);
+      font-weight: 600;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--ring);
+      border-radius: 0.5rem;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-submit:hover:not(:disabled) {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .success-message {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    
+    .error-message {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">انتقل إلى المحتوى</a>
+
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="التنقل الرئيسي">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="brand">
+          <img src="/assets/img/logo.webp" alt="شعار خطوة" width="48" height="48" class="logo">
+          <span>مجلس طلاب خطوة</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html">الرئيسية</a>
+          <a href="about.html">من نحن</a>
+          <a href="news.html">الأخبار</a>
+          <a href="events.html">الفعاليات</a>
+          <a href="courses.html">الدورات</a>
+          <a href="volunteers.html">التطوع</a>
+          <a href="contact.html">اتصل بنا</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main">
+    <div class="details-container">
+      <!-- Loading state -->
+      <div id="loadingState" class="loading">
+        <div class="spinner"></div>
+        <p>جاري تحميل تفاصيل الدورة...</p>
+      </div>
+      
+      <!-- Course not found -->
+      <div id="notFoundState" class="empty-state" style="display: none;">
+        <h2>الدورة غير موجودة</h2>
+        <p>عذراً، لم نتمكن من العثور على هذه الدورة</p>
+        <a href="courses.html" class="btn btn-primary">العودة إلى الدورات</a>
+      </div>
+      
+      <!-- Course details -->
+      <div id="courseDetails" style="display: none;">
+        <div class="details-grid">
+          <!-- Main Content -->
+          <div class="main-content">
+            <div id="courseHeader"></div>
+            <div id="courseDescription"></div>
+            <div id="courseSessions"></div>
+          </div>
+          
+          <!-- Sidebar -->
+          <div class="sidebar">
+            <div class="info-card">
+              <h3>معلومات الدورة</h3>
+              <div id="courseInfo"></div>
+            </div>
+            
+            <div class="info-card">
+              <h3>التسجيل في الدورة</h3>
+              <div id="successMessage" class="success-message"></div>
+              <div id="errorMessage" class="error-message"></div>
+              <form id="enrollmentForm">
+                <div class="form-group">
+                  <label class="form-label" for="fullName">الاسم الكامل *</label>
+                  <input type="text" id="fullName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="email">البريد الإلكتروني *</label>
+                  <input type="email" id="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="phone">رقم الهاتف *</label>
+                  <input type="tel" id="phone" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label" for="motivation">لماذا تريد الانضمام؟</label>
+                  <textarea id="motivation" class="form-textarea"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="submitBtn">
+                  تسجيل الآن
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>مجلس طلاب خطوة</h3>
+          <p>نمثل طلاب برنامج خطوة في جامعة لا تروب</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 مجلس طلاب خطوة. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_URL = 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/api/trpc';
+    
+    // Get course ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get('id');
+    
+    if (!courseId) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('notFoundState').style.display = 'flex';
+    } else {
+      loadCourseDetails();
+    }
+    
+    // Fetch course details
+    async function loadCourseDetails() {
+      try {
+        const response = await fetch(`${API_URL}/courses.getById?input=${encodeURIComponent(JSON.stringify({ id: parseInt(courseId) }))}`);
+        const data = await response.json();
+        const course = data.result?.data;
+        
+        if (!course) {
+          document.getElementById('loadingState').style.display = 'none';
+          document.getElementById('notFoundState').style.display = 'flex';
+          return;
+        }
+        
+        renderCourseDetails(course);
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('courseDetails').style.display = 'block';
+      } catch (error) {
+        console.error('Error loading course:', error);
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('notFoundState').style.display = 'flex';
+      }
+    }
+    
+    // Render course details
+    function renderCourseDetails(course) {
+      // Header
+      document.getElementById('courseHeader').innerHTML = `
+        ${course.thumbnailUrl ? `<img src="${course.thumbnailUrl}" alt="${course.titleAr}" style="width: 100%; border-radius: 1rem; margin-bottom: 1.5rem;">` : ''}
+        <h1>${course.titleAr}</h1>
+        ${course.titleEn ? `<p style="color: var(--muted); font-size: 1.2rem;">${course.titleEn}</p>` : ''}
+      `;
+      
+      // Description
+      document.getElementById('courseDescription').innerHTML = `
+        <h2>عن الدورة</h2>
+        <p>${course.descriptionAr || 'لا يوجد وصف'}</p>
+        ${course.descriptionEn ? `<p style="color: var(--muted);">${course.descriptionEn}</p>` : ''}
+        ${course.objectives ? `<h3>الأهداف</h3><p>${course.objectives}</p>` : ''}
+        ${course.prerequisites ? `<h3>المتطلبات المسبقة</h3><p>${course.prerequisites}</p>` : ''}
+      `;
+      
+      // Info
+      const levelMap = { beginner: 'مبتدئ', intermediate: 'متوسط', advanced: 'متقدم' };
+      const formatMap = { online: 'أونلاين', 'in-person': 'حضوري', hybrid: 'هجين' };
+      
+      document.getElementById('courseInfo').innerHTML = `
+        <div class="info-item">
+          <span class="info-label">المستوى</span>
+          <span class="info-value">${levelMap[course.level] || course.level}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">النوع</span>
+          <span class="info-value">${formatMap[course.format] || course.format}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">المدة</span>
+          <span class="info-value">${course.duration || 'غير محدد'}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">المقاعد المتاحة</span>
+          <span class="info-value">${course.maxParticipants || '∞'}</span>
+        </div>
+        ${course.price ? `
+        <div class="info-item">
+          <span class="info-label">السعر</span>
+          <span class="info-value">$${course.price}</span>
+        </div>
+        ` : '<div class="info-item"><span class="info-label">السعر</span><span class="info-value">مجاني</span></div>'}
+      `;
+    }
+    
+    // Handle form submission
+    document.getElementById('enrollmentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const successMsg = document.getElementById('successMessage');
+      const errorMsg = document.getElementById('errorMessage');
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'جاري التسجيل...';
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+      
+      try {
+        const formData = {
+          courseId: parseInt(courseId),
+          fullName: document.getElementById('fullName').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          motivation: document.getElementById('motivation').value
+        };
+        
+        const response = await fetch(`${API_URL}/courses.enroll`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.result) {
+          successMsg.textContent = 'تم التسجيل بنجاح! سنتواصل معك قريباً.';
+          successMsg.style.display = 'block';
+          document.getElementById('enrollmentForm').reset();
+        } else {
+          throw new Error(data.error?.message || 'فشل التسجيل');
+        }
+      } catch (error) {
+        errorMsg.textContent = error.message || 'حدث خطأ أثناء التسجيل. حاول مرة أخرى.';
+        errorMsg.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'تسجيل الآن';
+      }
+    });
+  </script>
+</body>
+</html>
