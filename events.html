@@ -670,13 +670,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
           }
 
-          // فلترة الفعاليات القادمة فقط
-          const today = new Date();
-          today.setHours(0,0,0,0);
+          // فلترة الفعاليات القادمة فقط (بما في ذلك فعاليات اليوم)
+          const now = new Date();
           
           const upcomingEvents = items
-            .map(ev => ({ ...ev, _date: new Date(ev.date) }))
-            .filter(ev => !isNaN(ev._date) && ev._date >= today)
+            .map(ev => ({ ...ev, _date: new Date(ev.date || ev.eventDate) }))
+            .filter(ev => !isNaN(ev._date) && ev._date > now)
             .sort((a,b) => a._date - b._date);
 
           if(upcomingEvents.length === 0){
