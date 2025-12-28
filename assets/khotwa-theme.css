@@ -1,0 +1,407 @@
+/*
+  ========================================
+  Khotwa Student Council - Official Theme
+  Inspired by khotwa.adek.ae
+  ========================================
+*/
+
+/* ========================================
+   1. CSS VARIABLES
+   ======================================== */
+
+:root {
+  /* Colors - Khotwa Brand */
+  --khotwa-purple: #5B4FFF;
+  --khotwa-pink: #FF0066;
+  --khotwa-cream: #F5F1E8;
+  --khotwa-black: #1a1a1a;
+  --khotwa-white: #ffffff;
+  --khotwa-gray: #6B7280;
+  --khotwa-gray-light: #F3F4F6;
+  
+  /* Spacing */
+  --section-padding: 100px;
+  --section-padding-mobile: 60px;
+  --container-max-width: 1200px;
+  
+  /* Typography */
+  --font-primary: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-hero: clamp(2.5rem, 5vw, 4rem);
+  --font-size-h2: clamp(2rem, 4vw, 3rem);
+  --font-size-h3: clamp(1.5rem, 3vw, 2rem);
+  --font-size-body: 1.125rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+/* ========================================
+   2. GLOBAL STYLES
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--khotwa-black);
+  background: var(--khotwa-white);
+  line-height: 1.7;
+  font-size: var(--font-size-body);
+}
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ========================================
+   3. HERO SECTION
+   ======================================== */
+
+.hero-section {
+  padding: var(--section-padding) 0;
+  background: var(--khotwa-white);
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-content h1 {
+  font-size: var(--font-size-hero);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  color: var(--khotwa-black);
+}
+
+.hero-content .highlight {
+  color: var(--khotwa-purple);
+  display: block;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  color: var(--khotwa-gray);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-image {
+  position: relative;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  object-fit: cover;
+}
+
+/* ========================================
+   4. BUTTONS
+   ======================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-primary);
+}
+
+.btn-primary {
+  background: var(--khotwa-purple);
+  color: var(--khotwa-white);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  background: #4a3ee6;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  background: var(--khotwa-pink);
+  color: var(--khotwa-white);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:hover {
+  background: #e6005c;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--khotwa-purple);
+  border: 2px solid var(--khotwa-purple);
+}
+
+.btn-outline:hover {
+  background: var(--khotwa-purple);
+  color: var(--khotwa-white);
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   5. SECTIONS
+   ======================================== */
+
+.section {
+  padding: var(--section-padding) 0;
+}
+
+.section-cream {
+  background: var(--khotwa-cream);
+}
+
+.section-white {
+  background: var(--khotwa-white);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-header h2 {
+  font-size: var(--font-size-h2);
+  font-weight: 800;
+  color: var(--khotwa-black);
+  margin-bottom: 16px;
+}
+
+.section-header p {
+  font-size: 1.25rem;
+  color: var(--khotwa-gray);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   6. CARDS
+   ======================================== */
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.card {
+  background: var(--khotwa-white);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--khotwa-black);
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: var(--khotwa-gray);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.card-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 0.875rem;
+  color: var(--khotwa-gray);
+}
+
+/* ========================================
+   7. STATS SECTION
+   ======================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+}
+
+.stat-card {
+  background: var(--khotwa-white);
+  border-radius: var(--radius-md);
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--khotwa-purple);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.stat-label {
+  font-size: 1.125rem;
+  color: var(--khotwa-gray);
+  font-weight: 600;
+}
+
+/* ========================================
+   8. RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 968px) {
+  :root {
+    --section-padding: var(--section-padding-mobile);
+    --font-size-hero: 2.5rem;
+    --font-size-h2: 2rem;
+  }
+  
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .hero-image {
+    order: -1;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ========================================
+   9. ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ========================================
+   10. UTILITIES
+   ======================================== */
+
+.text-center {
+  text-align: center;
+}
+
+.text-purple {
+  color: var(--khotwa-purple);
+}
+
+.text-pink {
+  color: var(--khotwa-pink);
+}
+
+.bg-cream {
+  background: var(--khotwa-cream);
+}
+
+.bg-white {
+  background: var(--khotwa-white);
+}
+
+.mt-large {
+  margin-top: 80px;
+}
+
+.mb-large {
+  margin-bottom: 80px;
+}

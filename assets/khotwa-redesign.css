@@ -1,0 +1,312 @@
+/*
+  ========================================
+  Khotwa Student Council - Redesign Override
+  Inspired by khotwa.adek.ae official website
+  ========================================
+  
+  This file overrides existing styles to match
+  the official Khotwa brand design without
+  breaking any existing functionality.
+*/
+
+/* Import Cairo font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+/* ========================================
+   1. GLOBAL OVERRIDES
+   ======================================== */
+
+:root {
+  /* Khotwa Brand Colors */
+  --khotwa-purple: #5B4FFF !important;
+  --khotwa-pink: #FF0066 !important;
+  --khotwa-cream: #F5F1E8 !important;
+  --khotwa-black: #1a1a1a !important;
+  --khotwa-white: #ffffff !important;
+  --khotwa-gray: #6B7280 !important;
+  
+  /* Override existing variables */
+  --primary: #5B4FFF !important;
+  --bg: #ffffff !important;
+  --text: #1a1a1a !important;
+  --muted: #6B7280 !important;
+}
+
+body {
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  color: var(--khotwa-black) !important;
+  background: var(--khotwa-white) !important;
+}
+
+/* ========================================
+   2. HERO SECTION REDESIGN
+   ======================================== */
+
+.hero {
+  padding: 100px 0 !important;
+  background: var(--khotwa-white) !important;
+  min-height: 600px !important;
+}
+
+.hero-inner {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 60px !important;
+  align-items: center !important;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  margin-bottom: 24px !important;
+  color: var(--khotwa-black) !important;
+}
+
+.hero p {
+  font-size: 1.25rem !important;
+  color: var(--khotwa-gray) !important;
+  margin-bottom: 40px !important;
+  line-height: 1.8 !important;
+}
+
+.hero-img img {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  object-fit: cover !important;
+}
+
+/* ========================================
+   3. BUTTONS REDESIGN
+   ======================================== */
+
+.btn, .cta-row a {
+  padding: 16px 32px !important;
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+}
+
+.btn-primary {
+  background: var(--khotwa-purple) !important;
+  color: var(--khotwa-white) !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(91, 79, 255, 0.3) !important;
+}
+
+.btn-primary:hover {
+  background: #4a3ee6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(91, 79, 255, 0.4) !important;
+}
+
+.btn-outline {
+  background: transparent !important;
+  color: var(--khotwa-purple) !important;
+  border: 2px solid var(--khotwa-purple) !important;
+}
+
+.btn-outline:hover {
+  background: var(--khotwa-purple) !important;
+  color: var(--khotwa-white) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ========================================
+   4. SECTIONS REDESIGN
+   ======================================== */
+
+section {
+  padding: 100px 0 !important;
+}
+
+section:nth-child(even) {
+  background: var(--khotwa-cream) !important;
+}
+
+section:nth-child(odd) {
+  background: var(--khotwa-white) !important;
+}
+
+.section-head h2 {
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  font-weight: 800 !important;
+  color: var(--khotwa-black) !important;
+  margin-bottom: 16px !important;
+}
+
+/* ========================================
+   5. CARDS REDESIGN
+   ======================================== */
+
+.card {
+  background: var(--khotwa-white) !important;
+  border-radius: 12px !important;
+  padding: 32px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+.card h3 {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: var(--khotwa-black) !important;
+  margin-bottom: 12px !important;
+}
+
+.card p {
+  color: var(--khotwa-gray) !important;
+  line-height: 1.7 !important;
+}
+
+/* ========================================
+   6. STATS CARDS REDESIGN
+   ======================================== */
+
+.stat-card {
+  background: var(--khotwa-white) !important;
+  border-radius: 12px !important;
+  padding: 40px 32px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+.stat-card::before {
+  background: linear-gradient(90deg, var(--khotwa-purple), var(--khotwa-pink)) !important;
+}
+
+.stat-value, .stat-card .stat-value {
+  font-size: 3rem !important;
+  font-weight: 800 !important;
+  color: var(--khotwa-purple) !important;
+}
+
+.stat-label {
+  font-size: 1.125rem !important;
+  color: var(--khotwa-gray) !important;
+  font-weight: 600 !important;
+}
+
+/* ========================================
+   7. NAVBAR REDESIGN
+   ======================================== */
+
+.navbar {
+  background: var(--khotwa-white) !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.nav-links a {
+  color: var(--khotwa-black) !important;
+  font-weight: 600 !important;
+  transition: color 0.3s ease !important;
+}
+
+.nav-links a:hover {
+  color: var(--khotwa-purple) !important;
+}
+
+/* ========================================
+   8. FOOTER REDESIGN
+   ======================================== */
+
+footer {
+  background: var(--khotwa-cream) !important;
+  border-top: 1px solid #e5e7eb !important;
+  padding: 60px 0 !important;
+}
+
+footer a {
+  color: var(--khotwa-black) !important;
+  transition: color 0.3s ease !important;
+}
+
+footer a:hover {
+  color: var(--khotwa-purple) !important;
+}
+
+/* ========================================
+   9. RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 968px) {
+  .hero {
+    padding: 60px 0 !important;
+  }
+  
+  .hero-inner {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  
+  .hero-img {
+    order: -1 !important;
+  }
+  
+  section {
+    padding: 60px 0 !important;
+  }
+  
+  .btn {
+    width: 100% !important;
+  }
+}
+
+/* ========================================
+   10. ANIMATIONS
+   ======================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ========================================
+   11. UTILITIES
+   ======================================== */
+
+.text-purple {
+  color: var(--khotwa-purple) !important;
+}
+
+.text-pink {
+  color: var(--khotwa-pink) !important;
+}
+
+.bg-cream {
+  background: var(--khotwa-cream) !important;
+}
+
+.bg-white {
+  background: var(--khotwa-white) !important;
+}
