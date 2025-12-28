@@ -411,66 +411,6 @@
       if(y) y.textContent=new Date().getFullYear();
     })();
 
-    // منيو الجوال + وصولية
-    (function(){
-      console.log('[DEBUG] Menu toggle IIFE started');
-      const btn = document.getElementById('menu-toggle');
-      const nav = document.getElementById('primary-nav');
-      console.log('[DEBUG] btn:', btn, 'nav:', nav);
-      if(!btn || !nav) {
-        console.log('[ERROR] Menu toggle: btn or nav not found!');
-        return;
-      }
-      console.log('[DEBUG] Menu toggle: Elements found, setting up...');
-
-      const mq  = window.matchMedia('(min-width:961px)');
-
-      function setMenu(open){
-        nav.setAttribute('data-open', String(open));
-        btn.setAttribute('aria-expanded', String(open));
-        // على سطح المكتب تبقى ظاهرة دائمًا، على الجوال تُخفى إذا كانت مغلقة
-        nav.setAttribute('aria-hidden', String(!open && !mq.matches));
-        if(open){
-          const focusable = nav.querySelector('a,button');
-          (focusable || btn).focus();
-        }
-      }
-
-      function init(){
-        // حالة أولية متسقة مع CSS
-        setMenu(false);
-        nav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
-      }
-      init();
-
-      btn.addEventListener('click', ()=> {
-        console.log('[DEBUG] Menu button clicked!');
-        setMenu(nav.getAttribute('data-open')!=='true');
-      });
-      console.log('[DEBUG] Menu toggle: Event listener registered!');
-
-      mq.addEventListener('change', (e)=>{
-        // عند الانتقال بين الشاشات نغلق القائمة على الجوال ونُظهرها على الديسكتوب
-        setMenu(false);
-        nav.setAttribute('aria-hidden', e.matches ? 'false':'true');
-      });
-
-      document.addEventListener('click', (e)=>{
-        const open = nav.getAttribute('data-open')==='true';
-        const target = e.target;
-        if(!open) return;
-        if(target instanceof Node && !nav.contains(target) && !btn.contains(target)){
-          setMenu(false);
-        }
-      });
-
-      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
-
-      // إغلاق القائمة عند اختيار رابط
-      nav.addEventListener('click', (e)=>{
-        const t = (e.target instanceof Element) ? e.target.closest('a') : null;
-        if(t) setMenu(false);
-      });
     })();
 
     // تبديل اللغة + حفظ التفضيل
@@ -749,5 +689,6 @@
     <script src="js/config.js"></script>
     <script src="js/settings-loader.js"></script>
     <script src="/js/language-toggle.js"></script>
+<script src="js/menu-toggle.js"></script>
 </body>
 </html>
