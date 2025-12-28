@@ -535,6 +535,8 @@
           container.innerHTML = '';
 
           upcoming.forEach(ev=>{
+            const d = ev._date;
+            const arDate = d ? d.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'nu          latest.forEach(ev=>{
             const titleText = isEn ? (ev.titleEn || ev.titleAr || '') : (ev.titleAr || ev.titleEn || '');
             const descText = isEn ? (ev.descriptionEn || ev.descriptionAr || '') : (ev.descriptionAr || ev.descriptionEn || '');
             const locText = ev.location || '';

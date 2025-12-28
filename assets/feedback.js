@@ -18,9 +18,9 @@
       const form = document.getElementById('feedback-form');
       const panel = document.getElementById('feedback-panel');
 
-      toggle?.addEventListener('click', () => panel.hidden = !panel.hidden);
-      close?.addEventListener('click', () => panel.hidden = true);
-      cancel?.addEventListener('click', () => panel.hidden = true);
+      toggle?.addEventListener('click', () => { if (panel) panel.hidden = !panel.hidden; });
+      close?.addEventListener('click', () => { if (panel) panel.hidden = true; });
+      cancel?.addEventListener('click', () => { if (panel) panel.hidden = true; });
 
       document.querySelectorAll('.rating-btn').forEach(btn => {
         btn.addEventListener('click', (e) =>
@@ -31,7 +31,7 @@
       form?.addEventListener('submit', (e) => this.handleSubmit(e));
 
       document.addEventListener('click', (e) => {
-        if (!e.target.closest('.feedback-widget') && !panel.hidden) {
+        if (panel && !e.target.closest('.feedback-widget') && !panel.hidden) {
           panel.hidden = true;
         }
       });
