@@ -1,7 +1,7 @@
 /**
  * Khotwa Backend API Integration
  * ==============================
- * هذا الملف يوفر جميع الدوال اللازمة للتواصل مع نظام Backend (tRPC)
+ * هذا الملف يوفر جميع الدوال اللازمة للتواصل مع نظام Backend (REST API)
  *
  * IMPORTANT:
  * - هذا الملف هو المصدر الوحيد للـ API
@@ -10,7 +10,7 @@
 
 const KhotwaAPI = (function () {
   // ==================== الإعدادات ====================
-  const API_BASE = window.KHOTWA_CONFIG?.API_BASE || "https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/api/trpc";
+  const API_BASE = window.KHOTWA_CONFIG?.API_BASE || "https://khotwabknd-gj8oeubw.manus.space/api";
 
   // ==================== Visitor ID ====================
   function getVisitorId() {
@@ -26,7 +26,7 @@ const KhotwaAPI = (function () {
     return id;
   }
 
-  // ==================== API Call (tRPC compatible) ====================
+  // ==================== API Call (REST API) ====================
   async function apiCall(endpoint, input = null, method = "GET") {
     try {
       let url = `${API_BASE}/${endpoint}`;
@@ -39,27 +39,31 @@ const KhotwaAPI = (function () {
         credentials: "include",
       };
 
-      // ✅ tRPC expects input wrapped in { json: ... }
+      // REST API: simple query params or body
       if (method === "GET" && input) {
-        url += `?input=${encodeURIComponent(
-          JSON.stringify({ json: input })
-        )}`;
+        const params = new URLSearchParams();
+        Object.keys(input).forEach(key => {
+          if (input[key] !== null && input[key] !== undefined) {
+            params.append(key, input[key]);
+          }
+        });
+        url += `?${params.toString()}`;
       } else if (method === "POST" && input) {
-        options.body = JSON.stringify({ json: input });
+        options.body = JSON.stringify(input);
       }
 
       const response = await fetch(url, options);
       const data = await response.json();
 
-      if (data?.error) {
+      if (!response.ok || data?.error) {
         throw new Error(
-          data.error?.json?.message ||
-            data.error?.message ||
+          data.error?.message ||
+            data.message ||
             "حدث خطأ في الاتصال"
         );
       }
 
-      return data?.result?.data?.json ?? data?.result?.data ?? null;
+      return data;
     } catch (err) {
       console.error("Khotwa API Error:", err);
       throw err;
@@ -67,26 +71,26 @@ const KhotwaAPI = (function () {
   }
 
   // ==================== Statistics ====================
-  const getStatistics = () => apiCall("statistics.get");
+  const getStatistics = () => apiCall("statistics");
 
   // ==================== News ====================
   const getNews = async () => {
-    const res = await apiCall("news.list");
-    return res?.json || res || [];
+    const res = await apiCall("news");
+    return res || [];
   };
 
-  const getNewsById = (id) => apiCall("news.getById", { id });
+  const getNewsById = (id) => apiCall(`news/${id}`);
 
   const searchNews = (query = "", category = null, sortBy = "newest") =>
-    apiCall("news.search", { query, category, sortBy });
+    apiCall("news", { query, category, sortBy });
 
   // ==================== Events ====================
   const getEvents = async () => {
-    const res = await apiCall("events.list");
-    return res?.json || res || [];
+    const res = await apiCall("events");
+    return res || [];
   };
 
-  const getEventById = (id) => apiCall("events.getById", { id });
+  const getEventById = (id) => apiCall(`events/${id}`);
 
   const searchEvents = (
     query = "",
@@ -94,11 +98,11 @@ const KhotwaAPI = (function () {
     dateTo = null,
     sortBy = "date"
   ) =>
-    apiCall("events.search", { query, dateFrom, dateTo, sortBy });
+    apiCall("events", { query, dateFrom, dateTo, sortBy });
 
   const registerForEvent = (eventId, fullName, email, phone, university, notes) =>
     apiCall(
-      "registrations.create",
+      "registrations",
       {
         eventId,
         fullName,
@@ -113,7 +117,7 @@ const KhotwaAPI = (function () {
 
   // ==================== Comments ====================
   const getComments = (contentType, contentId) =>
-    apiCall("comments.list", { contentType, contentId });
+    apiCall("comments", { contentType, contentId });
 
   const addComment = (
     contentType,
@@ -123,7 +127,7 @@ const KhotwaAPI = (function () {
     authorEmail
   ) =>
     apiCall(
-      "comments.create",
+      "comments",
       {
         contentType,
         contentId,
@@ -136,16 +140,15 @@ const KhotwaAPI = (function () {
     );
 
   // ==================== Polls ====================
-  const getActivePolls = () => apiCall("polls.listActive");
+  const getActivePolls = () => apiCall("polls/active");
 
   const getPollResults = (pollId) =>
-    apiCall("polls.results", { pollId });
+    apiCall(`polls/${pollId}/results`);
 
   const vote = (pollId, optionId) =>
     apiCall(
-      "polls.vote",
+      `polls/${pollId}/vote`,
       {
-        pollId,
         optionId,
         visitorId: getVisitorId(),
       },
@@ -155,38 +158,38 @@ const KhotwaAPI = (function () {
   // ==================== Complaints / Suggestions ====================
   const submitComplaint = (subject, content, name, email) =>
     apiCall(
-      "complaints.create",
+      "complaints",
       { type: "complaint", subject, content, name, email },
       "POST"
     );
 
   const submitSuggestion = (subject, content, name, email) =>
     apiCall(
-      "complaints.create",
+      "complaints",
       { type: "suggestion", subject, content, name, email },
       "POST"
     );
 
   // ==================== Gamification ====================
   const getMyPoints = () =>
-    apiCall("gamification.getPoints", {
+    apiCall("gamification/points", {
       visitorId: getVisitorId(),
     });
 
   const getMyBadges = () =>
-    apiCall("gamification.getBadges", {
+    apiCall("gamification/badges", {
       visitorId: getVisitorId(),
     });
 
-  const getAllBadges = () => apiCall("gamification.getAllBadges");
+  const getAllBadges = () => apiCall("gamification/badges/all");
 
   // ==================== Jobs ====================
   const getJobs = async () => {
-    const res = await apiCall("jobs.list");
-    return res?.json || res || [];
+    const res = await apiCall("jobs");
+    return res || [];
   };
 
-  const getJobById = (id) => apiCall("jobs.getById", { id });
+  const getJobById = (id) => apiCall(`jobs/${id}`);
 
   const applyForJob = (
     jobId,
@@ -197,7 +200,7 @@ const KhotwaAPI = (function () {
     coverLetter
   ) =>
     apiCall(
-      "jobs.submitApplication",
+      "jobs/apply",
       {
         jobId,
         fullName,
@@ -211,14 +214,14 @@ const KhotwaAPI = (function () {
 
   // ==================== Gallery ====================
   const getGallery = (album = null) =>
-    apiCall("gallery.list", album ? { album } : null);
+    apiCall("gallery", album ? { album } : null);
 
-  const getGalleryAlbums = () => apiCall("gallery.albums");
+  const getGalleryAlbums = () => apiCall("gallery/albums");
 
   // ==================== Attendance ====================
   const checkInAttendance = (eventId, name, email, phone) =>
     apiCall(
-      "attendance.checkIn",
+      "attendance/checkin",
       {
         eventId,
         name,
@@ -230,11 +233,11 @@ const KhotwaAPI = (function () {
     );
 
   // ==================== Push Notifications ====================
-  const getVapidPublicKey = () => apiCall("push.getPublicKey");
+  const getVapidPublicKey = () => apiCall("push/public-key");
   const subscribeToPush = (subscription) =>
-    apiCall("push.subscribe", subscription, "POST");
+    apiCall("push/subscribe", subscription, "POST");
   const unsubscribeFromPush = (data) =>
-    apiCall("push.unsubscribe", data, "POST");
+    apiCall("push/unsubscribe", data, "POST");
 
   // ==================== Export ====================
   return {
