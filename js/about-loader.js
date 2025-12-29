@@ -4,7 +4,7 @@
  */
 
 // Get Backend URL from config
-const BACKEND_URL = window.KHOTWA_CONFIG?.BACKEND_URL || 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer';
+const BACKEND_URL = window.KHOTWA_CONFIG?.BACKEND_URL || 'https://khotwabknd-gj8oeubu.manus.space';
 
 // Load About Content
 async function loadAboutContent() {

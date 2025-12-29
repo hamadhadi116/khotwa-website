@@ -8,7 +8,7 @@
   'use strict';
 
   // Admin panel URL
-  const ADMIN_URL = 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/admin';
+  const ADMIN_URL = 'https://khotwabknd-gj8oeubu.manus.space/admin';
 
   // Wait for DOM to be ready
   if (document.readyState === 'loading') {

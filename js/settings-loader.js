@@ -7,7 +7,7 @@
 (function() {
   'use strict';
 
-  const BACKEND_URL = window.KHOTWA_CONFIG?.BACKEND_URL || 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer';
+  const BACKEND_URL = window.KHOTWA_CONFIG?.BACKEND_URL || 'https://khotwabknd-gj8oeubu.manus.space';
   const CACHE_KEY = 'khotwa_settings';
   const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
