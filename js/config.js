@@ -3,10 +3,10 @@
  * Central configuration file for Backend API URL
  */
 
-// Backend API URL - Change this when Backend URL changes
+// Backend API URL - Now using stable published domain
 window.KHOTWA_CONFIG = {
-  BACKEND_URL: 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer',
-  API_BASE: 'https://3000-ivtx8t5s8uaytpylv5zyf-b88825ad.manus-asia.computer/api/trpc'
+  BACKEND_URL: 'https://khotwabknd-gj8oeubw.manus.space',
+  API_BASE: 'https://khotwabknd-gj8oeubw.manus.space/api'
 };
 
 // Log configuration on load
