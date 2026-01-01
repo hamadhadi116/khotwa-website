@@ -289,6 +289,57 @@ const KhotwaAPI = (function () {
   const unsubscribeFromPush = (data) =>
     apiCall("push/unsubscribe", data, "POST");
 
+  // ==================== Settings ====================
+  const loadSettings = async () => {
+    try {
+      const settings = await apiCall("settings");
+      if (!settings) return null;
+      
+      // Apply navbar colors if available
+      if (settings.navbar_bg_color) {
+        document.documentElement.style.setProperty('--navbar-bg', settings.navbar_bg_color);
+      }
+      if (settings.navbar_text_color) {
+        document.documentElement.style.setProperty('--navbar-text', settings.navbar_text_color);
+      }
+      
+      // Apply logo if available
+      if (settings.site_logo) {
+        const logoElements = document.querySelectorAll('.site-logo, .navbar-logo, img[alt="Logo"]');
+        logoElements.forEach(el => {
+          if (el.tagName === 'IMG') {
+            el.src = settings.site_logo;
+          }
+        });
+      }
+      
+      // Apply site title if available
+      if (settings.site_title_ar) {
+        const titleElements = document.querySelectorAll('.site-title');
+        titleElements.forEach(el => {
+          el.textContent = settings.site_title_ar;
+        });
+        
+        // Update page title
+        if (document.title.includes('مجلس طلاب خطوة') || document.title.includes('Khotwa')) {
+          document.title = document.title.replace(/مجلس طلاب خطوة|Khotwa Student Council/g, settings.site_title_ar);
+        }
+      }
+      
+      return settings;
+    } catch (error) {
+      console.warn('[Khotwa API] Could not load settings:', error);
+      return null;
+    }
+  };
+
+  // Auto-load settings when page loads
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadSettings);
+  } else {
+    loadSettings();
+  }
+
   // ==================== Export ====================
   return {
     getVisitorId,
@@ -349,6 +400,9 @@ const KhotwaAPI = (function () {
     getVapidPublicKey,
     subscribeToPush,
     unsubscribeFromPush,
+
+    // Settings
+    loadSettings,
   };
 })();
 
