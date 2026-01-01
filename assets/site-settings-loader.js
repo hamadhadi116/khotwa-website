@@ -6,7 +6,7 @@
 (function() {
   'use strict';
   
-  const BACKEND_URL = 'https://khotwabknd-gj8oeubu.manus.space';
+  const BACKEND_URL = 'https://khotwabknd-gj8oeubw.manus.space';
   const CACHE_KEY = 'khotwa_site_settings';
   const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
   

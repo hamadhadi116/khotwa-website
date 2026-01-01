@@ -8,7 +8,7 @@
   'use strict';
 
   // Admin panel URL
-  const ADMIN_URL = 'https://khotwabknd-gj8oeubu.manus.space/admin';
+  const ADMIN_URL = 'https://khotwabknd-gj8oeubw.manus.space/admin';
 
   // Wait for DOM to be ready
   if (document.readyState === 'loading') {

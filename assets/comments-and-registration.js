@@ -4,7 +4,7 @@
  */
 
 // Backend API Configuration
-const BACKEND_API = window.KHOTWA_CONFIG?.API_BASE || 'https://khotwabknd-gj8oeubu.manus.space/api/trpc';
+const BACKEND_API = window.KHOTWA_CONFIG?.API_BASE || 'https://khotwabknd-gj8oeubw.manus.space/api/trpc';
 
 // Helper Functions
 function getVisitorId() {
