@@ -282,6 +282,12 @@ const KhotwaAPI = (function () {
       "POST"
     );
 
+  // ==================== Achievements ====================
+  const getAchievements = async () => {
+    const res = await apiCall("achievements");
+    return res || [];
+  };
+
   // ==================== Push Notifications ====================
   const getVapidPublicKey = () => apiCall("push/public-key");
   const subscribeToPush = (subscription) =>
@@ -395,6 +401,9 @@ const KhotwaAPI = (function () {
 
     // Attendance
     checkInAttendance,
+
+    // Achievements
+    getAchievements,
 
     // Push
     getVapidPublicKey,
