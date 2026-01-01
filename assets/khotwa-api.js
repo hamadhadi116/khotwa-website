@@ -53,6 +53,18 @@ const KhotwaAPI = (function () {
       }
 
       const response = await fetch(url, options);
+      
+      // Check if response is JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        console.warn(`[Khotwa API] Non-JSON response from ${endpoint}:`, response.status);
+        // Return empty data for non-critical endpoints
+        if (method === "GET") {
+          return null;
+        }
+        throw new Error("حدث خطأ في الاتصال بالخادم");
+      }
+      
       const data = await response.json();
 
       if (!response.ok || data?.error) {
@@ -65,13 +77,35 @@ const KhotwaAPI = (function () {
 
       return data;
     } catch (err) {
-      console.error("Khotwa API Error:", err);
+      console.warn("[Khotwa API] Error calling", endpoint, ":", err.message);
+      // Return null for GET requests (non-critical)
+      if (method === "GET") {
+        return null;
+      }
       throw err;
     }
   }
 
   // ==================== Statistics ====================
-  const getStatistics = () => apiCall("statistics");
+  const getStatistics = async () => {
+    try {
+      const stats = await apiCall("statistics");
+      return stats || {
+        newsCount: 0,
+        eventsCount: 0,
+        commentsCount: 0,
+        registrationsCount: 0
+      };
+    } catch (err) {
+      console.warn("[Khotwa API] Failed to load statistics, using defaults");
+      return {
+        newsCount: 0,
+        eventsCount: 0,
+        commentsCount: 0,
+        registrationsCount: 0
+      };
+    }
+  };
 
   // ==================== News ====================
   const getNews = async () => {
@@ -212,6 +246,22 @@ const KhotwaAPI = (function () {
       "POST"
     );
 
+  // ==================== Courses ====================
+  const getCourses = async () => {
+    const res = await apiCall("courses");
+    return res || [];
+  };
+
+  const getCourseById = (id) => apiCall(`courses/${id}`);
+
+  // ==================== Volunteers ====================
+  const getVolunteers = async () => {
+    const res = await apiCall("volunteers");
+    return res || [];
+  };
+
+  const getVolunteerById = (id) => apiCall(`volunteers/${id}`);
+
   // ==================== Gallery ====================
   const getGallery = (album = null) =>
     apiCall("gallery", album ? { album } : null);
@@ -279,6 +329,14 @@ const KhotwaAPI = (function () {
     getJobs,
     getJobById,
     applyForJob,
+
+    // Courses
+    getCourses,
+    getCourseById,
+
+    // Volunteers
+    getVolunteers,
+    getVolunteerById,
 
     // Gallery
     getGallery,
