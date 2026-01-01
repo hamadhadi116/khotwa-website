@@ -37,7 +37,7 @@
       }
 
       // Fetch from API
-      const response = await fetch(`${BACKEND_URL}/api/trpc/settings.list`, {
+      const response = await fetch(`${BACKEND_URL}/api/settings`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -49,20 +49,9 @@
       }
 
       const result = await response.json();
-      const settings = result.result?.data || [];
-
-      // Convert array to object for easier access
-      const settingsObj = {};
       
-      // Handle both array and object responses
-      if (Array.isArray(settings)) {
-        settings.forEach(setting => {
-          settingsObj[setting.key] = setting.value;
-        });
-      } else if (typeof settings === 'object' && settings !== null) {
-        // If already an object, use it directly
-        Object.assign(settingsObj, settings);
-      }
+      // The API returns { success: true, settings: {...} }
+      const settingsObj = result.success && result.settings ? result.settings : {};
 
       // Update cache
       settingsCache = settingsObj;
