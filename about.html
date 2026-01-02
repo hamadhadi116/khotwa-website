@@ -1,169 +1,422 @@
+<!DOCTYPE html>
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>من نحن – Khotwa</title>
-
-  <meta name="keywords" content="مجلس طلاب خطوة, من نحن, رؤية المجلس, رسالة المجلس, فريق العمل, جامعة لا تروب, ملبورن, طلاب سعوديين">
+    <meta name="keywords" content="مجلس طلاب خطوة, من نحن, رؤية المجلس, رسالة المجلس, فريق العمل, جامعة لا تروب, ملبورن, ">
   <meta name="description" content="تعرف على مجلس طلاب خطوة: رؤيتنا، رسالتنا، أهدافنا، وفريق العمل. نمثل طلاب برنامج خطوة في جامعة لا تروب - ملبورن منذ 2024.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/about.html"/>
   <meta name="robots" content="index,follow"/>
-
   <meta name="color-scheme" content="light dark"/>
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
-  <!-- OG/Twitter -->
+  <!-- OG/Twitter (محلي لتفادي أعطال DNS) -->
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Khotwa Student Council"/>
   <meta property="og:title" content="من نحن – Khotwa"/>
   <meta property="og:description" content="مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن."/>
   <meta property="og:url" content="https://khotwastudentcouncil.com/about.html"/>
   <meta property="og:image" content="/assets/apple-touch-icon.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="من نحن – Khotwa"/>
+  <meta name="twitter:description" content="مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن."/>
+  <meta name="twitter:image" content="/assets/apple-touch-icon.png"/>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"Khotwa Student Council",
-    "url":"https://khotwastudentcouncil.com/",
-    "logo":"/assets/apple-touch-icon.png",
-    "sameAs":["https://www.instagram.com/khotwa.sc/"]
-  }
+  {"@context":"https://schema.org","@type":"Organization","name":"Khotwa Student Council","url":"https://khotwastudentcouncil.com/","logo":"/assets/apple-touch-icon.png","sameAs":["https://www.instagram.com/khotwa.sc/"]}
   </script>
 
-  <!-- CSS (كما هو) -->
+  <style>
+    :root{
+      --primary:#1e40af; --primary-600:#1d4ed8;
+      --text:#0f172a; --muted:#64748b;
+      --surface:#ffffff; --card:#f8fafc; --ring:#e6eaf2;
+      --r-md:14px; --r-lg:16px; --r-xl:22px;
+      --sh-sm:0 2px 10px rgba(2,6,23,.06); --sh-md:0 10px 26px rgba(2,6,23,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:var(--surface);line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1120px,92%);margin-inline:auto}
+
+    /* وصولية */
+    :where(a,button,[role="button"],input,select,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px;border-radius:8px}
+    .skip-link{position:absolute;inset-inline-start:1rem;inset-block-start:-100px;background:#fff;color:#000;padding:.6rem .9rem;border-radius:10px;box-shadow:var(--sh-sm);z-index:1000}
+    .skip-link:focus{inset-block-start:1rem}
+
+    /* NAV */
+    .navbar{position:sticky;top:0;z-index:40;background:color-mix(in oklab,#ffffff 80%,transparent);border-bottom:1px solid var(--ring);backdrop-filter:blur(8px)}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
+    .brand{display:flex;align-items:center;gap:.8rem;font-weight:800}
+    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .nav-links{display:flex;gap:.25rem;align-items:center}
+    .nav-links a{padding:.5rem .75rem;border-radius:var(--r-md)}
+    .nav-links a:hover{background:var(--card)}
+    .nav-links a[aria-current="page"]{background:var(--card)}
+    .lang-toggle,.menu-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:var(--r-md);cursor:pointer;font-weight:600}
+    .menu-toggle{display:none;align-items:center;gap:.5rem}
+    .menu-toggle svg{width:20px;height:20px}
+    @media (max-width:900px){
+      .menu-toggle{display:inline-flex}
+      .nav-links{
+        position:absolute;inset-inline:0;top:calc(100% + 8px);
+        background:#fff;border:1px solid var(--ring);border-radius:var(--r-xl);
+        display:grid;gap:.2rem;padding:.4rem;box-shadow:0 20px 48px rgba(2,6,23,.1);
+        max-height:80vh;overflow:auto;opacity:1;transform:scale(1);transition:opacity .2s ease,transform .2s ease,padding .2s ease;
+      }
+      .nav-links[aria-hidden="true"]{transform:scale(.98);opacity:0}
+      .nav-links a,.lang-toggle{padding:.7rem .9rem}
+    }
+
+    /* Sections */
+    section{padding:2rem 0}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
+    .section-head h1{margin:0;font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem)}
+    .section-head h2{margin:0;font-size:clamp(1.35rem,1.6vw + 1rem,1.6rem)}
+    .muted{color:var(--muted)}
+
+    /* Cards */
+    .grid{display:grid;gap:1rem}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid var(--ring);border-radius:var(--r-lg);padding:1rem;box-shadow:var(--sh-sm)}
+    .card h3{margin:.2rem 0 .4rem;font-size:1.05rem}
+    .card p{margin:0}
+
+    /* Members */
+    .members{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.2rem}
+    @media(max-width:1120px){.members{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:820px){.members{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:520px){.members{grid-template-columns:1fr}}
+    .member-card{background:#fff;border:1px solid var(--ring);border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden;display:flex;flex-direction:column}
+    .member-card img{
+      width:100%; height:auto; aspect-ratio:3/2; object-fit:cover;
+      object-position:50% 22%;
+      background:#f3f4f6; display:block;
+    }
+    .member-card h3{margin:.8rem .8rem .2rem;font-size:1.05rem}
+    .member-card p{margin:0 .8rem .8rem;color:var(--muted);font-size:.95rem}
+
+    /* Footer */
+    footer{border-top:1px solid var(--ring);background:#fff}
+    .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
+
+    /* Dark */
+    @media (prefers-color-scheme: dark){
+      :root{--surface:#0a0f1a;--card:#0b1220;--ring:#1f2937;--text:#e5e7eb;--muted:#9ca3af}
+      .navbar,footer{background:#0c1220;border-color:var(--ring)}
+      .card,.member-card{background:#0f172a;border-color:var(--ring)}
+      .nav-links a:hover,.nav-links a[aria-current="page"]{background:#0f172a}
+      .lang-toggle,.menu-toggle{background:transparent;color:var(--text)}
+      .member-card img{background:#0b1220}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+    }
+  </style>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCS6PYK04X"></script>
+  <script src="/assets/analytics.js"></script>
   <link rel="stylesheet" href="/assets/pagination.css">
   <link rel="stylesheet" href="/assets/advanced-filters.css">
   <link rel="stylesheet" href="/assets/feedback.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
-  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
-
-  <!-- Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCS6PYK04X"></script>
-  <script src="/assets/analytics.js"></script>
+    <link rel="stylesheet" href="assets/enhanced-navbar.css">
 </head>
-
 <body>
+  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
-<!-- Skip links -->
-<a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-<a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
+  <!-- NAVBAR -->
+  <link rel="stylesheet" href="/assets/feedback.css">
+  <link rel="alternate" type="application/rss+xml" title="أخبار مجلس طلاب خطوة" href="/feed.xml">
+  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
+  <script src="/assets/khotwa-api.js?v=1766975537"></script>
+  <link rel="stylesheet" href="/assets/design-system.css">
+  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
+  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
+</head>
+<body>
+  <!-- Skip link (لغتين) -->
+  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
-<!-- NAVBAR (كما هو) -->
-<nav class="navbar" aria-label="الشريط العلوي">
-  <div class="container nav-inner">
-    <a class="brand" href="/index.html">
-      <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40">
-      <span data-lang="ar">مجلس طلاب خطوة</span>
-      <span data-lang="en" hidden>Khotwa Student Council</span>
-    </a>
+  <!-- Navbar -->
+<!-- Navbar -->
+  <nav class="navbar" aria-label="الشريط العلوي">
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40" decoding="async" loading="lazy">
+        <span data-lang="ar">مجلس طلاب خطوة</span>
+        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
+      </a>
 
-    <button id="menu-toggle" class="menu-toggle" type="button"
-            aria-controls="primary-nav" aria-expanded="false">
-      ☰
-    </button>
-
-    <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-      <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
-      <a href="/about.html" aria-current="page"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
-      <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-
-      <button class="lang-toggle" id="lang-toggle" type="button">
-        <span data-lang="ar">English</span>
-        <span data-lang="en" hidden>عربي</span>
+      <button id="menu-toggle" class="menu-toggle" type="button"
+              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
       </button>
+
+      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
+        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden aria-hidden="true">Home</span></a>
+        
+        <!-- Mega Menu: البرامج -->
+        <div class="nav-item-mega" data-mega="programs">
+          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-programs">
+            <span data-lang="ar">البرامج</span>
+            <span data-lang="en" hidden aria-hidden="true">Programs</span>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </button>
+          <div class="mega-menu" id="mega-programs" hidden>
+            <div class="mega-menu-inner">
+              <div class="mega-column">
+                <h3 data-lang="ar">الأخبار والفعاليات</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">News & Events</h3>
+                <a href="/news.html"><span data-lang="ar">📰 الأخبار</span><span data-lang="en" hidden aria-hidden="true">📰 News</span></a>
+                <a href="/events.html"><span data-lang="ar">📅 الفعاليات</span><span data-lang="en" hidden aria-hidden="true">📅 Events</span></a>
+                <a href="/calendar.html"><span data-lang="ar">🗓️ التقويم</span><span data-lang="en" hidden aria-hidden="true">🗓️ Calendar</span></a>
+              </div>
+              <div class="mega-column">
+                <h3 data-lang="ar">التطوير والتدريب</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">Development & Training</h3>
+                <a href="/courses.html"><span data-lang="ar">🎓 الدورات والورش</span><span data-lang="en" hidden aria-hidden="true">🎓 Courses & Workshops</span></a>
+                <a href="/volunteers.html"><span data-lang="ar">❤️ الفرص التطوعية</span><span data-lang="en" hidden aria-hidden="true">❤️ Volunteer Opportunities</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mega Menu: عن المجلس -->
+        <div class="nav-item-mega" data-mega="council">
+          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-council">
+            <span data-lang="ar">عن المجلس</span>
+            <span data-lang="en" hidden aria-hidden="true">About Council</span>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </button>
+          <div class="mega-menu" id="mega-council" hidden>
+            <div class="mega-menu-inner">
+              <div class="mega-column">
+                <h3 data-lang="ar">معلومات عنا</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">About Us</h3>
+                <a href="/about.html"><span data-lang="ar">👥 من نحن</span><span data-lang="en" hidden aria-hidden="true">👥 About Us</span></a>
+                <a href="/gallery.html"><span data-lang="ar">📸 معرض الصور</span><span data-lang="en" hidden aria-hidden="true">📸 Gallery</span></a>
+                <a href="/faq.html"><span data-lang="ar">❓ الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">❓ FAQ</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        
+        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="تغيير اللغة">
+          <span data-lang="ar">English</span><span data-lang="en" hidden aria-hidden="true">عربي</span>
+        </button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 <main class="container" id="main">
+    <!-- Header -->
+    <section>
+      <div class="section-head">
+        <h1 data-lang="ar">من نحن</h1>
+        <h1 data-lang="en" hidden aria-hidden="true">About Us</h1>
+      </div>
+      <p class="muted" data-lang="ar">مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن.</p>
+      <p class="muted" data-lang="en" hidden aria-hidden="true">The Khotwa Student Council represents students of the Khotwa program at La Trobe University – Melbourne.</p>
 
-<section>
-  <div class="section-head">
-    <h1 data-lang="ar">من نحن</h1>
-    <h1 data-lang="en" hidden>About Us</h1>
-  </div>
+      <!-- Cards -->
+      <div class="grid grid-2" style="margin-top:1rem">
+        <article class="card"><h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden aria-hidden="true">Vision</h3><p data-lang="ar">مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده.</p><p data-lang="en" hidden aria-hidden="true">A supportive and proactive student community contributing to members’ success.</p></article>
+        <article class="card"><h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden aria-hidden="true">Mission</h3><p data-lang="ar">توفير فرص وأنشطة وخدمات تعزز تجربة الطالب.</p><p data-lang="en" hidden aria-hidden="true">Providing opportunities, activities, and services that enhance the student experience.</p></article>
+        <article class="card"><h3 data-lang="ar">القيم</h3><h3 data-lang="en" hidden aria-hidden="true">Values</h3><p data-lang="ar">العمل الجماعي، الشفافية، التطوع، الابتكار، المسؤولية.</p><p data-lang="en" hidden aria-hidden="true">Teamwork, transparency, volunteering, innovation, and responsibility.</p></article>
+        <article class="card"><h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden aria-hidden="true">Structure</h3><p data-lang="ar">رئيس ونائب رئيس، قادة فرق (الفعاليات، الإعلام، العلاقات)، ومنسقون.</p><p data-lang="en" hidden aria-hidden="true">President, Vice President, team leaders (events, media, relations), and coordinators.</p></article>
+      </div>
+    </section>
 
-  <p class="muted" data-lang="ar">
-    مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن.
-  </p>
-  <p class="muted" data-lang="en" hidden>
-    The Khotwa Student Council represents students of the Khotwa program at La Trobe University – Melbourne.
-  </p>
+    <!-- Members -->
+    <section>
+      <div class="section-head">
+        <h2 data-lang="ar">أعضاء المجلس</h2>
+        <h2 data-lang="en" hidden aria-hidden="true">Council Members</h2>
+      </div>
 
-  <div class="grid grid-2" style="margin-top:1rem">
+      <!-- Council Members will be loaded dynamically from Backend -->
+      <div class="members" id="council-members-container">
+        <!-- Loading... -->
+      </div>
+    </section>
+  </main>
 
-    <article class="card" data-section="vision">
-      <h3 data-lang="ar">الرؤية</h3>
-      <h3 data-lang="en" hidden>Vision</h3>
-      <p data-lang="ar">مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده.</p>
-      <p data-lang="en" hidden>A supportive and proactive student community contributing to members’ success.</p>
-    </article>
+  <footer aria-label="تذييل الموقع">
+    <div class="container foot">
+      <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
+      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
+  </footer>
 
-    <article class="card" data-section="mission">
-      <h3 data-lang="ar">الرسالة</h3>
-      <h3 data-lang="en" hidden>Mission</h3>
-      <p data-lang="ar">توفير فرص وأنشطة وخدمات تعزز تجربة الطالب.</p>
-      <p data-lang="en" hidden>Providing opportunities, activities, and services that enhance the student experience.</p>
-    </article>
-
-    <article class="card">
-      <h3 data-lang="ar">القيم</h3>
-      <h3 data-lang="en" hidden>Values</h3>
-      <p data-lang="ar">العمل الجماعي، الشفافية، التطوع، الابتكار، المسؤولية.</p>
-      <p data-lang="en" hidden>Teamwork, transparency, volunteering, innovation, responsibility.</p>
-    </article>
-
-    <article class="card" data-section="organization">
-      <h3 data-lang="ar">التنظيم</h3>
-      <h3 data-lang="en" hidden>Structure</h3>
-      <p data-lang="ar">
-        رئيس ونائب رئيس، قادة فرق (الفعاليات، الإعلام، العلاقات)، ومنسقون.
-      </p>
-      <p data-lang="en" hidden>
-        President, Vice President, team leaders (events, media, relations), and coordinators.
-      </p>
-    </article>
-
-  </div>
-</section>
-
-<section>
-  <div class="section-head">
-    <h2 data-lang="ar">أعضاء المجلس</h2>
-    <h2 data-lang="en" hidden>Council Members</h2>
-  </div>
-
-  <div class="members" id="council-members-container">
-    <!-- Loaded from backend -->
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <div class="container foot">
-    <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-    <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener">Instagram</a>
-  </div>
-</footer>
-
+  <!-- JS: منيو + اللغة + فfallback صور + سنة الحقوق -->
 <script>
-  const y = document.getElementById('year');
-  if (y) y.textContent = new Date().getFullYear();
+// Mega Menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const megaItems = document.querySelectorAll('.nav-item-mega');
+  
+  megaItems.forEach(item => {
+    const button = item.querySelector('.nav-link-mega');
+    const menu = item.querySelector('.mega-menu');
+    
+    if (!button || !menu) return;
+    
+    // Desktop: hover
+    item.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 980) {
+        menu.hidden = false;
+        button.setAttribute('aria-expanded', 'true');
+      }
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      if (window.innerWidth > 980) {
+        menu.hidden = true;
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    // Mobile: click
+    button.addEventListener('click', (e) => {
+      if (window.innerWidth <= 980) {
+        e.preventDefault();
+        const isOpen = !menu.hidden;
+        menu.hidden = isOpen;
+        button.setAttribute('aria-expanded', !isOpen);
+      }
+    });
+  });
+  
+  // Close all menus on resize
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.mega-menu').forEach(menu => {
+      menu.hidden = true;
+    });
+    document.querySelectorAll('.nav-link-mega').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+});
 </script>
+    // سنة الحقوق (مع تحقّق)
+    (function(){
+      const y=document.getElementById('year');
+      if(y) y.textContent = new Date().getFullYear();
+    })();
 
-<!-- JS كما هو -->
-<script src="js/config.js"></script>
-<script src="js/settings-loader.js"></script>
-<script src="/js/about-loader.js"></script>
-<script src="/js/language-toggle.js"></script>
+    // منيو (وصولية + توافق مع الميديا كويري)
+    (function(){
+      const menuBtn = document.getElementById('menu-toggle');
+      const primaryNav = document.getElementById('primary-nav');
+      if(!menuBtn || !primaryNav) return;
+
+      const mq = window.matchMedia('(min-width:901px)');
+
+      function setMenu(open){
+        primaryNav.setAttribute('data-open', String(open));
+        menuBtn.setAttribute('aria-expanded', String(open));
+        primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
+        if(open){
+          const focusable = primaryNav.querySelector('a,button');
+          (focusable || menuBtn).focus();
+        }
+      }
+      function initMenu(){
+        setMenu(false);
+        primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
+      }
+      initMenu();
+
+      menuBtn.addEventListener('click', ()=> setMenu(primaryNav.getAttribute('data-open')!=='true'));
+
+      mq.addEventListener('change', (e)=>{
+        setMenu(false);
+        primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
+      });
+
+      document.addEventListener('click', (e)=>{
+        const open = primaryNav.getAttribute('data-open')==='true';
+        const t = e.target;
+        if(!open) return;
+        if(t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)){
+          setMenu(false);
+        }
+      });
+
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
+
+      // إغلاق عند اختيار رابط
+      primaryNav.addEventListener('click', (e)=>{
+        const link = (e.target instanceof Element) ? e.target.closest('a') : null;
+        if(link) setMenu(false);
+      });
+    })();
+
+    // اللغة مع حفظ التفضيل + سمات aria-hidden
+    (function(){
+      const toggleBtn = document.getElementById('lang-toggle');
+      if(!toggleBtn) return;
+
+      function isEn(){ return localStorage.getItem('khotwa_lang')==='en'; }
+
+      function setLang(lang){ // 'ar' | 'en'
+        document.querySelectorAll('[data-lang]').forEach(el=>{
+          const want = el.getAttribute('data-lang')===lang;
+          el.hidden = !want;
+          el.setAttribute('aria-hidden', String(!want));
+        });
+        document.documentElement.lang = (lang==='ar')?'ar':'en';
+        document.documentElement.dir  = (lang==='ar')?'rtl':'ltr';
+        toggleBtn.textContent = (lang==='ar')?'English':'العربية';
+        toggleBtn.setAttribute('aria-pressed', String(lang!=='ar'));
+        localStorage.setItem('khotwa_lang', lang);
+      }
+
+      setLang(isEn() ? 'en' : 'ar');
+      toggleBtn.addEventListener('click', ()=> setLang(isEn() ? 'ar' : 'en'));
+    })();
+
+    // Fallback تلقائي للصور الخارجية (DNS/حجب)
+    (function(){
+      const FALLBACK = '/assets/apple-touch-icon.png';
+      document.querySelectorAll('.member-card img').forEach(img=>{
+        img.addEventListener('error', ()=>{
+          const absoluteFallback = new URL(FALLBACK, location.origin).href;
+          if(img.src !== absoluteFallback){ img.src = absoluteFallback; }
+        }, { once:true });
+      });
+    })();
+  </script>
+
+  
+  <!-- الميزات المحسّنة -->
+  <link rel="stylesheet" href="/assets/features.css">
+  <script src="/assets/features.js" defer></script>
+  <script src="/assets/pagination.js"></script>
+  <script src="/assets/advanced-filters.js"></script>
+  <script src="/assets/feedback.js"></script>
+  <script src="/assets/newsletter.js"></script>
+  <script src="/assets/form-validation.js"></script>
+  <script src="/assets/admin-button.js"></script>
+  <script src="/assets/feedback-button.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/settings-loader.js"></script>
+    <script src="/js/about-loader.js"></script>
+    <script src="/js/language-toggle.js"></script>
 <script src="js/menu-toggle.js"></script>
-<script src="/assets/site-settings-loader.js"></script>
-
+  <script src="/assets/site-settings-loader.js"></script>
 </body>
 </html>
