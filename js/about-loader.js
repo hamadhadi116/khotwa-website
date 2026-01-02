@@ -1,102 +1,120 @@
 /**
- * About Page Loader
+ * About Page Loader (FIXED & SAFE)
  * Loads "About Us" content and Council Members from Backend API
+ * Compatible with language-toggle.js
  */
 
-// Get Backend URL from config
-const BACKEND_URL = window.KHOTWA_CONFIG?.BACKEND_URL || 'https://khotwabknd-gj8oeubw.manus.space';
+(function () {
+  'use strict';
 
-// Load About Content
-async function loadAboutContent() {
-  try {
-    const response = await fetch(`${BACKEND_URL}/api/trpc/about.get`);
-    const data = await response.json();
-    
-    if (data.result && data.result.data) {
-      const content = data.result.data;
-      const currentLang = localStorage.getItem('language') || 'ar';
-      
-      // Update Vision
-      const visionCard = document.querySelector('.card:has(h3:contains("الرؤية"))');
-      if (visionCard) {
-        const p = visionCard.querySelector('p');
-        if (p) {
-          p.textContent = currentLang === 'ar' ? content.visionAr : content.visionEn;
-        }
-      }
-      
-      // Update Mission
-      const missionCard = document.querySelector('.card:has(h3:contains("الرسالة"))');
-      if (missionCard) {
-        const p = missionCard.querySelector('p');
-        if (p) {
-          p.textContent = currentLang === 'ar' ? content.missionAr : content.missionEn;
-        }
-      }
-      
-      // Update Goals
-      const goalsCard = document.querySelector('.card:has(h3:contains("الأهداف"))');
-      if (goalsCard) {
-        const p = goalsCard.querySelector('p');
-        if (p) {
-          p.textContent = currentLang === 'ar' ? content.goalsAr : content.goalsEn;
-        }
-      }
-      
-      // Update Organization
-      const orgCard = document.querySelector('.card:has(h3:contains("التنظيم"))');
-      if (orgCard) {
-        const p = orgCard.querySelector('p');
-        if (p) {
-          p.textContent = currentLang === 'ar' ? content.organizationAr : content.organizationEn;
-        }
-      }
-    }
-  } catch (error) {
-    console.error('Failed to load about content:', error);
+  // Backend URL (same as before)
+  const BACKEND_URL =
+    window.KHOTWA_CONFIG?.BACKEND_URL ||
+    'https://khotwabknd-gj8oeubw.manus.space';
+
+  // Get current language
+  function getCurrentLanguage() {
+    return localStorage.getItem('language') || 'ar';
   }
-}
 
-// Load Council Members
-async function loadCouncilMembers() {
-  try {
-    const response = await fetch(`${BACKEND_URL}/api/trpc/councilMembers.list`);
-    const data = await response.json();
-    
-    if (data.result && data.result.data) {
-      const members = data.result.data.json || data.result.data;
-      const currentLang = localStorage.getItem('language') || 'ar';
-      const membersContainer = document.getElementById('council-members-container');
-      
-      if (membersContainer && members.length > 0) {
-        membersContainer.innerHTML = members.map(member => `
+  /* ==============================
+     Load About Content
+  ============================== */
+  async function loadAboutContent() {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/trpc/about.get`);
+      if (!response.ok) throw new Error('About API failed');
+
+      const json = await response.json();
+      const content = json?.result?.data;
+      if (!content) return;
+
+      const lang = getCurrentLanguage();
+
+      const sections = {
+        vision: ['visionAr', 'visionEn'],
+        mission: ['missionAr', 'missionEn'],
+        goals: ['goalsAr', 'goalsEn'],
+        organization: ['organizationAr', 'organizationEn'],
+      };
+
+      Object.keys(sections).forEach((key) => {
+        const p = document.querySelector(
+          `[data-section="${key}"] p`
+        );
+        if (!p) return;
+
+        p.textContent =
+          lang === 'ar'
+            ? content[sections[key][0]]
+            : content[sections[key][1]];
+      });
+    } catch (error) {
+      console.error('[About Loader] Failed to load content:', error);
+    }
+  }
+
+  /* ==============================
+     Load Council Members
+  ============================== */
+  async function loadCouncilMembers() {
+    try {
+      const response = await fetch(
+        `${BACKEND_URL}/api/trpc/councilMembers.list`
+      );
+      if (!response.ok) throw new Error('Members API failed');
+
+      const json = await response.json();
+      const members =
+        json?.result?.data?.json || json?.result?.data || [];
+
+      if (!Array.isArray(members)) return;
+
+      const container = document.getElementById(
+        'council-members-container'
+      );
+      if (!container) return;
+
+      const lang = getCurrentLanguage();
+
+      container.innerHTML = members
+        .map(
+          (member) => `
           <div class="member-card">
-            <img src="${member.photoUrl || '/assets/apple-touch-icon.png'}" 
-                 alt="${currentLang === 'ar' ? member.nameAr : member.nameEn}" 
-                 width="360" height="240"
-                 loading="lazy" decoding="async" referrerpolicy="no-referrer">
-            <h3 data-lang="ar">${member.nameAr}</h3>
-            <h3 data-lang="en" hidden aria-hidden="true">${member.nameEn}</h3>
-            <p class="muted" data-lang="ar">${member.positionAr}</p>
-            <p class="muted" data-lang="en" hidden aria-hidden="true">${member.positionEn}</p>
+            <img
+              src="${member.photoUrl || '/assets/apple-touch-icon.png'}"
+              alt="${lang === 'ar' ? member.nameAr : member.nameEn}"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3>${lang === 'ar' ? member.nameAr : member.nameEn}</h3>
+            <p class="muted">
+              ${lang === 'ar' ? member.positionAr : member.positionEn}
+            </p>
           </div>
-        `).join('');
-      }
+        `
+        )
+        .join('');
+    } catch (error) {
+      console.error('[About Loader] Failed to load members:', error);
     }
-  } catch (error) {
-    console.error('Failed to load council members:', error);
   }
-}
 
-// Initialize
-function initAboutPage() {
-  loadAboutContent();
-  loadCouncilMembers();
-}
+  /* ==============================
+     Init + Language Sync
+  ============================== */
+  function initAboutPage() {
+    loadAboutContent();
+    loadCouncilMembers();
+  }
 
-// Load on DOM ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAboutPage);
-} else {
-  initAboutPage();
-}
+  // Initial load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAboutPage);
+  } else {
+    initAboutPage();
+  }
+
+  // Re-run when language changes
+  window.addEventListener('language:changed', initAboutPage);
+})();
