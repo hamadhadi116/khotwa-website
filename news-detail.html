@@ -3,133 +3,138 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>تفاصيل الخبر – مجلس طلاب خطوة</title>
-  
+  <title>الأخبار – مجلس طلاب خطوة</title>
+
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
+
   <script src="/assets/khotwa-api.js"></script>
 
   <style>
-    .article-container { max-width: 900px; margin: 4rem auto; padding: 0 1.5rem; }
+    :root { --primary: #1e40af; }
     
-    .back-link { 
-      display: inline-flex; 
-      align-items: center; 
-      gap: 8px; 
-      text-decoration: none; 
-      color: var(--muted); 
-      margin-bottom: 2rem;
-      font-weight: 600;
-    }
+    /* الحفاظ على تنسيقاتك الأصلية التي تضمن ظهور الأخبار */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px 0; }
+    .news-card { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; cursor: pointer; }
+    .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .news-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+    .news-content { padding: 15px; }
+    .news-date { font-size: 0.8rem; color: #888; display: block; margin-bottom: 5px; }
+    .news-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; color: #333; }
+    .read-more { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+    
+    .tools { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+    .search-input { padding: 10px; border-radius: 8px; border: 1px solid #ddd; flex: 1; min-width: 200px; }
+    .chip { padding: 8px 18px; border-radius: 20px; border: 1px solid #ddd; background: #fff; cursor: pointer; }
+    .chip.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    .article-header { margin-bottom: 3rem; }
-    .article-category { 
-      background: var(--primary); 
-      color: white; 
-      padding: 5px 15px; 
-      border-radius: 50px; 
-      font-size: 0.85rem; 
-      margin-bottom: 1rem; 
-      display: inline-block;
-    }
-    .article-title { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.2; margin-bottom: 1.5rem; color: #0f172a; }
-    .article-meta { color: #64748b; font-size: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 2rem; }
-
-    .article-hero-image { 
-      width: 100%; 
-      border-radius: 24px; 
-      margin-bottom: 3rem; 
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      aspect-ratio: 16/9;
-      object-fit: cover;
-    }
-
-    .article-content { 
-      font-size: 1.25rem; 
-      line-height: 2; 
-      color: #334155; 
-    }
-    .article-content p { margin-bottom: 2rem; }
-
-    .share-box {
-      background: #f8fafc;
-      padding: 2rem;
-      border-radius: 20px;
-      margin-top: 4rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
+    /* تنسيق الناف بار المحدث */
+    .navbar { position: sticky; top: 0; z-index: 9999; background: white; border-bottom: 1px solid #e2e8f0; }
   </style>
 </head>
 <body>
 
 <nav class="navbar">
   <div class="container nav-inner" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
-    <a href="/index.html" class="brand">
+    <a href="/index.html" class="brand" style="display: flex; align-items: center; gap: 10px;">
       <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40">
       <span>مجلس طلاب خطوة</span>
     </a>
+
     <div class="nav-links">
       <a href="/index.html">الرئيسية</a>
-      <a href="/news.html">الأخبار</a>
+      <a href="/news.html" class="active" style="font-weight: bold; color: var(--primary);">الأخبار</a>
+      <a href="/events.html">الفعاليات</a>
+      <a href="/about.html">عن المجلس</a>
       <a href="/contact.html">اتصل بنا</a>
     </div>
   </div>
 </nav>
 
-<main class="article-container" id="news-container">
-  <div style="text-align: center; padding: 5rem;">جاري تحميل تفاصيل الخبر...</div>
+<main class="container" id="main" style="margin-top: 40px;">
+  <section class="section-header">
+    <h1>الأخبار</h1>
+    <p class="muted">كل جديد عن مجلس طلاب خطوة</p>
+
+    <div class="tools">
+      <input type="search" id="q" class="search-input" placeholder="ابحث في الأخبار...">
+      <button class="chip active" data-filter="all">الكل</button>
+      <button class="chip" data-filter="ann">إعلانات</button>
+      <button class="chip" data-filter="event">فعاليات</button>
+      <button class="chip" data-filter="media">تغطيات</button>
+    </div>
+  </section>
+
+  <div class="grid" id="posts">
+    <div style="text-align: center; grid-column: 1/-1; padding: 3rem;">جاري جلب الأخبار من السيرفر...</div>
+  </div>
 </main>
 
+<footer style="background: #ffffff; border-top: 1px solid #e2e8f0; padding: 3rem 0; margin-top: 5rem; text-align: center;">
+  <div class="container">
+    <strong style="display: block; margin-bottom: 10px;">مجلس طلاب خطوة</strong>
+    <p style="font-size: 0.9rem; color: #64748b;">© <span id="year"></span> | ملبورن، أستراليا</p>
+    <div style="margin-top: 15px;">
+      <a href="https://instagram.com/khotwa.sc" target="_blank" style="color: #e1306c; text-decoration: none; font-weight: bold;">Instagram</a>
+    </div>
+  </div>
+</footer>
+
 <script>
-  async function loadDetail() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    const container = document.getElementById('news-container');
+  // كود البرمجة الأصلي الخاص بك (لضمان اشتغال البيانات)
+  let currentCategory = 'all';
+  let searchQuery = '';
+
+  async function loadNews() {
+    const container = document.getElementById('posts');
+    if (!container) return;
 
     try {
-      const allNews = await KhotwaAPI.getNews();
-      const news = allNews.find(n => n.id == id);
-
-      if (!news) {
-        container.innerHTML = "<h2>الخبر غير موجود</h2>";
+      // مناداة الـ API الخاص بك
+      const news = await KhotwaAPI.searchNews(searchQuery, currentCategory !== 'all' ? currentCategory : null);
+      
+      if (!news || news.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">لا توجد أخبار حالياً.</p>';
         return;
       }
 
-      container.innerHTML = `
-        <a href="/news.html" class="back-link">← العودة للأخبار</a>
-        
-        <header class="article-header">
-          <span class="article-category">${news.category || 'عام'}</span>
-          <h1 class="article-title">${news.titleAr}</h1>
-          <div class="article-meta">نُشر في: ${new Date(news.createdAt).toLocaleDateString('ar-EG')}</div>
-        </header>
-
-        ${news.imageUrl ? `<img src="${news.imageUrl}" class="article-hero-image">` : ''}
-
-        <div class="article-content">
-          ${news.contentAr.split('\n').map(p => `<p>${p}</p>`).join('')}
-        </div>
-
-        <div class="share-box">
-          <strong>شارك هذا الخبر:</strong>
-          <div style="display: flex; gap: 10px;">
-             <a href="https://wa.me/?text=${encodeURIComponent(news.titleAr + ' ' + window.location.href)}" target="_blank">WhatsApp</a>
-             <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(news.titleAr)}&url=${encodeURIComponent(window.location.href)}" target="_blank">Twitter</a>
+      container.innerHTML = news.map(item => `
+        <article class="news-card" onclick="location.href='/news-detail.html?id=${item.id}'">
+          <img src="${item.imageUrl || '/assets/apple-touch-icon.png'}" alt="${item.titleAr}" onerror="this.src='/assets/apple-touch-icon.png'">
+          <div class="news-content">
+            <span class="news-date">${new Date(item.createdAt).toLocaleDateString('ar-EG')}</span>
+            <h3 class="news-title">${item.titleAr}</h3>
+            <a href="/news-detail.html?id=${item.id}" class="read-more">اقرأ المزيد ←</a>
           </div>
-        </div>
-      `;
-    } catch (e) {
-      container.innerHTML = "<h2>حدث خطأ أثناء تحميل الخبر</h2>";
+        </article>
+      `).join('');
+    } catch (err) {
+      container.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">تعذر تحميل الأخبار. تأكد من أن ملف khotwa-api.js يعمل بشكل صحيح.</p>';
+      console.error(err);
     }
   }
-  loadDetail();
+
+  // مستمعات الأحداث (Events)
+  document.getElementById('q').addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    loadNews();
+  });
+
+  document.querySelectorAll('.chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCategory = btn.dataset.filter;
+      loadNews();
+    });
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.addEventListener('DOMContentLoaded', loadNews);
 </script>
 
+<script src="/js/menu-toggle.js"></script>
 </body>
 </html>
