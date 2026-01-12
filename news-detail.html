@@ -3,410 +3,133 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>تفاصيل الخبر – Khotwa</title>
-
-  <meta name="keywords" content="أخبار خطوة, إعلانات المجلس, فعاليات خطوة, أخبار الطلاب, جامعة لا تروب, ملبورن">
-  <meta name="description" content="تفاصيل الخبر من مجلس طلاب خطوة.">
-  <link rel="canonical" href="https://khotwastudentcouncil.com/news-detail.html"/>
-  <meta name="robots" content="index,follow"/>
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-  <link rel="icon" href="/assets/favicon.ico">
-
-  <!-- Theme color -->
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
-
+  <title>تفاصيل الخبر – مجلس طلاب خطوة</title>
+  
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="stylesheet" href="/assets/feedback.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
-
-  <script src="/assets/khotwa-api.js?v=1766975537"></script>
-
-  <style>
-    .news-detail {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
-
-    .news-detail-header {
-      margin-bottom: 2rem;
-    }
-
-    .news-detail-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .news-detail-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      color: #64748b;
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
-    }
-
-    .news-detail-meta span {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .news-detail-category {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: white;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .news-detail-image {
-      width: 100%;
-      height: auto;
-      max-height: 500px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .news-detail-content {
-      font-size: 1.125rem;
-      line-height: 1.8;
-      color: #1e293b;
-      margin-bottom: 3rem;
-    }
-
-    .news-detail-content p {
-      margin-bottom: 1.5rem;
-    }
-
-    .back-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      background: #f1f5f9;
-      color: #475569;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      margin-bottom: 2rem;
-    }
-
-    .back-button:hover {
-      background: #e2e8f0;
-      transform: translateX(5px);
-    }
-
-    .share-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid #e2e8f0;
-    }
-
-    .share-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      border: none;
-      cursor: pointer;
-    }
-
-    .share-btn-twitter {
-      background: #1da1f2;
-      color: white;
-    }
-
-    .share-btn-facebook {
-      background: #1877f2;
-      color: white;
-    }
-
-    .share-btn-whatsapp {
-      background: #25d366;
-      color: white;
-    }
-
-    .share-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .loading {
-      text-align: center;
-      padding: 4rem 1rem;
-      color: #64748b;
-    }
-
-    .error {
-      text-align: center;
-      padding: 4rem 1rem;
-      color: #ef4444;
-    }
-
-    @media (max-width: 768px) {
-      .news-detail-title {
-        font-size: 2rem;
-      }
-
-      .news-detail-content {
-        font-size: 1rem;
-      }
-
-      .share-buttons {
-        flex-direction: column;
-      }
-
-      .share-btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
-    <link rel="stylesheet" href="assets/enhanced-navbar.css">
-</head>
+  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
+  <script src="/assets/khotwa-api.js"></script>
 
+  <style>
+    .article-container { max-width: 900px; margin: 4rem auto; padding: 0 1.5rem; }
+    
+    .back-link { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+      text-decoration: none; 
+      color: var(--muted); 
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .article-header { margin-bottom: 3rem; }
+    .article-category { 
+      background: var(--primary); 
+      color: white; 
+      padding: 5px 15px; 
+      border-radius: 50px; 
+      font-size: 0.85rem; 
+      margin-bottom: 1rem; 
+      display: inline-block;
+    }
+    .article-title { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.2; margin-bottom: 1.5rem; color: #0f172a; }
+    .article-meta { color: #64748b; font-size: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 2rem; }
+
+    .article-hero-image { 
+      width: 100%; 
+      border-radius: 24px; 
+      margin-bottom: 3rem; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+
+    .article-content { 
+      font-size: 1.25rem; 
+      line-height: 2; 
+      color: #334155; 
+    }
+    .article-content p { margin-bottom: 2rem; }
+
+    .share-box {
+      background: #f8fafc;
+      padding: 2rem;
+      border-radius: 20px;
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+  </style>
+</head>
 <body>
 
-<!-- Navbar -->
-  <!-- Navbar -->
-  <nav class="navbar" aria-label="الشريط العلوي">
-    <div class="container nav-inner">
-      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40" decoding="async" loading="lazy">
-        <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
-      </a>
-
-      <button id="menu-toggle" class="menu-toggle" type="button"
-              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
-      </button>
-
-      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden aria-hidden="true">Home</span></a>
-        
-        <!-- Mega Menu: البرامج -->
-        <div class="nav-item-mega" data-mega="programs">
-          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-programs">
-            <span data-lang="ar">البرامج</span>
-            <span data-lang="en" hidden aria-hidden="true">Programs</span>
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </button>
-          <div class="mega-menu" id="mega-programs" hidden>
-            <div class="mega-menu-inner">
-              <div class="mega-column">
-                <h3 data-lang="ar">الأخبار والفعاليات</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">News & Events</h3>
-                <a href="/news.html"><span data-lang="ar">📰 الأخبار</span><span data-lang="en" hidden aria-hidden="true">📰 News</span></a>
-                <a href="/events.html"><span data-lang="ar">📅 الفعاليات</span><span data-lang="en" hidden aria-hidden="true">📅 Events</span></a>
-                <a href="/calendar.html"><span data-lang="ar">🗓️ التقويم</span><span data-lang="en" hidden aria-hidden="true">🗓️ Calendar</span></a>
-              </div>
-              <div class="mega-column">
-                <h3 data-lang="ar">التطوير والتدريب</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">Development & Training</h3>
-                <a href="/courses.html"><span data-lang="ar">🎓 الدورات والورش</span><span data-lang="en" hidden aria-hidden="true">🎓 Courses & Workshops</span></a>
-                <a href="/volunteers.html"><span data-lang="ar">❤️ الفرص التطوعية</span><span data-lang="en" hidden aria-hidden="true">❤️ Volunteer Opportunities</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Mega Menu: عن المجلس -->
-        <div class="nav-item-mega" data-mega="council">
-          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-council">
-            <span data-lang="ar">عن المجلس</span>
-            <span data-lang="en" hidden aria-hidden="true">About Council</span>
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </button>
-          <div class="mega-menu" id="mega-council" hidden>
-            <div class="mega-menu-inner">
-              <div class="mega-column">
-                <h3 data-lang="ar">معلومات عنا</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">About Us</h3>
-                <a href="/about.html"><span data-lang="ar">👥 من نحن</span><span data-lang="en" hidden aria-hidden="true">👥 About Us</span></a>
-                <a href="/gallery.html"><span data-lang="ar">📸 معرض الصور</span><span data-lang="en" hidden aria-hidden="true">📸 Gallery</span></a>
-                <a href="/faq.html"><span data-lang="ar">❓ الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">❓ FAQ</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
-        
-        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="تغيير اللغة">
-          <span data-lang="ar">English</span><span data-lang="en" hidden aria-hidden="true">عربي</span>
-        </button>
-      </div>
+<nav class="navbar">
+  <div class="container nav-inner" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+    <a href="/index.html" class="brand">
+      <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40">
+      <span>مجلس طلاب خطوة</span>
+    </a>
+    <div class="nav-links">
+      <a href="/index.html">الرئيسية</a>
+      <a href="/news.html">الأخبار</a>
+      <a href="/contact.html">اتصل بنا</a>
     </div>
-  </nav>
-
-<main class="container" id="main">
-  <div id="news-container" class="loading">
-    <p>جارٍ تحميل الخبر...</p>
   </div>
+</nav>
+
+<main class="article-container" id="news-container">
+  <div style="text-align: center; padding: 5rem;">جاري تحميل تفاصيل الخبر...</div>
 </main>
 
-<footer>
-  <div class="container foot">
-    <span>© <span id="year"></span> Khotwa Student Council</span>
-    <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
-  </div>
-</footer>
-
 <script>
-(function() {
-  'use strict';
+  async function loadDetail() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    const container = document.getElementById('news-container');
 
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Get news ID from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const newsId = urlParams.get('id');
-
-  if (!newsId) {
-    document.getElementById('news-container').innerHTML = `
-      <div class="error">
-        <h2>خطأ</h2>
-        <p>لم يتم تحديد الخبر</p>
-        <a href="/news.html" class="back-button">← العودة للأخبار</a>
-      </div>
-    `;
-    return;
-  }
-
-  async function loadNewsDetail() {
     try {
       const allNews = await KhotwaAPI.getNews();
-      const news = allNews.find(n => n.id === parseInt(newsId));
+      const news = allNews.find(n => n.id == id);
 
       if (!news) {
-        throw new Error('News not found');
+        container.innerHTML = "<h2>الخبر غير موجود</h2>";
+        return;
       }
 
-      const container = document.getElementById('news-container');
-      const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
-      const isEn = langPref === 'en';
-
-      const title = isEn ? (news.titleEn || news.titleAr) : (news.titleAr || news.titleEn);
-      const content = isEn ? (news.contentEn || news.contentAr) : (news.contentAr || news.contentEn);
-      const category = news.category || '';
-      const createdAt = new Date(news.createdAt).toLocaleDateString('ar-EG', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-
-      const shareUrl = encodeURIComponent(window.location.href);
-      const shareTitle = encodeURIComponent(title);
-
       container.innerHTML = `
-        <div class="news-detail">
-          <a href="/news.html" class="back-button">← العودة للأخبار</a>
-          
-          <div class="news-detail-header">
-            <h1 class="news-detail-title">${escapeHtml(title)}</h1>
-            
-            <div class="news-detail-meta">
-              <span>📅 ${createdAt}</span>
-              ${category ? `<span class="news-detail-category">🏷️ ${escapeHtml(category)}</span>` : ''}
-            </div>
-          </div>
+        <a href="/news.html" class="back-link">← العودة للأخبار</a>
+        
+        <header class="article-header">
+          <span class="article-category">${news.category || 'عام'}</span>
+          <h1 class="article-title">${news.titleAr}</h1>
+          <div class="article-meta">نُشر في: ${new Date(news.createdAt).toLocaleDateString('ar-EG')}</div>
+        </header>
 
-          ${news.imageUrl ? `<img src="${escapeHtml(news.imageUrl)}" alt="${escapeHtml(title)}" class="news-detail-image">` : ''}
+        ${news.imageUrl ? `<img src="${news.imageUrl}" class="article-hero-image">` : ''}
 
-          <div class="news-detail-content">
-            ${escapeHtml(content).split('\\n').map(p => `<p>${p}</p>`).join('')}
-          </div>
+        <div class="article-content">
+          ${news.contentAr.split('\n').map(p => `<p>${p}</p>`).join('')}
+        </div>
 
-          <div class="share-buttons">
-            <a href="https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-twitter">
-              🐦 مشاركة على Twitter
-            </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-facebook">
-              📘 مشاركة على Facebook
-            </a>
-            <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener noreferrer" class="share-btn share-btn-whatsapp">
-              💬 مشاركة على WhatsApp
-            </a>
+        <div class="share-box">
+          <strong>شارك هذا الخبر:</strong>
+          <div style="display: flex; gap: 10px;">
+             <a href="https://wa.me/?text=${encodeURIComponent(news.titleAr + ' ' + window.location.href)}" target="_blank">WhatsApp</a>
+             <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(news.titleAr)}&url=${encodeURIComponent(window.location.href)}" target="_blank">Twitter</a>
           </div>
         </div>
       `;
-
-    } catch (error) {
-      console.error('Error loading news:', error);
-      document.getElementById('news-container').innerHTML = `
-        <div class="error">
-          <h2>خطأ</h2>
-          <p>تعذر تحميل الخبر</p>
-          <a href="/news.html" class="back-button">← العودة للأخبار</a>
-        </div>
-      `;
+    } catch (e) {
+      container.innerHTML = "<h2>حدث خطأ أثناء تحميل الخبر</h2>";
     }
   }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str || '';
-    return div.innerHTML;
-  }
-
-  loadNewsDetail();
-
-  // Menu toggle
-  const menuBtn = document.getElementById('menu-toggle');
-  const nav = document.getElementById('primary-nav');
-  
-  if (menuBtn && nav) {
-    menuBtn.addEventListener('click', () => {
-      const isOpen = nav.getAttribute('data-open') === 'true';
-      nav.setAttribute('data-open', String(!isOpen));
-      menuBtn.setAttribute('aria-expanded', String(!isOpen));
-      nav.setAttribute('aria-hidden', String(isOpen));
-    });
-  }
-
-  // Language toggle
-  const langToggle = document.getElementById('lang-toggle');
-  if (langToggle) {
-    langToggle.addEventListener('click', () => {
-      const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
-      const newLang = currentLang === 'ar' ? 'en' : 'ar';
-      localStorage.setItem('khotwa_lang', newLang);
-      location.reload();
-    });
-  }
-})();
+  loadDetail();
 </script>
 
-<script src="/assets/feedback-button.js"></script>
-<script src="/assets/admin-button.js"></script>
-
-    <script src="js/config.js"></script>
-    <script src="js/settings-loader.js"></script>
-    <script src="/js/language-toggle.js"></script>
-<script src="js/menu-toggle.js"></script>
-  <script src="/assets/site-settings-loader.js"></script>
 </body>
 </html>
