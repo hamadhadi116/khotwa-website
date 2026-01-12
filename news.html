@@ -5,117 +5,63 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الأخبار – Khotwa</title>
 
-  <meta name="keywords" content="أخبار خطوة, إعلانات المجلس, فعاليات خطوة, أخبار الطلاب, جامعة لا تروب, ملبورن">
+  <meta name="keywords" content="أخبار خطوة, إعلانات المجلس, فعاليات خطوة, أخبار الطلاب, ملبورن">
   <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/news.html"/>
-  <meta name="robots" content="index,follow"/>
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-  <link rel="icon" href="/assets/favicon.ico">
-
-  <!-- Theme color -->
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="stylesheet" href="/assets/pagination.css">
-  <link rel="stylesheet" href="/assets/advanced-filters.css">
-  <link rel="stylesheet" href="/assets/feedback.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
-
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="assets/enhanced-navbar.css">
-
-  <link rel="alternate" type="application/rss+xml" title="أخبار مجلس طلاب خطوة" href="/feed.xml">
+  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
 
   <script src="/assets/khotwa-api.js?v=1766975537"></script>
+
+  <style>
+    /* تحسينات بسيطة للتنسيق دون تغيير الهيكل */
+    .grid { display: grid; gap: 1.5rem; margin-top: 2rem; }
+    .grid-3 { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+    
+    .news-card {
+      background: var(--card-bg, #fff);
+      border: 1px solid var(--ring, #e2e8f0);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .news-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #f1f5f9; }
+    .news-card .body { padding: 1.25rem; flex-grow: 1; }
+    .news-card h3 { margin: 0 0 0.75rem; font-size: 1.15rem; line-height: 1.4; }
+    .news-card .meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; display: block; }
+    
+    .skeleton { height: 300px; background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 12px; }
+    @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    .tools { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin: 1.5rem 0; }
+    .chip { padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid var(--ring); background: transparent; cursor: pointer; }
+    .chip[data-active="true"] { background: var(--primary, #1e40af); color: #fff; border-color: var(--primary); }
+    
+    input[type="search"] { padding: 0.6rem 1rem; border-radius: 8px; border: 1px solid var(--ring); min-width: 250px; }
+  </style>
 </head>
 
 <body>
 
-<!-- Skip link (لغتين) -->
-<a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
+<a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
 <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
-<!-- Navbar -->
 <nav class="navbar" aria-label="الشريط العلوي">
   <div class="container nav-inner">
-    <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-      <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40" decoding="async" loading="lazy">
+    <a class="brand" href="/index.html">
+      <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40" height="40">
       <span data-lang="ar">مجلس طلاب خطوة</span>
       <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
     </a>
-
-    <button id="menu-toggle" class="menu-toggle" type="button"
-            aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
-    </button>
-
-    <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-      <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden aria-hidden="true">Home</span></a>
-      
-      <!-- Mega Menu: البرامج -->
-      <div class="nav-item-mega" data-mega="programs">
-        <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-programs">
-          <span data-lang="ar">البرامج</span>
-          <span data-lang="en" hidden aria-hidden="true">Programs</span>
-          <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-          </svg>
-        </button>
-        <div class="mega-menu" id="mega-programs" hidden>
-          <div class="mega-menu-inner">
-            <div class="mega-column">
-              <h3 data-lang="ar">الأخبار والفعاليات</h3>
-              <h3 data-lang="en" hidden aria-hidden="true">News & Events</h3>
-              <a href="/news.html"><span data-lang="ar">📰 الأخبار</span><span data-lang="en" hidden aria-hidden="true">📰 News</span></a>
-              <a href="/events.html"><span data-lang="ar">📅 الفعاليات</span><span data-lang="en" hidden aria-hidden="true">📅 Events</span></a>
-              <a href="/calendar.html"><span data-lang="ar">🗓️ التقويم</span><span data-lang="en" hidden aria-hidden="true">🗓️ Calendar</span></a>
-            </div>
-            <div class="mega-column">
-              <h3 data-lang="ar">التطوير والتدريب</h3>
-              <h3 data-lang="en" hidden aria-hidden="true">Development & Training</h3>
-              <a href="/courses.html"><span data-lang="ar">🎓 الدورات والورش</span><span data-lang="en" hidden aria-hidden="true">🎓 Courses & Workshops</span></a>
-              <a href="/volunteers.html"><span data-lang="ar">❤️ الفرص التطوعية</span><span data-lang="en" hidden aria-hidden="true">❤️ Volunteer Opportunities</span></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mega Menu: عن المجلس -->
-      <div class="nav-item-mega" data-mega="council">
-        <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-council">
-          <span data-lang="ar">عن المجلس</span>
-          <span data-lang="en" hidden aria-hidden="true">About Council</span>
-          <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-          </svg>
-        </button>
-        <div class="mega-menu" id="mega-council" hidden>
-          <div class="mega-menu-inner">
-            <div class="mega-column">
-              <h3 data-lang="ar">معلومات عنا</h3>
-              <h3 data-lang="en" hidden aria-hidden="true">About Us</h3>
-              <a href="/about.html"><span data-lang="ar">👥 من نحن</span><span data-lang="en" hidden aria-hidden="true">👥 About Us</span></a>
-              <a href="/gallery.html"><span data-lang="ar">📸 معرض الصور</span><span data-lang="en" hidden aria-hidden="true">📸 Gallery</span></a>
-              <a href="/faq.html"><span data-lang="ar">❓ الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">❓ FAQ</span></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
-      
-      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="تغيير اللغة">
-        <span data-lang="ar">English</span><span data-lang="en" hidden aria-hidden="true">عربي</span>
-      </button>
     </div>
-  </div>
 </nav>
 
 <main class="container" id="main">
@@ -127,7 +73,7 @@
   <p class="muted" data-lang="en" hidden aria-hidden="true">All the latest from Khotwa Student Council</p>
 
   <div class="tools">
-    <input id="q" type="search" data-lang-placeholder-ar="ابحث في الأخبار…" data-lang-placeholder-en="Search news…" placeholder="ابحث في الأخبار…">
+    <input id="q" type="search" placeholder="ابحث في الأخبار…">
 
     <button class="chip" data-filter="all" data-active="true">
       <span data-lang="ar">الكل</span>
@@ -165,18 +111,76 @@
 </footer>
 
 <script>
-// Mega Menu functionality
-// (باقي السكربت كما هو)
+  let currentCategory = 'all';
+  let searchQuery = '';
+
+  // دالة جلب الأخبار وعرضها
+  async function loadNews() {
+    const postsContainer = document.getElementById('posts');
+    const lang = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
+    
+    try {
+      // استدعاء الـ API المعدل
+      const news = await KhotwaAPI.searchNews(searchQuery, currentCategory !== 'all' ? currentCategory : null);
+      
+      if (!news || news.length === 0) {
+        postsContainer.innerHTML = `<p class="muted" style="grid-column: 1/-1; text-align: center;">${lang === 'ar' ? 'لا توجد أخبار حالياً.' : 'No news found.'}</p>`;
+        return;
+      }
+
+      postsContainer.innerHTML = news.map(item => {
+        const title = lang === 'en' ? (item.titleEn || item.titleAr) : (item.titleAr || item.titleEn);
+        const date = new Date(item.createdAt || item.date).toLocaleDateString(lang === 'en' ? 'en-AU' : 'ar-EG', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        });
+
+        return `
+          <article class="news-card" onclick="location.href='/news-detail.html?id=${item.id}'">
+            <img src="${item.imageUrl || '/assets/apple-touch-icon.png'}" 
+                 alt="${title}" 
+                 onerror="this.src='/assets/apple-touch-icon.png'">
+            <div class="body">
+              <span class="meta">${date}</span>
+              <h3>${title}</h3>
+              <span style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">
+                ${lang === 'ar' ? 'اقرأ المزيد ←' : 'Read More ←'}
+              </span>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+    } catch (err) {
+      postsContainer.innerHTML = '<p>Error loading news.</p>';
+    }
+  }
+
+  // التحكم بالبحث
+  document.getElementById('q').addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    loadNews();
+  });
+
+  // التحكم بالفلاتر (Chips)
+  document.querySelectorAll('.chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(b => b.dataset.active = 'false');
+      btn.dataset.active = 'true';
+      currentCategory = btn.dataset.filter;
+      loadNews();
+    });
+  });
+
+  // سنة الحقوق
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // تشغيل عند التحميل
+  window.addEventListener('DOMContentLoaded', loadNews);
 </script>
 
-<!-- باقي السكربتات كما في الأصل -->
 <script src="/assets/feedback.js"></script>
-<script src="/assets/admin-button.js"></script>
-<script src="/assets/feedback-button.js"></script>
-<script src="js/config.js"></script>
-<script src="js/settings-loader.js"></script>
-<script src="/js/language-toggle.js"></script>
 <script src="js/menu-toggle.js"></script>
 <script src="/assets/site-settings-loader.js"></script>
+
 </body>
 </html>
