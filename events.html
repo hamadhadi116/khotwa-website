@@ -1,793 +1,210 @@
-<!DOCTYPE html>
-
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الفعاليات – Khotwa</title>
-  <meta name="keywords" content="فعاليات خطوة, أنشطة المجلس, فعاليات الطلاب, جامعة لا تروب, ملبورن">
-  <meta name="description" content="تابع أحدث فعاليات وأنشطة مجلس طلاب خطوة في ملبورن. سجل في الفعاليات القادمة وشارك في الأنشطة الطلابية.">
+  
+  <meta name="description" content="تابع أحدث فعاليات وأنشطة مجلس طلاب خطوة في ملبورن. سجل الآن وشارك في الأنشطة الطلابية.">
   <link rel="canonical" href="https://khotwastudentcouncil.com/events.html"/>
-  <meta name="robots" content="index,follow"/>
-  <meta name="color-scheme" content="light dark"/>
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
-
-  <!-- OG/Twitter -->
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Khotwa Student Council"/>
-  <meta property="og:title" content="الفعاليات – Khotwa"/>
-  <meta property="og:description" content="تابع أحدث فعاليات مجلس طلاب خطوة في ملبورن."/>
-  <meta property="og:url" content="https://khotwastudentcouncil.com/events.html"/>
-  <meta property="og:image" content="/assets/apple-touch-icon.png"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"EventSeries",
-    "name":"Khotwa Events",
-    "url":"https://khotwastudentcouncil.com/events.html",
-    "inLanguage":"ar",
-    "organizer":{
-      "@type":"Organization",
-      "name":"Khotwa Student Council",
-      "url":"https://khotwastudentcouncil.com/"
-    }
-  }
-  </script>
-
+  
   <style>
     :root {
-      --primary:#1e40af; --primary-600:#1d4ed8; --text:#0f172a; --muted:#64748b;
-      --surface:#ffffff; --card:#f8fafc; --ring:#e6eaf2; --r-md:14px; --r-lg:16px; --r-xl:22px;
-      --sh-sm:0 2px 10px rgba(2,6,23,.06); --sh-md:0 10px 26px rgba(2,6,23,.08);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;
-      color:var(--text);
-      background:var(--surface);
-      line-height:1.6;
-    }
-    a{color:inherit;text-decoration:none}
-    .container{width:min(1120px,92%);margin-inline:auto}
-
-    /* وصولية */
-    :where(a,button,input,select,textarea,[role="button"]):focus-visible{
-      outline:3px solid #2563eb;
-      outline-offset:3px;
-      border-radius:8px;
-    }
-    .skip-link{
-      position:absolute;
-      inset-inline-start:1rem;
-      inset-block-start:-100px;
-      background:#fff;
-      color:#000;
-      padding:.6rem .9rem;
-      border-radius:10px;
-      box-shadow:var(--sh-sm);
-      z-index:1000;
-    }
-    .skip-link:focus{inset-block-start:1rem}
-
-    /* NAV */
-    .navbar{
-      position:sticky;
-      top:0;
-      z-index:40;
-      background:color-mix(in oklab,#ffffff 80%,transparent);
-      border-bottom:1px solid var(--ring);
-      backdrop-filter:blur(8px);
-    }
-    .nav-inner{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:.8rem 0;
-      gap:.8rem;
-      position:relative;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:.8rem;
-      font-weight:800;
-    }
-    .brand .logo{
-      width:40px;
-      height:40px;
-      object-fit:cover;
-      border-radius:12px;
-      box-shadow:0 2px 6px rgba(0,0,0,.06);
-    }
-    .nav-links{
-      display:flex;
-      gap:.25rem;
-      align-items:center;
-    }
-    .nav-links a{
-      padding:.5rem .75rem;
-      border-radius:var(--r-md);
-    }
-    .nav-links a:hover{background:var(--card)}
-    .nav-links a[aria-current="page"]{background:var(--card)}
-    .lang-toggle,.menu-toggle{
-      padding:.45rem .75rem;
-      border:1px solid var(--ring);
-      background:#fff;
-      border-radius:var(--r-md);
-      cursor:pointer;
-      font-weight:600;
-    }
-    .menu-toggle{
-      display:none;
-      align-items:center;
-      gap:.5rem;
-    }
-    .menu-toggle svg{width:20px;height:20px}
-
-    @media (max-width:900px){
-      .menu-toggle{display:inline-flex}
-      .nav-links{
-        position:absolute;
-        inset-inline:0;
-        top:calc(100% + 8px);
-        background:#fff;
-        border:1px solid var(--ring);
-        border-radius:var(--r-xl);
-        display:grid;
-        gap:.2rem;
-        padding:.4rem;
-        box-shadow:0 20px 48px rgba(2,6,23,.1);
-        max-height:80vh;
-        overflow:auto;
-        opacity:1;
-        transform:scale(1);
-        transition:opacity .2s,transform .2s,padding .2s;
-      }
-      .nav-links[aria-hidden="true"]{
-        transform:scale(.98);
-        opacity:0;
-      }
-      .nav-links a,.lang-toggle{padding:.7rem .9rem}
+      --primary: #1e40af; --primary-hover: #1d4ed8;
+      --text: #0f172a; --muted: #64748b;
+      --surface: #ffffff; --card: #f8fafc;
+      --ring: #e2e8f0; --r-lg: 16px;
+      --sh-md: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     }
 
-    section{padding:2rem 0}
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:1rem;
-      margin-bottom:1.2rem;
+    * { box-sizing: border-box; transition: all 0.2s ease; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, sans-serif;
+      color: var(--text); background: var(--surface); line-height: 1.6;
     }
-    .section-head h1{
-      margin:0;
-      font-size:clamp(1.6rem,2.6vw + 1rem,2.2rem);
-    }
-    .muted{color:var(--muted)}
+    .container { width: min(1200px, 92%); margin-inline: auto; }
 
-    /* Cards */
-    .grid{display:grid;gap:1rem}
-    .grid-3{grid-template-columns:repeat(3,1fr)}
-    @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
-    .event-card{
-      background:#fff;
-      border:1px solid var(--ring);
-      border-radius:16px;
-      overflow:hidden;
-      box-shadow:var(--sh-sm);
-      display:flex;
-      flex-direction:column;
+    /* Navbar */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px); border-bottom: 1px solid var(--ring);
+      padding: 0.75rem 0;
     }
-    .event-card img{
-      width:100%;
-      height:auto;
-      aspect-ratio:16/9;
-      object-fit:cover;
-      background:#f3f4f6;
-    }
-    .event-card .body{padding:1rem}
-    .event-card h3{
-      margin:0 0 .4rem;
-      font-size:1.05rem;
-    }
-    .meta{
-      display:flex;
-      gap:.6rem;
-      align-items:center;
-      color:var(--muted);
-      font-size:.9rem;
-      margin-bottom:.6rem;
-    }
-    .event-card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 14px 34px rgba(2,6,23,.10);
-      transition:.18s;
-    }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; }
+    .brand img { width: 35px; height: 35px; border-radius: 8px; }
 
-    /* Skeleton */
-    .skeleton{
-      border:1px solid var(--ring);
-      border-radius:16px;
-      overflow:hidden;
-      background:#fff;
+    /* Section Head */
+    .section-head { padding: 3rem 0 1rem; text-align: center; }
+    .section-head h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--primary); }
+
+    /* Filters & Search */
+    .tools-bar {
+      display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
+      align-items: center; justify-content: center;
     }
-    .sk-img{
-      aspect-ratio:16/9;
-      background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 37%,#f1f5f9 63%);
-      background-size:400% 100%;
-      animation:sk 1.2s infinite;
+    .search-box {
+      position: relative; flex: 1; min-width: 300px;
     }
-    .sk-body{padding:1rem}
-    .sk-line{
-      height:12px;
-      background:#e2e8f0;
-      border-radius:8px;
-      margin:.4rem 0;
+    .search-box input {
+      width: 100%; padding: 0.8rem 1rem; padding-right: 2.5rem;
+      border: 1px solid var(--ring); border-radius: 12px; outline: none;
     }
-    .sk-line.w60{width:60%}
-    .sk-line.w80{width:80%}
-    .sk-line.w40{width:40%}
-    @keyframes sk{
-      0%{background-position:100% 0}
-      100%{background-position:-100% 0}
+    .search-box svg { position: absolute; right: 12px; top: 30%; color: var(--muted); }
+
+    .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .chip {
+      padding: 0.5rem 1.2rem; border-radius: 20px; border: 1px solid var(--ring);
+      background: white; cursor: pointer; font-size: 0.9rem; font-weight: 500;
+    }
+    .chip[data-active="true"] { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* Grid & Cards */
+    .events-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem; padding-bottom: 4rem;
+    }
+    .event-card {
+      background: white; border: 1px solid var(--ring); border-radius: var(--r-lg);
+      overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
+    }
+    .event-card:hover { transform: translateY(-5px); box-shadow: var(--sh-md); }
+    
+    .card-img-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; }
+    .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+    .category-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(30, 64, 175, 0.9); color: white;
+      padding: 4px 12px; border-radius: 12px; font-size: 0.75rem;
     }
 
-    /* Footer */
-    footer{
-      border-top:1px solid var(--ring);
-      background:#fff;
-    }
-    .foot{
-      display:flex;
-      justify-content:space-between;
-      gap:1rem;
-      align-items:center;
-      padding:1.2rem 0;
-    }
+    .card-body { padding: 1.25rem; flex-grow: 1; }
+    .card-meta { display: flex; gap: 10px; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.8rem; }
+    .card-body h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; }
+    .card-body p { font-size: 0.9rem; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-    /* Dark */
-    @media (prefers-color-scheme: dark){
-      :root{
-        --surface:#0a0f1a;
-        --card:#0b1220;
-        --ring:#1f2937;
-        --text:#e5e7eb;
-        --muted:#9ca3af;
-      }
-      .navbar,footer{
-        background:#0c1220;
-        border-color:var(--ring);
-      }
-      .event-card,.skeleton{
-        background:#0f172a;
-        border-color:var(--ring);
-      }
-      .nav-links a:hover,
-      .nav-links a[aria-current="page"]{
-        background:#0f172a;
-      }
-      .lang-toggle,.menu-toggle{
-        background:transparent;
-        color:var(--text);
-      }
-      .sk-img{
-        background:linear-gradient(90deg,#111827 25%,#1f2937 37%,#111827 63%);
-      }
-      .sk-line{background:#1f2937}
-    }
+    /* Skeletons */
+    .skeleton { height: 350px; background: #eee; border-radius: 16px; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 
-    @media (prefers-reduced-motion: reduce){
-      *{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        transition-duration:.01ms !important;
-        scroll-behavior:auto !important;
-      }
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      :root { --surface: #0f172a; --text: #f1f5f9; --ring: #1e293b; --card: #1e293b; }
+      body { background: var(--surface); }
+      .navbar, .event-card, .chip { background: #1e293b; color: white; }
+      .search-box input { background: #1e293b; color: white; }
     }
   </style>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCS6PYK04X"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HCS6PYK04X');</script>
-  <script src="/assets/khotwa-api.js?v=1766975537"></script>
-  <link rel="stylesheet" href="/assets/design-system.css">
-  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
-    <link rel="stylesheet" href="assets/enhanced-navbar.css">
 </head>
 <body>
-  <a href="#main" class="skip-link">تخطَّ إلى المحتوى</a>
 
-  <!-- NAVBAR -->
-  <link rel="stylesheet" href="/assets/feedback.css">
-  <link rel="alternate" type="application/rss+xml" title="أخبار مجلس طلاب خطوة" href="/feed.xml">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
-  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
-</head>
-<body>
-  <!-- Skip link (لغتين) -->
-  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
-
-  <!-- Navbar -->
-<!-- Navbar -->
-  <nav class="navbar" aria-label="الشريط العلوي">
+  <nav class="navbar">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40" decoding="async" loading="lazy">
-        <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
+      <a href="/index.html" class="brand">
+        <img src="/assets/apple-touch-icon.png" alt="Logo">
+        <span>مجلس طلاب خطوة</span>
       </a>
-
-      <button id="menu-toggle" class="menu-toggle" type="button"
-              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
-      </button>
-
-      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden aria-hidden="true">Home</span></a>
-        
-        <!-- Mega Menu: البرامج -->
-        <div class="nav-item-mega" data-mega="programs">
-          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-programs">
-            <span data-lang="ar">البرامج</span>
-            <span data-lang="en" hidden aria-hidden="true">Programs</span>
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </button>
-          <div class="mega-menu" id="mega-programs" hidden>
-            <div class="mega-menu-inner">
-              <div class="mega-column">
-                <h3 data-lang="ar">الأخبار والفعاليات</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">News & Events</h3>
-                <a href="/news.html"><span data-lang="ar">📰 الأخبار</span><span data-lang="en" hidden aria-hidden="true">📰 News</span></a>
-                <a href="/events.html"><span data-lang="ar">📅 الفعاليات</span><span data-lang="en" hidden aria-hidden="true">📅 Events</span></a>
-                <a href="/calendar.html"><span data-lang="ar">🗓️ التقويم</span><span data-lang="en" hidden aria-hidden="true">🗓️ Calendar</span></a>
-              </div>
-              <div class="mega-column">
-                <h3 data-lang="ar">التطوير والتدريب</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">Development & Training</h3>
-                <a href="/courses.html"><span data-lang="ar">🎓 الدورات والورش</span><span data-lang="en" hidden aria-hidden="true">🎓 Courses & Workshops</span></a>
-                <a href="/volunteers.html"><span data-lang="ar">❤️ الفرص التطوعية</span><span data-lang="en" hidden aria-hidden="true">❤️ Volunteer Opportunities</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Mega Menu: عن المجلس -->
-        <div class="nav-item-mega" data-mega="council">
-          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-council">
-            <span data-lang="ar">عن المجلس</span>
-            <span data-lang="en" hidden aria-hidden="true">About Council</span>
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </button>
-          <div class="mega-menu" id="mega-council" hidden>
-            <div class="mega-menu-inner">
-              <div class="mega-column">
-                <h3 data-lang="ar">معلومات عنا</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">About Us</h3>
-                <a href="/about.html"><span data-lang="ar">👥 من نحن</span><span data-lang="en" hidden aria-hidden="true">👥 About Us</span></a>
-                <a href="/gallery.html"><span data-lang="ar">📸 معرض الصور</span><span data-lang="en" hidden aria-hidden="true">📸 Gallery</span></a>
-                <a href="/faq.html"><span data-lang="ar">❓ الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">❓ FAQ</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
-        
-        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="تغيير اللغة">
-          <span data-lang="ar">English</span><span data-lang="en" hidden aria-hidden="true">عربي</span>
-        </button>
+      <div id="nav-links">
+        <a href="/index.html" style="padding: 0 10px;">الرئيسية</a>
+        <a href="/events.html" style="color: var(--primary); font-weight: bold;">الفعاليات</a>
       </div>
     </div>
   </nav>
 
-<main class="container" id="main">
-    <!-- Header -->
-    <section>
-      <div class="section-head">
-        <h1>
-          <span data-lang="ar" lang="ar">الفعاليات القادمة</span>
-          <span data-lang="en" lang="en" hidden aria-hidden="true">Upcoming Events</span>
-        </h1>
-      </div>
-      <p class="muted" data-lang="ar">
-        تابع أحدث فعاليات وأنشطة مجلس طلاب خطوة. سجل الآن وشارك معنا!
-      </p>
-      <p class="muted" data-lang="en" lang="en" hidden aria-hidden="true">
-        Follow the latest events and activities of Khotwa Student Council. Register now and join us!
-      </p>
+  <main class="container">
+    <header class="section-head">
+      <h1 data-lang="ar">الفعاليات القادمة</h1>
+      <p class="muted">اكتشف وشارك في فعالياتنا المميزة بمدينة ملبورن</p>
+    </header>
 
-      <!-- Search and Filters -->
-      <div class="tools" style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem;margin-bottom:1.5rem">
-        <div class="search" role="search" style="display:flex;align-items:center;gap:.5rem;border:1px solid var(--ring);border-radius:12px;padding:.45rem .6rem;background:#fff;min-width:240px">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-            <circle cx="11" cy="11" r="7"/>
-            <path d="m21 21-4.3-4.3"/>
-          </svg>
-          <input id="q" type="search" placeholder="ابحث في الفعاليات…" aria-label="ابحث في الفعاليات" style="border:0;outline:0;background:transparent;width:100%">
-        </div>
-        <button class="chip" data-filter="all" data-active="true" aria-pressed="true" style="border:1px solid var(--ring);padding:.45rem .9rem;border-radius:999px;background:#fff;cursor:pointer">
-          <span data-lang="ar">الكل</span>
-          <span data-lang="en" hidden aria-hidden="true">All</span>
-        </button>
-        <button class="chip" data-filter="social" aria-pressed="false" style="border:1px solid var(--ring);padding:.45rem .9rem;border-radius:999px;background:#fff;cursor:pointer">
-          <span data-lang="ar">اجتماعي</span>
-          <span data-lang="en" hidden aria-hidden="true">Social</span>
-        </button>
-        <button class="chip" data-filter="educational" aria-pressed="false" style="border:1px solid var(--ring);padding:.45rem .9rem;border-radius:999px;background:#fff;cursor:pointer">
-          <span data-lang="ar">تعليمي</span>
-          <span data-lang="en" hidden aria-hidden="true">Educational</span>
-        </button>
-        <button class="chip" data-filter="cultural" aria-pressed="false" style="border:1px solid var(--ring);padding:.45rem .9rem;border-radius:999px;background:#fff;cursor:pointer">
-          <span data-lang="ar">ثقافي</span>
-          <span data-lang="en" hidden aria-hidden="true">Cultural</span>
-        </button>
-        <button class="chip" data-filter="sports" aria-pressed="false" style="border:1px solid var(--ring);padding:.45rem .9rem;border-radius:999px;background:#fff;cursor:pointer">
-          <span data-lang="ar">رياضي</span>
-          <span data-lang="en" hidden aria-hidden="true">Sports</span>
-        </button>
+    <div class="tools-bar">
+      <div class="search-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="eventSearch" placeholder="ابحث عن فعالية باسمها...">
       </div>
+      <div class="filter-group">
+        <button class="chip" data-filter="all" data-active="true">الكل</button>
+        <button class="chip" data-filter="social">اجتماعي</button>
+        <button class="chip" data-filter="educational">تعليمي</button>
+        <button class="chip" data-filter="cultural">ثقافي</button>
+      </div>
+    </div>
 
-      <!-- Events Grid -->
-      <div class="grid grid-3" id="events">
-        <!-- Skeleton Loaders -->
-        <div class="skeleton">
-          <div class="sk-img"></div>
-          <div class="sk-body">
-            <div class="sk-line w60"></div>
-            <div class="sk-line w80"></div>
-            <div class="sk-line w40"></div>
-          </div>
-        </div>
-        <div class="skeleton">
-          <div class="sk-img"></div>
-          <div class="sk-body">
-            <div class="sk-line w60"></div>
-            <div class="sk-line w80"></div>
-            <div class="sk-line w40"></div>
-          </div>
-        </div>
-        <div class="skeleton">
-          <div class="sk-img"></div>
-          <div class="sk-body">
-            <div class="sk-line w60"></div>
-            <div class="sk-line w80"></div>
-            <div class="sk-line w40"></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="events-grid" id="eventsContainer">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </div>
   </main>
 
-  <footer aria-label="تذييل الموقع">
-    <div class="container foot">
-      <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </div>
-  </footer>
+  <script src="/assets/khotwa-api.js"></script>
+  <script>
+    let currentCategory = 'all';
+    let searchQuery = '';
 
-<script>
-// Mega Menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const megaItems = document.querySelectorAll('.nav-item-mega');
-  
-  megaItems.forEach(item => {
-    const button = item.querySelector('.nav-link-mega');
-    const menu = item.querySelector('.mega-menu');
-    
-    if (!button || !menu) return;
-    
-    // Desktop: hover
-    item.addEventListener('mouseenter', () => {
-      if (window.innerWidth > 980) {
-        menu.hidden = false;
-        button.setAttribute('aria-expanded', 'true');
-      }
-    });
-    
-    item.addEventListener('mouseleave', () => {
-      if (window.innerWidth > 980) {
-        menu.hidden = true;
-        button.setAttribute('aria-expanded', 'false');
-      }
-    });
-    
-    // Mobile: click
-    button.addEventListener('click', (e) => {
-      if (window.innerWidth <= 980) {
-        e.preventDefault();
-        const isOpen = !menu.hidden;
-        menu.hidden = isOpen;
-        button.setAttribute('aria-expanded', !isOpen);
-      }
-    });
-  });
-  
-  // Close all menus on resize
-  window.addEventListener('resize', () => {
-    document.querySelectorAll('.mega-menu').forEach(menu => {
-      menu.hidden = true;
-    });
-    document.querySelectorAll('.nav-link-mega').forEach(btn => {
-      btn.setAttribute('aria-expanded', 'false');
-    });
-  });
-});
-</script>
-
-<script>
-    (function(){
-      // سنة الحقوق
-      const y = document.getElementById('year');
-      if(y){ y.textContent = new Date().getFullYear(); }
-
-      // منيو الجوال + وصولية
-      const menuBtn = document.getElementById('menu-toggle');
-      const primaryNav = document.getElementById('primary-nav');
-      const mq = window.matchMedia('(min-width:901px)');
-
-      if(menuBtn && primaryNav){
-        function setMenu(open){
-          primaryNav.setAttribute('data-open', String(open));
-          menuBtn.setAttribute('aria-expanded', String(open));
-          primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
-          if(open){
-            (primaryNav.querySelector('a,button') || menuBtn).focus();
-          }
-        }
-        function initMenu(){
-          setMenu(false);
-          primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true');
-        }
-        initMenu();
-
-        menuBtn.addEventListener('click', ()=>{
-          setMenu(primaryNav.getAttribute('data-open')!=='true');
-        });
-
-        mq.addEventListener('change', e=>{
-          setMenu(false);
-          primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true');
-        });
-
-        document.addEventListener('click', e=>{
-          const open = primaryNav.getAttribute('data-open')==='true';
-          const t = e.target;
-          if(!open) return;
-          if(t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)){
-            setMenu(false);
-          }
-        });
-
-        document.addEventListener('keydown', e=>{
-          if(e.key==='Escape') setMenu(false);
-        });
-
-        primaryNav.addEventListener('click', e=>{
-          const link = (e.target instanceof Element) ? e.target.closest('a') : null;
-          if(link) setMenu(false);
-        });
-      }
-
-      // تبديل اللغة
-      const langBtn = document.getElementById('lang-toggle');
-
-      function currentLang(){
-        return localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
-      }
-
-      function setLang(lang){
-        document.querySelectorAll('[data-lang]').forEach(el=>{
-          const want = el.getAttribute('data-lang') === lang;
-          el.hidden = !want;
-          el.setAttribute('aria-hidden', String(!want));
-        });
-
-        document.documentElement.lang = (lang === 'ar') ? 'ar' : 'en';
-        document.documentElement.dir  = (lang === 'ar') ? 'rtl' : 'ltr';
-
-        if(langBtn){
-          langBtn.textContent = (lang === 'ar') ? 'English' : 'العربية';
-          langBtn.setAttribute('aria-pressed', String(lang !== 'ar'));
-        }
-
-        // تغيير عنوان الصفحة حسب اللغة
-        document.title = (lang === 'ar') ? 'الفعاليات – Khotwa' : 'Events – Khotwa';
-
-        localStorage.setItem('khotwa_lang', lang);
-      }
-
-      setLang(currentLang());
-      langBtn?.addEventListener('click', ()=>{
-        setLang(currentLang() === 'ar' ? 'en' : 'ar');
-      });
+    async function renderEvents() {
+      const container = document.getElementById('eventsContainer');
       
-      // Search functionality
-      const qInput = document.getElementById('q');
-      let searchTimeout;
-      qInput?.addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-          currentQuery = e.target.value.trim();
-          loadEvents();
-        }, 500); // Debounce 500ms
-      });
-      
-      // Filter buttons
-      document.querySelectorAll('[data-filter]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          // Update active state
-          document.querySelectorAll('[data-filter]').forEach(b => {
-            b.dataset.active = 'false';
-            b.setAttribute('aria-pressed', 'false');
+      try {
+        // جلب البيانات من الـ API
+        const events = await KhotwaAPI.searchEvents(searchQuery, currentCategory !== 'all' ? currentCategory : null);
+        
+        if (!events || events.length === 0) {
+          container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem;">لا توجد فعاليات تطابق بحثك حالياً.</div>';
+          return;
+        }
+
+        container.innerHTML = events.map(ev => {
+          const date = new Date(ev.date || ev.eventDate).toLocaleDateString('ar-EG', {
+            day: 'numeric', month: 'long'
           });
-          btn.dataset.active = 'true';
-          btn.setAttribute('aria-pressed', 'true');
           
-          // Update category and reload
-          currentCategory = btn.dataset.filter;
-          loadEvents();
-        });
-      });
-
-      // تحميل الفعاليات من Backend API
-      let currentQuery = '';
-      let currentCategory = 'all';
-      
-      async function loadEvents(){
-        const eventsEl = document.getElementById('events');
-        try{
-          // Use search API if there's a query or category filter
-          let items;
-          if (currentQuery || currentCategory !== 'all') {
-            items = await KhotwaAPI.searchEvents({
-              query: currentQuery,
-              category: currentCategory === 'all' ? undefined : currentCategory,
-              sortBy: 'newest'
-            });
-          } else {
-            items = await KhotwaAPI.getEvents();
-          }
-          
-          if (!items) {
-            throw new Error('Failed to load events');
-          }
-
-          eventsEl.innerHTML = '';
-
-          if(items.length === 0){
-            eventsEl.innerHTML = '<div class="muted">لا توجد فعاليات قادمة حالياً.</div>';
-            return;
-          }
-
-          // فلترة الفعاليات القادمة فقط (بما في ذلك فعاليات اليوم)
-          const now = new Date();
-          
-          const upcomingEvents = items
-            .map(ev => ({ ...ev, _date: new Date(ev.date || ev.eventDate) }))
-            .filter(ev => !isNaN(ev._date) && ev._date > now)
-            .sort((a,b) => a._date - b._date);
-
-          if(upcomingEvents.length === 0){
-            eventsEl.innerHTML = '<div class="muted">لا توجد فعاليات قادمة حالياً.</div>';
-            return;
-          }
-
-          const frag = document.createDocumentFragment();
-
-          upcomingEvents.forEach((event, idx)=>{
-            const article = document.createElement('article');
-            article.className = 'event-card';
-            article.id = 'event-' + (idx + 1);
-            article.style.cursor = 'pointer';
-            article.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
-
-            const arDate = event._date
-              ? event._date.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'})
-              : '';
-            const enDate = event._date
-              ? event._date.toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'})
-              : '';
-
-            const langPref = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
-            const title = langPref === 'en' ? (event.titleEn || event.titleAr || '') : (event.titleAr || event.titleEn || '');
-            const description = langPref === 'en' ? (event.descriptionEn || event.descriptionAr || '') : (event.descriptionAr || event.descriptionEn || '');
-            const location = event.location || 'غير محدد';
-
-            article.innerHTML = `
-              ${event.imageUrl
-                ? `<img src="${event.imageUrl}" alt="${title.replace(/"/g,'&quot;')}" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:8px">`
-                : `<div style="aspect-ratio:16/9;background:#f3f4f6;border-radius:8px"></div>`}
-              <div class="body">
-                <div class="meta">
-                  <span data-lang="ar">📅 ${arDate}</span>
-                  <span data-lang="en" lang="en" hidden aria-hidden="true">📅 ${enDate}</span>
-                  <span>•</span>
-                  <span data-lang="ar">📍 ${location}</span>
-                  <span data-lang="en" lang="en" hidden aria-hidden="true">📍 ${location}</span>
-                </div>
-                <h3>${title}</h3>
-                <p class="muted">${description.substring(0, 150)}${description.length > 150 ? '...' : ''}</p>
-                <span style="color: #8b5cf6; font-weight: 600; font-size: 0.9rem;">عرض التفاصيل ←</span>
+          return `
+            <article class="event-card" onclick="location.href='/event-detail.html?id=${ev.id}'">
+              <div class="card-img-wrapper">
+                <span class="category-badge">${ev.category || 'عام'}</span>
+                <img src="${ev.imageUrl || '/assets/default-event.jpg'}" alt="${ev.titleAr}" 
+                     onerror="this.src='/assets/apple-touch-icon.png'">
               </div>
-            `;
+              <div class="card-body">
+                <div class="card-meta">
+                  <span>📅 ${date}</span>
+                  <span>📍 ${ev.location || 'ملبورن'}</span>
+                </div>
+                <h3>${ev.titleAr || ev.title}</h3>
+                <p>${ev.descriptionAr || 'انضم إلينا في هذه الفعالية المميزة لمجلس خطوة.'}</p>
+                <div style="margin-top: 1rem; color: var(--primary); font-weight: 600; font-size: 0.85rem;">
+                   التفاصيل والتسجيل ←
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
 
-            // Add click handler
-            article.addEventListener('click', () => {
-              window.location.href = `/event-detail.html?id=${event.id}`;
-            });
-
-            // Add hover effect
-            article.addEventListener('mouseenter', () => {
-              article.style.transform = 'translateY(-4px)';
-              article.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
-            });
-
-            article.addEventListener('mouseleave', () => {
-              article.style.transform = 'translateY(0)';
-              article.style.boxShadow = '';
-            });
-
-            // fallback للصورة
-            const img = article.querySelector('img');
-            if(img){
-              const FALLBACK = '/assets/apple-touch-icon.png';
-              img.addEventListener('error', ()=>{
-                const absoluteFallback = new URL(FALLBACK, location.origin).href;
-                if(img.src !== absoluteFallback){
-                  img.src = absoluteFallback;
-                }
-              }, { once:true });
-            }
-
-            frag.appendChild(article);
-          });
-
-          eventsEl.appendChild(frag);
-
-          // احترام اللغة الحالية للعناصر المضافة
-          (function syncLangAfterRender(){
-            const lang = localStorage.getItem('khotwa_lang')==='en' ? 'en' : 'ar';
-            document.querySelectorAll('[data-lang]').forEach(el=>{
-              const want = el.getAttribute('data-lang')===lang;
-              el.hidden = !want;
-              el.setAttribute('aria-hidden', String(!want));
-            });
-          })();
-
-        }catch(err){
-          console.error('فشل تحميل الفعاليات:', err);
-          eventsEl.innerHTML = '<div class="muted">تعذر تحميل الفعاليات الآن. حاول لاحقاً.</div>';
-        }
+      } catch (err) {
+        container.innerHTML = '<p>حدث خطأ أثناء تحميل الفعاليات.</p>';
       }
+    }
 
-      loadEvents();
-    })();
+    // Event Listeners للبحث
+    document.getElementById('eventSearch').addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderEvents(); // يمكن إضافة debounce هنا لتحسين الأداء
+    });
+
+    // Event Listeners للفلاتر
+    document.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(b => b.dataset.active = 'false');
+        btn.dataset.active = 'true';
+        currentCategory = btn.dataset.filter;
+        renderEvents();
+      });
+    });
+
+    // البدء عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', renderEvents);
   </script>
-
-  <!-- الميزات المحسّنة -->
-  <link rel="stylesheet" href="/assets/features.css">
-  <script src="/assets/features.js" defer></script>
-  <script src="/assets/pagination.js"></script>
-  <script src="/assets/advanced-filters.js"></script>
-  <script src="/assets/newsletter.js"></script>
-  <script src="/assets/form-validation.js"></script>
-  <script src="/assets/comments-and-registration.js"></script>
-  <script src="/assets/all-features.js"></script>
-  <script src="/assets/feedback.js"></script>
-  <script src="/assets/admin-button.js"></script>
-  <script src="/assets/feedback-button.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/settings-loader.js"></script>
-    <script src="/js/language-toggle.js"></script>
-<script src="js/menu-toggle.js"></script>
-  <script src="/assets/site-settings-loader.js"></script>
 </body>
 </html>
