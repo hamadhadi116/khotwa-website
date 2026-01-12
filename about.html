@@ -6,20 +6,22 @@
   <title>من نحن – Khotwa</title>
   
   <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/design-system.css">
+  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
-    /* حل مشكلة تداخل المنيو */
-    .navbar { z-index: 9999 !important; position: relative; background: #fff; }
-    .hero-about { padding: 3rem 0; text-align: center; background: #f8fafc; }
+    /* تحسينات بسيطة لضمان ثبات الهيكل وعدم تداخل القوائم */
+    .navbar { z-index: 2000 !important; }
+    .hero-about { padding: 4rem 0; text-align: center; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
     
-    .grid-about { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-    .card-about { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; shadow: 0 4px 6px rgba(0,0,0,0.05); }
-    .card-about h3 { color: #1e40af; margin-bottom: 1rem; }
-
-    /* تنسيق الصور لضمان عدم اختفائها */
-    .members { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem; }
-    .member-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; text-align: center; }
+    /* الحفاظ على الهيكل القديم للكروت */
+    .grid-about { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
+    .card-about { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+    
+    /* تنسيق الأعضاء (الهيكل القديم) */
+    .members { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .member-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; text-align: center; }
     .member-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #f1f5f9; }
     
     [hidden] { display: none !important; }
@@ -28,61 +30,74 @@
 <body>
 
   <nav class="navbar">
-    <div class="container nav-inner" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
-      <a class="brand" href="/index.html">مجلس طلاب خطوة</a>
-      <div class="nav-links">
-        <a href="/index.html">الرئيسية</a>
-        <a href="/about.html"><b>من نحن</b></a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/calendar.html">التقويم</a>
+    <div class="container nav-inner">
+      <a class="brand" href="/index.html">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
+        <span data-lang="ar">مجلس طلاب خطوة</span>
+        <span data-lang="en" hidden>Khotwa Student Council</span>
+      </a>
+      <button id="menu-toggle" class="menu-toggle">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <div class="nav-links" id="primary-nav" data-open="false">
+        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
+        <a href="/about.html" class="active"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل معنا</span><span data-lang="en" hidden>Contact</span></a>
+        <button class="lang-toggle" id="lang-toggle">English</button>
       </div>
     </div>
   </nav>
 
-  <main class="container">
-    <header class="hero-about">
-      <h1>من نحن</h1>
-      <p>تعرف على رؤية وأهداف فريق مجلس طلاب خطوة</p>
-    </header>
+  <header class="hero-about">
+    <div class="container">
+      <h1 data-lang="ar">من نحن</h1>
+      <h1 data-lang="en" hidden>About Us</h1>
+      <p class="muted">مجلس طلاب خطوة - جامعة لا تروب، ملبورن</p>
+    </div>
+  </header>
 
+  <main class="container">
     <div class="grid-about">
       <article class="card-about" data-section="vision">
-        <h3>الرؤية</h3>
+        <h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3>
         <p>بناء مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده أكاديمياً واجتماعياً.</p>
       </article>
       
       <article class="card-about" data-section="mission">
-        <h3>الرسالة</h3>
-        <p>توفير منصة تجمع الطلاب وتوفر لهم الأنشطة والخدمات التي تعزز تجربتهم الدراسية.</p>
+        <h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3>
+        <p>توفير منصة تجمع الطلاب وتوفر لهم الأنشطة والخدمات التي تعزز تجربتهم الدراسية في أستراليا.</p>
       </article>
 
       <article class="card-about" data-section="organization">
-        <h3>القيم</h3>
+        <h3 data-lang="ar">القيم</h3><h3 data-lang="en" hidden>Values</h3>
         <p>العمل الجماعي، الشفافية، الابتكار، والمسؤولية تجاه مجتمعنا الطلابي.</p>
       </article>
     </div>
 
-    <section id="council-section">
-      <h2 style="text-align: center;">فريق العمل والمجلس</h2>
+    <section style="margin-bottom: 5rem;">
+      <h2 style="text-align: center;" data-lang="ar">فريق العمل والمجلس</h2>
+      
       <div class="members" id="council-members-container">
-        <p style="grid-column: 1/-1; text-align: center; padding: 2rem;" class="muted">
-          جاري جلب بيانات الأعضاء من السيرفر... 
-          <br><small>(تأكد من اتصالك بالإنترنت وصحة ملف about-loader.js)</small>
-        </p>
+        <div class="member-card">
+          <img src="/assets/apple-touch-icon.png" alt="عضو المجلس">
+          <h3>اسم العضو</h3>
+          <p>المنصب</p>
+        </div>
       </div>
     </section>
   </main>
 
   <script src="/js/config.js"></script>
-  <script src="/js/about-loader.js" onerror="console.error('فشل تحميل ملف السكريبت، تأكد من المسار!')"></script>
+  <script src="/js/language-toggle.js"></script>
+  <script src="/js/menu-toggle.js"></script>
+  
+  <script src="/js/about-loader.js"></script>
 
   <script>
-    // تحديث السنة في الفوتر
-    document.addEventListener('DOMContentLoaded', () => {
-      const yearEl = document.getElementById('year');
-      if(yearEl) yearEl.textContent = new Date().getFullYear();
-    });
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
