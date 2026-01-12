@@ -5,88 +5,65 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>من نحن – Khotwa</title>
   
-  <meta name="keywords" content="مجلس طلاب خطوة, من نحن, رؤية المجلس, رسالة المجلس, فريق العمل, جامعة لا تروب, ملبورن">
-  <meta name="description" content="تعرف على مجلس طلاب خطوة: رؤيتنا، رسالتنا، أهدافنا، وفريق العمل.">
-  
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
-    :root {
-      --primary: #1e40af;
-      --ring: #e6eaf2;
+    /* تحسينات الناف بار لضمان عدم التداخل مع المحتوى */
+    .navbar { 
+      position: sticky; 
+      top: 0; 
+      z-index: 9999 !important; 
+      background: rgba(255, 255, 255, 0.95); 
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--ring);
     }
     
-    /* منع تداخل المنيو */
-    .navbar { position: sticky; top: 0; z-index: 9999 !important; background: #fff; border-bottom: 1px solid var(--ring); }
-    .mega-menu { z-index: 10000 !important; }
-
-    /* الحفاظ على تنسيق الصور والأعضاء الأصلي */
-    .members { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
-      gap: 1.5rem; 
-      margin-top: 2rem; 
+    /* الحفاظ على تنسيق المحتوى الأصلي الخاص بك */
+    .grid-about { display: grid; gap: 1.5rem; margin: 3rem 0; }
+    .members { display: grid; gap: 1rem; margin-top: 1.2rem; }
+    
+    /* تنسيق الفوتر الجديد */
+    footer {
+      background: #ffffff;
+      padding: 3rem 0 1.5rem;
+      border-top: 1px solid var(--ring);
+      margin-top: 4rem;
     }
-    .member-card { 
-      background: #fff; 
-      border: 1px solid var(--ring); 
-      border-radius: 16px; 
-      overflow: hidden; 
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-bottom {
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding-top: 1.5rem;
+      border-top: 1px solid #f1f5f9;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
-    .member-card img { 
-      width: 100%; 
-      aspect-ratio: 3/2; 
-      object-fit: cover; 
-      background: #f3f4f6; 
-    }
-    
-    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
 
-  <nav class="navbar" aria-label="الشريط العلوي">
-    <div class="container nav-inner" style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0;">
-      <a class="brand" href="/index.html">
-        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40">
+  <nav class="navbar">
+    <div class="container nav-inner" style="display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0;">
+      <a class="brand" href="/index.html" style="display: flex; align-items: center; gap: 10px;">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40" height="40">
         <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden>Khotwa Student Council</span>
+        <span data-lang="en" hidden>Khotwa Council</span>
       </a>
 
-      <button id="menu-toggle" class="menu-toggle" type="button">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
-
-      <div class="nav-links" id="primary-nav">
+      <div class="nav-links" style="display: flex; align-items: center; gap: 1rem;">
         <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
-        
-        <div class="nav-item-mega">
-          <button class="nav-link-mega">
-            <span data-lang="ar">البرامج</span><span data-lang="en" hidden>Programs</span>
-          </button>
-          <div class="mega-menu" hidden>
-            <div class="mega-menu-inner" style="display: flex; gap: 2rem; padding: 1rem;">
-              <div class="mega-column">
-                <a href="/news.html">📰 الأخبار</a>
-                <a href="/events.html">📅 الفعاليات</a>
-              </div>
-              <div class="mega-column">
-                <a href="/courses.html">🎓 الدورات</a>
-                <a href="/volunteers.html">❤️ التطوع</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a href="/about.html" aria-current="page"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
-        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden>Contact</span></a>
-        
-        <button class="lang-toggle" id="lang-toggle">English</button>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+        <a href="/about.html" class="active" style="font-weight: bold; color: var(--primary);"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
+        <a href="/contact.html"><span data-lang="ar">تواصل معنا</span><span data-lang="en" hidden>Contact</span></a>
+        <button class="lang-toggle" id="lang-toggle" style="background: var(--card); border: 1px solid var(--ring); padding: 5px 12px; border-radius: 8px; cursor: pointer;">English</button>
       </div>
     </div>
   </nav>
@@ -113,44 +90,46 @@
         <h2 data-lang="en" hidden>Council Members</h2>
       </div>
       <div class="members" id="council-members-container">
-        <p class="muted" style="grid-column: 1/-1; text-align: center;">جاري تحميل فريق العمل...</p>
-      </div>
+        </div>
     </section>
   </main>
 
-  <footer style="margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--ring); background: #fff;">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-      <div class="muted">© <span id="year"></span> مجلس طلاب خطوة</div>
-      <div class="social-links">
-        <a href="https://www.instagram.com/khotwa.sc/" target="_blank">Instagram</a>
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4 style="margin-bottom: 1rem;">عن المجلس</h4>
+          <p class="muted" style="font-size: 0.9rem;">نعمل على دعم طلاب برنامج خطوة في أستراليا وتوفير بيئة تعليمية واجتماعية محفزة.</p>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 1rem;">روابط سريعة</h4>
+          <ul style="list-style: none; padding: 0; font-size: 0.9rem; display: grid; gap: 0.5rem;">
+            <li><a href="/news.html">آخر الأخبار</a></li>
+            <li><a href="/gallery.html">معرض الصور</a></li>
+            <li><a href="/faq.html">الأسئلة الشائعة</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 1rem;">تابعنا</h4>
+          <a href="https://www.instagram.com/khotwa.sc/" target="_blank" style="display: flex; align-items: center; gap: 8px;">
+            <span>Instagram</span>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> مجلس طلاب خطوة - Khotwa Student Council</p>
       </div>
     </div>
   </footer>
 
   <script src="/js/config.js"></script>
+  <script src="/js/language-toggle.js"></script>
   <script src="/js/menu-toggle.js"></script>
   <script src="/js/about-loader.js"></script>
+  
   <script>
-    // سنة الحقوق
+    // تحديث السنة تلقائياً
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // تشغيل الميجا منيو البسيط
-    document.querySelectorAll('.nav-item-mega').forEach(item => {
-      item.addEventListener('mouseenter', () => item.querySelector('.mega-menu').hidden = false);
-      item.addEventListener('mouseleave', () => item.querySelector('.mega-menu').hidden = true);
-    });
-
-    // تبديل اللغة البسيط لضمان عدم التعارض
-    const langBtn = document.getElementById('lang-toggle');
-    langBtn.addEventListener('click', () => {
-      const currentLang = document.documentElement.lang === 'ar' ? 'en' : 'ar';
-      document.documentElement.lang = currentLang;
-      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        el.hidden = el.getAttribute('data-lang') !== currentLang;
-      });
-      langBtn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
-    });
   </script>
 </body>
 </html>
