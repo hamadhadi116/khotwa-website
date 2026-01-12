@@ -5,182 +5,128 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الأخبار – Khotwa</title>
 
-  <meta name="keywords" content="أخبار خطوة, إعلانات المجلس, فعاليات خطوة, أخبار الطلاب, ملبورن">
-  <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة.">
-  <link rel="canonical" href="https://khotwastudentcouncil.com/news.html"/>
-
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
-  <link rel="stylesheet" href="assets/enhanced-navbar.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
+  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
-  <script src="/assets/khotwa-api.js?v=1766975537"></script>
+  <script src="/assets/khotwa-api.js"></script>
 
   <style>
-    /* تحسينات بسيطة للتنسيق دون تغيير الهيكل */
-    .grid { display: grid; gap: 1.5rem; margin-top: 2rem; }
-    .grid-3 { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+    /* تنسيقات إضافية لضمان الظهور الصحيح */
+    :root { --primary: #1e40af; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px 0; }
+    .news-card { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; cursor: pointer; }
+    .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .news-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+    .news-content { padding: 15px; }
+    .news-date { font-size: 0.8rem; color: #888; display: block; margin-bottom: 5px; }
+    .news-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; color: #333; }
+    .read-more { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
     
-    .news-card {
-      background: var(--card-bg, #fff);
-      border: 1px solid var(--ring, #e2e8f0);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-    }
-    .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-    .news-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #f1f5f9; }
-    .news-card .body { padding: 1.25rem; flex-grow: 1; }
-    .news-card h3 { margin: 0 0 0.75rem; font-size: 1.15rem; line-height: 1.4; }
-    .news-card .meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; display: block; }
-    
-    .skeleton { height: 300px; background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 12px; }
-    @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-    .tools { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin: 1.5rem 0; }
-    .chip { padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid var(--ring); background: transparent; cursor: pointer; }
-    .chip[data-active="true"] { background: var(--primary, #1e40af); color: #fff; border-color: var(--primary); }
-    
-    input[type="search"] { padding: 0.6rem 1rem; border-radius: 8px; border: 1px solid var(--ring); min-width: 250px; }
+    /* إصلاح مظهر الأدوات */
+    .tools { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; align-items: center; }
+    .search-input { padding: 10px; border-radius: 8px; border: 1px solid #ddd; flex: 1; min-width: 200px; }
+    .chip { padding: 8px 18px; border-radius: 20px; border: 1px solid #ddd; background: #fff; cursor: pointer; }
+    .chip.active { background: var(--primary); color: white; border-color: var(--primary); }
   </style>
 </head>
-
 <body>
 
-<a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-<a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
-
-<nav class="navbar" aria-label="الشريط العلوي">
+<nav class="navbar">
   <div class="container nav-inner">
-    <a class="brand" href="/index.html">
-      <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40" height="40">
-      <span data-lang="ar">مجلس طلاب خطوة</span>
-      <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
+    <a href="/index.html" class="brand">
+      <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
+      <span>مجلس طلاب خطوة</span>
     </a>
+
+    <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <div class="nav-links" id="primary-nav">
+      <a href="/index.html">الرئيسية</a>
+      <a href="/news.html" class="active">الأخبار</a>
+      <a href="/events.html">الفعاليات</a>
+      <a href="/courses.html">الدورات</a>
+      <a href="/about.html">عن المجلس</a>
+      <a href="/contact.html">اتصل بنا</a>
     </div>
+  </div>
 </nav>
 
-<main class="container" id="main">
+<main class="container" id="main" style="margin-top: 40px;">
+  <section class="section-header">
+    <h1>الأخبار</h1>
+    <p class="muted">كل جديد عن مجلس طلاب خطوة</p>
 
-<section>
-  <h1 data-lang="ar">الأخبار</h1>
-  <h1 data-lang="en" hidden aria-hidden="true">News</h1>
-  <p class="muted" data-lang="ar">كل جديد عن مجلس طلاب خطوة</p>
-  <p class="muted" data-lang="en" hidden aria-hidden="true">All the latest from Khotwa Student Council</p>
+    <div class="tools">
+      <input type="search" id="q" class="search-input" placeholder="ابحث في الأخبار...">
+      <button class="chip active" data-filter="all">الكل</button>
+      <button class="chip" data-filter="ann">إعلانات</button>
+      <button class="chip" data-filter="event">فعاليات</button>
+      <button class="chip" data-filter="media">تغطيات</button>
+    </div>
+  </section>
 
-  <div class="tools">
-    <input id="q" type="search" placeholder="ابحث في الأخبار…">
-
-    <button class="chip" data-filter="all" data-active="true">
-      <span data-lang="ar">الكل</span>
-      <span data-lang="en" hidden aria-hidden="true">All</span>
-    </button>
-    <button class="chip" data-filter="ann">
-      <span data-lang="ar">إعلانات</span>
-      <span data-lang="en" hidden aria-hidden="true">Announcements</span>
-    </button>
-    <button class="chip" data-filter="event">
-      <span data-lang="ar">فعاليات</span>
-      <span data-lang="en" hidden aria-hidden="true">Events</span>
-    </button>
-    <button class="chip" data-filter="media">
-      <span data-lang="ar">تغطيات</span>
-      <span data-lang="en" hidden aria-hidden="true">Coverage</span>
-    </button>
-  </div>
-</section>
-
-<section>
-  <div class="grid grid-3" id="posts">
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-  </div>
-</section>
-
+  <div class="grid" id="posts">
+    <div class="skeleton" style="height: 300px; background: #f0f0f0; border-radius: 12px;"></div>
+    <div class="skeleton" style="height: 300px; background: #f0f0f0; border-radius: 12px;"></div>
+  </section>
 </main>
-
-<footer>
-  <div class="container foot">
-    <span>© <span id="year"></span> Khotwa Student Council</span>
-  </div>
-</footer>
 
 <script>
   let currentCategory = 'all';
   let searchQuery = '';
 
-  // دالة جلب الأخبار وعرضها
   async function loadNews() {
-    const postsContainer = document.getElementById('posts');
-    const lang = localStorage.getItem('khotwa_lang') === 'en' ? 'en' : 'ar';
-    
+    const container = document.getElementById('posts');
+    if (!container) return;
+
     try {
-      // استدعاء الـ API المعدل
       const news = await KhotwaAPI.searchNews(searchQuery, currentCategory !== 'all' ? currentCategory : null);
       
       if (!news || news.length === 0) {
-        postsContainer.innerHTML = `<p class="muted" style="grid-column: 1/-1; text-align: center;">${lang === 'ar' ? 'لا توجد أخبار حالياً.' : 'No news found.'}</p>`;
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">لا توجد أخبار حالياً.</p>';
         return;
       }
 
-      postsContainer.innerHTML = news.map(item => {
-        const title = lang === 'en' ? (item.titleEn || item.titleAr) : (item.titleAr || item.titleEn);
-        const date = new Date(item.createdAt || item.date).toLocaleDateString(lang === 'en' ? 'en-AU' : 'ar-EG', {
-          year: 'numeric', month: 'long', day: 'numeric'
-        });
-
-        return `
-          <article class="news-card" onclick="location.href='/news-detail.html?id=${item.id}'">
-            <img src="${item.imageUrl || '/assets/apple-touch-icon.png'}" 
-                 alt="${title}" 
-                 onerror="this.src='/assets/apple-touch-icon.png'">
-            <div class="body">
-              <span class="meta">${date}</span>
-              <h3>${title}</h3>
-              <span style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">
-                ${lang === 'ar' ? 'اقرأ المزيد ←' : 'Read More ←'}
-              </span>
-            </div>
-          </article>
-        `;
-      }).join('');
-
+      container.innerHTML = news.map(item => `
+        <article class="news-card" onclick="location.href='/news-detail.html?id=${item.id}'">
+          <img src="${item.imageUrl || '/assets/apple-touch-icon.png'}" alt="${item.titleAr}" onerror="this.src='/assets/apple-touch-icon.png'">
+          <div class="news-content">
+            <span class="news-date">${new Date(item.createdAt).toLocaleDateString('ar-EG')}</span>
+            <h3 class="news-title">${item.titleAr}</h3>
+            <a href="/news-detail.html?id=${item.id}" class="read-more">اقرأ المزيد ←</a>
+          </div>
+        </article>
+      `).join('');
     } catch (err) {
-      postsContainer.innerHTML = '<p>Error loading news.</p>';
+      container.innerHTML = '<p>تعذر تحميل الأخبار، تأكد من اتصالك بالسيرفر.</p>';
     }
   }
 
-  // التحكم بالبحث
+  // مستمعات الأحداث للفلاتر والبحث
   document.getElementById('q').addEventListener('input', (e) => {
     searchQuery = e.target.value;
     loadNews();
   });
 
-  // التحكم بالفلاتر (Chips)
   document.querySelectorAll('.chip').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.chip').forEach(b => b.dataset.active = 'false');
-      btn.dataset.active = 'true';
+      document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
       currentCategory = btn.dataset.filter;
       loadNews();
     });
   });
 
-  // سنة الحقوق
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // تشغيل عند التحميل
-  window.addEventListener('DOMContentLoaded', loadNews);
+  document.addEventListener('DOMContentLoaded', loadNews);
 </script>
 
-<script src="/assets/feedback.js"></script>
-<script src="js/menu-toggle.js"></script>
+<script src="/js/menu-toggle.js"></script>
 <script src="/assets/site-settings-loader.js"></script>
-
 </body>
 </html>
