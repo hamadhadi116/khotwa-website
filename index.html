@@ -11,21 +11,71 @@
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
-    /* لمسة جمالية لقسم الترحيب (Hero Section) */
+    /* تحسين قسم الـ Hero */
     .hero {
-      padding: 5rem 0;
-      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      padding: 6rem 0;
+      background: radial-gradient(circle at top right, #f8fafc, #e2e8f0);
       text-align: center;
       border-bottom: 1px solid var(--ring);
+      position: relative;
+      overflow: hidden;
     }
-    .hero h1 { font-size: 3rem; color: var(--primary); margin-bottom: 1rem; }
-    .hero p { font-size: 1.25rem; color: #64748b; max-width: 700px; margin: 0 auto 2rem; }
+    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--primary); margin-bottom: 1.5rem; font-weight: 800; }
+    .hero p { font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto 2.5rem; line-height: 1.8; }
     
-    .cta-buttons { display: flex; gap: 1rem; justify-content: center; }
-    .btn-main { padding: 0.8rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; transition: 0.3s; }
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-secondary { background: white; color: var(--primary); border: 1px solid var(--primary); }
+    /* الأزرار المحسنة */
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-main { 
+      padding: 1rem 2.5rem; 
+      border-radius: 14px; 
+      text-decoration: none; 
+      font-weight: 700; 
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .btn-primary { background: var(--primary); color: white; border: none; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(30, 64, 175, 0.2); }
+    .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
+    .btn-secondary:hover { background: #f1f5f9; transform: translateY(-3px); }
+
+    /* قسم الإحصائيات (تحسين إضافي) */
+    .stats-section { padding: 4rem 0; background: white; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
+    .stat-item h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+    .stat-item p { color: #64748b; font-weight: 600; }
+
+    /* الفوتر الجديد والاحترافي */
+    .main-footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 4rem 0 2rem;
+      margin-top: 4rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-col h4 { color: var(--primary); margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .footer-col p { color: #64748b; line-height: 1.6; font-size: 0.95rem; }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 0.8rem; }
+    .footer-links a { color: #64748b; text-decoration: none; transition: 0.2s; }
+    .footer-links a:hover { color: var(--primary); padding-inline-start: 5px; }
     
+    .social-icons { display: flex; gap: 1rem; margin-top: 1rem; }
+    .social-icons img { width: 24px; transition: 0.3s; }
+    .social-icons a:hover img { transform: scale(1.2); }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid #f1f5f9;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -40,17 +90,14 @@
       </a>
 
       <button id="menu-toggle" class="menu-toggle" aria-label="القائمة">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
 
-      <div class="nav-links" id="primary-nav" data-open="false">
+      <div class="nav-links" id="primary-nav">
         <a href="/index.html" class="active"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
         <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
         <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
         <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-        
         <button class="lang-toggle" id="lang-toggle">
           <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
         </button>
@@ -62,37 +109,72 @@
     <div class="container">
       <h1 data-lang="ar">أهلاً بك في مجلس خطوة</h1>
       <h1 data-lang="en" hidden>Welcome to Khotwa Council</h1>
-      <p data-lang="ar">منصتكم الأولى للتواصل، التطوير، والمشاركة الطلابية في مدينة ملبورن.</p>
-      <p data-lang="en" hidden>Your primary platform for connection, development, and student participation in Melbourne.</p>
+      <p data-lang="ar">البيت الجامعي لطلاب برنامج خطوة في ملبورن. نجمع بين العلم، المبادرة، والروح الجماعية لتطوير مستقبلنا.</p>
+      <p data-lang="en" hidden>The university home for Khotwa program students in Melbourne. We combine knowledge, initiative, and community spirit.</p>
       
       <div class="cta-buttons">
         <a href="/events.html" class="btn-main btn-primary">
-          <span data-lang="ar">استكشف الفعاليات</span>
-          <span data-lang="en" hidden>Explore Events</span>
+          <span data-lang="ar">استكشف الفعاليات</span><span data-lang="en" hidden>Explore Events</span>
         </a>
         <a href="/about.html" class="btn-main btn-secondary">
-          <span data-lang="ar">من نحن</span>
-          <span data-lang="en" hidden>About Us</span>
+          <span data-lang="ar">تعرف علينا</span><span data-lang="en" hidden>About Us</span>
         </a>
       </div>
     </div>
   </header>
 
-  <footer style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 3rem 0; margin-top: 5rem;">
+  <section class="stats-section">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <h2 id="count1">+50</h2>
+        <p data-lang="ar">فعالية سنوياً</p><p data-lang="en" hidden>Events Yearly</p>
+      </div>
+      <div class="stat-item">
+        <h2 id="count2">+200</h2>
+        <p data-lang="ar">طالب مستفيد</p><p data-lang="en" hidden>Students Helped</p>
+      </div>
+      <div class="stat-item">
+        <h2 id="count3">100%</h2>
+        <p data-lang="ar">دعم طلابي</p><p data-lang="en" hidden>Student Support</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="main-footer">
     <div class="container">
-      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem;">
-        <div>
-          <strong data-lang="ar">مجلس طلاب خطوة</strong>
-          <strong data-lang="en" hidden>Khotwa Council</strong>
-          <p style="font-size: 0.9rem; color: #64748b;">© <span id="year"></span> | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 data-lang="ar">مجلس طلاب خطوة</h4>
+          <h4 data-lang="en" hidden>Khotwa Council</h4>
+          <p data-lang="ar">مجلس طلابي تطوعي يهدف لتمثيل الطلاب وتقديم الدعم الأكاديمي والاجتماعي في ملبورن، أستراليا.</p>
+          <p data-lang="en" hidden>A volunteer student council aiming to represent students and provide academic and social support in Melbourne.</p>
         </div>
-        <div style="display: flex; gap: 1.5rem;">
-          <a href="https://instagram.com/khotwa.sc" target="_blank" style="color: #e1306c; text-decoration: none; font-weight: bold;">Instagram</a>
-          <a href="/contact.html" style="color: var(--primary); text-decoration: none;">
-            <span data-lang="ar">تواصل معنا</span>
-            <span data-lang="en" hidden>Contact</span>
-          </a>
+        
+        <div class="footer-col">
+          <h4 data-lang="ar">روابط سريعة</h4>
+          <h4 data-lang="en" hidden>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About Us</span></a></li>
+            <li><a href="/news.html"><span data-lang="ar">آخر الأخبار</span><span data-lang="en" hidden>Latest News</span></a></li>
+            <li><a href="/calendar.html"><span data-lang="ar">التقويم الدراسي</span><span data-lang="en" hidden>Academic Calendar</span></a></li>
+            <li><a href="/contact.html"><span data-lang="ar">تواصل معنا</span><span data-lang="en" hidden>Contact</span></a></li>
+          </ul>
         </div>
+
+        <div class="footer-col">
+          <h4 data-lang="ar">تابعنا على الانستقرام</h4>
+          <h4 data-lang="en" hidden>Follow Us</h4>
+          <p data-lang="ar">كن أول من يعرف بفعالياتنا الجديدة.</p>
+          <div class="social-icons">
+            <a href="https://instagram.com/khotwa.sc" target="_blank">
+               <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> Khotwa Student Council | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
       </div>
     </div>
   </footer>
@@ -101,18 +183,16 @@
     // تحديث السنة
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // وظيفة تبديل اللغة الموحدة
+    // وظيفة تبديل اللغة
     function updateUI(lang) {
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      
-      // إظهار وإخفاء العناصر بناءً على اللغة
       document.querySelectorAll('[data-lang]').forEach(el => {
         el.hidden = el.getAttribute('data-lang') !== lang;
       });
+      document.getElementById('lang-toggle').textContent = lang === 'ar' ? 'English' : 'العربية';
     }
 
-    // تشغيل نظام اللغة عند التحميل
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
       updateUI(savedLang);
