@@ -5,65 +5,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الفعاليات – Khotwa</title>
   
-  <meta name="description" content="تابع أحدث فعاليات وأنشطة مجلس طلاب خطوة في ملبورن.">
-  
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
-    :root {
-      --primary: #1e40af;
-      --ring: #e2e8f0;
-      --sh-md: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-
-    /* تحسينات شبكة الفعاليات */
-    .events-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 2rem; 
-      padding: 2rem 0 4rem;
-    }
-    
-    .event-card {
-      background: var(--surface, #fff); 
-      border: 1px solid var(--ring); 
-      border-radius: 16px;
-      overflow: hidden; 
-      transition: all 0.3s ease;
-      display: flex; 
-      flex-direction: column;
-      height: 100%;
-    }
-    
-    .event-card:hover { transform: translateY(-8px); box-shadow: var(--sh-md); }
+    :root { --primary: #1e40af; --ring: #e2e8f0; }
+    .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; padding: 2rem 0; }
+    .event-card { background: var(--surface, #fff); border: 1px solid var(--ring); border-radius: 16px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; height: 100%; cursor: pointer; }
+    .event-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
     .card-img-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; }
     .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .category-badge {
-      position: absolute; top: 12px; left: 12px;
-      background: var(--primary); color: white;
-      padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
-    }
-
-    .card-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+    .category-badge { position: absolute; top: 12px; left: 12px; background: var(--primary); color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .card-body { padding: 1.5rem; flex-grow: 1; }
     .card-meta { display: flex; gap: 15px; font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; }
-    .card-body h3 { margin: 0 0 0.75rem; font-size: 1.25rem; color: var(--text); }
-    .card-body p { font-size: 0.95rem; color: #64748b; line-height: 1.6; margin-bottom: 1.5rem; }
-
-    /* أزرار الفلاتر */
-    .tools-bar { margin: 2rem 0; display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
-    .filter-group { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
-    .chip {
-      padding: 0.6rem 1.5rem; border-radius: 25px; border: 1px solid var(--ring);
-      background: white; cursor: pointer; font-weight: 500; transition: 0.2s;
-    }
-    .chip[data-active="true"] { background: var(--primary); color: white; border-color: var(--primary); }
-
-    /* الهيكل المستجيب للناف بار */
-    .nav-links[data-open="true"] { display: flex !important; }
+    .tools-bar { margin: 2rem 0; display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+    .chip { padding: 0.6rem 1.5rem; border-radius: 25px; border: 1px solid var(--ring); background: white; cursor: pointer; }
+    .chip[data-active="true"] { background: var(--primary); color: white; }
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -76,152 +35,116 @@
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
-
-      <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+      <button id="menu-toggle" class="menu-toggle">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
-
       <div class="nav-links" id="primary-nav" data-open="false">
         <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
         <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
         <a href="/events.html" class="active"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
         <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden>Contact</span></a>
-        
-        <button class="lang-toggle" id="lang-toggle">
-          <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
-        </button>
+        <button class="lang-toggle" id="lang-toggle"><span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span></button>
       </div>
     </div>
   </nav>
 
   <main class="container">
-    <header style="text-align: center; padding: 3rem 0 1rem;">
-      <h1 data-lang="ar" style="font-size: 2.8rem; color: var(--primary);">الفعاليات القادمة</h1>
-      <h1 data-lang="en" hidden style="font-size: 2.8rem; color: var(--primary);">Upcoming Events</h1>
-      <p style="color: #64748b;">
-        <span data-lang="ar">اكتشف وشارك في فعالياتنا المميزة بمدينة ملبورن</span>
-        <span data-lang="en" hidden>Discover and participate in our events in Melbourne</span>
-      </p>
+    <header style="text-align: center; padding: 3rem 0;">
+      <h1 data-lang="ar">الفعاليات القادمة</h1>
+      <h1 data-lang="en" hidden>Upcoming Events</h1>
     </header>
 
     <div class="tools-bar">
-      <div style="position: relative; width: 100%; max-width: 500px;">
-        <input type="text" id="eventSearch" style="width: 100%; padding: 0.8rem 1.2rem; border-radius: 12px; border: 1px solid var(--ring);" 
-               placeholder="ابحث عن فعالية...">
-      </div>
-      
-      <div class="filter-group">
-        <button class="chip" data-filter="all" data-active="true" data-lang="ar">الكل</button>
-        <button class="chip" data-filter="all" data-active="true" data-lang="en" hidden>All</button>
-        <button class="chip" data-filter="social"><span data-lang="ar">اجتماعي</span><span data-lang="en" hidden>Social</span></button>
-        <button class="chip" data-filter="educational"><span data-lang="ar">تعليمي</span><span data-lang="en" hidden>Educational</span></button>
+      <input type="text" id="eventSearch" style="width: 100%; max-width: 400px; padding: 0.8rem; border-radius: 12px; border: 1px solid var(--ring);" placeholder="بحث...">
+      <div class="filter-group" style="display:flex; gap:10px;">
+        <button class="chip" data-filter="all" data-active="true">الكل / All</button>
+        <button class="chip" data-filter="social">اجتماعي</button>
       </div>
     </div>
 
-    <div class="events-grid" id="eventsContainer">
-      </div>
+    <div class="events-grid" id="eventsContainer"></div>
   </main>
+
+  <footer style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 3rem 0; margin-top: 4rem;">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem;">
+        <div>
+          <strong data-lang="ar">مجلس طلاب خطوة</strong>
+          <strong data-lang="en" hidden>Khotwa Council</strong>
+          <p style="font-size: 0.9rem; color: #64748b;">© <span id="year"></span> | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
+        </div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="https://instagram.com/khotwa.sc" style="color: #e1306c; text-decoration: none; font-weight: bold;">Instagram</a>
+          <a href="/contact.html" style="color: var(--primary); text-decoration: none;"><span data-lang="ar">تواصل معنا</span><span data-lang="en" hidden>Contact</span></a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script src="/assets/khotwa-api.js"></script>
   <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
     let currentCategory = 'all';
     let searchQuery = '';
 
-    async function renderEvents() {
+    async function render() {
       const container = document.getElementById('eventsContainer');
       const lang = localStorage.getItem('khotwa_lang') || 'ar';
       const isAr = lang === 'ar';
-
+      
       try {
-        const events = await KhotwaAPI.getEvents(); // نفضل استخدام getEvents وعمل فلترة يدوية لضمان الدقة
-        
-        // منطق الفلترة والبحث
+        const events = await KhotwaAPI.getEvents();
         const filtered = events.filter(ev => {
           const title = (isAr ? ev.titleAr : ev.titleEn) || ev.title || "";
-          const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase());
-          const matchesCat = currentCategory === 'all' || ev.category === currentCategory;
-          return matchesSearch && matchesCat;
+          return title.toLowerCase().includes(searchQuery.toLowerCase()) && (currentCategory === 'all' || ev.category === currentCategory);
         });
-
-        if (filtered.length === 0) {
-          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 3rem;">${isAr ? 'لا توجد فعاليات حالياً.' : 'No events found.'}</p>`;
-          return;
-        }
 
         container.innerHTML = filtered.map(ev => {
           const dateObj = new Date(ev.eventDate || ev.date);
-          const dateStr = !isNaN(dateObj.getTime()) 
-            ? dateObj.toLocaleDateString(isAr ? 'ar-EG' : 'en-AU', { day: 'numeric', month: 'long' })
-            : "";
-          
-          const title = isAr ? (ev.titleAr || ev.title) : (ev.titleEn || ev.title);
-          const desc = isAr ? (ev.descriptionAr || ev.description) : (ev.descriptionEn || ev.description);
-
+          const dateStr = !isNaN(dateObj.getTime()) ? dateObj.toLocaleDateString(isAr ? 'ar-EG' : 'en-AU', {day:'numeric', month:'long'}) : "";
           return `
             <article class="event-card" onclick="location.href='/event-detail.html?id=${ev.id}'">
               <div class="card-img-wrapper">
-                <span class="category-badge">${ev.category || (isAr ? 'عام' : 'General')}</span>
+                <span class="category-badge">${ev.category || 'Event'}</span>
                 <img src="${ev.imageUrl || '/assets/apple-touch-icon.png'}" alt="Event">
               </div>
               <div class="card-body">
-                <div class="card-meta">
-                  <span>📅 ${dateStr}</span>
-                  <span>📍 ${ev.location || (isAr ? 'ملبورن' : 'Melbourne')}</span>
-                </div>
-                <h3>${title}</h3>
-                <p>${desc ? desc.substring(0, 100) + '...' : ''}</p>
-                <div style="margin-top: auto; color: var(--primary); font-weight: 600;">
-                   ${isAr ? 'التفاصيل والتسجيل ←' : 'Details & Register ←'}
-                </div>
+                <div class="card-meta"><span>📅 ${dateStr}</span></div>
+                <h3>${isAr ? (ev.titleAr || ev.title) : (ev.titleEn || ev.title)}</h3>
+                <p style="color:#64748b; font-size:0.9rem;">${isAr ? 'اضغط لمعرفة التفاصيل والتسجيل' : 'Click for details and registration'}</p>
               </div>
             </article>
           `;
         }).join('');
-      } catch (err) {
-        container.innerHTML = '<p>Error loading events.</p>';
-      }
+      } catch (e) { container.innerHTML = "Error loading data."; }
     }
 
-    // لغة الواجهة
-    function updateLangUI(lang) {
+    function updateUI(lang) {
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        el.hidden = el.getAttribute('data-lang') !== lang;
-      });
-      renderEvents();
+      document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== lang);
+      render();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
-      updateLangUI(savedLang);
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      const newLang = localStorage.getItem('khotwa_lang') === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('khotwa_lang', newLang);
+      updateUI(newLang);
+    });
 
-      document.getElementById('lang-toggle').addEventListener('click', () => {
-        const nextLang = localStorage.getItem('khotwa_lang') === 'ar' ? 'en' : 'ar';
-        localStorage.setItem('khotwa_lang', nextLang);
-        updateLangUI(nextLang);
-      });
+    document.getElementById('eventSearch').addEventListener('input', (e) => { searchQuery = e.target.value; render(); });
 
-      document.getElementById('eventSearch').addEventListener('input', (e) => {
-        searchQuery = e.target.value;
-        renderEvents();
-      });
-
-      document.querySelectorAll('.chip').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.chip').forEach(b => b.dataset.active = 'false');
-          btn.dataset.active = 'true';
-          currentCategory = btn.dataset.filter;
-          renderEvents();
-        });
+    document.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(b => b.dataset.active = "false");
+        btn.dataset.active = "true";
+        currentCategory = btn.dataset.filter;
+        render();
       });
     });
-  </script>
 
+    updateUI(localStorage.getItem('khotwa_lang') || 'ar');
+  </script>
   <script src="/js/menu-toggle.js"></script>
-  <script src="/assets/site-settings-loader.js"></script>
 </body>
 </html>
