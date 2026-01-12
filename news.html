@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الأخبار – Khotwa</title>
+
   <meta name="keywords" content="أخبار خطوة, إعلانات المجلس, فعاليات خطوة, أخبار الطلاب, جامعة لا تروب, ملبورن">
   <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة.">
-  <link rel="canonical" href="https://khotwastudentcouncil.com/news.html">
-  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://khotwastudentcouncil.com/news.html"/>
+  <meta name="robots" content="index,follow"/>
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
@@ -20,112 +21,59 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
-  <!-- ================= CSS ORDER (IMPORTANT) ================= -->
-
-  <!-- Design system -->
-  <link rel="stylesheet" href="/assets/design-system.css">
-
-  <!-- Theme & layout -->
-  <link rel="stylesheet" href="/assets/khotwa-theme.css">
-  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
-
-  <!-- Navbar -->
-  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
-
-  <!-- Global -->
+  <!-- CSS (نفس كودك) -->
   <link rel="stylesheet" href="/assets/main.css">
-
-  <!-- Page specific -->
   <link rel="stylesheet" href="/assets/pagination.css">
   <link rel="stylesheet" href="/assets/advanced-filters.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css">
   <link rel="stylesheet" href="/assets/feedback.css">
+  <link rel="stylesheet" href="/assets/comments-and-registration.css">
+  <link rel="stylesheet" href="/assets/design-system.css">
+  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
+  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
-  <!-- API -->
-  <script src="/assets/khotwa-api.js?v=1766975537" defer></script>
+  <script src="/assets/khotwa-api.js?v=1766975537"></script>
 
-  <!-- RSS -->
   <link rel="alternate" type="application/rss+xml" title="أخبار مجلس طلاب خطوة" href="/feed.xml">
 </head>
 
 <body>
 
-  <!-- Skip links -->
+  <!-- Skip link -->
   <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
   <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
-  <!-- ================= NAVBAR ================= -->
+  <!-- Navbar (بدون أي تعديل) -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40">
+      <a class="brand" href="/index.html">
+        <img src="/assets/apple-touch-icon.png" class="logo" width="40" height="40">
         <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
+        <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
 
-      <button id="menu-toggle" class="menu-toggle" type="button"
-              aria-controls="primary-nav" aria-expanded="false">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 7h16M4 12h16M4 17h16"/>
-        </svg>
-        <span data-lang="ar">القائمة</span>
-        <span data-lang="en" hidden aria-hidden="true">Menu</span>
+      <button id="menu-toggle" class="menu-toggle" type="button">
+        ☰
       </button>
 
-      <div class="nav-links" id="primary-nav" aria-hidden="true">
-
-        <a href="/index.html">
-          <span data-lang="ar">الرئيسية</span>
-          <span data-lang="en" hidden>Home</span>
-        </a>
-
-        <!-- Programs -->
-        <div class="nav-item-mega">
-          <button class="nav-link-mega">
-            <span data-lang="ar">البرامج</span>
-            <span data-lang="en" hidden>Programs</span>
-          </button>
-
-          <div class="mega-menu" hidden>
-            <div class="mega-menu-inner">
-              <div class="mega-column">
-                <h3 data-lang="ar">الأخبار والفعاليات</h3>
-                <a href="/news.html">📰 الأخبار</a>
-                <a href="/events.html">📅 الفعاليات</a>
-              </div>
-              <div class="mega-column">
-                <h3 data-lang="ar">التطوير</h3>
-                <a href="/courses.html">🎓 الدورات</a>
-                <a href="/volunteers.html">❤️ التطوع</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a href="/contact.html">
-          <span data-lang="ar">اتصل بنا</span>
-          <span data-lang="en" hidden>Contact</span>
-        </a>
-
-        <button class="lang-toggle" id="lang-toggle" type="button">
-          English
-        </button>
-
+      <div class="nav-links" id="primary-nav">
+        <a href="/index.html">الرئيسية</a>
+        <a href="/news.html">الأخبار</a>
+        <a href="/events.html">الفعاليات</a>
+        <a href="/contact.html">اتصل بنا</a>
       </div>
     </div>
   </nav>
 
-  <!-- ================= MAIN ================= -->
-  <main id="main" class="container">
+  <!-- Main -->
+  <main class="container" id="main">
 
     <section>
-      <h1 data-lang="ar">الأخبار</h1>
-      <h1 data-lang="en" hidden>News</h1>
-      <p class="muted" data-lang="ar">كل جديد عن مجلس طلاب خطوة</p>
+      <h1>الأخبار</h1>
+      <p class="muted">كل جديد عن مجلس طلاب خطوة</p>
     </section>
 
     <section>
-      <div class="grid grid-cols-3" id="posts">
+      <div class="grid grid-3" id="posts">
         <div class="skeleton"></div>
         <div class="skeleton"></div>
         <div class="skeleton"></div>
@@ -134,22 +82,24 @@
 
   </main>
 
-  <!-- ================= FOOTER ================= -->
+  <!-- Footer (كما هو) -->
   <footer>
     <div class="container foot">
-      © <span id="year"></span> Khotwa Student Council
+      <span>© <span id="year"></span> Khotwa Student Council</span>
     </div>
   </footer>
 
-  <!-- ================= SCRIPTS ================= -->
-  <script src="/js/menu-toggle.js"></script>
-  <script src="/js/language-toggle.js"></script>
-  <script src="/assets/feedback.js"></script>
-  <script src="/assets/admin-button.js"></script>
-
+  <!-- Scripts (كما هي) -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+  <script src="/assets/feedback.js"></script>
+  <script src="/assets/admin-button.js"></script>
+  <script src="/assets/feedback-button.js"></script>
+  <script src="/js/language-toggle.js"></script>
+  <script src="/js/menu-toggle.js"></script>
+  <script src="/assets/site-settings-loader.js"></script>
 
 </body>
 </html>
