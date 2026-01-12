@@ -21,85 +21,317 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
 
-  <!-- CSS (نفس كودك) -->
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/pagination.css">
   <link rel="stylesheet" href="/assets/advanced-filters.css">
   <link rel="stylesheet" href="/assets/feedback.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css">
-  <link rel="stylesheet" href="/assets/design-system.css">
-  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
-  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
+  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
 
   <script src="/assets/khotwa-api.js?v=1766975537"></script>
-
-  <link rel="alternate" type="application/rss+xml" title="أخبار مجلس طلاب خطوة" href="/feed.xml">
+  <link rel="stylesheet" href="/assets/design-system.css">
+  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
+    <link rel="stylesheet" href="assets/enhanced-navbar.css">
 </head>
 
 <body>
 
-  <!-- Skip link -->
+  <link rel="stylesheet" href="/assets/feedback.css">
+  <link rel="alternate" type="application/rss+xml" title="أخبار مجلس طلاب خطوة" href="/feed.xml">
+  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
+  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
+</head>
+<body>
+  <!-- Skip link (لغتين) -->
   <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
   <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
-  <!-- Navbar (بدون أي تعديل) -->
+  <!-- Navbar -->
+<!-- Navbar -->
   <nav class="navbar" aria-label="الشريط العلوي">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html">
-        <img src="/assets/apple-touch-icon.png" class="logo" width="40" height="40">
+      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40" decoding="async" loading="lazy">
         <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden>Khotwa Student Council</span>
+        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
       </a>
 
-      <button id="menu-toggle" class="menu-toggle" type="button">
-        ☰
+      <button id="menu-toggle" class="menu-toggle" type="button"
+              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
       </button>
 
-      <div class="nav-links" id="primary-nav">
-        <a href="/index.html">الرئيسية</a>
-        <a href="/news.html">الأخبار</a>
-        <a href="/events.html">الفعاليات</a>
-        <a href="/contact.html">اتصل بنا</a>
+      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
+        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden aria-hidden="true">Home</span></a>
+        
+        <!-- Mega Menu: البرامج -->
+        <div class="nav-item-mega" data-mega="programs">
+          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-programs">
+            <span data-lang="ar">البرامج</span>
+            <span data-lang="en" hidden aria-hidden="true">Programs</span>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </button>
+          <div class="mega-menu" id="mega-programs" hidden>
+            <div class="mega-menu-inner">
+              <div class="mega-column">
+                <h3 data-lang="ar">الأخبار والفعاليات</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">News & Events</h3>
+                <a href="/news.html"><span data-lang="ar">📰 الأخبار</span><span data-lang="en" hidden aria-hidden="true">📰 News</span></a>
+                <a href="/events.html"><span data-lang="ar">📅 الفعاليات</span><span data-lang="en" hidden aria-hidden="true">📅 Events</span></a>
+                <a href="/calendar.html"><span data-lang="ar">🗓️ التقويم</span><span data-lang="en" hidden aria-hidden="true">🗓️ Calendar</span></a>
+              </div>
+              <div class="mega-column">
+                <h3 data-lang="ar">التطوير والتدريب</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">Development & Training</h3>
+                <a href="/courses.html"><span data-lang="ar">🎓 الدورات والورش</span><span data-lang="en" hidden aria-hidden="true">🎓 Courses & Workshops</span></a>
+                <a href="/volunteers.html"><span data-lang="ar">❤️ الفرص التطوعية</span><span data-lang="en" hidden aria-hidden="true">❤️ Volunteer Opportunities</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mega Menu: عن المجلس -->
+        <div class="nav-item-mega" data-mega="council">
+          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-council">
+            <span data-lang="ar">عن المجلس</span>
+            <span data-lang="en" hidden aria-hidden="true">About Council</span>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </button>
+          <div class="mega-menu" id="mega-council" hidden>
+            <div class="mega-menu-inner">
+              <div class="mega-column">
+                <h3 data-lang="ar">معلومات عنا</h3>
+                <h3 data-lang="en" hidden aria-hidden="true">About Us</h3>
+                <a href="/about.html"><span data-lang="ar">👥 من نحن</span><span data-lang="en" hidden aria-hidden="true">👥 About Us</span></a>
+                <a href="/gallery.html"><span data-lang="ar">📸 معرض الصور</span><span data-lang="en" hidden aria-hidden="true">📸 Gallery</span></a>
+                <a href="/faq.html"><span data-lang="ar">❓ الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">❓ FAQ</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
+        
+        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="تغيير اللغة">
+          <span data-lang="ar">English</span><span data-lang="en" hidden aria-hidden="true">عربي</span>
+        </button>
       </div>
     </div>
   </nav>
 
-  <!-- Main -->
-  <main class="container" id="main">
+<main class="container" id="main">
 
-    <section>
-      <h1>الأخبار</h1>
-      <p class="muted">كل جديد عن مجلس طلاب خطوة</p>
-    </section>
+<section>
+  <h1 data-lang="ar">الأخبار</h1>
+  <h1 data-lang="en" hidden aria-hidden="true">News</h1>
+  <p class="muted" data-lang="ar">كل جديد عن مجلس طلاب خطوة</p>
+  <p class="muted" data-lang="en" hidden aria-hidden="true">All the latest from Khotwa Student Council</p>
 
-    <section>
-      <div class="grid grid-3" id="posts">
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-      </div>
-    </section>
+  <div class="tools">
+    <input id="q" type="search" data-lang-placeholder-ar="ابحث في الأخبار…" data-lang-placeholder-en="Search news…" placeholder="ابحث في الأخبار…">
 
-  </main>
+    <button class="chip" data-filter="all" data-active="true">
+      <span data-lang="ar">الكل</span>
+      <span data-lang="en" hidden aria-hidden="true">All</span>
+    </button>
+    <button class="chip" data-filter="ann">
+      <span data-lang="ar">إعلانات</span>
+      <span data-lang="en" hidden aria-hidden="true">Announcements</span>
+    </button>
+    <button class="chip" data-filter="event">
+      <span data-lang="ar">فعاليات</span>
+      <span data-lang="en" hidden aria-hidden="true">Events</span>
+    </button>
+    <button class="chip" data-filter="media">
+      <span data-lang="ar">تغطيات</span>
+      <span data-lang="en" hidden aria-hidden="true">Coverage</span>
+    </button>
+  </div>
+</section>
 
-  <!-- Footer (كما هو) -->
-  <footer>
-    <div class="container foot">
-      <span>© <span id="year"></span> Khotwa Student Council</span>
-    </div>
-  </footer>
+<section>
+  <div class="grid grid-3" id="posts">
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  </div>
+</section>
 
-  <!-- Scripts (كما هي) -->
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+</main>
 
-  <script src="/assets/feedback.js"></script>
+<footer>
+  <div class="container foot">
+    <span>© <span id="year"></span> Khotwa Student Council</span>
+  </div>
+</footer>
+
+<script>
+// Mega Menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const megaItems = document.querySelectorAll('.nav-item-mega');
+  
+  megaItems.forEach(item => {
+    const button = item.querySelector('.nav-link-mega');
+    const menu = item.querySelector('.mega-menu');
+    
+    if (!button || !menu) return;
+    
+    // Desktop: hover
+    item.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 980) {
+        menu.hidden = false;
+        button.setAttribute('aria-expanded', 'true');
+      }
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      if (window.innerWidth > 980) {
+        menu.hidden = true;
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    // Mobile: click
+    button.addEventListener('click', (e) => {
+      if (window.innerWidth <= 980) {
+        e.preventDefault();
+        const isOpen = !menu.hidden;
+        menu.hidden = isOpen;
+        button.setAttribute('aria-expanded', !isOpen);
+      }
+    });
+  });
+  
+  // Close all menus on resize
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.mega-menu').forEach(menu => {
+      menu.hidden = true;
+    });
+    document.querySelectorAll('.nav-link-mega').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+});
+</script>
+
+<script>
+(function () {
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const postsEl = document.getElementById('posts');
+  const qInput  = document.getElementById('q');
+  const chips   = document.querySelectorAll('.chip');
+
+  let currentQuery = '';
+  let currentCategory = 'all';
+
+  async function loadNews() {
+    const currentLang = localStorage.getItem('language') || 'ar';
+    const loadingText = currentLang === 'ar' ? 'جارٍ التحميل…' : 'Loading…';
+    const noNewsText = currentLang === 'ar' ? 'لا توجد أخبار.' : 'No news found.';
+    const errorText = currentLang === 'ar' ? 'تعذر تحميل الأخبار.' : 'Failed to load news.';
+    const readMoreText = currentLang === 'ar' ? 'اقرأ المزيد ←' : 'Read More →';
+
+    postsEl.innerHTML = `<div class="muted">${loadingText}</div>`;
+
+    try {
+      let items;
+
+      if (currentQuery || currentCategory !== 'all') {
+        items = await KhotwaAPI.searchNews(
+          currentQuery,
+          currentCategory === 'all' ? null : currentCategory,
+          'newest'
+        );
+      } else {
+        items = await KhotwaAPI.getNews();
+      }
+
+      postsEl.innerHTML = '';
+
+      if (!items || items.length === 0) {
+        postsEl.innerHTML = `<div class="muted">${noNewsText}</div>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const article = document.createElement('article');
+        article.className = 'post';
+        article.style.cursor = 'pointer';
+        article.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+
+        const title = currentLang === 'en' ? (item.titleEn || item.titleAr || '') : (item.titleAr || item.titleEn || '');
+        const content = currentLang === 'en' ? (item.contentEn || item.contentAr || '') : (item.contentAr || item.contentEn || '');
+        
+        article.innerHTML = `
+          ${item.imageUrl ? `<img src="${item.imageUrl}" alt="${title}" style="width:100%;height:auto;border-radius:8px">` : ''}
+          <div class="body">
+            <h3>${title}</h3>
+            <p class="muted">${content.substring(0,150)}${content.length > 150 ? '...' : ''}</p>
+            <span style="color: #10b981; font-weight: 600; font-size: 0.9rem;">${readMoreText}</span>
+          </div>
+        `;
+
+        article.addEventListener('click', () => {
+          window.location.href = `/news-detail.html?id=${item.id}`;
+        });
+
+        article.addEventListener('mouseenter', () => {
+          article.style.transform = 'translateY(-4px)';
+          article.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+        });
+
+        article.addEventListener('mouseleave', () => {
+          article.style.transform = 'translateY(0)';
+          article.style.boxShadow = '';
+        });
+
+        postsEl.appendChild(article);
+      });
+
+    } catch (err) {
+      console.error(err);
+      postsEl.innerHTML = `<div class="muted">${errorText}</div>`;
+    }
+  }
+
+  qInput.addEventListener('input', e => {
+    currentQuery = e.target.value.trim();
+    loadNews();
+  });
+
+  chips.forEach(btn => {
+    btn.addEventListener('click', () => {
+      chips.forEach(b => b.dataset.active = 'false');
+      btn.dataset.active = 'true';
+      currentCategory = btn.dataset.filter;
+      loadNews();
+    });
+  });
+
+  loadNews();
+
+  // Update placeholder on language change
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'language') {
+      const currentLang = e.newValue || 'ar';
+      qInput.placeholder = currentLang === 'ar' ? 'ابحث في الأخبار…' : 'Search news…';
+      loadNews();
+    }
+  });
+
+})();
+</script>
+
+<script src="/assets/feedback.js"></script>
+
   <script src="/assets/admin-button.js"></script>
   <script src="/assets/feedback-button.js"></script>
-  <script src="/js/language-toggle.js"></script>
-  <script src="/js/menu-toggle.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/settings-loader.js"></script>
+    <script src="/js/language-toggle.js"></script>
+<script src="js/menu-toggle.js"></script>
   <script src="/assets/site-settings-loader.js"></script>
-
 </body>
 </html>
