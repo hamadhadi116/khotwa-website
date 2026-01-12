@@ -1,141 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الفعاليات – Khotwa</title>
   
-  <meta name="description" content="تابع أحدث فعاليات وأنشطة مجلس طلاب خطوة في ملبورن. سجل الآن وشارك في الأنشطة الطلابية.">
-  <link rel="canonical" href="https://khotwastudentcouncil.com/events.html"/>
+  <meta name="description" content="تابع أحدث فعاليات وأنشطة مجلس طلاب خطوة في ملبورن.">
   
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="/assets/design-system.css">
+  <link rel="stylesheet" href="/assets/khotwa-redesign.css">
+  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
+
   <style>
     :root {
-      --primary: #1e40af; --primary-hover: #1d4ed8;
-      --text: #0f172a; --muted: #64748b;
-      --surface: #ffffff; --card: #f8fafc;
-      --ring: #e2e8f0; --r-lg: 16px;
+      --primary: #1e40af;
+      --ring: #e2e8f0;
       --sh-md: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     }
 
-    * { box-sizing: border-box; transition: all 0.2s ease; }
-    body {
-      margin: 0; font-family: system-ui, -apple-system, sans-serif;
-      color: var(--text); background: var(--surface); line-height: 1.6;
+    /* تحسينات شبكة الفعاليات */
+    .events-grid {
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem; 
+      padding: 2rem 0 4rem;
     }
-    .container { width: min(1200px, 92%); margin-inline: auto; }
+    
+    .event-card {
+      background: var(--surface, #fff); 
+      border: 1px solid var(--ring); 
+      border-radius: 16px;
+      overflow: hidden; 
+      transition: all 0.3s ease;
+      display: flex; 
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .event-card:hover { transform: translateY(-8px); box-shadow: var(--sh-md); }
+    .card-img-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; }
+    .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .category-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--primary); color: white;
+      padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+    }
 
-    /* Navbar */
-    .navbar {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(10px); border-bottom: 1px solid var(--ring);
-      padding: 0.75rem 0;
-    }
-    .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; }
-    .brand img { width: 35px; height: 35px; border-radius: 8px; }
+    .card-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+    .card-meta { display: flex; gap: 15px; font-size: 0.85rem; color: #64748b; margin-bottom: 1rem; }
+    .card-body h3 { margin: 0 0 0.75rem; font-size: 1.25rem; color: var(--text); }
+    .card-body p { font-size: 0.95rem; color: #64748b; line-height: 1.6; margin-bottom: 1.5rem; }
 
-    /* Section Head */
-    .section-head { padding: 3rem 0 1rem; text-align: center; }
-    .section-head h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--primary); }
-
-    /* Filters & Search */
-    .tools-bar {
-      display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
-      align-items: center; justify-content: center;
-    }
-    .search-box {
-      position: relative; flex: 1; min-width: 300px;
-    }
-    .search-box input {
-      width: 100%; padding: 0.8rem 1rem; padding-right: 2.5rem;
-      border: 1px solid var(--ring); border-radius: 12px; outline: none;
-    }
-    .search-box svg { position: absolute; right: 12px; top: 30%; color: var(--muted); }
-
-    .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    /* أزرار الفلاتر */
+    .tools-bar { margin: 2rem 0; display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
+    .filter-group { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
     .chip {
-      padding: 0.5rem 1.2rem; border-radius: 20px; border: 1px solid var(--ring);
-      background: white; cursor: pointer; font-size: 0.9rem; font-weight: 500;
+      padding: 0.6rem 1.5rem; border-radius: 25px; border: 1px solid var(--ring);
+      background: white; cursor: pointer; font-weight: 500; transition: 0.2s;
     }
     .chip[data-active="true"] { background: var(--primary); color: white; border-color: var(--primary); }
 
-    /* Grid & Cards */
-    .events-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem; padding-bottom: 4rem;
-    }
-    .event-card {
-      background: white; border: 1px solid var(--ring); border-radius: var(--r-lg);
-      overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
-    }
-    .event-card:hover { transform: translateY(-5px); box-shadow: var(--sh-md); }
-    
-    .card-img-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; }
-    .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-    .category-badge {
-      position: absolute; top: 12px; left: 12px;
-      background: rgba(30, 64, 175, 0.9); color: white;
-      padding: 4px 12px; border-radius: 12px; font-size: 0.75rem;
-    }
-
-    .card-body { padding: 1.25rem; flex-grow: 1; }
-    .card-meta { display: flex; gap: 10px; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.8rem; }
-    .card-body h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; }
-    .card-body p { font-size: 0.9rem; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
-    /* Skeletons */
-    .skeleton { height: 350px; background: #eee; border-radius: 16px; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-
-    /* Dark Mode */
-    @media (prefers-color-scheme: dark) {
-      :root { --surface: #0f172a; --text: #f1f5f9; --ring: #1e293b; --card: #1e293b; }
-      body { background: var(--surface); }
-      .navbar, .event-card, .chip { background: #1e293b; color: white; }
-      .search-box input { background: #1e293b; color: white; }
-    }
+    /* الهيكل المستجيب للناف بار */
+    .nav-links[data-open="true"] { display: flex !important; }
+    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
 
   <nav class="navbar">
     <div class="container nav-inner">
-      <a href="/index.html" class="brand">
-        <img src="/assets/apple-touch-icon.png" alt="Logo">
-        <span>مجلس طلاب خطوة</span>
+      <a class="brand" href="/index.html">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
+        <span data-lang="ar">مجلس طلاب خطوة</span>
+        <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
-      <div id="nav-links">
-        <a href="/index.html" style="padding: 0 10px;">الرئيسية</a>
-        <a href="/events.html" style="color: var(--primary); font-weight: bold;">الفعاليات</a>
+
+      <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <div class="nav-links" id="primary-nav" data-open="false">
+        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+        <a href="/events.html" class="active"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
+        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden>Contact</span></a>
+        
+        <button class="lang-toggle" id="lang-toggle">
+          <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
+        </button>
       </div>
     </div>
   </nav>
 
   <main class="container">
-    <header class="section-head">
-      <h1 data-lang="ar">الفعاليات القادمة</h1>
-      <p class="muted">اكتشف وشارك في فعالياتنا المميزة بمدينة ملبورن</p>
+    <header style="text-align: center; padding: 3rem 0 1rem;">
+      <h1 data-lang="ar" style="font-size: 2.8rem; color: var(--primary);">الفعاليات القادمة</h1>
+      <h1 data-lang="en" hidden style="font-size: 2.8rem; color: var(--primary);">Upcoming Events</h1>
+      <p style="color: #64748b;">
+        <span data-lang="ar">اكتشف وشارك في فعالياتنا المميزة بمدينة ملبورن</span>
+        <span data-lang="en" hidden>Discover and participate in our events in Melbourne</span>
+      </p>
     </header>
 
     <div class="tools-bar">
-      <div class="search-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="text" id="eventSearch" placeholder="ابحث عن فعالية باسمها...">
+      <div style="position: relative; width: 100%; max-width: 500px;">
+        <input type="text" id="eventSearch" style="width: 100%; padding: 0.8rem 1.2rem; border-radius: 12px; border: 1px solid var(--ring);" 
+               placeholder="ابحث عن فعالية...">
       </div>
+      
       <div class="filter-group">
-        <button class="chip" data-filter="all" data-active="true">الكل</button>
-        <button class="chip" data-filter="social">اجتماعي</button>
-        <button class="chip" data-filter="educational">تعليمي</button>
-        <button class="chip" data-filter="cultural">ثقافي</button>
+        <button class="chip" data-filter="all" data-active="true" data-lang="ar">الكل</button>
+        <button class="chip" data-filter="all" data-active="true" data-lang="en" hidden>All</button>
+        <button class="chip" data-filter="social"><span data-lang="ar">اجتماعي</span><span data-lang="en" hidden>Social</span></button>
+        <button class="chip" data-filter="educational"><span data-lang="ar">تعليمي</span><span data-lang="en" hidden>Educational</span></button>
       </div>
     </div>
 
     <div class="events-grid" id="eventsContainer">
-      <div class="skeleton"></div>
-      <div class="skeleton"></div>
-      <div class="skeleton"></div>
-    </div>
+      </div>
   </main>
 
   <script src="/assets/khotwa-api.js"></script>
@@ -145,66 +132,96 @@
 
     async function renderEvents() {
       const container = document.getElementById('eventsContainer');
-      
+      const lang = localStorage.getItem('khotwa_lang') || 'ar';
+      const isAr = lang === 'ar';
+
       try {
-        // جلب البيانات من الـ API
-        const events = await KhotwaAPI.searchEvents(searchQuery, currentCategory !== 'all' ? currentCategory : null);
+        const events = await KhotwaAPI.getEvents(); // نفضل استخدام getEvents وعمل فلترة يدوية لضمان الدقة
         
-        if (!events || events.length === 0) {
-          container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem;">لا توجد فعاليات تطابق بحثك حالياً.</div>';
+        // منطق الفلترة والبحث
+        const filtered = events.filter(ev => {
+          const title = (isAr ? ev.titleAr : ev.titleEn) || ev.title || "";
+          const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase());
+          const matchesCat = currentCategory === 'all' || ev.category === currentCategory;
+          return matchesSearch && matchesCat;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 3rem;">${isAr ? 'لا توجد فعاليات حالياً.' : 'No events found.'}</p>`;
           return;
         }
 
-        container.innerHTML = events.map(ev => {
-          const date = new Date(ev.date || ev.eventDate).toLocaleDateString('ar-EG', {
-            day: 'numeric', month: 'long'
-          });
+        container.innerHTML = filtered.map(ev => {
+          const dateObj = new Date(ev.eventDate || ev.date);
+          const dateStr = !isNaN(dateObj.getTime()) 
+            ? dateObj.toLocaleDateString(isAr ? 'ar-EG' : 'en-AU', { day: 'numeric', month: 'long' })
+            : "";
           
+          const title = isAr ? (ev.titleAr || ev.title) : (ev.titleEn || ev.title);
+          const desc = isAr ? (ev.descriptionAr || ev.description) : (ev.descriptionEn || ev.description);
+
           return `
             <article class="event-card" onclick="location.href='/event-detail.html?id=${ev.id}'">
               <div class="card-img-wrapper">
-                <span class="category-badge">${ev.category || 'عام'}</span>
-                <img src="${ev.imageUrl || '/assets/default-event.jpg'}" alt="${ev.titleAr}" 
-                     onerror="this.src='/assets/apple-touch-icon.png'">
+                <span class="category-badge">${ev.category || (isAr ? 'عام' : 'General')}</span>
+                <img src="${ev.imageUrl || '/assets/apple-touch-icon.png'}" alt="Event">
               </div>
               <div class="card-body">
                 <div class="card-meta">
-                  <span>📅 ${date}</span>
-                  <span>📍 ${ev.location || 'ملبورن'}</span>
+                  <span>📅 ${dateStr}</span>
+                  <span>📍 ${ev.location || (isAr ? 'ملبورن' : 'Melbourne')}</span>
                 </div>
-                <h3>${ev.titleAr || ev.title}</h3>
-                <p>${ev.descriptionAr || 'انضم إلينا في هذه الفعالية المميزة لمجلس خطوة.'}</p>
-                <div style="margin-top: 1rem; color: var(--primary); font-weight: 600; font-size: 0.85rem;">
-                   التفاصيل والتسجيل ←
+                <h3>${title}</h3>
+                <p>${desc ? desc.substring(0, 100) + '...' : ''}</p>
+                <div style="margin-top: auto; color: var(--primary); font-weight: 600;">
+                   ${isAr ? 'التفاصيل والتسجيل ←' : 'Details & Register ←'}
                 </div>
               </div>
             </article>
           `;
         }).join('');
-
       } catch (err) {
-        container.innerHTML = '<p>حدث خطأ أثناء تحميل الفعاليات.</p>';
+        container.innerHTML = '<p>Error loading events.</p>';
       }
     }
 
-    // Event Listeners للبحث
-    document.getElementById('eventSearch').addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      renderEvents(); // يمكن إضافة debounce هنا لتحسين الأداء
-    });
+    // لغة الواجهة
+    function updateLangUI(lang) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.hidden = el.getAttribute('data-lang') !== lang;
+      });
+      renderEvents();
+    }
 
-    // Event Listeners للفلاتر
-    document.querySelectorAll('.chip').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.chip').forEach(b => b.dataset.active = 'false');
-        btn.dataset.active = 'true';
-        currentCategory = btn.dataset.filter;
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
+      updateLangUI(savedLang);
+
+      document.getElementById('lang-toggle').addEventListener('click', () => {
+        const nextLang = localStorage.getItem('khotwa_lang') === 'ar' ? 'en' : 'ar';
+        localStorage.setItem('khotwa_lang', nextLang);
+        updateLangUI(nextLang);
+      });
+
+      document.getElementById('eventSearch').addEventListener('input', (e) => {
+        searchQuery = e.target.value;
         renderEvents();
       });
-    });
 
-    // البدء عند تحميل الصفحة
-    window.addEventListener('DOMContentLoaded', renderEvents);
+      document.querySelectorAll('.chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.chip').forEach(b => b.dataset.active = 'false');
+          btn.dataset.active = 'true';
+          currentCategory = btn.dataset.filter;
+          renderEvents();
+        });
+      });
+    });
   </script>
+
+  <script src="/js/menu-toggle.js"></script>
+  <script src="/assets/site-settings-loader.js"></script>
 </body>
 </html>
