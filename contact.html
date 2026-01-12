@@ -1,522 +1,131 @@
 <!DOCTYPE html>
-<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title data-lang="ar">تواصل – Khotwa</title>
-  <title data-lang="en" hidden>Contact – Khotwa</title>
-    <meta name="keywords" content="تواصل معنا, اتصل بنا, استفسارات, اقتراحات, دعم الطلاب, مجلس خطوة">
-  <meta name="description" content="تواصل مع مجلس طلاب خطوة. نحن هنا للإجابة على استفساراتك، استقبال اقتراحاتك، وتقديم الدعم اللازم لك."/>
-  <link rel="canonical" href="https://khotwastudentcouncil.com/contact.html"/>
-  <meta name="robots" content="index,follow"/>
-  <meta name="color-scheme" content="light dark"/>
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0a0f1a"  media="(prefers-color-scheme: dark)">
-
-  <!-- OG/Twitter -->
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Khotwa Student Council"/>
-  <meta property="og:title" content="تواصل – Khotwa"/>
-  <meta property="og:description" content="يسعدنا استقبال أسئلتك واقتراحاتك."/>
-  <meta property="og:url" content="https://khotwastudentcouncil.com/contact.html"/>
-  <meta property="og:image" content="/assets/apple-touch-icon.png"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="تواصل – Khotwa"/>
-  <meta name="twitter:description" content="يسعدنا استقبال أسئلتك واقتراحاتك."/>
-  <meta name="twitter:image" content="/assets/apple-touch-icon.png"/>
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"ContactPage",
-    "name":"Contact – Khotwa Student Council",
-    "url":"https://khotwastudentcouncil.com/contact.html",
-    "isPartOf":{"@type":"WebSite","name":"Khotwa Student Council","url":"https://khotwastudentcouncil.com/"}
-  }
-  </script>
-
-  <style>
-    :root{
-      --primary:#1e40af;--primary-600:#1d4ed8;
-      --ring:#e5e7eb;--card:#f8fafc;
-      --text:#0f172a;--muted:#6b7280
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Tahoma,Arial,sans-serif;color:var(--text);background:#fff;line-height:1.6}
-    a{color:inherit;text-decoration:none}
-    a:visited{color:inherit}
-    .container{width:min(1120px,92%);margin-inline:auto}
-
-    /* وصولية */
-    :where(a,button,[role="button"],input,textarea,select):focus-visible{
-      outline:3px solid #2563eb;outline-offset:3px;border-radius:8px
-    }
-    .skip-link{
-      position:absolute;inset-inline-start:1rem;inset-block-start:-100px;
-      background:#fff;color:#000;padding:.6rem .9rem;border-radius:.5rem;
-      box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1000
-    }
-    .skip-link:focus{inset-block-start:1rem}
-
-    /* Navbar */
-    .navbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--ring);z-index:40}
-    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;gap:.8rem;position:relative}
-    .brand{display:flex;align-items:center;gap:.8rem;font-weight:700}
-    .brand .logo{width:40px;height:40px;object-fit:cover;border-radius:8px}
-    .nav-links{display:flex;gap:1rem;align-items:center}
-    .nav-links a{padding:.5rem .75rem;border-radius:10px}
-    .nav-links a:hover{background:var(--card)}
-    .nav-links a[aria-current="page"]{background:var(--card)}
-    .lang-toggle{padding:.45rem .75rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-    .menu-toggle{display:none;align-items:center;gap:.5rem;padding:.5rem .7rem;border:1px solid var(--ring);background:#fff;border-radius:10px;cursor:pointer}
-    .menu-toggle svg{width:20px;height:20px}
-    @media (max-width: 900px){
-      .menu-toggle{display:inline-flex}
-      .nav-links{
-        position:absolute; inset-inline:0; top:calc(100% + 8px);
-        background:#fff; border:1px solid var(--ring); border-radius:12px;
-        display:grid; gap:.2rem; padding:.4rem;
-        box-shadow:0 12px 30px rgba(2,6,23,.10);
-        max-height:0; overflow:hidden; opacity:0; transform:scale(.98);
-        transition:max-height .2s ease, opacity .2s ease, transform .2s ease, padding .2s ease;
-      }
-      .nav-links[data-open="true"]{max-height:80vh;opacity:1;transform:scale(1);padding:.6rem}
-      .nav-links a,.lang-toggle{padding:.7rem .9rem}
-    }
-
-    /* أقسام */
-    section{padding:2rem 0}
-    .section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}
-    .section-head h2{margin:0;font-size:1.4rem}
-    .muted{color:var(--muted)}
-    .grid{display:grid;gap:1rem;grid-template-columns:1fr 1fr}
-    @media (max-width:980px){.grid{grid-template-columns:1fr}}
-    .card{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:1rem}
-
-    /* نموذج الاتصال */
-    form{display:grid;gap:.9rem}
-    .field{display:grid;gap:.35rem}
-    label{display:flex;align-items:center;gap:.45rem;font-size:.95rem}
-    .icon{width:18px;height:18px;color:var(--primary);flex:none}
-    input,textarea{width:100%;padding:.7rem;border:1px solid var(--ring);border-radius:10px;font:inherit;background:#fff;color:inherit}
-    input[aria-invalid="true"], textarea[aria-invalid="true"]{border-color:#dc2626;outline-color:#dc2626}
-    .error{color:#dc2626;font-size:.88rem;display:none}
-    .error[aria-live]{display:block}
-    button{padding:.7rem 1rem;border-radius:10px;border:1px solid var(--ring);background:var(--primary);color:#fff;cursor:pointer;font-weight:700}
-    button:hover{background:var(--primary-600)}
-    .note{font-size:.9rem}
-
-    /* خريطة */
-    iframe{width:100%;height:360px;border:1px solid var(--ring);border-radius:16px}
-
-    /* منبّه */
-    .popup{position:fixed;top:20px;right:20px;padding:.9rem 1.2rem;border-radius:10px;font-weight:700;display:none;z-index:1000;box-shadow:0 4px 18px rgba(0,0,0,.12)}
-    .popup.success{background:#16a34a;color:#fff}
-    .popup.error{background:#dc2626;color:#fff}
-
-    /* Footer */
-    footer{border-top:1px solid var(--ring);background:#fff}
-    .foot{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:1.2rem 0}
-
-    /* وضع ليلي */
-    @media (prefers-color-scheme: dark){
-      :root{
-        --card:#0b1220; --ring:#1f2937;
-        --text:#e5e7eb; --muted:#9ca3af;
-        --primary:#93c5fd; --primary-600:#60a5fa;
-      }
-      body{ background:#0a0f1a; }
-      .navbar, footer{ background:#0c1220; border-color:var(--ring); }
-      .card{ background:#0f172a; border-color:var(--ring); }
-      .nav-links a:hover, .nav-links a[aria-current="page"]{ background:#0f172a; }
-      .lang-toggle,.menu-toggle{ background:transparent; color:var(--text); }
-      input,textarea{ background:#0c1220; border-color:var(--ring); color:var(--text); }
-    }
-
-    /* تقليل الحركة */
-    @media (prefers-reduced-motion: reduce){
-      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
-    }
-  </style>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCS6PYK04X"></script>
-  <script src="/assets/analytics.js"></script>
-  <link rel="stylesheet" href="/assets/pagination.css">
-  <link rel="stylesheet" href="/assets/advanced-filters.css">
-  <link rel="stylesheet" href="/assets/feedback.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>تواصل معنا – Khotwa</title>
+  
+  <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
-    <link rel="stylesheet" href="assets/enhanced-navbar.css">
-  <script src="/assets/khotwa-api.js?v=1766975537"></script>
+  <link rel="stylesheet" href="/assets/enhanced-navbar.css">
+
+  <style>
+    :root { --primary: #1e40af; --ring: #e2e8f0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0; }
+    @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+    
+    .contact-card { background: white; border: 1px solid var(--ring); border-radius: 16px; padding: 2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+    .form-group input, .form-group textarea { 
+      width: 100%; padding: 0.8rem; border: 1px solid var(--ring); border-radius: 10px; font-family: inherit;
+    }
+    .submit-btn { 
+      background: var(--primary); color: white; border: none; padding: 1rem 2rem; 
+      border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s;
+    }
+    .submit-btn:hover { background: #1d4ed8; }
+    iframe { width: 100%; height: 350px; border-radius: 16px; border: 1px solid var(--ring); }
+    [hidden] { display: none !important; }
+  </style>
 </head>
 <body>
-  <!-- Skip links -->
-  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
 
-  <!-- Navbar -->
-<!-- Navbar -->
-  <nav class="navbar" aria-label="الشريط العلوي">
+  <nav class="navbar">
     <div class="container nav-inner">
-      <a class="brand" href="/index.html" aria-label="العودة للرئيسية">
-        <img src="/assets/apple-touch-icon.png" class="logo" alt="شعار مجلس طلاب خطوة" width="40" height="40" decoding="async" loading="lazy">
+      <a class="brand" href="/index.html">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
         <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
+        <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
-
-      <button id="menu-toggle" class="menu-toggle" type="button"
-              aria-controls="primary-nav" aria-expanded="false" aria-label="فتح وإغلاق القائمة">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
+      <button id="menu-toggle" class="menu-toggle">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
-
-      <div class="nav-links" id="primary-nav" data-open="false" aria-hidden="true">
-        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden aria-hidden="true">Home</span></a>
-        
-        <!-- Mega Menu: البرامج -->
-        <div class="nav-item-mega" data-mega="programs">
-          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-programs">
-            <span data-lang="ar">البرامج</span>
-            <span data-lang="en" hidden aria-hidden="true">Programs</span>
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </button>
-          <div class="mega-menu" id="mega-programs" hidden>
-            <div class="mega-menu-inner">
-              <div class="mega-column">
-                <h3 data-lang="ar">الأخبار والفعاليات</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">News & Events</h3>
-                <a href="/news.html"><span data-lang="ar">📰 الأخبار</span><span data-lang="en" hidden aria-hidden="true">📰 News</span></a>
-                <a href="/events.html"><span data-lang="ar">📅 الفعاليات</span><span data-lang="en" hidden aria-hidden="true">📅 Events</span></a>
-                <a href="/calendar.html"><span data-lang="ar">🗓️ التقويم</span><span data-lang="en" hidden aria-hidden="true">🗓️ Calendar</span></a>
-              </div>
-              <div class="mega-column">
-                <h3 data-lang="ar">التطوير والتدريب</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">Development & Training</h3>
-                <a href="/courses.html"><span data-lang="ar">🎓 الدورات والورش</span><span data-lang="en" hidden aria-hidden="true">🎓 Courses & Workshops</span></a>
-                <a href="/volunteers.html"><span data-lang="ar">❤️ الفرص التطوعية</span><span data-lang="en" hidden aria-hidden="true">❤️ Volunteer Opportunities</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Mega Menu: عن المجلس -->
-        <div class="nav-item-mega" data-mega="council">
-          <button class="nav-link-mega" aria-expanded="false" aria-controls="mega-council">
-            <span data-lang="ar">عن المجلس</span>
-            <span data-lang="en" hidden aria-hidden="true">About Council</span>
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </button>
-          <div class="mega-menu" id="mega-council" hidden>
-            <div class="mega-menu-inner">
-              <div class="mega-column">
-                <h3 data-lang="ar">معلومات عنا</h3>
-                <h3 data-lang="en" hidden aria-hidden="true">About Us</h3>
-                <a href="/about.html"><span data-lang="ar">👥 من نحن</span><span data-lang="en" hidden aria-hidden="true">👥 About Us</span></a>
-                <a href="/gallery.html"><span data-lang="ar">📸 معرض الصور</span><span data-lang="en" hidden aria-hidden="true">📸 Gallery</span></a>
-                <a href="/faq.html"><span data-lang="ar">❓ الأسئلة الشائعة</span><span data-lang="en" hidden aria-hidden="true">❓ FAQ</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
-        
-        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="تغيير اللغة">
-          <span data-lang="ar">English</span><span data-lang="en" hidden aria-hidden="true">عربي</span>
-        </button>
+      <div class="nav-links" id="primary-nav" data-open="false">
+        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
+        <a href="/contact.html" class="active"><span data-lang="ar">تواصل معنا</span><span data-lang="en" hidden>Contact</span></a>
+        <button class="lang-toggle" id="lang-toggle"><span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span></button>
       </div>
     </div>
   </nav>
 
-<main class="container" id="main">
-    <section>
-      <div class="section-head">
-        <h2 data-lang="ar">راسلنا</h2>
-        <h2 data-lang="en" hidden aria-hidden="true">Contact Us</h2>
+  <main class="container">
+    <header style="text-align: center; padding: 3rem 0;">
+      <h1 data-lang="ar">راسلنا</h1>
+      <h1 data-lang="en" hidden>Contact Us</h1>
+      <p style="color: #64748b;">يسعدنا استقبال أسئلتك واقتراحاتك</p>
+    </header>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <form id="contact-form" action="https://formspree.io/f/mblkegbr" method="POST">
+          <div class="form-group">
+            <label data-lang="ar">الاسم الكامل</label>
+            <label data-lang="en" hidden>Full Name</label>
+            <input type="text" name="name" required>
+          </div>
+          <div class="form-group">
+            <label data-lang="ar">البريد الإلكتروني</label>
+            <label data-lang="en" hidden>Email Address</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label data-lang="ar">رسالتك</label>
+            <label data-lang="en" hidden>Your Message</label>
+            <textarea name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">
+            <span data-lang="ar">إرسال الرسالة</span>
+            <span data-lang="en" hidden>Send Message</span>
+          </button>
+        </form>
       </div>
-      <p class="muted" data-lang="ar">يسعدنا استقبال أسئلتك واقتراحاتك.</p>
-      <p class="muted" data-lang="en" hidden aria-hidden="true">We’re happy to hear your questions and suggestions.</p>
 
-      <div class="grid">
-        <!-- نموذج -->
-        <article class="card" aria-labelledby="contact-form-title">
-          <h3 id="contact-form-title" style="margin-top:0" data-lang="ar">نموذج التواصل</h3>
-          <h3 data-lang="en" hidden aria-hidden="true" style="margin-top:0">Contact Form</h3>
-
-          <form id="contact-form" action="https://formspree.io/f/mblkegbr" method="POST" novalidate>
-            <input type="hidden" name="_subject" value="رسالة جديدة من موقع المجلس | New message from Khotwa site">
-            <!-- honeypot بسيط لمكافحة السبام -->
-            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" aria-hidden="true">
-
-            <div class="field">
-              <label for="name">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>
-                <span data-lang="ar">الاسم الكامل</span><span data-lang="en" hidden aria-hidden="true">Full Name</span>
-              </label>
-              <input id="name" name="name" type="text" placeholder="الاسم / Name" autocomplete="name" required aria-invalid="false" aria-describedby="err-name">
-              <div id="err-name" class="error" aria-live="polite"></div>
-            </div>
-
-            <div class="field">
-              <label for="email">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
-                <span data-lang="ar">البريد الإلكتروني</span><span data-lang="en" hidden aria-hidden="true">Email</span>
-              </label>
-              <input id="email" name="email" type="email" dir="ltr" inputmode="email" placeholder="example@email.com" autocomplete="email" required aria-invalid="false" aria-describedby="err-email">
-              <div id="err-email" class="error" aria-live="polite"></div>
-            </div>
-
-            <div class="field">
-              <label for="message">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 10-15.5 3.5L3 21l5-1.5A8 8 0 1021 12z"/></svg>
-                <span data-lang="ar">رسالتك</span><span data-lang="en" hidden aria-hidden="true">Your Message</span>
-              </label>
-              <textarea id="message" name="message" rows="6" placeholder="..." required aria-invalid="false" aria-describedby="err-message"></textarea>
-              <div id="err-message" class="error" aria-live="polite"></div>
-            </div>
-
-            <button id="submit-btn" type="submit">
-              <span data-lang="ar">إرسال</span>
-              <span data-lang="en" hidden aria-hidden="true">Send</span>
-            </button>
-            <p class="note muted" data-lang="ar">بالإرسال، توافق على التواصل عبر البريد.</p>
-            <p class="note muted" data-lang="en" hidden aria-hidden="true">By submitting, you agree to be contacted by email.</p>
-          </form>
-        </article>
-
-        <!-- الموقع -->
-        <article class="card">
-          <h3 style="margin-top:0;display:flex;align-items:center;gap:.5rem">
-            <svg class="icon" style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-4.35 7-11a7 7 0 10-14 0c0 6.65 7 11 7 11z"/><circle cx="12" cy="11" r="3"/></svg>
-            <span data-lang="ar">موقعنا – Bundoora</span><span data-lang="en" hidden aria-hidden="true">Our Location – Bundoora</span>
-          </h3>
-          <p class="muted">La Trobe University – Bundoora Campus</p>
-          <iframe title="La Trobe University – Bundoora" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?hl=ar&q=La+Trobe+University,+Bundoora&output=embed&t=m&z=15"></iframe>
-        </article>
+      <div class="contact-card">
+        <h3 data-lang="ar">موقعنا - Bundoora</h3>
+        <h3 data-lang="en" hidden>Our Location - Bundoora</h3>
+        <p style="color: #64748b; margin-bottom: 1rem;">La Trobe University – Bundoora Campus</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3156.974235835616!2d145.0458421!3d-37.7214197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad6459025078a63%3A0xc3f7360a775f0a6e!2sLa%20Trobe%20University!5e0!3m2!1sen!2sau!4v1700000000000"></iframe>
       </div>
-    </section>
+    </div>
   </main>
 
-  <!-- Footer -->
-  <footer aria-label="تذييل الموقع">
-    <div class="container foot">
-      <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-      <a href="https://www.instagram.com/khotwa.sc/" target="_blank" rel="noopener noreferrer">Instagram</a>
+  <footer style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 3rem 0; margin-top: 4rem;">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem;">
+        <div>
+          <strong data-lang="ar">مجلس طلاب خطوة</strong>
+          <strong data-lang="en" hidden>Khotwa Council</strong>
+          <p style="font-size: 0.9rem; color: #64748b;">© <span id="year"></span> | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
+        </div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="https://instagram.com/khotwa.sc" style="color: #e1306c; text-decoration: none; font-weight: bold;">Instagram</a>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <!-- منبّه مرئي + وصولي -->
-  <div id="popup" class="popup" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-<script>
-// Mega Menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const megaItems = document.querySelectorAll('.nav-item-mega');
-  
-  megaItems.forEach(item => {
-    const button = item.querySelector('.nav-link-mega');
-    const menu = item.querySelector('.mega-menu');
-    
-    if (!button || !menu) return;
-    
-    // Desktop: hover
-    item.addEventListener('mouseenter', () => {
-      if (window.innerWidth > 980) {
-        menu.hidden = false;
-        button.setAttribute('aria-expanded', 'true');
-      }
+    function updateUI(lang) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== lang);
+    }
+
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      const newLang = localStorage.getItem('khotwa_lang') === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('khotwa_lang', newLang);
+      updateUI(newLang);
     });
-    
-    item.addEventListener('mouseleave', () => {
-      if (window.innerWidth > 980) {
-        menu.hidden = true;
-        button.setAttribute('aria-expanded', 'false');
-      }
-    });
-    
-    // Mobile: click
-    button.addEventListener('click', (e) => {
-      if (window.innerWidth <= 980) {
-        e.preventDefault();
-        const isOpen = !menu.hidden;
-        menu.hidden = isOpen;
-        button.setAttribute('aria-expanded', !isOpen);
-      }
-    });
-  });
-  
-  // Close all menus on resize
-  window.addEventListener('resize', () => {
-    document.querySelectorAll('.mega-menu').forEach(menu => {
-      menu.hidden = true;
-    });
-    document.querySelectorAll('.nav-link-mega').forEach(btn => {
-      btn.setAttribute('aria-expanded', 'false');
-    });
-  });
-});
-</script>
-    (function(){
-      // سنة الحقوق
-      const y=document.getElementById('year'); if(y){ y.textContent = new Date().getFullYear(); }
 
-      // منيو + وصولية
-      const menuBtn = document.getElementById('menu-toggle');
-      const primaryNav = document.getElementById('primary-nav');
-      const mq = window.matchMedia('(min-width:901px)');
-
-      function setMenu(open){
-        if(!menuBtn || !primaryNav) return;
-        primaryNav.setAttribute('data-open', String(open));
-        menuBtn.setAttribute('aria-expanded', String(open));
-        primaryNav.setAttribute('aria-hidden', String(!open && !mq.matches));
-        if(open){ (primaryNav.querySelector('a,button') || menuBtn).focus(); }
-      }
-      function initMenu(){
-        setMenu(false);
-        if(primaryNav){ primaryNav.setAttribute('aria-hidden', mq.matches ? 'false' : 'true'); }
-      }
-      initMenu();
-
-      menuBtn?.addEventListener('click', ()=>{
-        const open = primaryNav.getAttribute('data-open')==='true';
-        setMenu(!open);
-      });
-      mq.addEventListener('change', e=>{ setMenu(false); primaryNav.setAttribute('aria-hidden', e.matches ? 'false' : 'true'); });
-      document.addEventListener('click', (e)=>{
-        const open = primaryNav.getAttribute('data-open')==='true';
-        const t=e.target;
-        if(open && t instanceof Node && !primaryNav.contains(t) && !menuBtn.contains(t)) setMenu(false);
-      });
-      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') setMenu(false); });
-      primaryNav.addEventListener('click', (e)=>{
-        const link = (e.target instanceof Element)? e.target.closest('a'):null;
-        if(link) setMenu(false);
-      });
-
-      // تبديل اللغة + تزامن <title>
-      const langBtn = document.getElementById('lang-toggle');
-      function currentLang(){ return localStorage.getItem('khotwa_lang')==='en' ? 'en' : 'ar'; }
-      function setLang(lang){
-        document.querySelectorAll('[data-lang]').forEach(el=>{
-          const want = el.getAttribute('data-lang')===lang;
-          el.hidden = !want;
-          el.setAttribute('aria-hidden', String(!want));
-        });
-        document.documentElement.lang = (lang==='ar')?'ar':'en';
-        document.documentElement.dir  = (lang==='ar')?'rtl':'ltr';
-        langBtn?.setAttribute('aria-pressed', String(lang!=='ar'));
-        if(langBtn) langBtn.textContent = (lang==='ar')?'English':'العربية';
-        const t = document.querySelector('title[data-lang="'+lang+'"]');
-        if(t) document.title = t.textContent.trim();
-        localStorage.setItem('khotwa_lang', lang);
-      }
-      setLang(currentLang());
-      langBtn?.addEventListener('click', ()=> setLang(currentLang()==='ar'?'en':'ar'));
-
-      // بوب-أب
-      const popup = document.getElementById('popup');
-      function show(msg, ok=true){
-        popup.textContent = msg;
-        popup.className = 'popup ' + (ok ? 'success' : 'error');
-        popup.style.display = 'block';
-        setTimeout(()=> popup.style.display = 'none', 4000);
-      }
-
-      // تحقّق بسيط للنموذج + إرسال
-      const form  = document.getElementById('contact-form');
-      const submitBtn = document.getElementById('submit-btn');
-      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
-      function setErr(id, msg){
-        const input = document.getElementById(id);
-        const errEl = document.getElementById('err-'+id);
-        if(!input || !errEl) return;
-        const has = Boolean(msg);
-        input.setAttribute('aria-invalid', String(has));
-        errEl.textContent = msg || '';
-        errEl.setAttribute('aria-live', has ? 'polite' : '');
-        if(!has) errEl.removeAttribute('aria-live');
-      }
-
-      function validate(){
-        const lang = document.documentElement.lang || 'ar';
-        const t = (ar,en)=> lang==='ar' ? ar : en;
-
-        let ok = true;
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-
-        setErr('name', name ? '' : t('الرجاء كتابة الاسم','Please enter your name'));
-        ok = ok && Boolean(name);
-
-        setErr('email', emailRe.test(email) ? '' : t('بريد غير صالح','Invalid email'));
-        ok = ok && emailRe.test(email);
-
-        setErr('message', message ? '' : t('اكتب رسالتك','Please write your message'));
-        ok = ok && Boolean(message);
-
-        return ok;
-      }
-
-      form.addEventListener('input', (e)=>{
-        const id = e.target.id;
-        if(['name','email','message'].includes(id)) validate();
-      });
-
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        if(!validate()) {
-          const firstInvalid = form.querySelector('[aria-invalid="true"]');
-          if(firstInvalid) firstInvalid.focus();
-          return;
-        }
-        const data = new FormData(form);
-        // honeypot
-        if(data.get('_gotcha')){ show((document.documentElement.lang==='ar')?'تم حظر الإرسال':'Submission blocked', false); return; }
-
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = .7;
-
-        try{
-          const res = await fetch(form.action, { method:'POST', body:data, headers:{'Accept':'application/json'} });
-          if(res.ok){
-            show((document.documentElement.lang==='ar')?'تم الإرسال بنجاح ✅':'Sent successfully ✅', true);
-            form.reset();
-            ['name','email','message'].forEach(id=> setErr(id,''));
-          }else{
-            show((document.documentElement.lang==='ar')?'تعذّر الإرسال ❌':'Submission failed ❌', false);
-          }
-        }catch{
-          show((document.documentElement.lang==='ar')?'خطأ بالشبكة ❌':'Network error ❌', false);
-        }finally{
-          submitBtn.disabled = false;
-          submitBtn.style.opacity = 1;
-        }
-      });
-    })();
+    updateUI(localStorage.getItem('khotwa_lang') || 'ar');
   </script>
-
-  <!-- CMS -->
-  
-  <!-- الميزات المحسّنة -->
-  <link rel="stylesheet" href="/assets/features.css">
-  <script src="/assets/features.js" defer></script>
-  <script src="/assets/pagination.js"></script>
-  <script src="/assets/advanced-filters.js"></script>
-  <script src="/assets/feedback.js"></script>
-  <script src="/assets/newsletter.js"></script>
-  <script src="/assets/form-validation.js"></script>
-  <script src="/assets/admin-button.js"></script>
-  <script src="/assets/feedback-button.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/settings-loader.js"></script>
-    <script src="/js/language-toggle.js"></script>
-<script src="js/menu-toggle.js"></script>
-  <script src="/assets/site-settings-loader.js"></script>
+  <script src="/js/menu-toggle.js"></script>
 </body>
 </html>
