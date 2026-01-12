@@ -3,46 +3,40 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title data-lang="ar">التقويم – مجلس طلاب خطوة</title>
-  <title data-lang="en" hidden>Calendar – Khotwa Council</title>
+  <title>التقويم – Khotwa</title>
 
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
-
+  
   <script src="/assets/khotwa-api.js?v=1766975537"></script>
 
   <style>
-    /* تحسينات بصرية للتقويم لتطابق الصورة الرابعة */
-    .calendar-container { margin-top: 2rem; }
-    .event-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-      border-bottom: 1px solid var(--ring, #eee);
+    /* تنسيق الجدول المرتب كما في صورتك السابقة */
+    .events-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .event-row { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1.2rem; 
+      border-bottom: 1px solid #eee; 
       transition: background 0.2s;
     }
-    .event-row:hover { background: #f8fafc; }
-    .event-info { display: flex; gap: 20px; align-items: center; flex: 1; }
-    .event-date { color: var(--primary, #1e40af); font-weight: bold; min-width: 120px; }
-    .event-details-link { color: #6366f1; font-size: 0.9rem; font-weight: 500; }
+    .event-row:hover { background-color: #f9f9f9; }
+    .event-main { display: flex; flex: 1; justify-content: flex-end; align-items: center; gap: 30px; }
+    .event-title { font-weight: 600; color: #333; font-size: 1.05rem; text-align: right; }
+    .event-date { color: #5c6bc0; font-weight: bold; min-width: 150px; text-align: right; white-space: nowrap; }
+    .event-link { color: #6366f1; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
     
-    /* إصلاح استجابة الناف بار */
-    @media (max-width: 900px) {
-      .nav-links[data-open="false"] { display: none; }
-      .nav-links[data-open="true"] { display: flex; flex-direction: column; }
-    }
+    /* إصلاح مظهر الناف بار ليطابق الهيكل الجديد */
+    .nav-links[data-open="true"] { display: flex !important; }
+    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
 
-  <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-  <a class="skip-link" href="#main" data-lang="en" hidden>Skip to content</a>
-
-  <nav class="navbar" id="navbar">
+  <nav class="navbar">
     <div class="container nav-inner">
       <a class="brand" href="/index.html">
         <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
@@ -50,7 +44,7 @@
         <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
 
-      <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
+      <button id="menu-toggle" class="menu-toggle" aria-expanded="false">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
@@ -70,75 +64,91 @@
     </div>
   </nav>
 
-  <main class="container calendar-container" id="main">
-    <header style="text-align: right; margin-bottom: 2rem;">
-      <h1 data-lang="ar">تقويم الفعاليات</h1>
-      <h1 data-lang="en" hidden>Events Calendar</h1>
-      <p class="muted" data-lang="ar">جدول الفعاليات القادمة لطلاب خطوة.</p>
-      <p class="muted" data-lang="en" hidden>Schedule of upcoming events for Khotwa students.</p>
-    </header>
+  <main class="container" id="main" style="margin-top: 40px;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h1 style="font-size: 2.5rem; margin-bottom: 10px;">
+        <span data-lang="ar">تقويم الفعاليات</span>
+        <span data-lang="en" hidden>Events Calendar</span>
+      </h1>
+      <p class="muted">
+        <span data-lang="ar">جدول الفعاليات القادمة لطلاب خطوة.</span>
+        <span data-lang="en" hidden>Upcoming events schedule for Khotwa students.</span>
+      </p>
+    </div>
 
-    <div class="card" id="events-list">
-      <div class="skeleton" style="height: 50px; margin-bottom: 10px;"></div>
-      <div class="skeleton" style="height: 50px; margin-bottom: 10px;"></div>
+    <div class="card">
+      <div id="events-list">
+        <div style="padding: 2rem; text-align: center;">جاري تحميل التقويم...</div>
+      </div>
     </div>
   </main>
 
   <script>
-    // نظام تبديل اللغة والحفاظ على التفضيلات
-    function updateLanguageUI(lang) {
+    // نظام تبديل اللغة
+    function setLanguage(lang) {
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
       
       document.querySelectorAll('[data-lang]').forEach(el => {
-        const isTarget = el.getAttribute('data-lang') === lang;
-        el.hidden = !isTarget;
-        if (isTarget) el.removeAttribute('aria-hidden');
+        const match = el.getAttribute('data-lang') === lang;
+        el.hidden = !match;
+        if (match) el.removeAttribute('aria-hidden');
         else el.setAttribute('aria-hidden', 'true');
       });
       localStorage.setItem('khotwa_lang', lang);
-      loadCalendarData(lang);
+      loadCalendar(lang);
     }
 
-    // جلب الفعاليات بناءً على اللغة
-    async function loadCalendarData(lang) {
-      const container = document.getElementById('events-list');
+    // دالة جلب البيانات ومعالجة مشكلة "Invalid Date"
+    async function loadCalendar(lang) {
+      const list = document.getElementById('events-list');
       try {
-        const events = await KhotwaAPI.getEvents(); // استدعاء من ملف khotwa-api.js الخاص بك
-        if (!events || events.length === 0) {
-          container.innerHTML = `<p style="padding: 2rem; text-align: center;">${lang === 'ar' ? 'لا توجد فعاليات حالياً' : 'No upcoming events'}</p>`;
+        const data = await KhotwaAPI.getEvents();
+        if (!data || data.length === 0) {
+          list.innerHTML = `<p style="padding: 2rem; text-align: center;">${lang === 'ar' ? 'لا توجد فعاليات حالياً.' : 'No events available.'}</p>`;
           return;
         }
 
-        container.innerHTML = events.map(ev => {
-          const date = new Date(ev.date).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-AU', {
-            day: 'numeric', month: 'long', year: 'numeric'
-          });
-          const title = lang === 'ar' ? (ev.titleAr || ev.title) : (ev.titleEn || ev.title);
+        list.innerHTML = data.map(ev => {
+          // معالجة التاريخ لضمان عدم ظهور Invalid Date
+          const rawDate = ev.date || ev.eventDate || ev.createdAt;
+          const dateObj = new Date(rawDate);
           
+          let formattedDate = "";
+          if (!isNaN(dateObj.getTime())) {
+            formattedDate = dateObj.toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-AU', {
+              day: 'numeric', month: 'long', year: 'numeric'
+            });
+          } else {
+            formattedDate = rawDate; // عرض النص الخام إذا فشل التحويل
+          }
+
+          const title = lang === 'ar' ? (ev.titleAr || ev.title) : (ev.titleEn || ev.title);
+
           return `
             <div class="event-row">
-              <a href="/event-detail.html?id=${ev.id}" class="event-details-link">${lang === 'ar' ? 'التفاصيل' : 'Details'}</a>
-              <div class="event-info">
+              <a href="/event-detail.html?id=${ev.id}" class="event-link">${lang === 'ar' ? 'التفاصيل' : 'Details'}</a>
+              <div class="event-main">
                 <span class="event-title">${title}</span>
-                <span class="event-date">${date}</span>
+                <span class="event-date">${formattedDate}</span>
               </div>
             </div>
           `;
         }).join('');
-      } catch (e) {
-        container.innerHTML = '<p>Error loading data.</p>';
+
+      } catch (err) {
+        list.innerHTML = '<p style="padding: 2rem; text-align: center;">حدث خطأ أثناء تحميل البيانات.</p>';
       }
     }
 
-    // تهيئة الصفحة
+    // التشغيل عند التحميل
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
-      updateLanguageUI(savedLang);
+      setLanguage(savedLang);
 
       document.getElementById('lang-toggle').addEventListener('click', () => {
-        const current = localStorage.getItem('khotwa_lang') || 'ar';
-        updateLanguageUI(current === 'ar' ? 'en' : 'ar');
+        const current = localStorage.getItem('khotwa_lang') === 'ar' ? 'en' : 'ar';
+        setLanguage(current);
       });
     });
   </script>
