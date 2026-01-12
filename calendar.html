@@ -3,175 +3,144 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>التقويم – Khotwa Student Council</title>
+  <title data-lang="ar">التقويم – مجلس طلاب خطوة</title>
+  <title data-lang="en" hidden>Calendar – Khotwa Council</title>
 
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
-  <link rel="stylesheet" href="/assets/feedback.css">
   <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
 
   <script src="/assets/khotwa-api.js?v=1766975537"></script>
 
   <style>
-    /* تنسيقات التقويم الأساسية */
-    .events-list { list-style: none; padding: 0; margin: 0; }
-    .event-item {
-      padding: 1.2rem;
-      border-bottom: 1px solid var(--ring, #e5e7eb);
+    /* تحسينات بصرية للتقويم لتطابق الصورة الرابعة */
+    .calendar-container { margin-top: 2rem; }
+    .event-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      justify-content: space-between;
       align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid var(--ring, #eee);
+      transition: background 0.2s;
     }
-    .event-item:last-child { border-bottom: none; }
-    .event-date-box { font-weight: bold; color: var(--primary, #1e40af); min-width: 120px; }
-    .event-title { flex: 1; font-weight: 600; }
-    .event-link { color: var(--primary); text-decoration: underline; font-size: 0.9rem; }
+    .event-row:hover { background: #f8fafc; }
+    .event-info { display: flex; gap: 20px; align-items: center; flex: 1; }
+    .event-date { color: var(--primary, #1e40af); font-weight: bold; min-width: 120px; }
+    .event-details-link { color: #6366f1; font-size: 0.9rem; font-weight: 500; }
     
-    /* Skeleton Loading */
-    .sk { display: flex; gap: 15px; padding: 1rem; }
-    .sk div { height: 20px; background: #eee; border-radius: 4px; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+    /* إصلاح استجابة الناف بار */
+    @media (max-width: 900px) {
+      .nav-links[data-open="false"] { display: none; }
+      .nav-links[data-open="true"] { display: flex; flex-direction: column; }
+    }
   </style>
 </head>
 <body>
 
   <a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-  <a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
+  <a class="skip-link" href="#main" data-lang="en" hidden>Skip to content</a>
 
-  <nav class="navbar" aria-label="الشريط العلوي">
+  <nav class="navbar" id="navbar">
     <div class="container nav-inner">
       <a class="brand" href="/index.html">
         <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
         <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden aria-hidden="true">Khotwa Student Council</span>
+        <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
 
-      <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="primary-nav" aria-expanded="false">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        <span data-lang="ar">القائمة</span><span data-lang="en" hidden aria-hidden="true">Menu</span>
+      <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
       </button>
 
       <div class="nav-links" id="primary-nav" data-open="false">
-        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden aria-hidden="true">Home</span></a>
+        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
+        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+        <a href="/calendar.html" class="active"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
+        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden>Contact</span></a>
         
-        <div class="nav-item-mega">
-          <button class="nav-link-mega">
-            <span data-lang="ar">البرامج</span><span data-lang="en" hidden aria-hidden="true">Programs</span>
-          </button>
-          <div class="mega-menu" hidden>
-            <div class="mega-menu-inner">
-              <div class="mega-column">
-                <a href="/news.html">📰 <span data-lang="ar">الأخبار</span><span data-lang="en" hidden aria-hidden="true">News</span></a>
-                <a href="/events.html">📅 <span data-lang="ar">الفعاليات</span><span data-lang="en" hidden aria-hidden="true">Events</span></a>
-                <a href="/calendar.html" class="active">🗓️ <span data-lang="ar">التقويم</span><span data-lang="en" hidden aria-hidden="true">Calendar</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden aria-hidden="true">Contact</span></a>
-        
-        <button class="lang-toggle" id="lang-toggle" type="button">
-          <span data-lang="ar">English</span><span data-lang="en" hidden aria-hidden="true">عربي</span>
+        <button class="lang-toggle" id="lang-toggle">
+          <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
         </button>
       </div>
     </div>
   </nav>
 
-  <main class="container" id="main" style="margin-top: 3rem;">
-    <section>
-      <div class="section-head">
-        <h1>
-          <span data-lang="ar">تقويم الفعاليات</span>
-          <span data-lang="en" hidden aria-hidden="true">Events Calendar</span>
-        </h1>
-      </div>
-      <p class="muted">
-        <span data-lang="ar">جدول الفعاليات القادمة لطلاب خطوة.</span>
-        <span data-lang="en" hidden aria-hidden="true">Schedule of upcoming events for Khotwa students.</span>
-      </p>
+  <main class="container calendar-container" id="main">
+    <header style="text-align: right; margin-bottom: 2rem;">
+      <h1 data-lang="ar">تقويم الفعاليات</h1>
+      <h1 data-lang="en" hidden>Events Calendar</h1>
+      <p class="muted" data-lang="ar">جدول الفعاليات القادمة لطلاب خطوة.</p>
+      <p class="muted" data-lang="en" hidden>Schedule of upcoming events for Khotwa students.</p>
+    </header>
 
-      <div class="card">
-        <ul class="events-list" id="events" aria-live="polite">
-          <li class="sk"><div style="width: 20%"></div><div style="width: 60%"></div></li>
-          <li class="sk"><div style="width: 20%"></div><div style="width: 60%"></div></li>
-        </ul>
-      </div>
-    </section>
+    <div class="card" id="events-list">
+      <div class="skeleton" style="height: 50px; margin-bottom: 10px;"></div>
+      <div class="skeleton" style="height: 50px; margin-bottom: 10px;"></div>
+    </div>
   </main>
 
-  <footer>
-    <div class="container foot">
-      <div class="muted">© <span id="year"></span> Khotwa Student Council</div>
-    </div>
-  </footer>
-
   <script>
-    (function() {
-      const langBtn = document.getElementById('lang-toggle');
+    // نظام تبديل اللغة والحفاظ على التفضيلات
+    function updateLanguageUI(lang) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
       
-      // دالة تبديل اللغة
-      function setLang(lang) {
-        document.querySelectorAll('[data-lang]').forEach(el => {
-          const isMatch = el.getAttribute('data-lang') === lang;
-          el.hidden = !isMatch;
-          el.setAttribute('aria-hidden', String(!isMatch));
-        });
-        document.documentElement.lang = lang;
-        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-        localStorage.setItem('khotwa_lang', lang);
-        loadEvents(); // إعادة تحميل التواريخ باللغة الجديدة
-      }
-
-      // جلب الفعاليات
-      async function loadEvents() {
-        const list = document.getElementById('events');
-        const lang = localStorage.getItem('khotwa_lang') || 'ar';
-        
-        try {
-          const items = await KhotwaAPI.getEvents();
-          list.innerHTML = '';
-
-          if (!items || items.length === 0) {
-            list.innerHTML = `<li class="muted">${lang === 'ar' ? 'لا توجد فعاليات حالياً.' : 'No events found.'}</li>`;
-            return;
-          }
-
-          // عرض الفعاليات
-          items.forEach(ev => {
-            const dateObj = new Date(ev.date || ev.eventDate);
-            const dateStr = dateObj.toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-AU', {
-              day: 'numeric', month: 'long', year: 'numeric'
-            });
-
-            const li = document.createElement('li');
-            li.className = 'event-item';
-            li.innerHTML = `
-              <div class="event-date-box">${dateStr}</div>
-              <div class="event-title">${lang === 'ar' ? (ev.titleAr || ev.title) : (ev.titleEn || ev.title)}</div>
-              ${ev.id ? `<a href="/event-detail.html?id=${ev.id}" class="event-link">${lang === 'ar' ? 'التفاصيل' : 'Details'}</a>` : ''}
-            `;
-            list.appendChild(li);
-          });
-
-        } catch (e) {
-          list.innerHTML = '<li>Error loading calendar.</li>';
-        }
-      }
-
-      // تهيئة الصفحة
-      document.getElementById('year').textContent = new Date().getFullYear();
-      const initialLang = localStorage.getItem('khotwa_lang') || 'ar';
-      setLang(initialLang);
-
-      langBtn?.addEventListener('click', () => {
-        const next = localStorage.getItem('khotwa_lang') === 'ar' ? 'en' : 'ar';
-        setLang(next);
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        const isTarget = el.getAttribute('data-lang') === lang;
+        el.hidden = !isTarget;
+        if (isTarget) el.removeAttribute('aria-hidden');
+        else el.setAttribute('aria-hidden', 'true');
       });
-    })();
+      localStorage.setItem('khotwa_lang', lang);
+      loadCalendarData(lang);
+    }
+
+    // جلب الفعاليات بناءً على اللغة
+    async function loadCalendarData(lang) {
+      const container = document.getElementById('events-list');
+      try {
+        const events = await KhotwaAPI.getEvents(); // استدعاء من ملف khotwa-api.js الخاص بك
+        if (!events || events.length === 0) {
+          container.innerHTML = `<p style="padding: 2rem; text-align: center;">${lang === 'ar' ? 'لا توجد فعاليات حالياً' : 'No upcoming events'}</p>`;
+          return;
+        }
+
+        container.innerHTML = events.map(ev => {
+          const date = new Date(ev.date).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-AU', {
+            day: 'numeric', month: 'long', year: 'numeric'
+          });
+          const title = lang === 'ar' ? (ev.titleAr || ev.title) : (ev.titleEn || ev.title);
+          
+          return `
+            <div class="event-row">
+              <a href="/event-detail.html?id=${ev.id}" class="event-details-link">${lang === 'ar' ? 'التفاصيل' : 'Details'}</a>
+              <div class="event-info">
+                <span class="event-title">${title}</span>
+                <span class="event-date">${date}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (e) {
+        container.innerHTML = '<p>Error loading data.</p>';
+      }
+    }
+
+    // تهيئة الصفحة
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
+      updateLanguageUI(savedLang);
+
+      document.getElementById('lang-toggle').addEventListener('click', () => {
+        const current = localStorage.getItem('khotwa_lang') || 'ar';
+        updateLanguageUI(current === 'ar' ? 'en' : 'ar');
+      });
+    });
   </script>
 
   <script src="/js/menu-toggle.js"></script>
