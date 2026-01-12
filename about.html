@@ -5,99 +5,152 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>من نحن – Khotwa</title>
   
+  <meta name="keywords" content="مجلس طلاب خطوة, من نحن, رؤية المجلس, رسالة المجلس, فريق العمل, جامعة لا تروب, ملبورن">
+  <meta name="description" content="تعرف على مجلس طلاب خطوة: رؤيتنا، رسالتنا، أهدافنا، وفريق العمل.">
+  
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
-    /* تحسينات بسيطة لضمان ثبات الهيكل وعدم تداخل القوائم */
-    .navbar { z-index: 2000 !important; }
-    .hero-about { padding: 4rem 0; text-align: center; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+    :root {
+      --primary: #1e40af;
+      --ring: #e6eaf2;
+    }
     
-    /* الحفاظ على الهيكل القديم للكروت */
-    .grid-about { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
-    .card-about { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-    
-    /* تنسيق الأعضاء (الهيكل القديم) */
-    .members { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2rem; margin-top: 2rem; }
-    .member-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; text-align: center; }
-    .member-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #f1f5f9; }
+    /* منع تداخل المنيو */
+    .navbar { position: sticky; top: 0; z-index: 9999 !important; background: #fff; border-bottom: 1px solid var(--ring); }
+    .mega-menu { z-index: 10000 !important; }
+
+    /* الحفاظ على تنسيق الصور والأعضاء الأصلي */
+    .members { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+      gap: 1.5rem; 
+      margin-top: 2rem; 
+    }
+    .member-card { 
+      background: #fff; 
+      border: 1px solid var(--ring); 
+      border-radius: 16px; 
+      overflow: hidden; 
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .member-card img { 
+      width: 100%; 
+      aspect-ratio: 3/2; 
+      object-fit: cover; 
+      background: #f3f4f6; 
+    }
     
     [hidden] { display: none !important; }
   </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="container nav-inner">
+  <nav class="navbar" aria-label="الشريط العلوي">
+    <div class="container nav-inner" style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0;">
       <a class="brand" href="/index.html">
-        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
+        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40">
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
-      <button id="menu-toggle" class="menu-toggle">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+
+      <button id="menu-toggle" class="menu-toggle" type="button">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
-      <div class="nav-links" id="primary-nav" data-open="false">
+
+      <div class="nav-links" id="primary-nav">
         <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
-        <a href="/about.html" class="active"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
-        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
-        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-        <a href="/contact.html"><span data-lang="ar">تواصل معنا</span><span data-lang="en" hidden>Contact</span></a>
+        
+        <div class="nav-item-mega">
+          <button class="nav-link-mega">
+            <span data-lang="ar">البرامج</span><span data-lang="en" hidden>Programs</span>
+          </button>
+          <div class="mega-menu" hidden>
+            <div class="mega-menu-inner" style="display: flex; gap: 2rem; padding: 1rem;">
+              <div class="mega-column">
+                <a href="/news.html">📰 الأخبار</a>
+                <a href="/events.html">📅 الفعاليات</a>
+              </div>
+              <div class="mega-column">
+                <a href="/courses.html">🎓 الدورات</a>
+                <a href="/volunteers.html">❤️ التطوع</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/about.html" aria-current="page"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
+        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden>Contact</span></a>
+        
         <button class="lang-toggle" id="lang-toggle">English</button>
       </div>
     </div>
   </nav>
 
-  <header class="hero-about">
-    <div class="container">
-      <h1 data-lang="ar">من نحن</h1>
-      <h1 data-lang="en" hidden>About Us</h1>
-      <p class="muted">مجلس طلاب خطوة - جامعة لا تروب، ملبورن</p>
-    </div>
-  </header>
+  <main class="container" id="main">
+    <section>
+      <div class="section-head">
+        <h1 data-lang="ar">من نحن</h1>
+        <h1 data-lang="en" hidden>About Us</h1>
+      </div>
+      <p class="muted" data-lang="ar">مجلس طلاب خطوة يمثل طلاب برنامج خطوة في جامعة لا تروب – ملبورن.</p>
 
-  <main class="container">
-    <div class="grid-about">
-      <article class="card-about" data-section="vision">
-        <h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3>
-        <p>بناء مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده أكاديمياً واجتماعياً.</p>
-      </article>
-      
-      <article class="card-about" data-section="mission">
-        <h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3>
-        <p>توفير منصة تجمع الطلاب وتوفر لهم الأنشطة والخدمات التي تعزز تجربتهم الدراسية في أستراليا.</p>
-      </article>
+      <div class="grid grid-2" style="margin-top:1rem">
+        <article class="card"><h3 data-lang="ar">الرؤية</h3><p data-lang="ar">مجتمع طلابي داعم ومبادر يسهم في نجاح أفراده.</p></article>
+        <article class="card"><h3 data-lang="ar">الرسالة</h3><p data-lang="ar">توفير فرص وأنشطة وخدمات تعزز تجربة الطالب.</p></article>
+        <article class="card"><h3 data-lang="ar">القيم</h3><p data-lang="ar">العمل الجماعي، الشفافية، التطوع، الابتكار.</p></article>
+        <article class="card"><h3 data-lang="ar">التنظيم</h3><p data-lang="ar">رئيس ونائب رئيس، قادة فرق ومنسقون.</p></article>
+      </div>
+    </section>
 
-      <article class="card-about" data-section="organization">
-        <h3 data-lang="ar">القيم</h3><h3 data-lang="en" hidden>Values</h3>
-        <p>العمل الجماعي، الشفافية، الابتكار، والمسؤولية تجاه مجتمعنا الطلابي.</p>
-      </article>
-    </div>
-
-    <section style="margin-bottom: 5rem;">
-      <h2 style="text-align: center;" data-lang="ar">فريق العمل والمجلس</h2>
-      
+    <section>
+      <div class="section-head">
+        <h2 data-lang="ar">أعضاء المجلس</h2>
+        <h2 data-lang="en" hidden>Council Members</h2>
+      </div>
       <div class="members" id="council-members-container">
-        <div class="member-card">
-          <img src="/assets/apple-touch-icon.png" alt="عضو المجلس">
-          <h3>اسم العضو</h3>
-          <p>المنصب</p>
-        </div>
+        <p class="muted" style="grid-column: 1/-1; text-align: center;">جاري تحميل فريق العمل...</p>
       </div>
     </section>
   </main>
 
-  <script src="/js/config.js"></script>
-  <script src="/js/language-toggle.js"></script>
-  <script src="/js/menu-toggle.js"></script>
-  
-  <script src="/js/about-loader.js"></script>
+  <footer style="margin-top: 4rem; padding: 2rem 0; border-top: 1px solid var(--ring); background: #fff;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <div class="muted">© <span id="year"></span> مجلس طلاب خطوة</div>
+      <div class="social-links">
+        <a href="https://www.instagram.com/khotwa.sc/" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </footer>
 
+  <script src="/js/config.js"></script>
+  <script src="/js/menu-toggle.js"></script>
+  <script src="/js/about-loader.js"></script>
   <script>
+    // سنة الحقوق
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // تشغيل الميجا منيو البسيط
+    document.querySelectorAll('.nav-item-mega').forEach(item => {
+      item.addEventListener('mouseenter', () => item.querySelector('.mega-menu').hidden = false);
+      item.addEventListener('mouseleave', () => item.querySelector('.mega-menu').hidden = true);
+    });
+
+    // تبديل اللغة البسيط لضمان عدم التعارض
+    const langBtn = document.getElementById('lang-toggle');
+    langBtn.addEventListener('click', () => {
+      const currentLang = document.documentElement.lang === 'ar' ? 'en' : 'ar';
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.hidden = el.getAttribute('data-lang') !== currentLang;
+      });
+      langBtn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
+    });
   </script>
 </body>
 </html>
