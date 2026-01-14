@@ -1,61 +1,89 @@
 /**
- * About Page Loader (FIXED & SAFE)
- * Loads "About Us" content and Council Members from Backend API
- * Compatible with language-toggle.js
+ * About Page Loader (STABLE & SAFE)
+ * - Loads Council Members from API
+ * - Uses static fallback for About content if API fails
  */
 
 (function () {
   'use strict';
 
-  // Backend URL (same as before)
   const BACKEND_URL =
     window.KHOTWA_CONFIG?.BACKEND_URL ||
     'https://khotwabknd-gj8oeubw.manus.space';
 
-  // Get current language
   function getCurrentLanguage() {
     return localStorage.getItem('language') || 'ar';
   }
 
   /* ==============================
-     Load About Content
+     Load About Content (SAFE)
   ============================== */
   async function loadAboutContent() {
+    const lang = getCurrentLanguage();
+
     try {
       const response = await fetch(`${BACKEND_URL}/api/trpc/about.get`);
-      if (!response.ok) throw new Error('About API failed');
+      if (!response.ok) throw new Error('About API not available');
 
       const json = await response.json();
       const content = json?.result?.data;
-      if (!content) return;
+      if (!content) throw new Error('Empty about content');
 
-      const lang = getCurrentLanguage();
-
-      const sections = {
-        vision: ['visionAr', 'visionEn'],
-        mission: ['missionAr', 'missionEn'],
-        goals: ['goalsAr', 'goalsEn'],
-        organization: ['organizationAr', 'organizationEn'],
-      };
-
-      Object.keys(sections).forEach((key) => {
-        const p = document.querySelector(
-          `[data-section="${key}"] p`
-        );
-        if (!p) return;
-
-        p.textContent =
-          lang === 'ar'
-            ? content[sections[key][0]]
-            : content[sections[key][1]];
-      });
+      updateAboutSections(content, lang);
     } catch (error) {
-      console.error('[About Loader] Failed to load content:', error);
+      console.warn('[About Loader] Using static fallback');
+      useStaticAboutFallback(lang);
     }
   }
 
+  function updateAboutSections(content, lang) {
+    const sections = {
+      vision: ['visionAr', 'visionEn'],
+      mission: ['missionAr', 'missionEn'],
+      goals: ['goalsAr', 'goalsEn'],
+      organization: ['organizationAr', 'organizationEn'],
+    };
+
+    Object.keys(sections).forEach((key) => {
+      const p = document.querySelector(`[data-section="${key}"] p`);
+      if (!p) return;
+
+      p.textContent =
+        lang === 'ar'
+          ? content[sections[key][0]]
+          : content[sections[key][1]];
+    });
+  }
+
+  function useStaticAboutFallback(lang) {
+    const fallback = {
+      vision: {
+        ar: 'أن يكون مجلس طلاب خطوة نموذجًا رائدًا في التمثيل الطلابي والدعم الأكاديمي.',
+        en: 'To be a leading student council in representation and academic support.',
+      },
+      mission: {
+        ar: 'دعم طلاب خطوة أكاديميًا واجتماعيًا وتعزيز التواصل مع إدارة الجامعة.',
+        en: 'Supporting Khotwa students academically and socially while strengthening ties with the university.',
+      },
+      goals: {
+        ar: 'التمثيل، تطوير القيادة، التفاعل المجتمعي.',
+        en: 'Representation, leadership development, and community engagement.',
+      },
+      organization: {
+        ar: 'مجلس طلابي تابع لبرنامج خطوة في جامعة لا تروب.',
+        en: 'A student council affiliated with the Khotwa Program at La Trobe University.',
+      },
+    };
+
+    Object.keys(fallback).forEach((key) => {
+      const p = document.querySelector(`[data-section="${key}"] p`);
+      if (!p) return;
+      p.textContent = fallback[key][lang];
+    });
+  }
+
   /* ==============================
-     Load Council Members
+     Load Council Members (WORKING)
   ============================== */
   async function loadCouncilMembers() {
     try {
@@ -108,13 +136,11 @@
     loadCouncilMembers();
   }
 
-  // Initial load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAboutPage);
   } else {
     initAboutPage();
   }
 
-  // Re-run when language changes
   window.addEventListener('language:changed', initAboutPage);
 })();
