@@ -105,25 +105,54 @@
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="container nav-inner" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
-      <a class="brand" href="/index.html">
-        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40" height="40">
-        <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden>Khotwa Council</span>
+<nav class="navbar">
+  <div class="container nav-inner">
+
+    <!-- Logo -->
+    <a class="brand" href="/index.html">
+      <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo" width="40" height="40">
+      <span data-lang="ar">مجلس طلاب خطوة</span>
+      <span data-lang="en" hidden>Khotwa Council</span>
+    </a>
+
+    <!-- زر الموبايل -->
+    <button id="menu-toggle"
+            class="menu-toggle"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      ☰
+    </button>
+
+    <!-- الروابط -->
+    <div class="nav-links" id="primary-nav" data-open="false">
+
+      <a href="/index.html">
+        <span data-lang="ar">الرئيسية</span>
+        <span data-lang="en" hidden>Home</span>
       </a>
 
-      <div class="nav-links" style="display: flex; gap: 1.2rem; align-items: center;">
-        <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
-        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-        <a href="/about.html" class="active" style="font-weight: 700; color: var(--primary); border-bottom: 2px solid var(--primary); border-radius:0;">
-          <span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span>
-        </a>
-        <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden>Contact</span></a>
-        <button class="lang-toggle" id="lang-toggle" style="cursor: pointer; padding: 5px 15px; border-radius: 8px; border: 1px solid var(--ring); background: #fff;">English</button>
-      </div>
+      <a href="/news.html">
+        <span data-lang="ar">الأخبار</span>
+        <span data-lang="en" hidden>News</span>
+      </a>
+
+      <a href="/about.html" class="active">
+        <span data-lang="ar">من نحن</span>
+        <span data-lang="en" hidden>About</span>
+      </a>
+
+      <a href="/contact.html">
+        <span data-lang="ar">اتصل بنا</span>
+        <span data-lang="en" hidden>Contact</span>
+      </a>
+
+      <button id="lang-toggle" class="lang-toggle">
+        English
+      </button>
+
     </div>
-  </nav>
+  </div>
+</nav>
 
   <main class="container" id="main">
     <section>
