@@ -5,102 +5,90 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الأخبار – Khotwa</title>
 
-  <meta name="keywords" content="أخبار خطوة, إعلانات المجلس, فعاليات خطوة, أخبار الطلاب, جامعة لا تروب, ملبورن">
   <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة.">
-  <link rel="canonical" href="https://khotwastudentcouncil.com/news.html"/>
   <meta name="robots" content="index,follow"/>
 
   <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <link rel="icon" href="/assets/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
-  <!-- Theme color -->
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)">
-
+  <!-- Styles -->
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="stylesheet" href="/assets/pagination.css">
-  <link rel="stylesheet" href="/assets/advanced-filters.css">
-  <link rel="stylesheet" href="/assets/feedback.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
-
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
+  <link rel="stylesheet" href="/assets/advanced-filters.css">
 
-  <link rel="alternate" type="application/rss+xml" title="أخبار مجلس طلاب خطوة" href="/feed.xml">
-
+  <!-- API (مرة وحدة فقط) -->
   <script src="/assets/khotwa-api.js?v=1766975537"></script>
 </head>
 
 <body>
 
-<!-- Skip link (لغتين) -->
-<a class="skip-link" href="#main" data-lang="ar">تخطَّ إلى المحتوى</a>
-<a class="skip-link" href="#main" data-lang="en" hidden aria-hidden="true">Skip to content</a>
-
 <!-- Navbar -->
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a class="brand" href="/index.html">
+      <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
+      <span data-lang="ar">مجلس طلاب خطوة</span>
+      <span data-lang="en" hidden>Khotwa Student Council</span>
+    </a>
 
-  <nav class="navbar">
-    <div class="container nav-inner">
-      <a class="brand" href="/index.html">
-        <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
-        <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden>Khotwa Student Council</span>
-      </a>
+    <button id="menu-toggle" class="menu-toggle">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
 
-      <button id="menu-toggle" class="menu-toggle" aria-label="القائمة">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
-      </button>
-
-      <div class="nav-links" id="primary-nav">
-        <a href="/index.html" class="active"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
-        <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-        <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
-        <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-        <button class="lang-toggle" id="lang-toggle">
-          <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
-        </button>
-      </div>
+    <div class="nav-links" id="primary-nav">
+      <a href="/index.html">Home</a>
+      <a href="/news.html" class="active">News</a>
+      <a href="/events.html">Events</a>
+      <a href="/calendar.html">Calendar</a>
+      <button class="lang-toggle" id="lang-toggle">EN / AR</button>
     </div>
-  </nav>
+  </div>
+</nav>
 
 <main class="container" id="main">
 
-<section>
-  <h1 data-lang="ar">الأخبار</h1>
-  <h1 data-lang="en" hidden aria-hidden="true">News</h1>
-  <p class="muted" data-lang="ar">كل جديد عن مجلس طلاب خطوة</p>
-  <p class="muted" data-lang="en" hidden aria-hidden="true">All the latest from Khotwa Student Council</p>
+  <section>
+    <h1 data-lang="ar">الأخبار</h1>
+    <h1 data-lang="en" hidden>News</h1>
+    <p class="muted" data-lang="ar">كل جديد عن مجلس طلاب خطوة</p>
+    <p class="muted" data-lang="en" hidden>All the latest from Khotwa Student Council</p>
 
-  <div class="tools">
-    <input id="q" type="search" data-lang-placeholder-ar="ابحث في الأخبار…" data-lang-placeholder-en="Search news…" placeholder="ابحث في الأخبار…">
+    <div class="tools">
+      <input id="q" type="search" placeholder="ابحث في الأخبار…">
 
-    <button class="chip" data-filter="all" data-active="true">
-      <span data-lang="ar">الكل</span>
-      <span data-lang="en" hidden aria-hidden="true">All</span>
-    </button>
-    <button class="chip" data-filter="ann">
-      <span data-lang="ar">إعلانات</span>
-      <span data-lang="en" hidden aria-hidden="true">Announcements</span>
-    </button>
-    <button class="chip" data-filter="event">
-      <span data-lang="ar">فعاليات</span>
-      <span data-lang="en" hidden aria-hidden="true">Events</span>
-    </button>
-    <button class="chip" data-filter="media">
-      <span data-lang="ar">تغطيات</span>
-      <span data-lang="en" hidden aria-hidden="true">Coverage</span>
-    </button>
+      <button class="chip" data-filter="all" data-active="true">الكل</button>
+      <button class="chip" data-filter="ann">إعلانات</button>
+      <button class="chip" data-filter="event">فعاليات</button>
+      <button class="chip" data-filter="media">تغطيات</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid grid-3" id="posts">
+      <div class="muted">Loading…</div>
+    </div>
+  </section>
+
+</main>
+
+<footer style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:3rem 0;margin-top:4rem;">
+  <div class="container">
+    <strong>Khotwa Student Council</strong>
+    <p class="muted">© <span id="year"></span> Melbourne, Australia</p>
   </div>
-</section>
+</footer>
+
+<!-- ================= NEWS SCRIPT ================= -->
 <script>
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   const postsEl = document.getElementById("posts");
-  const qInput  = document.getElementById("q");
-  const chips   = document.querySelectorAll(".chip");
+  const qInput = document.getElementById("q");
+  const chips = document.querySelectorAll(".chip");
 
   let currentQuery = "";
   let currentCategory = "all";
@@ -109,48 +97,54 @@ document.addEventListener("DOMContentLoaded", async () => {
     const lang = localStorage.getItem("language") || "ar";
     postsEl.innerHTML = "<div class='muted'>Loading…</div>";
 
-    let items;
-    if (currentQuery || currentCategory !== "all") {
-      items = await KhotwaAPI.searchNews(
-        currentQuery,
-        currentCategory === "all" ? null : currentCategory,
-        "newest"
-      );
-    } else {
-      items = await KhotwaAPI.getNews();
+    try {
+      let items;
+      if (currentQuery || currentCategory !== "all") {
+        items = await KhotwaAPI.searchNews(
+          currentQuery,
+          currentCategory === "all" ? null : currentCategory,
+          "newest"
+        );
+      } else {
+        items = await KhotwaAPI.getNews();
+      }
+
+      if (!Array.isArray(items) || items.length === 0) {
+        postsEl.innerHTML = "<div class='muted'>No news found.</div>";
+        return;
+      }
+
+      postsEl.innerHTML = "";
+
+      items.forEach(item => {
+        const title =
+          lang === "ar"
+            ? item.titleAr || item.titleEn || ""
+            : item.titleEn || item.titleAr || "";
+
+        const content =
+          lang === "ar"
+            ? item.contentAr || item.contentEn || ""
+            : item.contentEn || item.contentAr || "";
+
+        const article = document.createElement("article");
+        article.className = "post";
+        article.innerHTML = `
+          <h3>${title}</h3>
+          <p class="muted">${content.substring(0,150)}${content.length > 150 ? "..." : ""}</p>
+        `;
+
+        article.onclick = () => {
+          location.href = \`/news-detail.html?id=\${item.id}\`;
+        };
+
+        postsEl.appendChild(article);
+      });
+
+    } catch (e) {
+      console.error(e);
+      postsEl.innerHTML = "<div class='muted'>Failed to load news.</div>";
     }
-
-    if (!items || !Array.isArray(items)) {
-      postsEl.innerHTML = "<div class='muted'>No news found.</div>";
-      return;
-    }
-
-    postsEl.innerHTML = "";
-
-    items.forEach(item => {
-      const title =
-        lang === "ar"
-          ? item.titleAr || item.titleEn || ""
-          : item.titleEn || item.titleAr || "";
-
-      const content =
-        lang === "ar"
-          ? item.contentAr || item.contentEn || ""
-          : item.contentEn || item.contentAr || "";
-
-      const card = document.createElement("article");
-      card.className = "post";
-      card.innerHTML = `
-        <h3>${title}</h3>
-        <p class="muted">${content.substring(0,150)}${content.length > 150 ? "..." : ""}</p>
-      `;
-
-      card.onclick = () => {
-        location.href = \`/news-detail.html?id=\${item.id}\`;
-      };
-
-      postsEl.appendChild(card);
-    });
   }
 
   qInput.addEventListener("input", e => {
@@ -167,46 +161,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
+  document.getElementById("year").textContent = new Date().getFullYear();
+
   loadNews();
 });
 </script>
 
-
-<section>
-  <div class="grid grid-3" id="posts">
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-  </div>
-</section>
-
-</main>
-
- <footer style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 3rem 0; margin-top: 4rem;">
-    <div class="container">
-      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem;">
-        <div>
-          <strong data-lang="ar">مجلس طلاب خطوة</strong>
-          <strong data-lang="en" hidden>Khotwa Council</strong>
-          <p style="font-size: 0.9rem; color: #64748b;">© <span id="year"></span> | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
-        </div>
-        <div style="display: flex; gap: 1.5rem;">
-          <a href="https://instagram.com/khotwa.sc" style="color: #e1306c; text-decoration: none; font-weight: bold;">Instagram</a>
-          <a href="/contact.html" style="color: var(--primary); text-decoration: none;"><span data-lang="ar">تواصل معنا</span><span data-lang="en" hidden>Contact</span></a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-<script src="/assets/khotwa-api.js"></script>
-<script src="/assets/feedback.js"></script>
-<script src="/assets/admin-button.js"></script>
-<script src="/assets/feedback-button.js"></script>
-<script src="/js/config.js"></script>
-
-<script src="/js/language-toggle.js"></script>
+<!-- Nav / Lang -->
 <script src="/js/menu-toggle.js"></script>
-<script src="/assets/site-settings-loader.js"></script>
+<script src="/js/language-toggle.js"></script>
 
 </body>
 </html>
