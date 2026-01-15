@@ -2,174 +2,123 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>الأخبار – Khotwa</title>
 
-  <meta name="description" content="آخر أخبار وإعلانات مجلس طلاب خطوة.">
-  <meta name="robots" content="index,follow"/>
-
-  <!-- Favicons -->
-  <link rel="icon" href="/assets/favicon.ico">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
-  <link rel="stylesheet" href="/assets/advanced-filters.css">
 
-  <!-- API (مرة وحدة فقط) -->
-  <script src="/assets/khotwa-api.js?v=1766975537"></script>
+  <script src="/assets/khotwa-api.js"></script>
 </head>
 
 <body>
 
-<!-- Navbar -->
 <nav class="navbar">
   <div class="container nav-inner">
     <a class="brand" href="/index.html">
       <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
-      <span data-lang="ar">مجلس طلاب خطوة</span>
-      <span data-lang="en" hidden>Khotwa Student Council</span>
+      <span>مجلس طلاب خطوة</span>
     </a>
-
-    <button id="menu-toggle" class="menu-toggle">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M4 6h16M4 12h16M4 18h16"></path>
-      </svg>
-    </button>
-
-    <div class="nav-links" id="primary-nav">
-      <a href="/index.html">Home</a>
-      <a href="/news.html" class="active">News</a>
-      <a href="/events.html">Events</a>
-      <a href="/calendar.html">Calendar</a>
-      <button class="lang-toggle" id="lang-toggle">EN / AR</button>
-    </div>
   </div>
 </nav>
 
 <main class="container" id="main">
 
-  <section>
-    <h1 data-lang="ar">الأخبار</h1>
-    <h1 data-lang="en" hidden>News</h1>
-    <p class="muted" data-lang="ar">كل جديد عن مجلس طلاب خطوة</p>
-    <p class="muted" data-lang="en" hidden>All the latest from Khotwa Student Council</p>
+  <header>
+    <h1>الأخبار</h1>
+    <p class="muted">كل جديد عن مجلس طلاب خطوة</p>
+  </header>
 
-    <div class="tools">
-      <input id="q" type="search" placeholder="ابحث في الأخبار…">
+  <div class="tools">
+    <input id="q" type="search" placeholder="ابحث في الأخبار…">
 
-      <button class="chip" data-filter="all" data-active="true">الكل</button>
-      <button class="chip" data-filter="ann">إعلانات</button>
-      <button class="chip" data-filter="event">فعاليات</button>
-      <button class="chip" data-filter="media">تغطيات</button>
-    </div>
-  </section>
+    <button class="chip" data-filter="all" data-active="true">الكل</button>
+    <button class="chip" data-filter="ann">إعلانات</button>
+    <button class="chip" data-filter="event">فعاليات</button>
+    <button class="chip" data-filter="media">تغطيات</button>
+  </div>
 
   <section>
     <div class="grid grid-3" id="posts">
-      <div class="muted">Loading…</div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
     </div>
   </section>
 
 </main>
 
-<footer style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:3rem 0;margin-top:4rem;">
+<footer class="footer">
   <div class="container">
-    <strong>Khotwa Student Council</strong>
-    <p class="muted">© <span id="year"></span> Melbourne, Australia</p>
+    © <span id="year"></span> Khotwa Student Council
   </div>
 </footer>
 
-<!-- ================= NEWS SCRIPT ================= -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const postsEl = document.getElementById("posts");
-  const qInput = document.getElementById("q");
-  const chips = document.querySelectorAll(".chip");
+document.getElementById("year").textContent = new Date().getFullYear();
 
-  let currentQuery = "";
-  let currentCategory = "all";
+const postsEl = document.getElementById("posts");
+const qInput  = document.getElementById("q");
+const chips   = document.querySelectorAll(".chip");
 
-  async function loadNews() {
-    const lang = localStorage.getItem("language") || "ar";
-    postsEl.innerHTML = "<div class='muted'>Loading…</div>";
+let currentQuery = "";
+let currentCategory = "all";
 
-    try {
-      let items;
-      if (currentQuery || currentCategory !== "all") {
-        items = await KhotwaAPI.searchNews(
-          currentQuery,
-          currentCategory === "all" ? null : currentCategory,
-          "newest"
-        );
-      } else {
-        items = await KhotwaAPI.getNews();
-      }
+async function loadNews() {
+  postsEl.innerHTML = "<p class='muted'>Loading…</p>";
 
-      if (!Array.isArray(items) || items.length === 0) {
-        postsEl.innerHTML = "<div class='muted'>No news found.</div>";
-        return;
-      }
-
-      postsEl.innerHTML = "";
-
-      items.forEach(item => {
-        const title =
-          lang === "ar"
-            ? item.titleAr || item.titleEn || ""
-            : item.titleEn || item.titleAr || "";
-
-        const content =
-          lang === "ar"
-            ? item.contentAr || item.contentEn || ""
-            : item.contentEn || item.contentAr || "";
-
-        const article = document.createElement("article");
-        article.className = "post";
-        article.innerHTML = `
-          <h3>${title}</h3>
-          <p class="muted">${content.substring(0,150)}${content.length > 150 ? "..." : ""}</p>
-        `;
-
-        article.onclick = () => {
-          location.href = \`/news-detail.html?id=\${item.id}\`;
-        };
-
-        postsEl.appendChild(article);
-      });
-
-    } catch (e) {
-      console.error(e);
-      postsEl.innerHTML = "<div class='muted'>Failed to load news.</div>";
-    }
+  let items;
+  if (currentQuery || currentCategory !== "all") {
+    items = await KhotwaAPI.searchNews(
+      currentQuery,
+      currentCategory === "all" ? null : currentCategory,
+      "newest"
+    );
+  } else {
+    items = await KhotwaAPI.getNews();
   }
 
-  qInput.addEventListener("input", e => {
-    currentQuery = e.target.value.trim();
-    loadNews();
+  if (!items || !items.length) {
+    postsEl.innerHTML = "<p class='muted'>لا توجد أخبار</p>";
+    return;
+  }
+
+  postsEl.innerHTML = "";
+
+  items.forEach(item => {
+    const card = document.createElement("article");
+    card.className = "post";
+    card.innerHTML = `
+      <h3>${item.titleAr || item.titleEn || ""}</h3>
+      <p class="muted">
+        ${(item.contentAr || "").substring(0,120)}...
+      </p>
+    `;
+    card.onclick = () => {
+      location.href = `/news-detail.html?id=${item.id}`;
+    };
+    postsEl.appendChild(card);
   });
+}
 
-  chips.forEach(btn => {
-    btn.addEventListener("click", () => {
-      chips.forEach(b => b.dataset.active = "false");
-      btn.dataset.active = "true";
-      currentCategory = btn.dataset.filter;
-      loadNews();
-    });
-  });
-
-  document.getElementById("year").textContent = new Date().getFullYear();
-
+qInput.addEventListener("input", e => {
+  currentQuery = e.target.value.trim();
   loadNews();
 });
-</script>
 
-<!-- Nav / Lang -->
-<script src="/js/menu-toggle.js"></script>
-<script src="/js/language-toggle.js"></script>
+chips.forEach(btn => {
+  btn.addEventListener("click", () => {
+    chips.forEach(b => b.dataset.active = "false");
+    btn.dataset.active = "true";
+    currentCategory = btn.dataset.filter;
+    loadNews();
+  });
+});
+
+loadNews();
+</script>
 
 </body>
 </html>
