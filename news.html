@@ -96,6 +96,74 @@
     </button>
   </div>
 </section>
+<script>
+(async function () {
+  const postsEl = document.getElementById('posts');
+  const qInput  = document.getElementById('q');
+  const chips   = document.querySelectorAll('.chip');
+
+  let currentQuery = '';
+  let currentCategory = 'all';
+
+  async function loadNews() {
+    const lang = localStorage.getItem('khotwa_lang') || 'ar';
+
+    postsEl.innerHTML = '<div class="muted">Loading...</div>';
+
+    const items =
+      currentQuery || currentCategory !== 'all'
+        ? await KhotwaAPI.searchNews(
+            currentQuery,
+            currentCategory === 'all' ? null : currentCategory,
+            'newest'
+          )
+        : await KhotwaAPI.getNews();
+
+    postsEl.innerHTML = '';
+
+    items.forEach(item => {
+      const title =
+        lang === 'ar'
+          ? item.titleAr || item.titleEn
+          : item.titleEn || item.titleAr;
+
+      const content =
+        lang === 'ar'
+          ? item.contentAr || item.contentEn
+          : item.contentEn || item.contentAr;
+
+      const card = document.createElement('article');
+      card.className = 'post';
+      card.innerHTML = `
+        <h3>${title}</h3>
+        <p class="muted">${content.substring(0,150)}...</p>
+      `;
+
+      card.onclick = () => {
+        location.href = \`/news-detail.html?id=\${item.id}\`;
+      };
+
+      postsEl.appendChild(card);
+    });
+  }
+
+  qInput.addEventListener('input', e => {
+    currentQuery = e.target.value.trim();
+    loadNews();
+  });
+
+  chips.forEach(btn => {
+    btn.addEventListener('click', () => {
+      chips.forEach(b => b.dataset.active = 'false');
+      btn.dataset.active = 'true';
+      currentCategory = btn.dataset.filter;
+      loadNews();
+    });
+  });
+
+  loadNews();
+})();
+</script>
 
 <section>
   <div class="grid grid-3" id="posts">
