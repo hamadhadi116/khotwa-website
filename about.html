@@ -11,19 +11,13 @@
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
-    /* تنسيق المسافات والناف بار */
-    body { padding-top: 90px !important; }
+    body { padding-top: 90px !important; background-color: #fafafa; }
     @media (max-width: 960px) { body { padding-top: 70px !important; } }
 
-    .about-header {
-      text-align: center;
-      padding: 3rem 1rem;
-      margin-bottom: 2rem;
-    }
-
+    .about-header { text-align: center; padding: 2rem 1rem; margin-bottom: 2rem; }
     .about-header h1 { font-size: 2.5rem; font-weight: 800; color: #1e293b; }
 
-    /* شبكة المعلومات (الرؤية، الرسالة، الأهداف) */
+    /* شبكة المعلومات */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -35,49 +29,62 @@
       padding: 2rem;
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 16px;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     }
 
-    .info-card h3 { 
-      color: #0284c7; 
-      margin-bottom: 12px; 
-      font-size: 1.3rem;
-      font-weight: 700;
+    .info-card h3 { color: #0284c7; margin-bottom: 12px; font-size: 1.2rem; font-weight: 700; }
+    .info-card p { line-height: 1.7; color: #64748b; font-size: 0.95rem; }
+
+    /* التصميم الجديد لبوكس الأعضاء والإدارة */
+    .members-section {
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 30px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     }
 
-    .info-card p { line-height: 1.6; color: #64748b; }
-
-    /* شبكة الأعضاء */
     .members-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
     }
 
     .member-card {
-      background: white;
-      border-radius: 12px;
-      border: 1px solid #f1f5f9;
-      overflow: hidden;
       text-align: center;
-      transition: transform 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .member-card:hover { transform: translateY(-5px); }
+    .member-card:hover { transform: translateY(-10px); }
+
+    .member-img-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+    }
 
     .member-card img {
       width: 100%;
-      aspect-ratio: 1/1;
+      height: 100%;
+      border-radius: 50%;
       object-fit: cover;
+      border: 4px solid white;
       background: #f8fafc;
     }
 
-    .member-card h3 { font-size: 1rem; margin: 12px 5px 4px; color: #1e293b; }
-    .member-card p { font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px; }
+    .member-card h3 { font-size: 1.1rem; color: #1e293b; margin-top: 10px; font-weight: 700; }
+    .member-card p { font-size: 0.85rem; color: #0284c7; font-weight: 600; margin-top: 4px; }
 
     @media (max-width: 600px) {
-      .members-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .members-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+      .member-img-container { width: 120px; height: 120px; }
+      .members-section { padding: 2rem 1rem; }
     }
   </style>
 </head>
@@ -88,14 +95,15 @@
     <a class="brand" href="/index.html">
       <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
       <span data-lang="ar">مجلس طلاب خطوة</span>
+      <span data-lang="en" hidden>Khotwa Student Council</span>
     </a>
     <button id="menu-toggle" class="menu-toggle">☰</button>
     <div class="nav-links" id="primary-nav">
-      <a href="/index.html">الرئيسية</a>
-      <a href="/news.html">الأخبار</a>
-      <a href="/about.html" class="active">من نحن</a>
-      <a href="/contact.html">اتصل بنا</a>
-      <button id="lang-toggle" class="lang-toggle">English</button>
+      <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
+      <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+      <a href="/about.html" class="active"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
+      <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden>Contact</span></a>
+      <button id="lang-toggle-btn" class="lang-toggle">English</button>
     </div>
   </div>
 </nav>
@@ -108,34 +116,28 @@
 
   <div class="info-grid">
     <article class="info-card" data-section="vision">
-      <h3 data-lang="ar">الرؤية</h3>
-      <h3 data-lang="en" hidden>Vision</h3>
-      <p>جارٍ التحميل...</p>
+      <h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3>
+      <p>...</p>
     </article>
-
     <article class="info-card" data-section="mission">
-      <h3 data-lang="ar">الرسالة</h3>
-      <h3 data-lang="en" hidden>Mission</h3>
-      <p>جارٍ التحميل...</p>
+      <h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3>
+      <p>...</p>
     </article>
-
     <article class="info-card" data-section="goals">
-      <h3 data-lang="ar">الأهداف</h3>
-      <h3 data-lang="en" hidden>Goals</h3>
-      <p>جارٍ التحميل...</p>
+      <h3 data-lang="ar">الأهداف</h3><h3 data-lang="en" hidden>Goals</h3>
+      <p>...</p>
     </article>
-
     <article class="info-card" data-section="organization">
-      <h3 data-lang="ar">التنظيم</h3>
-      <h3 data-lang="en" hidden>Organization</h3>
-      <p>جارٍ التحميل...</p>
+      <h3 data-lang="ar">التنظيم</h3><h3 data-lang="en" hidden>Organization</h3>
+      <p>...</p>
     </article>
   </div>
 
-  <section>
+  <section class="members-section">
     <div class="section-head" style="text-align:center;">
       <h2 data-lang="ar">أعضاء المجلس والإدارة</h2>
-      <h2 data-lang="en" hidden>Council Members</h2>
+      <h2 data-lang="en" hidden>Council Board</h2>
+      <div style="width: 50px; height: 3px; background: #0284c7; margin: 15px auto;"></div>
     </div>
     
     <div class="members-grid" id="council-members-container">
@@ -143,10 +145,11 @@
   </section>
 </main>
 
-<footer style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:3rem 0; margin-top:5rem;">
+<footer style="background:#fff; border-top:1px solid #e2e8f0; padding:3rem 0; margin-top:5rem;">
   <div class="container" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:2rem;">
     <div class="muted">
-      © <span id="year"></span> مجلس طلاب خطوة - ملبورن
+      <span data-lang="ar">© 2026 مجلس طلاب خطوة - ملبورن</span>
+      <span data-lang="en" hidden>© 2026 Khotwa Student Council - Melbourne</span>
     </div>
     <div class="socials">
       <a href="https://www.instagram.com/khotwa.sc/" target="_blank" style="color:#e1306c; font-weight:bold; text-decoration:none;">Instagram</a>
@@ -160,12 +163,24 @@
 <script src="/js/about-loader.js"></script>
 
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+  // حل مشكلة تحديث اللغة في البيانات المسحوبة من الـ API
+  const langBtn = document.getElementById('lang-toggle-btn');
+  if (langBtn) {
+    langBtn.addEventListener('click', () => {
+      // إعطاء وقت بسيط للمتصفح لتغيير الـ LocalStorage ثم إعادة تحميل البيانات
+      setTimeout(() => {
+        const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
+        localStorage.setItem('language', currentLang);
+        // استدعاء وظيفة التحميل مرة أخرى إذا كانت معرفة في about-loader.js
+        location.reload(); 
+      }, 100);
+    });
+  }
 
-  // تأكيد تزامن مفتاح اللغة بين كل الصفحات
+  // مزامنة اللغة عند التحميل الأول
   window.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
-    localStorage.setItem('language', savedLang); // ليتوافق مع about-loader.js
+    const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
+    localStorage.setItem('language', currentLang);
   });
 </script>
 
