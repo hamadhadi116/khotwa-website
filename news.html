@@ -139,8 +139,6 @@ items = items.filter(item => {
   return matchesQuery && category === currentCategory;
 });
 
-  });
-
   if (!items.length) {
     postsEl.innerHTML = "<p class='muted'>لا توجد أخبار</p>";
     return;
