@@ -11,66 +11,70 @@
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
-    /* حل مشكلة اختفاء الناف بار وتداخل المحتوى */
+    /* تنسيق المسافات والناف بار */
     body { padding-top: 90px !important; }
     @media (max-width: 960px) { body { padding-top: 70px !important; } }
 
-    /* الهيدر الرئيسي */
     .about-header {
       text-align: center;
       padding: 3rem 1rem;
-      background: linear-gradient(to bottom, #f8fafc, #ffffff);
-      border-radius: 24px;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .about-header h1 { font-size: 2.5rem; font-weight: 800; color: #1e293b; }
 
-    /* شبكة الرؤية والرسالة (مرتبطة بالسكربت عبر data-section) */
+    /* شبكة المعلومات (الرؤية، الرسالة، الأهداف) */
     .info-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5rem;
       margin-bottom: 4rem;
     }
 
     .info-card {
       padding: 2rem;
-      background: white;
+      background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 20px;
-      transition: all 0.3s ease;
+      border-radius: 16px;
     }
 
-    .info-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-    .info-card h3 { color: #0284c7; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+    .info-card h3 { 
+      color: #0284c7; 
+      margin-bottom: 12px; 
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
 
-    /* شبكة الأعضاء (تنسيق الصور الموحد) */
+    .info-card p { line-height: 1.6; color: #64748b; }
+
+    /* شبكة الأعضاء */
     .members-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 2rem;
       margin-top: 2rem;
     }
 
     .member-card {
       background: white;
-      border-radius: 16px;
+      border-radius: 12px;
       border: 1px solid #f1f5f9;
       overflow: hidden;
       text-align: center;
-      transition: 0.3s;
+      transition: transform 0.3s ease;
     }
+
+    .member-card:hover { transform: translateY(-5px); }
 
     .member-card img {
       width: 100%;
       aspect-ratio: 1/1;
       object-fit: cover;
-      background: #f1f5f9;
+      background: #f8fafc;
     }
 
-    .member-card h3 { font-size: 1.1rem; margin: 15px 10px 5px; color: #1e293b; }
-    .member-card p { font-size: 0.9rem; color: #64748b; margin-bottom: 15px; }
+    .member-card h3 { font-size: 1rem; margin: 12px 5px 4px; color: #1e293b; }
+    .member-card p { font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px; }
 
     @media (max-width: 600px) {
       .members-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -100,48 +104,49 @@
   <header class="about-header">
     <h1 data-lang="ar">من نحن</h1>
     <h1 data-lang="en" hidden>About Us</h1>
-    <p class="muted" data-lang="ar">تعرف على رؤية وأهداف وفريق عمل مجلس طلاب خطوة</p>
   </header>
 
   <div class="info-grid">
     <article class="info-card" data-section="vision">
-      <h3><span>👁️</span> الرؤية</h3>
+      <h3 data-lang="ar">الرؤية</h3>
+      <h3 data-lang="en" hidden>Vision</h3>
       <p>جارٍ التحميل...</p>
     </article>
 
     <article class="info-card" data-section="mission">
-      <h3><span>🚀</span> الرسالة</h3>
+      <h3 data-lang="ar">الرسالة</h3>
+      <h3 data-lang="en" hidden>Mission</h3>
       <p>جارٍ التحميل...</p>
     </article>
 
     <article class="info-card" data-section="goals">
-      <h3><span>🎯</span> الأهداف</h3>
+      <h3 data-lang="ar">الأهداف</h3>
+      <h3 data-lang="en" hidden>Goals</h3>
       <p>جارٍ التحميل...</p>
     </article>
 
     <article class="info-card" data-section="organization">
-      <h3><span>🏛️</span> التنظيم</h3>
+      <h3 data-lang="ar">التنظيم</h3>
+      <h3 data-lang="en" hidden>Organization</h3>
       <p>جارٍ التحميل...</p>
     </article>
   </div>
 
   <section>
-    <div class="section-head" style="text-align:center; margin-bottom: 2rem;">
+    <div class="section-head" style="text-align:center;">
       <h2 data-lang="ar">أعضاء المجلس والإدارة</h2>
-      <p class="muted">نخبة من الطلاب يعملون لخدمتكم</p>
+      <h2 data-lang="en" hidden>Council Members</h2>
     </div>
     
     <div class="members-grid" id="council-members-container">
-      <p style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #94a3b8;">جاري تحميل فريق العمل...</p>
-    </div>
+      </div>
   </section>
 </main>
 
 <footer style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:3rem 0; margin-top:5rem;">
   <div class="container" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:2rem;">
-    <div>
-      <strong>مجلس طلاب خطوة</strong>
-      <p style="font-size:0.9rem; color:#64748b;">© <span id="year"></span> | ملبورن، أستراليا</p>
+    <div class="muted">
+      © <span id="year"></span> مجلس طلاب خطوة - ملبورن
     </div>
     <div class="socials">
       <a href="https://www.instagram.com/khotwa.sc/" target="_blank" style="color:#e1306c; font-weight:bold; text-decoration:none;">Instagram</a>
@@ -156,6 +161,12 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // تأكيد تزامن مفتاح اللغة بين كل الصفحات
+  window.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
+    localStorage.setItem('language', savedLang); // ليتوافق مع about-loader.js
+  });
 </script>
 
 </body>
