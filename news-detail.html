@@ -25,10 +25,7 @@
       text-decoration: none;
       font-weight: 600;
       margin-bottom: 30px;
-      transition: color 0.2s;
     }
-
-    .btn-back:hover { color: var(--primary-color, #0284c7); }
 
     .news-header { margin-bottom: 30px; }
 
@@ -51,32 +48,27 @@
       margin-bottom: 15px;
     }
 
-    .news-meta {
-      color: #94a3b8;
-      font-size: 0.9rem;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #f1f5f9;
-    }
-
-    /* إصلاح عرض الصورة */
+    /* تحسين عرض الصورة لضمان ظهورها */
     .news-main-img-container {
       width: 100%;
       margin: 30px 0;
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      background: #f1f5f9;
     }
 
     .news-main-img {
       width: 100%;
       height: auto;
       display: block;
+      min-height: 200px;
       object-fit: cover;
     }
 
     .news-article-body {
-      font-size: 1.15rem;
-      line-height: 1.8;
+      font-size: 1.2rem;
+      line-height: 1.9;
       color: #334155;
     }
 
@@ -92,28 +84,24 @@
 
     .share-grid {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
       margin-top: 15px;
     }
 
     .share-btn {
-      padding: 10px 20px;
-      border-radius: 10px;
+      padding: 10px 24px;
+      border-radius: 12px;
       color: white;
       text-decoration: none;
       font-weight: 700;
-      font-size: 0.9rem;
       transition: transform 0.2s;
     }
 
-    .share-btn:hover { transform: translateY(-3px); }
     .tw { background: #000; }
     .wa { background: #25d366; }
     .fb { background: #1877f2; }
-
-    .loading-state { text-align: center; padding: 100px 0; color: #64748b; }
   </style>
 
   <script src="/assets/khotwa-api.js"></script>
@@ -127,22 +115,23 @@
       <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
       <span data-lang="ar">مجلس طلاب خطوة</span>
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="primary-nav">
       <a href="/index.html">الرئيسية</a>
-      <a href="/news.html" class="active">الأخبار</a>
+      <a href="/news.html">الأخبار</a>
       <a href="/events.html">الفعاليات</a>
       <button class="lang-toggle" id="lang-toggle">English</button>
     </div>
   </div>
 </nav>
 
-<main id="content-area">
-  <div class="loading-state">جاري تحميل تفاصيل الخبر...</div>
+<main id="news-content">
+  <div style="text-align:center; padding:100px 0;">جاري التحميل...</div>
 </main>
 
 <script>
-async function loadDetail() {
-  const id = new URLSearchParams(window.location.search).get('id');
+async function loadNewsDetail() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
   const lang = localStorage.getItem('khotwa_lang') || 'ar';
   
   if (!id) { window.location.href = '/news.html'; return; }
@@ -151,30 +140,30 @@ async function loadDetail() {
     const allNews = await KhotwaAPI.getNews();
     const news = allNews.find(n => n.id == id);
 
-    if (!news) throw new Error();
+    if (!news) throw new Error("News not found");
 
     const title = lang === 'ar' ? (news.titleAr || news.titleEn) : (news.titleEn || news.titleAr);
     const content = lang === 'ar' ? (news.contentAr || news.contentEn) : (news.contentEn || news.contentAr);
     
-    // محاولة جلب الصورة من أكثر من مسمى محتمل (image أو imageUrl)
-    const imagePath = news.image || news.imageUrl || '';
+    // جلب الصورة بناءً على المسميات المحتملة في الـ API الخاص بك
+    const imagePath = news.image || news.imageUrl || news.img || '';
     
     const shareUrl = encodeURIComponent(window.location.href);
     const shareTitle = encodeURIComponent(title);
 
-    document.getElementById('content-area').innerHTML = `
+    document.getElementById('news-content').innerHTML = `
       <div class="news-detail-wrapper">
         <a href="/news.html" class="btn-back">← العودة للأخبار</a>
 
         <header class="news-header">
           <span class="news-category-badge">${news.category || 'خبر'}</span>
           <h1 class="news-title-main">${title}</h1>
-          <div class="news-meta">📅 ${new Date(news.createdAt).toLocaleDateString('ar-EG')}</div>
+          <div style="color:#94a3b8;">📅 ${new Date(news.createdAt).toLocaleDateString('ar-EG')}</div>
         </header>
 
         ${imagePath ? `
           <div class="news-main-img-container">
-            <img src="${imagePath}" class="news-main-img" alt="${title}" onerror="this.parentElement.style.display='none'">
+            <img src="${imagePath}" class="news-main-img" alt="${title}" onerror="this.style.display='none'">
           </div>
         ` : ''}
 
@@ -183,7 +172,7 @@ async function loadDetail() {
         </article>
 
         <section class="share-section">
-          <p style="font-weight:700; color:#1e293b;">مشاركة الخبر</p>
+          <p style="font-weight:700;">مشاركة الخبر</p>
           <div class="share-grid">
             <a href="https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}" target="_blank" class="share-btn tw">𝕏 تويتر</a>
             <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" class="share-btn wa">واتساب</a>
@@ -193,14 +182,15 @@ async function loadDetail() {
       </div>
     `;
   } catch (e) {
-    document.getElementById('content-area').innerHTML = `<div class="loading-state">تعذر تحميل الخبر.</div>`;
+    document.getElementById('news-content').innerHTML = `<div style="text-align:center; padding:100px 0;">عذراً، لم يتم العثور على الخبر.</div>`;
   }
 }
 
-loadDetail();
+loadNewsDetail();
 </script>
 
 <script src="/js/menu-toggle.js"></script>
 <script src="/js/language-toggle.js"></script>
+
 </body>
 </html>
