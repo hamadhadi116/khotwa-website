@@ -9,18 +9,12 @@
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
-  <link rel="stylesheet" href="/assets/comments-and-registration.css"/>
 
   <style>
-    /* تحسينات تصميم صفحة الخبر */
     .news-detail-wrapper {
-      max-width: 900px;
+      max-width: 850px;
       margin: 40px auto;
       padding: 0 20px;
-    }
-
-    .back-nav {
-      margin-bottom: 30px;
     }
 
     .btn-back {
@@ -30,111 +24,96 @@
       color: #64748b;
       text-decoration: none;
       font-weight: 600;
+      margin-bottom: 30px;
       transition: color 0.2s;
     }
 
-    .btn-back:hover {
-      color: var(--primary-color, #0284c7);
-    }
+    .btn-back:hover { color: var(--primary-color, #0284c7); }
 
-    .news-header {
-      margin-bottom: 40px;
-    }
+    .news-header { margin-bottom: 30px; }
 
     .news-category-badge {
-      background: #e0f2fe;
+      background: #f0f9ff;
       color: #0284c7;
       padding: 6px 16px;
       border-radius: 50px;
       font-size: 0.85rem;
       font-weight: 700;
-      display: inline-block;
       margin-bottom: 15px;
+      display: inline-block;
     }
 
     .news-title-main {
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
       line-height: 1.3;
-      font-weight: 900;
-      color: #1e293b;
-      margin-bottom: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 15px;
     }
 
-    .news-meta-info {
-      display: flex;
-      gap: 20px;
+    .news-meta {
       color: #94a3b8;
-      font-size: 0.95rem;
-      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.9rem;
       padding-bottom: 20px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    /* إصلاح عرض الصورة */
+    .news-main-img-container {
+      width: 100%;
+      margin: 30px 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
     .news-main-img {
       width: 100%;
-      border-radius: 24px;
-      margin: 30px 0;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      height: auto;
+      display: block;
       object-fit: cover;
     }
 
     .news-article-body {
-      font-size: 1.2rem;
-      line-height: 1.9;
+      font-size: 1.15rem;
+      line-height: 1.8;
       color: #334155;
-      text-align: justify;
     }
 
-    .news-article-body p {
-      margin-bottom: 25px;
-    }
+    .news-article-body p { margin-bottom: 20px; }
 
-    /* أزرار المشاركة العصرية */
     .share-section {
       margin-top: 50px;
       padding: 30px;
       background: #f8fafc;
       border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+      text-align: center;
     }
 
     .share-grid {
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 10px;
       justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 15px;
     }
 
-    .share-icon-btn {
-      padding: 12px 24px;
-      border-radius: 12px;
+    .share-btn {
+      padding: 10px 20px;
+      border-radius: 10px;
       color: white;
       text-decoration: none;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 0.9rem;
       transition: transform 0.2s;
     }
 
-    .share-icon-btn:hover {
-      transform: translateY(-3px);
-    }
+    .share-btn:hover { transform: translateY(-3px); }
+    .tw { background: #000; }
+    .wa { background: #25d366; }
+    .fb { background: #1877f2; }
 
-    .tw-bg { background: #000; }
-    .fb-bg { background: #1877f2; }
-    .wa-bg { background: #25d366; }
-
-    .loading-state {
-      text-align: center;
-      padding: 100px 0;
-    }
-
-    @media (max-width: 768px) {
-      .news-article-body { font-size: 1.1rem; }
-    }
+    .loading-state { text-align: center; padding: 100px 0; color: #64748b; }
   </style>
 
   <script src="/assets/khotwa-api.js"></script>
@@ -148,7 +127,7 @@
       <img src="/assets/apple-touch-icon.png" class="logo" alt="Logo">
       <span data-lang="ar">مجلس طلاب خطوة</span>
     </a>
-    <div class="nav-links" id="primary-nav">
+    <div class="nav-links">
       <a href="/index.html">الرئيسية</a>
       <a href="/news.html" class="active">الأخبار</a>
       <a href="/events.html">الفعاليات</a>
@@ -157,89 +136,64 @@
   </div>
 </nav>
 
-<main id="news-detail-content">
-  <div class="loading-state">
-    <div class="skeleton-text" style="width: 60%; margin: 0 auto 20px;"></div>
-    <p>جارٍ جلب الخبر من المجلس...</p>
-  </div>
+<main id="content-area">
+  <div class="loading-state">جاري تحميل تفاصيل الخبر...</div>
 </main>
 
-<footer style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:4rem 0; margin-top:4rem;">
-  <div class="container">
-    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center;">
-      <p>© <span id="year"></span> مجلس طلاب خطوة</p>
-      <a href="https://instagram.com/khotwa.sc" style="color:#e1306c; font-weight:bold;">Instagram</a>
-    </div>
-  </div>
-</footer>
-
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
-
 async function loadDetail() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const id = new URLSearchParams(window.location.search).get('id');
   const lang = localStorage.getItem('khotwa_lang') || 'ar';
   
-  if (!id) {
-    window.location.href = '/news.html';
-    return;
-  }
+  if (!id) { window.location.href = '/news.html'; return; }
 
   try {
     const allNews = await KhotwaAPI.getNews();
     const news = allNews.find(n => n.id == id);
 
-    if (!news) throw new Error("Not found");
+    if (!news) throw new Error();
 
     const title = lang === 'ar' ? (news.titleAr || news.titleEn) : (news.titleEn || news.titleAr);
     const content = lang === 'ar' ? (news.contentAr || news.contentEn) : (news.contentEn || news.contentAr);
-    const date = new Date(news.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-AU', {
-      year: 'numeric', month: 'long', day: 'numeric'
-    });
-
+    
+    // محاولة جلب الصورة من أكثر من مسمى محتمل (image أو imageUrl)
+    const imagePath = news.image || news.imageUrl || '';
+    
     const shareUrl = encodeURIComponent(window.location.href);
     const shareTitle = encodeURIComponent(title);
 
-    document.getElementById('news-detail-content').innerHTML = `
+    document.getElementById('content-area').innerHTML = `
       <div class="news-detail-wrapper">
-        <div class="back-nav">
-          <a href="/news.html" class="btn-back">← العودة للأخبار</a>
-        </div>
+        <a href="/news.html" class="btn-back">← العودة للأخبار</a>
 
         <header class="news-header">
           <span class="news-category-badge">${news.category || 'خبر'}</span>
           <h1 class="news-title-main">${title}</h1>
-          <div class="news-meta-info">
-            <span>📅 ${date}</span>
-            <span>👤 مجلس خطوة</span>
-          </div>
+          <div class="news-meta">📅 ${new Date(news.createdAt).toLocaleDateString('ar-EG')}</div>
         </header>
 
-        ${news.image ? `<img src="${news.image}" class="news-main-img" alt="${title}" onerror="this.style.display='none'">` : ''}
+        ${imagePath ? `
+          <div class="news-main-img-container">
+            <img src="${imagePath}" class="news-main-img" alt="${title}" onerror="this.parentElement.style.display='none'">
+          </div>
+        ` : ''}
 
         <article class="news-article-body">
           ${content.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('')}
         </article>
 
         <section class="share-section">
-          <h3>مشاركة هذا الخبر</h3>
+          <p style="font-weight:700; color:#1e293b;">مشاركة الخبر</p>
           <div class="share-grid">
-            <a href="https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}" target="_blank" class="share-icon-btn tw-bg">𝕏 تويتر</a>
-            <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" class="share-icon-btn wa-bg">واتساب</a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" class="share-icon-btn fb-bg">فيسبوك</a>
+            <a href="https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}" target="_blank" class="share-btn tw">𝕏 تويتر</a>
+            <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" class="share-btn wa">واتساب</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" class="share-btn fb">فيسبوك</a>
           </div>
         </section>
       </div>
     `;
-
-  } catch (err) {
-    document.getElementById('news-detail-content').innerHTML = `
-      <div style="text-align:center; padding:100px 0;">
-        <h2>عذراً، لم نتمكن من العثور على الخبر</h2>
-        <a href="/news.html" class="btn-back">العودة لقائمة الأخبار</a>
-      </div>
-    `;
+  } catch (e) {
+    document.getElementById('content-area').innerHTML = `<div class="loading-state">تعذر تحميل الخبر.</div>`;
   }
 }
 
@@ -248,6 +202,5 @@ loadDetail();
 
 <script src="/js/menu-toggle.js"></script>
 <script src="/js/language-toggle.js"></script>
-
 </body>
 </html>
