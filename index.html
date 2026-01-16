@@ -11,15 +11,30 @@
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
+    :root { --primary: #1e40af; --ring: #e2e8f0; }
+
     /* تحسين قسم الـ Hero */
     .hero {
-      padding: 6rem 0;
+      padding: 8rem 0;
       background: radial-gradient(circle at top right, #f8fafc, #e2e8f0);
       text-align: center;
       border-bottom: 1px solid var(--ring);
       position: relative;
       overflow: hidden;
     }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -10%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: rgba(30, 64, 175, 0.05);
+      filter: blur(80px);
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .hero .container { position: relative; z-index: 1; }
     .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--primary); margin-bottom: 1.5rem; font-weight: 800; }
     .hero p { font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto 2.5rem; line-height: 1.8; }
     
@@ -38,43 +53,37 @@
     .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
     .btn-secondary:hover { background: #f1f5f9; transform: translateY(-3px); }
 
-    /* قسم الإحصائيات (تحسين إضافي) */
+    /* قسم الإحصائيات */
     .stats-section { padding: 4rem 0; background: white; }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
-    .stat-item h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+    .stat-item h2 { font-size: 3rem; color: var(--primary); margin-bottom: 0.5rem; font-weight: 800; }
     .stat-item p { color: #64748b; font-weight: 600; }
 
-    /* الفوتر الجديد والاحترافي */
-    .main-footer {
-      background: #ffffff;
-      border-top: 1px solid #e2e8f0;
-      padding: 4rem 0 2rem;
-      margin-top: 4rem;
+    /* قسم الخدمات (بدون إيموجي) */
+    .services-section { padding: 5rem 0; background: #fcfcfc; }
+    .service-card { 
+      background: white; 
+      padding: 2.5rem; 
+      border-radius: 20px; 
+      text-align: center; 
+      border: 1px solid #f1f5f9;
+      transition: 0.3s;
     }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
+    .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+    .icon-wrapper { color: var(--primary); margin-bottom: 1.5rem; }
+
+    /* الفوتر */
+    .main-footer { background: #ffffff; border-top: 1px solid #e2e8f0; padding: 4rem 0 2rem; margin-top: 4rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
     .footer-col h4 { color: var(--primary); margin-bottom: 1.5rem; font-size: 1.2rem; }
     .footer-col p { color: #64748b; line-height: 1.6; font-size: 0.95rem; }
     .footer-links { list-style: none; padding: 0; }
     .footer-links li { margin-bottom: 0.8rem; }
     .footer-links a { color: #64748b; text-decoration: none; transition: 0.2s; }
     .footer-links a:hover { color: var(--primary); padding-inline-start: 5px; }
-    
     .social-icons { display: flex; gap: 1rem; margin-top: 1rem; }
     .social-icons img { width: 24px; transition: 0.3s; }
-    .social-icons a:hover img { transform: scale(1.2); }
-
-    .footer-bottom {
-      text-align: center;
-      padding-top: 2rem;
-      border-top: 1px solid #f1f5f9;
-      color: #94a3b8;
-      font-size: 0.9rem;
-    }
+    .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #f1f5f9; color: #94a3b8; font-size: 0.9rem; }
 
     [hidden] { display: none !important; }
   </style>
@@ -88,19 +97,15 @@
         <span data-lang="ar">مجلس طلاب خطوة</span>
         <span data-lang="en" hidden>Khotwa Student Council</span>
       </a>
-
       <button id="menu-toggle" class="menu-toggle" aria-label="القائمة">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
-
       <div class="nav-links" id="primary-nav">
         <a href="/index.html" class="active"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
         <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
         <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
         <a href="/calendar.html"><span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span></a>
-        <button class="lang-toggle" id="lang-toggle">
-          <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
-        </button>
+        <button class="lang-toggle" id="lang-toggle"><span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span></button>
       </div>
     </div>
   </nav>
@@ -111,31 +116,52 @@
       <h1 data-lang="en" hidden>Welcome to Khotwa Council</h1>
       <p data-lang="ar">البيت الجامعي لطلاب برنامج خطوة في ملبورن. نجمع بين العلم، المبادرة، والروح الجماعية لتطوير مستقبلنا.</p>
       <p data-lang="en" hidden>The university home for Khotwa program students in Melbourne. We combine knowledge, initiative, and community spirit.</p>
-      
       <div class="cta-buttons">
-        <a href="/events.html" class="btn-main btn-primary">
-          <span data-lang="ar">استكشف الفعاليات</span><span data-lang="en" hidden>Explore Events</span>
-        </a>
-        <a href="/about.html" class="btn-main btn-secondary">
-          <span data-lang="ar">تعرف علينا</span><span data-lang="en" hidden>About Us</span>
-        </a>
+        <a href="/events.html" class="btn-main btn-primary"><span data-lang="ar">استكشف الفعاليات</span><span data-lang="en" hidden>Explore Events</span></a>
+        <a href="/about.html" class="btn-main btn-secondary"><span data-lang="ar">تعرف علينا</span><span data-lang="en" hidden>About Us</span></a>
       </div>
     </div>
   </header>
 
   <section class="stats-section">
     <div class="container stats-grid">
-      <div class="stat-item">
-        <h2 id="count1">+50</h2>
-        <p data-lang="ar">فعالية سنوياً</p><p data-lang="en" hidden>Events Yearly</p>
+      <div class="stat-item"><h2 id="count1">+0</h2><p data-lang="ar">فعالية سنوياً</p><p data-lang="en" hidden>Events Yearly</p></div>
+      <div class="stat-item"><h2 id="count2">+0</h2><p data-lang="ar">طالب مستفيد</p><p data-lang="en" hidden>Students Helped</p></div>
+      <div class="stat-item"><h2 id="count3">0%</h2><p data-lang="ar">دعم طلابي</p><p data-lang="en" hidden>Student Support</p></div>
+    </div>
+  </section>
+
+  <section class="services-section">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 data-lang="ar">ماذا يقدم المجلس؟</h2>
+        <h2 data-lang="en" hidden>What We Offer</h2>
       </div>
-      <div class="stat-item">
-        <h2 id="count2">+200</h2>
-        <p data-lang="ar">طالب مستفيد</p><p data-lang="en" hidden>Students Helped</p>
-      </div>
-      <div class="stat-item">
-        <h2 id="count3">100%</h2>
-        <p data-lang="ar">دعم طلابي</p><p data-lang="en" hidden>Student Support</p>
+      <div class="stats-grid">
+        <div class="service-card">
+          <div class="icon-wrapper">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <h3 data-lang="ar">دعم أكاديمي</h3>
+          <h3 data-lang="en" hidden>Academic Support</h3>
+          <p style="color: #64748b; margin-top: 10px;">إرشاد الطلاب في مسيرتهم وتسهيل التحديات الجامعية.</p>
+        </div>
+        <div class="service-card">
+          <div class="icon-wrapper">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 data-lang="ar">أنشطة اجتماعية</h3>
+          <h3 data-lang="en" hidden>Social Activities</h3>
+          <p style="color: #64748b; margin-top: 10px;">تنظيم فعاليات دورية لتعزيز الروابط وتقوية المجتمع.</p>
+        </div>
+        <div class="service-card">
+          <div class="icon-wrapper">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3 data-lang="ar">تطوير المهارات</h3>
+          <h3 data-lang="en" hidden>Skills Development</h3>
+          <p style="color: #64748b; margin-top: 10px;">ورش عمل تساهم في صقل المهارات الشخصية والمهنية.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -144,58 +170,59 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <h4 data-lang="ar">مجلس طلاب خطوة</h4>
-          <h4 data-lang="en" hidden>Khotwa Council</h4>
-          <p data-lang="ar">مجلس طلابي تطوعي يهدف لتمثيل الطلاب وتقديم الدعم الأكاديمي والاجتماعي في ملبورن، أستراليا.</p>
-          <p data-lang="en" hidden>A volunteer student council aiming to represent students and provide academic and social support in Melbourne.</p>
+          <h4 data-lang="ar">مجلس طلاب خطوة</h4><h4 data-lang="en" hidden>Khotwa Council</h4>
+          <p data-lang="ar">مجلس طلابي تطوعي يهدف لتمثيل الطلاب وتقديم الدعم الأكاديمي والاجتماعي في ملبورن.</p>
+          <p data-lang="en" hidden>A volunteer council aiming to represent students and provide support in Melbourne.</p>
         </div>
-        
         <div class="footer-col">
-          <h4 data-lang="ar">روابط سريعة</h4>
-          <h4 data-lang="en" hidden>Quick Links</h4>
+          <h4 data-lang="ar">روابط سريعة</h4><h4 data-lang="en" hidden>Quick Links</h4>
           <ul class="footer-links">
             <li><a href="/about.html"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About Us</span></a></li>
-            <li><a href="/news.html"><span data-lang="ar">آخر الأخبار</span><span data-lang="en" hidden>Latest News</span></a></li>
-            <li><a href="/calendar.html"><span data-lang="ar">التقويم الدراسي</span><span data-lang="en" hidden>Academic Calendar</span></a></li>
+            <li><a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a></li>
             <li><a href="/contact.html"><span data-lang="ar">تواصل معنا</span><span data-lang="en" hidden>Contact</span></a></li>
           </ul>
         </div>
-
         <div class="footer-col">
-          <h4 data-lang="ar">تابعنا على الانستقرام</h4>
-          <h4 data-lang="en" hidden>Follow Us</h4>
-          <p data-lang="ar">كن أول من يعرف بفعالياتنا الجديدة.</p>
+          <h4 data-lang="ar">تابعنا</h4><h4 data-lang="en" hidden>Follow Us</h4>
           <div class="social-icons">
-            <a href="https://instagram.com/khotwa.sc" target="_blank">
-               <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
-            </a>
+            <a href="https://instagram.com/khotwa.sc" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="IG"></a>
           </div>
         </div>
       </div>
-
       <div class="footer-bottom">
-        <p>© <span id="year"></span> Khotwa Student Council | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
+        <p>© <span id="year"></span> Khotwa Council | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne</span></p>
       </div>
     </div>
   </footer>
 
   <script>
-    // تحديث السنة
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // وظيفة تبديل اللغة
+    function animateValue(id, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentVal = Math.floor(progress * (end - start) + start);
+            const element = document.getElementById(id);
+            element.innerHTML = (id === 'count3' ? currentVal + "%" : "+" + currentVal);
+            if (progress < 1) window.requestAnimationFrame(step);
+        };
+        window.requestAnimationFrame(step);
+    }
+
     function updateUI(lang) {
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        el.hidden = el.getAttribute('data-lang') !== lang;
-      });
-      document.getElementById('lang-toggle').textContent = lang === 'ar' ? 'English' : 'العربية';
+      document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== lang);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
       updateUI(savedLang);
+      animateValue("count1", 0, 50, 2000);
+      animateValue("count2", 0, 200, 2000);
+      animateValue("count3", 0, 100, 2000);
 
       document.getElementById('lang-toggle').addEventListener('click', () => {
         const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
@@ -205,7 +232,6 @@
       });
     });
   </script>
-
   <script src="/js/menu-toggle.js"></script>
 </body>
 </html>
