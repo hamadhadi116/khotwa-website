@@ -1,22 +1,24 @@
 /**
- * About Page Loader (STABLE & SAFE)
- * - Loads Council Members from API
- * - Uses static fallback for About content if API fails
+ * About Page Loader (UPDATED FOR NEW DESIGN)
+ * - Ensures images are square and high quality
+ * - Synchronizes language changes perfectly
  */
 
 (function () {
   'use strict';
 
+  // الرابط الخاص ببيانات الموقع
   const BACKEND_URL =
     window.KHOTWA_CONFIG?.BACKEND_URL ||
     'https://khotwabknd-gj8oeubw.manus.space';
 
+  // جلب اللغة الحالية (مع ضمان التوافق مع khotwa_lang)
   function getCurrentLanguage() {
-    return localStorage.getItem('language') || 'ar';
+    return localStorage.getItem('khotwa_lang') || localStorage.getItem('language') || 'ar';
   }
 
   /* ==============================
-     Load About Content (SAFE)
+      تحميل محتوى (الرؤية والرسالة)
   ============================== */
   async function loadAboutContent() {
     const lang = getCurrentLanguage();
@@ -48,10 +50,7 @@
       const p = document.querySelector(`[data-section="${key}"] p`);
       if (!p) return;
 
-      p.textContent =
-        lang === 'ar'
-          ? content[sections[key][0]]
-          : content[sections[key][1]];
+      p.textContent = lang === 'ar' ? content[sections[key][0]] : content[sections[key][1]];
     });
   }
 
@@ -83,64 +82,69 @@
   }
 
   /* ==============================
-     Load Council Members (WORKING)
+      تحميل أعضاء المجلس (التصميم المطور)
   ============================== */
   async function loadCouncilMembers() {
     try {
-      const response = await fetch(
-        `${BACKEND_URL}/api/trpc/councilMembers.list`
-      );
+      const response = await fetch(`${BACKEND_URL}/api/trpc/councilMembers.list`);
       if (!response.ok) throw new Error('Members API failed');
 
       const json = await response.json();
-      const members =
-        json?.result?.data?.json || json?.result?.data || [];
+      const members = json?.result?.data?.json || json?.result?.data || [];
 
       if (!Array.isArray(members)) return;
 
-      const container = document.getElementById(
-        'council-members-container'
-      );
+      const container = document.getElementById('council-members-container');
       if (!container) return;
 
       const lang = getCurrentLanguage();
 
+      // رسم البطاقات بالتنسيق الجديد لضمان عدم تمطيط الصور
       container.innerHTML = members
-        .map(
-          (member) => `
+        .map((member) => {
+          const name = lang === 'ar' ? member.nameAr : member.nameEn;
+          const position = lang === 'ar' ? member.positionAr : member.positionEn;
+          const photo = member.photoUrl || '/assets/apple-touch-icon.png';
+
+          return `
           <div class="member-card">
-            <img
-              src="${member.photoUrl || '/assets/apple-touch-icon.png'}"
-              alt="${lang === 'ar' ? member.nameAr : member.nameEn}"
-              loading="lazy"
-              decoding="async"
-            />
-            <h3>${lang === 'ar' ? member.nameAr : member.nameEn}</h3>
-            <p class="muted">
-              ${lang === 'ar' ? member.positionAr : member.positionEn}
-            </p>
+            <div class="img-wrapper">
+              <img src="${photo}" alt="${name}" loading="lazy">
+            </div>
+            <div class="member-details">
+              <h3>${name}</h3>
+              <p>${position}</p>
+            </div>
           </div>
-        `
-        )
+        `;
+        })
         .join('');
     } catch (error) {
       console.error('[About Loader] Failed to load members:', error);
+      const container = document.getElementById('council-members-container');
+      if(container) container.innerHTML = '<p style="text-align:center; grid-column:1/-1;">عذراً، تعذر تحميل بيانات الأعضاء.</p>';
     }
   }
 
   /* ==============================
-     Init + Language Sync
+      تشغيل السكربت وتزامن اللغة
   ============================== */
   function initAboutPage() {
     loadAboutContent();
     loadCouncilMembers();
   }
 
+  // التأكد من تشغيل الوظيفة عند جاهزية الصفحة
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAboutPage);
   } else {
     initAboutPage();
   }
 
+  // استجابة لتغيير اللغة بدون الحاجة لتحديث الصفحة بالكامل إذا كان النظام يدعم ذلك
   window.addEventListener('language:changed', initAboutPage);
+
+  // جعل الوظيفة متاحة عالمياً ليتم استدعاؤها من زر تغيير اللغة في HTML
+  window.initAboutPage = initAboutPage;
+
 })();
