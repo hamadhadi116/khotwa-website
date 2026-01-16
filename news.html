@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>الأخبار – Khotwa</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
-  <!-- API -->
   <script src="/assets/khotwa-api.js"></script>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
 <nav class="navbar">
   <div class="container nav-inner">
     <a class="brand" href="/index.html">
@@ -43,7 +40,6 @@
   </div>
 </nav>
 
-<!-- ================= MAIN ================= -->
 <main class="container" id="main">
 
   <header style="text-align:center; padding:3rem 0;">
@@ -53,7 +49,6 @@
     <p class="muted" data-lang="en" hidden>All the latest from Khotwa Student Council</p>
   </header>
 
-  <!-- Filters -->
   <div class="tools" style="margin-bottom:2rem;">
     <input id="q" type="search" placeholder="ابحث في الأخبار…" />
 
@@ -63,7 +58,6 @@
     <button class="chip" data-filter="media">تغطيات</button>
   </div>
 
-  <!-- News Grid -->
   <section>
     <div class="events-grid" id="posts">
       <div class="skeleton"></div>
@@ -74,7 +68,6 @@
 
 </main>
 
-<!-- ================= FOOTER ================= -->
 <footer style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:3rem 0; margin-top:4rem;">
   <div class="container">
     <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:2rem;">
@@ -101,8 +94,8 @@
   </div>
 </footer>
 
-<!-- ================= SCRIPTS ================= -->
 <script>
+// تحديث السنة في الفوتر
 document.getElementById("year").textContent = new Date().getFullYear();
 
 const postsEl = document.getElementById("posts");
@@ -114,75 +107,81 @@ let currentCategory = "all";
 
 async function loadNews() {
   const lang = localStorage.getItem("khotwa_lang") || "ar";
-  postsEl.innerHTML = "<p class='muted'>Loading…</p>";
+  
+  // أثناء التحميل نظهر رسالة أو نحافظ على الـ skeletons
+  // postsEl.innerHTML = "<p class='muted'>Loading…</p>";
 
-  let items = await KhotwaAPI.getNews();
+  try {
+    let items = await KhotwaAPI.getNews();
 
-  if (!items || !items.length) {
-    postsEl.innerHTML = "<p class='muted'>لا توجد أخبار</p>";
-    return;
+    if (!items || !items.length) {
+      postsEl.innerHTML = "<p class='muted'>لا توجد أخبار حالياً</p>";
+      return;
+    }
+
+    // فلترة الأخبار بناءً على البحث والنوع
+    items = items.filter(item => {
+      const title = (item.titleAr || item.titleEn || "").toLowerCase();
+      const content = (item.contentAr || item.contentEn || "").toLowerCase();
+      const query = currentQuery.toLowerCase();
+
+      const matchesQuery = !currentQuery || title.includes(query) || content.includes(query);
+
+      if (currentCategory === "all") return matchesQuery;
+
+      const category = (item.category || "").toLowerCase();
+      return matchesQuery && category === currentCategory;
+    });
+
+    if (!items.length) {
+      postsEl.innerHTML = "<p class='muted'>لا توجد نتائج تطابق بحثك</p>";
+      return;
+    }
+
+    // تفريغ الحاوية قبل عرض النتائج
+    postsEl.innerHTML = "";
+
+    items.forEach(item => {
+      const title = lang === "ar" 
+        ? (item.titleAr || item.titleEn || "") 
+        : (item.titleEn || item.titleAr || "");
+
+      const content = lang === "ar" 
+        ? (item.contentAr || item.contentEn || "") 
+        : (item.contentEn || item.contentAr || "");
+
+      const card = document.createElement("article");
+      card.className = "event-card";
+      card.style.cursor = "pointer";
+
+      card.innerHTML = `
+        <div class="card-body">
+          <h3>${title}</h3>
+          <p class="muted">
+            ${content.substring(0, 120)}${content.length > 120 ? "..." : ""}
+          </p>
+        </div>
+      `;
+
+      card.onclick = () => {
+        location.href = `/news-detail.html?id=${item.id}`;
+      };
+
+      postsEl.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error loading news:", error);
+    postsEl.innerHTML = "<p class='muted'>حدث خطأ أثناء تحميل الأخبار</p>";
   }
-
- // فلترة بسيطة وآمنة (ما تخفي الأخبار)
-items = items.filter(item => {
-  const title = item.titleAr || item.titleEn || "";
-  const content = item.contentAr || item.contentEn || "";
-
-  const matchesQuery =
-    !currentQuery ||
-    title.includes(currentQuery) ||
-    content.includes(currentQuery);
-
-  if (currentCategory === "all") return matchesQuery;
-
-  const category = (item.category || "").toLowerCase();
-  return matchesQuery && category === currentCategory;
-});
-
-  if (!items.length) {
-    postsEl.innerHTML = "<p class='muted'>لا توجد أخبار</p>";
-    return;
-  }
-
-  postsEl.innerHTML = "";
-
-  items.forEach(item => {
-    const title =
-      lang === "ar"
-        ? item.titleAr || item.titleEn || ""
-        : item.titleEn || item.titleAr || "";
-
-    const content =
-      lang === "ar"
-        ? item.contentAr || item.contentEn || ""
-        : item.contentEn || item.contentAr || "";
-
-    const card = document.createElement("article");
-    card.className = "event-card";
-    card.style.cursor = "pointer";
-
-    card.innerHTML = `
-      <div class="card-body">
-        <h3>${title}</h3>
-        <p class="muted">
-          ${content.substring(0,120)}${content.length > 120 ? "..." : ""}
-        </p>
-      </div>
-    `;
-
-    card.onclick = () => {
-      location.href = \`/news-detail.html?id=\${item.id}\`;
-    };
-
-    postsEl.appendChild(card);
-  });
 }
 
+// مستمع لمدخلات البحث
 qInput.addEventListener("input", e => {
   currentQuery = e.target.value.trim();
   loadNews();
 });
 
+// مستمع لأزرار التصنيف (Chips)
 chips.forEach(btn => {
   btn.addEventListener("click", () => {
     chips.forEach(b => b.dataset.active = "false");
@@ -192,6 +191,7 @@ chips.forEach(btn => {
   });
 });
 
+// تشغيل الدالة لأول مرة
 loadNews();
 </script>
 
