@@ -123,30 +123,22 @@ async function loadNews() {
     return;
   }
 
-  // فلترة ذكية (لا تحذف الأخبار بدون category)
-  items = items.filter(item => {
-    const matchesQuery =
-      !currentQuery ||
-      (item.titleAr || "").includes(currentQuery) ||
-      (item.titleEn || "").includes(currentQuery);
+ // فلترة بسيطة وآمنة (ما تخفي الأخبار)
+items = items.filter(item => {
+  const title = item.titleAr || item.titleEn || "";
+  const content = item.contentAr || item.contentEn || "";
 
-    if (currentCategory === "all") return matchesQuery;
+  const matchesQuery =
+    !currentQuery ||
+    title.includes(currentQuery) ||
+    content.includes(currentQuery);
 
-    const categoryMap = {
-      ann: ["ann", "announcement", "announcements"],
-      event: ["event", "events"],
-      media: ["media", "coverage"],
-    };
+  if (currentCategory === "all") return matchesQuery;
 
-    // إذا ما عنده category نعرضه
-    if (!item.category) return matchesQuery;
+  const category = (item.category || "").toLowerCase();
+  return matchesQuery && category === currentCategory;
+});
 
-    return (
-      matchesQuery &&
-      categoryMap[currentCategory]?.includes(
-        String(item.category).toLowerCase()
-      )
-    );
   });
 
   if (!items.length) {
