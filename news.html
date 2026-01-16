@@ -116,18 +116,40 @@ async function loadNews() {
   const lang = localStorage.getItem("khotwa_lang") || "ar";
   postsEl.innerHTML = "<p class='muted'>Loading…</p>";
 
-  let items;
-  if (currentQuery || currentCategory !== "all") {
-    items = await KhotwaAPI.searchNews(
-      currentQuery,
-      currentCategory === "all" ? null : currentCategory,
-      "newest"
-    );
-  } else {
-    items = await KhotwaAPI.getNews();
-  }
+  let items = await KhotwaAPI.getNews();
 
   if (!items || !items.length) {
+    postsEl.innerHTML = "<p class='muted'>لا توجد أخبار</p>";
+    return;
+  }
+
+  // فلترة ذكية (لا تحذف الأخبار بدون category)
+  items = items.filter(item => {
+    const matchesQuery =
+      !currentQuery ||
+      (item.titleAr || "").includes(currentQuery) ||
+      (item.titleEn || "").includes(currentQuery);
+
+    if (currentCategory === "all") return matchesQuery;
+
+    const categoryMap = {
+      ann: ["ann", "announcement", "announcements"],
+      event: ["event", "events"],
+      media: ["media", "coverage"],
+    };
+
+    // إذا ما عنده category نعرضه
+    if (!item.category) return matchesQuery;
+
+    return (
+      matchesQuery &&
+      categoryMap[currentCategory]?.includes(
+        String(item.category).toLowerCase()
+      )
+    );
+  });
+
+  if (!items.length) {
     postsEl.innerHTML = "<p class='muted'>لا توجد أخبار</p>";
     return;
   }
