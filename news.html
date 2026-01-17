@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الأخبار – مجلس طلاب خطوة</title>
 
   <link rel="stylesheet" href="/assets/main.css">
@@ -11,16 +11,16 @@
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <script>
-    // هذا السطر ضروري جداً لكي يعمل ملف khotwa-api.js ويسحب الصور الصحيحة
+    // الإعدادات الصحيحة للـ API لضمان الاتصال بالسيرفر
     window.KHOTWA_CONFIG = {
-      API_BASE: 'https://khotwabknd-gj8oeubw.manus.space/api/trpc'
+      API_BASE: 'https://khotwabknd-gj8oeubw.manus.space/api'
     };
   </script>
 
   <style>
     :root { --primary-color: #1e40af; }
-
-    /* تنسيق القائمة للجوال بناءً على السكربت الخاص بك */
+    
+    /* تنسيق عمل القائمة للجوال */
     @media (max-width: 960px) {
       #primary-nav {
         display: none;
@@ -37,22 +37,14 @@
       .menu-toggle { display: block !important; cursor: pointer; background: none; border: none; }
     }
 
-    .filters-container { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; align-items: center; }
-    .search-box { width: 100%; max-width: 500px; }
-    .search-box input { width: 100%; padding: 12px 24px; border-radius: 50px; border: 1px solid #e2e8f0; font-size: 1rem; }
-    .chips-group { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
-    .chip { padding: 10px 22px; border-radius: 50px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; transition: 0.2s; }
-    .chip[data-active="true"] { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-
     .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
     .news-card { background: #fff; border-radius: 16px; border: 1px solid #edf2f7; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; cursor: pointer; }
-    .news-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
     .news-card-img { width: 100%; height: 220px; object-fit: cover; background: #f1f5f9; }
-    .news-card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .news-card-body { padding: 1.5rem; flex-grow: 1; }
     .news-tag { background: #f0f9ff; color: var(--primary-color); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.75rem; width: fit-content; }
     .news-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.75rem; }
     .skeleton-box { height: 350px; background: #eee; border-radius: 16px; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes pulse { 50% { opacity: 0.5; } }
     [hidden] { display: none !important; }
   </style>
 
@@ -89,43 +81,23 @@
     <h1 data-lang="ar">الأخبار</h1>
     <h1 data-lang="en" hidden>News</h1>
     <p class="muted" data-lang="ar">كل ما هو جديد في مجلس طلاب خطوة</p>
-    <p class="muted" data-lang="en" hidden>Latest updates from Khotwa Student Council</p>
   </header>
 
-  <div class="filters-container">
-    <div class="search-box">
-      <input id="q" type="search" placeholder="ابحث في الأخبار…" />
-    </div>
-    <div class="chips-group">
-      <button class="chip" data-filter="all" data-active="true">الكل</button>
-      <button class="chip" data-filter="ann">إعلانات</button>
-      <button class="chip" data-filter="event">فعاليات</button>
-      <button class="chip" data-filter="media">تغطيات</button>
-    </div>
+  <div id="posts" class="events-grid">
+    <div class="skeleton-box"></div>
+    <div class="skeleton-box"></div>
+    <div class="skeleton-box"></div>
   </div>
-
-  <section>
-    <div class="events-grid" id="posts">
-      <div class="skeleton-box"></div>
-      <div class="skeleton-box"></div>
-      <div class="skeleton-box"></div>
-    </div>
-  </section>
 </main>
 
 <footer class="main-footer" style="background:#ffffff; border-top:1px solid #e2e8f0; padding:3rem 0; margin-top:4rem;">
   <div class="container">
-    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:2rem;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:2rem;">
       <div>
-        <strong data-lang="ar">مجلس طلاب خطوة</strong>
-        <strong data-lang="en" hidden>Khotwa Council</strong>
-        <p style="font-size:0.9rem; color:#64748b;">© 2026 | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
+        <strong>مجلس طلاب خطوة</strong>
+        <p>© 2026 | ملبورن، أستراليا</p>
       </div>
-      <div style="display:flex; gap:1.5rem;">
-        <a href="https://instagram.com/khotwa.sc" target="_blank">Instagram</a>
-        <a href="/contact.html" data-lang="ar">تواصل معنا</a>
-        <a href="/contact.html" data-lang="en" hidden>Contact Us</a>
-      </div>
+      <a href="https://instagram.com/khotwa.sc" target="_blank">Instagram</a>
     </div>
   </div>
 </footer>
@@ -133,86 +105,64 @@
 <script src="/js/menu-toggle.js"></script>
 
 <script>
-const postsEl = document.getElementById("posts");
-const qInput  = document.getElementById("q");
-const chips   = document.querySelectorAll(".chip");
-
-let currentQuery = "";
-let currentCategory = "all";
-
 async function loadNews() {
+  const postsEl = document.getElementById("posts");
   const lang = localStorage.getItem("khotwa_lang") || "ar";
   
   try {
-    let items = await KhotwaAPI.getNews();
+    // جلب البيانات من الـ API
+    const response = await KhotwaAPI.getNews();
+    
+    // تصحيح قراءة البيانات: التعامل مع مصفوفة مباشرة أو نظام tRPC (result.data)
+    const items = Array.isArray(response) ? response : (response?.result?.data || []);
 
-    if (!items || !items.length) {
-      postsEl.innerHTML = "<p>لا توجد أخبار حالياً</p>";
+    if (items.length === 0) {
+      postsEl.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>لا توجد أخبار حالياً.</p>";
       return;
     }
 
-    // الفلترة
-    items = items.filter(item => {
-      const title = (lang === 'ar' ? item.titleAr : item.titleEn || "").toLowerCase();
-      const query = currentQuery.toLowerCase();
-      const matchesQuery = !currentQuery || title.includes(query);
-      if (currentCategory === "all") return matchesQuery;
-      return matchesQuery && (item.category || "").toLowerCase() === currentCategory;
-    });
-
     postsEl.innerHTML = "";
-
     items.forEach(item => {
-      const title = lang === "ar" ? (item.titleAr || item.titleEn) : (item.titleEn || item.titleAr);
-      const content = lang === "ar" ? (item.contentAr || item.contentEn) : (item.contentEn || item.contentAr);
+      const title = lang === 'ar' ? (item.titleAr || item.title) : (item.titleEn || item.title);
+      const content = lang === 'ar' ? (item.contentAr || item.content) : (item.contentEn || item.content);
       
-      // إصلاح مشكلة الصورة: نستخدم صورة الخبر وإذا لم توجد نضع صورة افتراضية
-      const newsImg = item.imageUrl || item.image || '/apple-touch-icon.png';
+      // حل مشكلة الصورة: تجربة كل المفاتيح الممكنة للصورة
+      const newsImg = item.imageUrl || item.image || item.coverImage || '/apple-touch-icon.png';
 
-      const card = document.createElement("article");
-      card.className = "news-card";
-      card.onclick = () => location.href = `/news-detail.html?id=${item.id}`;
-
-      card.innerHTML = `
-        <img src="${newsImg}" class="news-card-img" alt="${title}" onerror="this.src='/apple-touch-icon.png'">
-        <div class="news-card-body">
-          <span class="news-tag">${item.category || 'خبر'}</span>
-          <h3 class="news-title">${title}</h3>
-          <p class="news-excerpt" style="color: #64748b; font-size: 0.9rem; line-height: 1.5;">${content}</p>
-          <div style="margin-top:auto; font-size:0.8rem; color:#94a3b8; padding-top:10px;">${item.date || ''}</div>
-        </div>
+      postsEl.innerHTML += `
+        <article class="news-card" onclick="location.href='/news-detail.html?id=${item.id}'">
+          <img src="${newsImg}" class="news-card-img" onerror="this.src='/apple-touch-icon.png'">
+          <div class="news-card-body">
+            <span class="news-tag">${item.category || 'خبر'}</span>
+            <h3 class="news-title">${title || 'عنوان الخبر'}</h3>
+            <p style="color:#64748b; font-size:0.9rem; line-height:1.5;">${content ? content.substring(0, 120) + '...' : ''}</p>
+          </div>
+        </article>
       `;
-      postsEl.appendChild(card);
     });
   } catch (err) {
-    postsEl.innerHTML = "<p>حدث خطأ أثناء تحميل الأخبار</p>";
+    console.error("News Load Error:", err);
+    postsEl.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>حدث خطأ في تحميل البيانات.</p>";
   }
 }
 
 // تبديل اللغة
 const langBtn = document.getElementById('lang-toggle-btn');
-const updateLang = (l) => {
-  document.documentElement.lang = l;
-  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
-  document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== l);
-  localStorage.setItem('khotwa_lang', l);
-  loadNews(); // إعادة تحميل الأخبار لترجمة المحتوى
-};
-
-langBtn.onclick = () => updateLang(document.documentElement.lang === 'ar' ? 'en' : 'ar');
-
-qInput.addEventListener("input", e => { currentQuery = e.target.value.trim(); loadNews(); });
-chips.forEach(btn => {
-  btn.onclick = () => {
-    chips.forEach(b => b.dataset.active = "false");
-    btn.dataset.active = "true";
-    currentCategory = btn.dataset.filter;
+if(langBtn) {
+  langBtn.onclick = () => {
+    const current = document.documentElement.lang === 'ar' ? 'en' : 'ar';
+    document.documentElement.lang = current;
+    document.documentElement.dir = current === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== current);
+    localStorage.setItem('khotwa_lang', current);
     loadNews();
   };
-});
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-  updateLang(localStorage.getItem('khotwa_lang') || 'ar');
+  const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
+  document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== savedLang);
+  loadNews();
 });
 </script>
 
