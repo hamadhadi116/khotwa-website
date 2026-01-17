@@ -35,7 +35,6 @@
     }
     [hidden] { display: none !important; }
   </style>
-  <script src="/assets/khotwa-api.js"></script>
 </head>
 <body>
 
@@ -61,7 +60,7 @@
 <main id="news-content">
   <div class="loading-state">
     <span data-lang="ar">جاري تحميل الخبر...</span>
-    <span data-lang="en" hidden>Loading article...</span>
+    <span data-lang="en" hidden>Loading...</span>
   </div>
 </main>
 
@@ -94,16 +93,15 @@ async function loadNewsDetail() {
   if (!id) { window.location.href = '/news.html'; return; }
 
   try {
-    // تم إصلاح الرابط هنا: إضافة /trpc/ والتأكد من صيغة الـ input
-    const input = encodeURIComponent(JSON.stringify({ "0": { "json": { "id": id } } }));
+    // التصحيح النهائي للرابط: حذف كلمة json لأن سيرفرك لا يدعمها
+    const input = encodeURIComponent(JSON.stringify({ "0": { "id": id } }));
     const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/trpc/news.getById?batch=1&input=${input}`;
 
     const res = await fetch(apiUrl);
     const result = await res.json();
     
-    // فحص دقيق للبيانات المستلمة من tRPC
-    const dataBatch = result[0]?.result?.data;
-    const news = dataBatch?.json || dataBatch;
+    // استخراج البيانات مباشرة بدون كلمة json
+    const news = result[0]?.result?.data;
 
     if (!news) throw new Error("Not Found");
 
@@ -144,8 +142,7 @@ const updateLang = (l) => {
 if(langBtn) langBtn.onclick = () => updateLang(document.documentElement.lang === 'ar' ? 'en' : 'ar');
 
 document.addEventListener('DOMContentLoaded', () => {
-  const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
-  updateLang(currentLang);
+  updateLang(localStorage.getItem('khotwa_lang') || 'ar');
 });
 </script>
 </body>
