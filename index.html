@@ -19,32 +19,28 @@
   <style>
     :root { --primary: #1e40af; --ring: #e2e8f0; }
     
-    /* Hero Section */
     .hero { padding: 8rem 0; background: radial-gradient(circle at top right, #f8fafc, #e2e8f0); text-align: center; border-bottom: 1px solid var(--ring); }
     .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--primary); font-weight: 800; margin-bottom: 1.5rem; }
     .hero p { font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto 2.5rem; line-height: 1.8; }
     
-    /* Buttons */
     .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .btn-main { padding: 1rem 2.5rem; border-radius: 14px; text-decoration: none; font-weight: 700; transition: 0.3s; display: inline-block; }
     .btn-primary { background: var(--primary); color: white !important; }
     .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
     
-    /* Stats */
     .stats-section { padding: 4rem 0; background: white; }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
     .stat-item h2 { font-size: 3rem; color: var(--primary); font-weight: 800; margin-bottom: 0.5rem; }
     
-    /* Footer */
     .main-footer { background: #ffffff; border-top: 1px solid #e2e8f0; padding: 4rem 0 2rem; margin-top: 4rem; }
     .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
     .footer-col h4 { color: var(--primary); margin-bottom: 1.5rem; }
     .social-icons img { width: 30px; height: 30px; }
 
-    /* Fix for Mobile Navbar */
+    /* تحسين ظهور القائمة بناءً على كود menu-toggle.js */
     @media (max-width: 960px) {
-      .nav-links {
-        display: none; /* مخفي افتراضياً في الجوال */
+      #primary-nav {
+        display: none; 
         flex-direction: column;
         position: absolute;
         top: 100%;
@@ -56,8 +52,9 @@
         box-shadow: 0 10px 15px rgba(0,0,0,0.1);
         z-index: 1000;
       }
-      .nav-links.active {
-        display: flex; /* يظهر عند الضغط على الزر */
+      /* الربط مع حالة data-open التي يغيرها السكربت */
+      #primary-nav[data-open="true"] {
+        display: flex !important;
       }
       .menu-toggle {
         display: block !important;
@@ -81,7 +78,7 @@
         <span data-lang="en" hidden>Khotwa Council</span>
       </a>
 
-      <button class="menu-toggle" id="mobile-menu-btn" style="display: none;">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -89,7 +86,7 @@
         </svg>
       </button>
 
-      <div class="nav-links" id="nav-content">
+      <div class="nav-links" id="primary-nav" data-open="false">
         <a href="/index.html" class="active">
           <span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span>
         </a>
@@ -152,7 +149,7 @@
         </div>
       </div>
       <div class="footer-bottom" style="text-align: center; padding-top: 2rem; border-top: 1px solid #f1f5f9; color: #94a3b8;">
-        <p>© 2026 Khotwa Council | ملبورن، أستراليا</p>
+        <p>© 2026 Khotwa Council | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
       </div>
     </div>
   </footer>
@@ -162,15 +159,6 @@
   <script src="/js/menu-toggle.js"></script>
 
   <script>
-    // تشغيل القائمة في الجوال
-    const btn = document.getElementById('mobile-menu-btn');
-    const nav = document.getElementById('nav-content');
-    if(btn) {
-      btn.onclick = function() {
-        nav.classList.toggle('active');
-      }
-    }
-
     // نظام تبديل اللغة
     const langBtn = document.getElementById('lang-toggle-btn');
     const updateLanguage = (lang) => {
@@ -182,10 +170,12 @@
       localStorage.setItem('khotwa_lang', lang);
     };
 
-    langBtn.onclick = () => {
-      const current = document.documentElement.lang === 'ar' ? 'en' : 'ar';
-      updateLanguage(current);
-    };
+    if(langBtn) {
+      langBtn.onclick = () => {
+        const current = document.documentElement.lang === 'ar' ? 'en' : 'ar';
+        updateLanguage(current);
+      };
+    }
 
     // عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', () => {
