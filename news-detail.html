@@ -3,12 +3,19 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>تفاصيل الخبر – Khotwa</title>
+  <title>تفاصيل الخبر – مجلس طلاب خطوة</title>
 
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
+
+  <script>
+    // الإعدادات الموحدة لضمان عمل ملف khotwa-api.js
+    window.KHOTWA_CONFIG = {
+      API_BASE: 'https://khotwabknd-gj8oeubw.manus.space/api'
+    };
+  </script>
 
   <style>
     body { padding-top: 100px !important; background-color: #fff; }
@@ -20,25 +27,25 @@
       overflow: hidden;
       margin: 30px 0;
       background: #f1f5f9;
+      min-height: 200px;
     }
     .news-main-img {
       width: 100%;
-      max-height: 500px;
+      max-height: 550px;
       object-fit: cover;
       display: block;
     }
 
     .news-article-body { 
-      font-size: 1.2rem; 
+      font-size: 1.15rem; 
       line-height: 1.8; 
       color: #334155; 
-      text-align: justify;
     }
     .news-article-body p { margin-bottom: 20px; }
     
     .loading-state { text-align: center; padding: 100px 0; color: #64748b; }
-    
-    /* تنسيق القائمة للجوال لتعمل مع menu-toggle.js */
+
+    /* تنسيق الناف بار للجوال */
     @media (max-width: 960px) {
       #primary-nav {
         display: none;
@@ -48,13 +55,15 @@
         background: white; padding: 20px;
         border-bottom: 2px solid #1e40af;
         z-index: 1000;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.05);
       }
       #primary-nav[data-open="true"] { display: flex !important; }
-      .menu-toggle { display: block !important; }
+      .menu-toggle { display: block !important; cursor: pointer; background: none; border: none; }
     }
-
     [hidden] { display: none !important; }
   </style>
+
+  <script src="/assets/khotwa-api.js"></script>
 </head>
 <body>
 
@@ -88,7 +97,6 @@
   </div>
 </main>
 
-<script src="/assets/khotwa-api.js"></script>
 <script src="/js/menu-toggle.js"></script>
 
 <script>
@@ -101,22 +109,24 @@ async function loadNewsDetail() {
   if (!id) { window.location.href = '/news.html'; return; }
 
   try {
-    // استخدام KhotwaAPI لضمان معالجة الـ TRPC والروابط بشكل صحيح
-    const response = await fetch(`https://khotwabknd-gj8oeubw.manus.space/api/trpc/news.getById?batch=1&input={"0":{"id":"${id}"}}`);
-    const data = await response.json();
+    // الطريقة الصحيحة لجلب البيانات من tRPC كما يطلب السيرفر الخاص بك
+    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/trpc/news.getById?batch=1&input={"0":{"json":{"id":"${id}"}}}`;
     
-    // استخراج الخبر من هيكل TRPC المترابط
-    const news = data[0].result.data.json || data[0].result.data;
+    const response = await fetch(apiUrl);
+    const result = await response.json();
+    
+    // استخراج البيانات بناءً على هيكل tRPC الظاهر في الكونسول عندك
+    const newsData = result[0].result.data.json;
 
-    const title = lang === 'ar' ? (news.titleAr || news.titleEn) : (news.titleEn || news.titleAr);
-    const content = lang === 'ar' ? (news.contentAr || news.contentEn) : (news.contentEn || news.contentAr);
-    const image = news.imageUrl || news.image || '/apple-touch-icon.png';
+    const title = lang === 'ar' ? (newsData.titleAr || newsData.titleEn) : (newsData.titleEn || newsData.titleAr);
+    const content = lang === 'ar' ? (newsData.contentAr || newsData.contentEn) : (newsData.contentEn || newsData.contentAr);
+    const image = newsData.imageUrl || newsData.image || '/apple-touch-icon.png';
 
     container.innerHTML = `
       <div class="news-detail-wrapper">
         <header>
-          <h1 style="font-size: 2.2rem; color: #1e293b; margin-bottom: 10px;">${title}</h1>
-          <p style="color: #64748b;">📅 ${news.date || new Date(news.createdAt).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US')}</p>
+          <h1 style="font-size: 2.2rem; color: #1e293b; margin-bottom: 10px; line-height: 1.3;">${title}</h1>
+          <p style="color: #64748b; font-weight: 500;">📅 ${newsData.date || '2024'}</p>
         </header>
 
         <div class="news-main-img-container">
@@ -124,23 +134,23 @@ async function loadNewsDetail() {
         </div>
 
         <article class="news-article-body">
-          ${content.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('')}
+          ${content ? content.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('') : ''}
         </article>
       </div>
     `;
   } catch (e) {
-    console.error("Detail Load Error:", e);
+    console.error("خطأ في الجلب:", e);
     container.innerHTML = `
       <div class="loading-state">
-        <p>${lang === 'ar' ? 'عذراً، تعذر تحميل تفاصيل الخبر.' : 'Sorry, could not load news details.'}</p>
-        <a href="/news.html" class="btn-primary">${lang === 'ar' ? 'العودة للأخبار' : 'Back to News'}</a>
+        <p>${lang === 'ar' ? 'عذراً، لم نتمكن من العثور على الخبر.' : 'Sorry, news not found.'}</p>
+        <a href="/news.html" style="color: #1e40af; text-decoration: underline;">${lang === 'ar' ? 'العودة للأخبار' : 'Back to News'}</a>
       </div>`;
   }
 }
 
-// نظام تبديل اللغة الموحد
+// معالجة اللغة
 const langBtn = document.getElementById('lang-toggle-btn');
-const updateLang = (l) => {
+const updatePageLang = (l) => {
   document.documentElement.lang = l;
   document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
   document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== l);
@@ -149,12 +159,13 @@ const updateLang = (l) => {
 };
 
 if(langBtn) {
-  langBtn.onclick = () => updateLang(document.documentElement.lang === 'ar' ? 'en' : 'ar');
+  langBtn.onclick = () => updatePageLang(document.documentElement.lang === 'ar' ? 'en' : 'ar');
 }
 
+// التشغيل الأولي
 document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
-  updateLang(savedLang);
+  updatePageLang(savedLang);
 });
 </script>
 
