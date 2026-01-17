@@ -11,61 +11,32 @@
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <script>
-    window.KHOTWA_CONFIG = {
-      API_BASE: 'https://khotwabknd-gj8oeubw.manus.space/api'
-    };
+    window.KHOTWA_CONFIG = { API_BASE: 'https://khotwabknd-gj8oeubw.manus.space/api' };
   </script>
 
   <style>
     body { 
       padding-top: 100px !important; 
       background-color: #ffffff; 
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      margin: 0;
+      display: flex; flex-direction: column; min-height: 100vh; margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
     }
-    
     main { flex: 1; }
-
-    .news-detail-wrapper { max-width: 800px; margin: 0 auto 60px; padding: 0 20px; }
+    .news-detail-wrapper { max-width: 850px; margin: 0 auto 60px; padding: 0 20px; }
+    .news-main-img-container { width: 100%; border-radius: 20px; overflow: hidden; margin: 30px 0; background: #f8fafc; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .news-main-img { width: 100%; max-height: 550px; object-fit: cover; display: block; }
+    .news-article-body { font-size: 1.25rem; line-height: 1.8; color: #334155; }
+    .news-article-body p { margin-bottom: 24px; }
+    .loading-state { text-align: center; padding: 120px 0; color: #94a3b8; font-size: 1.2rem; }
     
-    .news-main-img-container {
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      margin: 30px 0;
-      background: #f1f5f9;
-    }
-    .news-main-img {
-      width: 100%;
-      max-height: 500px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .news-article-body { 
-      font-size: 1.2rem; 
-      line-height: 1.8; 
-      color: #334155; 
-    }
-    
-    .loading-state { text-align: center; padding: 100px 0; color: #64748b; }
-
+    /* ضبط الناف بار */
     @media (max-width: 960px) {
-      #primary-nav {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%; left: 0; right: 0;
-        background: white; padding: 20px;
-        border-bottom: 2px solid #1e40af;
-      }
+      #primary-nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 20px; border-bottom: 2px solid #0284c7; z-index: 1000; }
       #primary-nav[data-open="true"] { display: flex !important; }
+      .menu-toggle { display: block !important; cursor: pointer; }
     }
     [hidden] { display: none !important; }
   </style>
-
   <script src="/assets/khotwa-api.js"></script>
 </head>
 <body>
@@ -92,22 +63,22 @@
 <main id="news-content">
   <div class="loading-state">
     <span data-lang="ar">جاري تحميل الخبر...</span>
-    <span data-lang="en" hidden>Loading...</span>
+    <span data-lang="en" hidden>Loading article...</span>
   </div>
 </main>
 
-<footer class="main-footer" style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:3rem 0;">
+<footer class="main-footer" style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:4rem 0;">
   <div class="container">
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:2rem;">
       <div>
         <strong data-lang="ar">مجلس طلاب خطوة</strong>
         <strong data-lang="en" hidden>Khotwa Council</strong>
-        <p style="color:#64748b; font-size:0.9rem; margin:5px 0;">© 2026 | ملبورن، أستراليا</p>
+        <p style="color:#64748b; font-size:0.95rem; margin-top:10px;">© 2026 | ملبورن، أستراليا</p>
       </div>
-      <div style="display:flex; gap:1.5rem;">
-        <a href="https://instagram.com/khotwa.sc" target="_blank" style="color:#e1306c;">Instagram</a>
-        <a href="/contact.html" data-lang="ar">تواصل معنا</a>
-        <a href="/contact.html" data-lang="en" hidden>Contact Us</a>
+      <div style="display:flex; gap:1.5rem; font-weight:600;">
+        <a href="https://instagram.com/khotwa.sc" target="_blank" style="color:#e1306c; text-decoration:none;">Instagram</a>
+        <a href="/contact.html" style="color:#0284c7; text-decoration:none;" data-lang="ar">تواصل معنا</a>
+        <a href="/contact.html" style="color:#0284c7; text-decoration:none;" data-lang="en" hidden>Contact Us</a>
       </div>
     </div>
   </div>
@@ -125,12 +96,20 @@ async function loadNewsDetail() {
   if (!id) { window.location.href = '/news.html'; return; }
 
   try {
-    // جلب البيانات مع معالجة نظام tRPC للسيرفر الخاص بك
-    const res = await fetch(`https://khotwabknd-gj8oeubw.manus.space/api/trpc/news.getById?batch=1&input={"0":{"json":{"id":"${id}"}}}`);
-    const json = await res.json();
-    const news = json[0]?.result?.data?.json || json[0]?.result?.data;
+    // تعديل صيغة الـ Input لتعمل مع السيرفر (بدون تغليف json الزائد)
+    const inputParam = encodeURIComponent(JSON.stringify({ "0": { "id": id } }));
+    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/trpc/news.getById?batch=1&input=${inputParam}`;
 
-    if (!news) throw new Error("No data");
+    const res = await fetch(apiUrl);
+    if (!res.ok) throw new Error("400 Bad Request or Not Found");
+    
+    const json = await res.json();
+    
+    // محاولة استخراج البيانات سواء كانت بداخل json أو مباشرة
+    const dataObj = json[0]?.result?.data;
+    const news = dataObj?.json || dataObj;
+
+    if (!news) throw new Error("No News Found");
 
     const title = lang === 'ar' ? (news.titleAr || news.titleEn) : (news.titleEn || news.titleAr);
     const content = lang === 'ar' ? (news.contentAr || news.contentEn) : (news.contentEn || news.contentAr);
@@ -138,13 +117,16 @@ async function loadNewsDetail() {
 
     container.innerHTML = `
       <div class="news-detail-wrapper">
-        <header>
-          <h1 style="font-size: 2.2rem; color: #1e293b; margin-bottom: 10px;">${title}</h1>
-          <p style="color: #64748b;">📅 ${news.date || '2024'}</p>
+        <header style="margin-bottom: 30px;">
+          <h1 style="font-size: 2.5rem; color: #0f172a; margin-bottom: 15px; line-height: 1.2;">${title}</h1>
+          <div style="display:flex; gap:15px; color:#64748b;">
+             <span>📅 ${news.date || '2026'}</span>
+             <span>🏷️ ${news.category || (lang === 'ar' ? 'أخبار' : 'News')}</span>
+          </div>
         </header>
 
         <div class="news-main-img-container">
-          <img src="${image}" class="news-main-img" onerror="this.src='/apple-touch-icon.png'">
+          <img src="${image}" class="news-main-img" alt="${title}" onerror="this.src='/apple-touch-icon.png'">
         </div>
 
         <article class="news-article-body">
@@ -153,7 +135,12 @@ async function loadNewsDetail() {
       </div>
     `;
   } catch (e) {
-    container.innerHTML = `<div class="loading-state"><p>تعذر تحميل الخبر.</p></div>`;
+    console.error("Detail Error:", e);
+    container.innerHTML = `
+      <div class="loading-state">
+        <p>${lang === 'ar' ? 'عذراً، لم نتمكن من عرض هذا الخبر.' : 'Sorry, could not display this article.'}</p>
+        <a href="/news.html" style="color:#0284c7; text-decoration:underline;">${lang === 'ar' ? 'العودة لقائمة الأخبار' : 'Back to News'}</a>
+      </div>`;
   }
 }
 
