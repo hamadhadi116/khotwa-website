@@ -4,25 +4,22 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>من نحن – Khotwa</title>
-  
+
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <style>
-    /* إصلاح تداخل الناف بار والفوتر في الجوال */
-    body { 
-      padding-top: 100px !important; 
-      background-color: #fcfcfc; 
+    body {
+      padding-top: 100px !important;
+      background-color: #fcfcfc;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
-    
     main { flex: 1; }
 
-    /* كروت الرؤية والرسالة */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -34,55 +31,55 @@
       padding: 30px;
       border-radius: 12px;
       border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
-    .info-card h3 { color: #0284c7; margin-bottom: 15px; font-weight: 800; }
+    .info-card h3 {
+      color: #0284c7;
+      margin-bottom: 15px;
+      font-weight: 800;
+    }
 
-    /* تصميم شبكة الأعضاء (حل مشكلة القياسات) */
     .members-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 25px;
       margin-top: 30px;
     }
-
     .member-card {
       background: white;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid #e2e8f0;
-      transition: transform 0.2s ease;
       display: flex;
       flex-direction: column;
     }
-
-    .member-card:hover { transform: translateY(-5px); }
-
-    /* حاوية الصورة لضمان القياس المربع 1:1 */
     .img-wrapper {
       width: 100%;
       aspect-ratio: 1 / 1;
       background: #f1f5f9;
-      overflow: hidden;
     }
-
     .img-wrapper img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* يمنع التمطيط تماماً */
+      object-fit: cover;
     }
-
-    .member-details { padding: 20px; text-align: center; }
-    .member-details h3 { font-size: 1.1rem; color: #1e293b; margin-bottom: 5px; font-weight: 700; }
-    .member-details p { color: #0284c7; font-size: 0.9rem; font-weight: 600; }
-
-    @media (max-width: 600px) {
-      body { padding-top: 80px !important; }
-      .members-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-      .member-details { padding: 12px; }
+    .member-details {
+      padding: 20px;
+      text-align: center;
     }
+    .member-details h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      color: #1e293b;
+    }
+    .member-details p {
+      color: #0284c7;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    [hidden] { display: none !important; }
   </style>
 </head>
+
 <body>
 
 <nav class="navbar">
@@ -94,76 +91,60 @@
     </a>
     <button id="menu-toggle" class="menu-toggle">☰</button>
     <div class="nav-links" id="primary-nav">
-      <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
-      <a href="/news.html"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-      <a href="/about.html" class="active"><span data-lang="ar">من نحن</span><span data-lang="en" hidden>About</span></a>
-      <a href="/contact.html"><span data-lang="ar">اتصل بنا</span><span data-lang="en" hidden>Contact</span></a>
+      <a href="/index.html">الرئيسية</a>
+      <a href="/news.html">الأخبار</a>
+      <a href="/about.html" class="active">من نحن</a>
+      <a href="/contact.html">اتصل بنا</a>
       <button id="lang-toggle-btn" class="lang-toggle">English</button>
     </div>
   </div>
 </nav>
 
 <main class="container">
-  <div style="text-align:center; margin-bottom: 40px;">
+
+  <div style="text-align:center; margin-bottom:40px;">
     <h1 data-lang="ar">من نحن</h1>
     <h1 data-lang="en" hidden>About Us</h1>
   </div>
 
   <div class="info-grid">
     <div class="info-card" data-section="vision">
-      <h3 data-lang="ar">الرؤية</h3><h3 data-lang="en" hidden>Vision</h3>
-      <p>...</p>
+      <h3 data-lang="ar">الرؤية</h3>
+      <h3 data-lang="en" hidden>Vision</h3>
+      <p></p>
     </div>
     <div class="info-card" data-section="mission">
-      <h3 data-lang="ar">الرسالة</h3><h3 data-lang="en" hidden>Mission</h3>
-      <p>...</p>
+      <h3 data-lang="ar">الرسالة</h3>
+      <h3 data-lang="en" hidden>Mission</h3>
+      <p></p>
     </div>
   </div>
 
   <section>
     <h2 style="text-align:center;" data-lang="ar">أعضاء المجلس</h2>
     <h2 style="text-align:center;" data-lang="en" hidden>Council Members</h2>
-    
+
     <div class="members-grid" id="council-members-container">
-      <p style="text-align:center; grid-column: 1/-1;">جاري التحميل...</p>
+      <p style="grid-column:1/-1;text-align:center;">جاري التحميل...</p>
     </div>
   </section>
+
 </main>
 
-<footer style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:3rem 0; margin-top:4rem;">
-  <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
-    <div class="muted">
-      <span data-lang="ar">© 2026 مجلس طلاب خطوة</span>
-      <span data-lang="en" hidden>© 2026 Khotwa Council</span>
-    </div>
-    <a href="https://instagram.com/khotwa.sc" target="_blank" style="color:#e1306c; text-decoration:none; font-weight:bold;">Instagram</a>
+<footer style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:3rem 0;margin-top:4rem;">
+  <div class="container" style="display:flex;justify-content:space-between;">
+    <span data-lang="ar">© 2026 مجلس طلاب خطوة</span>
+    <span data-lang="en" hidden>© 2026 Khotwa Council</span>
+    <a href="https://instagram.com/khotwa.sc" target="_blank">Instagram</a>
   </div>
 </footer>
 
+<!-- ✅ الترتيب الصحيح للسكربتات -->
 <script src="/js/config.js"></script>
+<script src="/assets/khotwa-api.js"></script>
 <script src="/js/language-toggle.js"></script>
 <script src="/js/menu-toggle.js"></script>
 <script src="/js/about-loader.js"></script>
-
-<script>
-  // حل مشكلة اللغة: مزامنة وإعادة تحميل عند التغيير
-  const btn = document.getElementById('lang-toggle-btn');
-  if (btn) {
-    btn.addEventListener('click', () => {
-      setTimeout(() => {
-        const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
-        localStorage.setItem('language', currentLang); // مزامنة مع about-loader.js
-        location.reload(); 
-      }, 50);
-    });
-  }
-
-  // مزامنة عند أول تحميل للبيانات
-  window.addEventListener('DOMContentLoaded', () => {
-    const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
-    localStorage.setItem('language', currentLang);
-  });
-</script>
 
 </body>
 </html>
