@@ -19,21 +19,19 @@
       padding-top: 100px !important; 
       background-color: #ffffff; 
       display: flex; flex-direction: column; min-height: 100vh; margin: 0;
-      font-family: system-ui, -apple-system, sans-serif;
     }
     main { flex: 1; }
     .news-detail-wrapper { max-width: 850px; margin: 0 auto 60px; padding: 0 20px; }
-    .news-main-img-container { width: 100%; border-radius: 20px; overflow: hidden; margin: 30px 0; background: #f8fafc; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .news-main-img-container { width: 100%; border-radius: 20px; overflow: hidden; margin: 30px 0; background: #f8fafc; }
     .news-main-img { width: 100%; max-height: 550px; object-fit: cover; display: block; }
     .news-article-body { font-size: 1.25rem; line-height: 1.8; color: #334155; }
     .news-article-body p { margin-bottom: 24px; }
-    .loading-state { text-align: center; padding: 120px 0; color: #94a3b8; font-size: 1.2rem; }
+    .loading-state { text-align: center; padding: 120px 0; color: #94a3b8; }
     
-    /* ضبط الناف بار */
     @media (max-width: 960px) {
       #primary-nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 20px; border-bottom: 2px solid #0284c7; z-index: 1000; }
       #primary-nav[data-open="true"] { display: flex !important; }
-      .menu-toggle { display: block !important; cursor: pointer; }
+      .menu-toggle { display: block !important; }
     }
     [hidden] { display: none !important; }
   </style>
@@ -75,10 +73,10 @@
         <strong data-lang="en" hidden>Khotwa Council</strong>
         <p style="color:#64748b; font-size:0.95rem; margin-top:10px;">© 2026 | ملبورن، أستراليا</p>
       </div>
-      <div style="display:flex; gap:1.5rem; font-weight:600;">
-        <a href="https://instagram.com/khotwa.sc" target="_blank" style="color:#e1306c; text-decoration:none;">Instagram</a>
-        <a href="/contact.html" style="color:#0284c7; text-decoration:none;" data-lang="ar">تواصل معنا</a>
-        <a href="/contact.html" style="color:#0284c7; text-decoration:none;" data-lang="en" hidden>Contact Us</a>
+      <div style="display:flex; gap:1.5rem;">
+        <a href="https://instagram.com/khotwa.sc" target="_blank" style="color:#e1306c;">Instagram</a>
+        <a href="/contact.html" style="color:#0284c7;" data-lang="ar">تواصل معنا</a>
+        <a href="/contact.html" style="color:#0284c7;" data-lang="en" hidden>Contact Us</a>
       </div>
     </div>
   </div>
@@ -96,64 +94,48 @@ async function loadNewsDetail() {
   if (!id) { window.location.href = '/news.html'; return; }
 
   try {
-    // تعديل صيغة الـ Input لتعمل مع السيرفر (بدون تغليف json الزائد)
-    const inputParam = encodeURIComponent(JSON.stringify({ "0": { "id": id } }));
-    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/news.getById?batch=1&input=${inputParam}`;
+    // الطريقة الصحيحة لـ tRPC بدون الخطأ 400
+    const input = encodeURIComponent(JSON.stringify({ "0": { "json": { "id": id } } }));
+    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/news.getById?batch=1&input=${input}`;
 
     const res = await fetch(apiUrl);
-    if (!res.ok) throw new Error("400 Bad Request or Not Found");
+    const result = await res.json();
     
-    const json = await res.json();
-    
-    // محاولة استخراج البيانات سواء كانت بداخل json أو مباشرة
-    const dataObj = json[0]?.result?.data;
-    const news = dataObj?.json || dataObj;
+    // فك تغليف البيانات بناءً على رد السيرفر
+    const news = result[0]?.result?.data?.json || result[0]?.result?.data;
 
-    if (!news) throw new Error("No News Found");
+    if (!news) throw new Error("Not Found");
 
-    const title = lang === 'ar' ? (news.titleAr || news.titleEn) : (news.titleEn || news.titleAr);
-    const content = lang === 'ar' ? (news.contentAr || news.contentEn) : (news.contentEn || news.contentAr);
+    const title = lang === 'ar' ? (news.titleAr || news.title) : (news.titleEn || news.title);
+    const content = lang === 'ar' ? (news.contentAr || news.content) : (news.contentEn || news.content);
     const image = news.imageUrl || news.image || '/apple-touch-icon.png';
 
     container.innerHTML = `
       <div class="news-detail-wrapper">
-        <header style="margin-bottom: 30px;">
-          <h1 style="font-size: 2.5rem; color: #0f172a; margin-bottom: 15px; line-height: 1.2;">${title}</h1>
-          <div style="display:flex; gap:15px; color:#64748b;">
-             <span>📅 ${news.date || '2026'}</span>
-             <span>🏷️ ${news.category || (lang === 'ar' ? 'أخبار' : 'News')}</span>
-          </div>
+        <header>
+          <h1 style="font-size: 2.5rem; color: #0f172a; margin-bottom: 15px;">${title}</h1>
+          <p style="color: #64748b; margin-bottom:30px;">📅 ${news.date || '2026'}</p>
         </header>
-
         <div class="news-main-img-container">
-          <img src="${image}" class="news-main-img" alt="${title}" onerror="this.src='/apple-touch-icon.png'">
+          <img src="${image}" class="news-main-img" onerror="this.src='/apple-touch-icon.png'">
         </div>
-
         <article class="news-article-body">
           ${content ? content.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('') : ''}
         </article>
       </div>
     `;
   } catch (e) {
-    console.error("Detail Error:", e);
-    container.innerHTML = `
-      <div class="loading-state">
-        <p>${lang === 'ar' ? 'عذراً، لم نتمكن من عرض هذا الخبر.' : 'Sorry, could not display this article.'}</p>
-        <a href="/news.html" style="color:#0284c7; text-decoration:underline;">${lang === 'ar' ? 'العودة لقائمة الأخبار' : 'Back to News'}</a>
-      </div>`;
+    container.innerHTML = `<div class="loading-state"><p>${lang === 'ar' ? 'تعذر تحميل الخبر.' : 'News not found.'}</p></div>`;
   }
 }
 
-// تبديل اللغة
 const langBtn = document.getElementById('lang-toggle-btn');
 const updateLang = (l) => {
-  document.documentElement.lang = l;
-  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = l; document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
   document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== l);
   localStorage.setItem('khotwa_lang', l);
   loadNewsDetail();
 };
-
 if(langBtn) langBtn.onclick = () => updateLang(document.documentElement.lang === 'ar' ? 'en' : 'ar');
 
 document.addEventListener('DOMContentLoaded', () => {
