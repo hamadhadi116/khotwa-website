@@ -95,7 +95,7 @@ async function loadNewsDetail() {
   try {
     // التصحيح النهائي للرابط: حذف كلمة json لأن سيرفرك لا يدعمها
     const input = encodeURIComponent(JSON.stringify({ "0": { "id": id } }));
-    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/trpc/news.getById?batch=1&input=${input}`;
+    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/news.getById?batch=1&input=${input}`;
 
     const res = await fetch(apiUrl);
     const result = await res.json();
