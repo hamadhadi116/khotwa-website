@@ -6,44 +6,47 @@
 (function() {
   'use strict';
   
-  // Wait for DOM to be ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-  
   function init() {
     console.log('[Menu Toggle] Initializing...');
     
+    // البحث عن المعرفات الصحيحة
     const btn = document.getElementById('menu-toggle');
     const nav = document.getElementById('primary-nav');
     
     if (!btn || !nav) {
-      console.warn('[Menu Toggle] Elements not found:', { btn: !!btn, nav: !!nav });
+      console.warn('[Menu Toggle] Elements not found. Check if IDs "menu-toggle" and "primary-nav" exist.');
       return;
     }
     
-    console.log('[Menu Toggle] Elements found, attaching event listener');
-    
-    // Set initial state
+    // ضبط الحالة الابتدائية
     nav.setAttribute('data-open', 'false');
+    btn.setAttribute('aria-expanded', 'false');
     
-    // Toggle function
+    // وظيفة التحكم في القائمة
     function setMenu(open) {
-      nav.setAttribute('data-open', open ? 'true' : 'false');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        nav.setAttribute('data-open', 'true');
+        nav.classList.add('active'); // إضافة كلاس لضمان عمل الـ CSS
+        btn.setAttribute('aria-expanded', 'true');
+        btn.classList.add('is-active');
+      } else {
+        nav.setAttribute('data-open', 'false');
+        nav.classList.remove('active');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.classList.remove('is-active');
+      }
       console.log('[Menu Toggle] Menu state:', open ? 'OPEN' : 'CLOSED');
     }
     
-    // Click handler
-    btn.addEventListener('click', function(e) {
+    // مستمع حدث الضغط
+    btn.onclick = function(e) {
       e.preventDefault();
+      e.stopPropagation(); // منع انتشار الحدث لضمان عدم إغلاق القائمة فوراً
       const isOpen = nav.getAttribute('data-open') === 'true';
       setMenu(!isOpen);
-    });
+    };
     
-    // Close menu when clicking outside
+    // إغلاق القائمة عند الضغط في أي مكان خارجها
     document.addEventListener('click', function(e) {
       const isOpen = nav.getAttribute('data-open') === 'true';
       if (isOpen && !nav.contains(e.target) && !btn.contains(e.target)) {
@@ -51,16 +54,20 @@
       }
     });
     
-    // Close menu on escape key
+    // إغلاق القائمة عند ضغط زر Escape
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        const isOpen = nav.getAttribute('data-open') === 'true';
-        if (isOpen) {
-          setMenu(false);
-        }
+        setMenu(false);
       }
     });
     
     console.log('[Menu Toggle] Initialized successfully');
+  }
+
+  // التأكد من تشغيل السكربت بعد تحميل الصفحة
+  if (document.readyState === 'complete') {
+    init();
+  } else {
+    window.addEventListener('load', init);
   }
 })();
