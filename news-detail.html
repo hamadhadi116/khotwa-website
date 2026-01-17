@@ -94,15 +94,16 @@ async function loadNewsDetail() {
   if (!id) { window.location.href = '/news.html'; return; }
 
   try {
-    // الطريقة الصحيحة لـ tRPC بدون الخطأ 400
+    // تم إصلاح الرابط هنا: إضافة /trpc/ والتأكد من صيغة الـ input
     const input = encodeURIComponent(JSON.stringify({ "0": { "json": { "id": id } } }));
-    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/news.getById?batch=1&input=${input}`;
+    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/trpc/news.getById?batch=1&input=${input}`;
 
     const res = await fetch(apiUrl);
     const result = await res.json();
     
-    // فك تغليف البيانات بناءً على رد السيرفر
-    const news = result[0]?.result?.data?.json || result[0]?.result?.data;
+    // فحص دقيق للبيانات المستلمة من tRPC
+    const dataBatch = result[0]?.result?.data;
+    const news = dataBatch?.json || dataBatch;
 
     if (!news) throw new Error("Not Found");
 
@@ -125,21 +126,26 @@ async function loadNewsDetail() {
       </div>
     `;
   } catch (e) {
-    container.innerHTML = `<div class="loading-state"><p>${lang === 'ar' ? 'تعذر تحميل الخبر.' : 'News not found.'}</p></div>`;
+    console.error("Fetch Error:", e);
+    container.innerHTML = `<div class="loading-state"><p>${lang === 'ar' ? 'عذراً، لم يتم العثور على هذا الخبر.' : 'News not found.'}</p></div>`;
   }
 }
 
+// تبديل اللغة
 const langBtn = document.getElementById('lang-toggle-btn');
 const updateLang = (l) => {
-  document.documentElement.lang = l; document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = l; 
+  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
   document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== l);
   localStorage.setItem('khotwa_lang', l);
   loadNewsDetail();
 };
+
 if(langBtn) langBtn.onclick = () => updateLang(document.documentElement.lang === 'ar' ? 'en' : 'ar');
 
 document.addEventListener('DOMContentLoaded', () => {
-  updateLang(localStorage.getItem('khotwa_lang') || 'ar');
+  const currentLang = localStorage.getItem('khotwa_lang') || 'ar';
+  updateLang(currentLang);
 });
 </script>
 </body>
