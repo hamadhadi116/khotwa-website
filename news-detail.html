@@ -20,37 +20,48 @@
     body { 
       padding-top: 100px !important; 
       background-color: #ffffff; 
-      display: flex; 
-      flex-direction: column; 
-      min-height: 100vh; 
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       margin: 0;
     }
     main { flex: 1; }
-    .news-detail-wrapper { max-width: 850px; margin: 0 auto 60px; padding: 0 20px; }
-    .news-main-img-container { width: 100%; border-radius: 20px; overflow: hidden; margin: 30px 0; background: #f8fafc; }
-    .news-main-img { width: 100%; max-height: 550px; object-fit: cover; display: block; }
-    .news-article-body { font-size: 1.25rem; line-height: 1.8; color: #334155; }
-    .news-article-body p { margin-bottom: 24px; }
-    .loading-state { text-align: center; padding: 120px 0; color: #94a3b8; }
-
-    @media (max-width: 960px) {
-      #primary-nav {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        padding: 20px;
-        border-bottom: 2px solid #0284c7;
-        z-index: 1000;
-      }
-      #primary-nav[data-open="true"] { display: flex !important; }
-      .menu-toggle { display: block !important; }
+    .news-detail-wrapper {
+      max-width: 850px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+    .news-main-img-container {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 30px 0;
+      background: #f8fafc;
+    }
+    .news-main-img {
+      width: 100%;
+      max-height: 550px;
+      object-fit: cover;
+      display: block;
+    }
+    .news-article-body {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: #334155;
+    }
+    .news-article-body p {
+      margin-bottom: 24px;
+    }
+    .loading-state {
+      text-align: center;
+      padding: 120px 0;
+      color: #94a3b8;
     }
     [hidden] { display: none !important; }
   </style>
+
+  <!-- نفس ملف API المستخدم في صفحة الأخبار -->
+  <script src="/assets/khotwa-api.js"></script>
 </head>
 
 <body>
@@ -64,18 +75,9 @@
     </a>
     <button id="menu-toggle" class="menu-toggle">☰</button>
     <div class="nav-links" id="primary-nav" data-open="false">
-      <a href="/index.html">
-        <span data-lang="ar">الرئيسية</span>
-        <span data-lang="en" hidden>Home</span>
-      </a>
-      <a href="/news.html" class="active">
-        <span data-lang="ar">الأخبار</span>
-        <span data-lang="en" hidden>News</span>
-      </a>
-      <a href="/events.html">
-        <span data-lang="ar">الفعاليات</span>
-        <span data-lang="en" hidden>Events</span>
-      </a>
+      <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
+      <a href="/news.html" class="active"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+      <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
       <button id="lang-toggle-btn" class="lang-toggle">
         <span data-lang="ar">English</span>
         <span data-lang="en" hidden>عربي</span>
@@ -91,20 +93,20 @@
   </div>
 </main>
 
-<footer class="main-footer" style="background:#f8fafc; border-top:1px solid #e2e8f0; padding:4rem 0;">
+<footer class="main-footer" style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:4rem 0;">
   <div class="container">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:2rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2rem;">
       <div>
         <strong data-lang="ar">مجلس طلاب خطوة</strong>
         <strong data-lang="en" hidden>Khotwa Council</strong>
-        <p style="color:#64748b; font-size:0.95rem; margin-top:10px;">
+        <p style="color:#64748b;font-size:0.95rem;margin-top:10px;">
           © 2026 | ملبورن، أستراليا
         </p>
       </div>
-      <div style="display:flex; gap:1.5rem;">
-        <a href="https://instagram.com/khotwa.sc" target="_blank" style="color:#e1306c;">Instagram</a>
-        <a href="/contact.html" style="color:#0284c7;" data-lang="ar">تواصل معنا</a>
-        <a href="/contact.html" style="color:#0284c7;" data-lang="en" hidden>Contact Us</a>
+      <div style="display:flex;gap:1.5rem;">
+        <a href="https://instagram.com/khotwa.sc" target="_blank">Instagram</a>
+        <a href="/contact.html" data-lang="ar">تواصل معنا</a>
+        <a href="/contact.html" data-lang="en" hidden>Contact Us</a>
       </div>
     </div>
   </div>
@@ -115,7 +117,7 @@
 <script>
 async function loadNewsDetail() {
   const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const id = Number(params.get('id'));
   const lang = localStorage.getItem('khotwa_lang') || 'ar';
   const container = document.getElementById('news-content');
 
@@ -125,30 +127,28 @@ async function loadNewsDetail() {
   }
 
   try {
-    const input = encodeURIComponent(
-      JSON.stringify({ "0": { "id": Number(id) } })
-    );
+    // نفس الاستدعاء المستخدم في news.html
+    const response = await KhotwaAPI.getNews();
 
-    const apiUrl =
-      `${window.KHOTWA_CONFIG.API_BASE}/news.getById?input=${input}`;
+    const items = Array.isArray(response)
+      ? response
+      : (response?.result?.data || []);
 
-    const res = await fetch(apiUrl);
-    const data = await res.json();
-
-    const news = data?.result?.data;
+    const news = items.find(n => Number(n.id) === id);
     if (!news) throw new Error('Not found');
 
     const title =
       lang === 'ar'
-        ? news.titleAr || news.title
-        : news.titleEn || news.title;
+        ? (news.titleAr || news.title)
+        : (news.titleEn || news.title);
 
     const content =
       lang === 'ar'
-        ? news.contentAr || news.content
-        : news.contentEn || news.content;
+        ? (news.contentAr || news.content)
+        : (news.contentEn || news.content);
 
-    const image = news.imageUrl || news.image || '/apple-touch-icon.png';
+    const image =
+      news.imageUrl || news.image || news.coverImage || '/apple-touch-icon.png';
 
     container.innerHTML = `
       <div class="news-detail-wrapper">
@@ -182,10 +182,9 @@ async function loadNewsDetail() {
     console.error(err);
     container.innerHTML = `
       <div class="loading-state">
-        <p>${lang === 'ar'
+        ${lang === 'ar'
           ? 'عذراً، لم يتم العثور على هذا الخبر.'
           : 'News not found.'}
-        </p>
       </div>
     `;
   }
