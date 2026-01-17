@@ -98,7 +98,7 @@ async function loadNewsDetail() {
   try {
     // تعديل صيغة الـ Input لتعمل مع السيرفر (بدون تغليف json الزائد)
     const inputParam = encodeURIComponent(JSON.stringify({ "0": { "id": id } }));
-    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/trpc/news.getById?batch=1&input=${inputParam}`;
+    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/news.getById?batch=1&input=${inputParam}`;
 
     const res = await fetch(apiUrl);
     if (!res.ok) throw new Error("400 Bad Request or Not Found");
