@@ -11,14 +11,19 @@
   <link rel="stylesheet" href="/assets/enhanced-navbar.css">
 
   <script>
-    window.KHOTWA_CONFIG = { API_BASE: 'https://khotwabknd-gj8oeubw.manus.space/api' };
+    window.KHOTWA_CONFIG = {
+      API_BASE: 'https://khotwabknd-gj8oeubw.manus.space/api'
+    };
   </script>
 
   <style>
     body { 
       padding-top: 100px !important; 
       background-color: #ffffff; 
-      display: flex; flex-direction: column; min-height: 100vh; margin: 0;
+      display: flex; 
+      flex-direction: column; 
+      min-height: 100vh; 
+      margin: 0;
     }
     main { flex: 1; }
     .news-detail-wrapper { max-width: 850px; margin: 0 auto 60px; padding: 0 20px; }
@@ -27,15 +32,27 @@
     .news-article-body { font-size: 1.25rem; line-height: 1.8; color: #334155; }
     .news-article-body p { margin-bottom: 24px; }
     .loading-state { text-align: center; padding: 120px 0; color: #94a3b8; }
-    
+
     @media (max-width: 960px) {
-      #primary-nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 20px; border-bottom: 2px solid #0284c7; z-index: 1000; }
+      #primary-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 20px;
+        border-bottom: 2px solid #0284c7;
+        z-index: 1000;
+      }
       #primary-nav[data-open="true"] { display: flex !important; }
       .menu-toggle { display: block !important; }
     }
     [hidden] { display: none !important; }
   </style>
 </head>
+
 <body>
 
 <nav class="navbar">
@@ -47,11 +64,21 @@
     </a>
     <button id="menu-toggle" class="menu-toggle">☰</button>
     <div class="nav-links" id="primary-nav" data-open="false">
-      <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
-      <a href="/news.html" class="active"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
-      <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+      <a href="/index.html">
+        <span data-lang="ar">الرئيسية</span>
+        <span data-lang="en" hidden>Home</span>
+      </a>
+      <a href="/news.html" class="active">
+        <span data-lang="ar">الأخبار</span>
+        <span data-lang="en" hidden>News</span>
+      </a>
+      <a href="/events.html">
+        <span data-lang="ar">الفعاليات</span>
+        <span data-lang="en" hidden>Events</span>
+      </a>
       <button id="lang-toggle-btn" class="lang-toggle">
-        <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
+        <span data-lang="ar">English</span>
+        <span data-lang="en" hidden>عربي</span>
       </button>
     </div>
   </div>
@@ -70,7 +97,9 @@
       <div>
         <strong data-lang="ar">مجلس طلاب خطوة</strong>
         <strong data-lang="en" hidden>Khotwa Council</strong>
-        <p style="color:#64748b; font-size:0.95rem; margin-top:10px;">© 2026 | ملبورن، أستراليا</p>
+        <p style="color:#64748b; font-size:0.95rem; margin-top:10px;">
+          © 2026 | ملبورن، أستراليا
+        </p>
       </div>
       <div style="display:flex; gap:1.5rem;">
         <a href="https://instagram.com/khotwa.sc" target="_blank" style="color:#e1306c;">Instagram</a>
@@ -85,65 +114,108 @@
 
 <script>
 async function loadNewsDetail() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get('id');
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
   const lang = localStorage.getItem('khotwa_lang') || 'ar';
   const container = document.getElementById('news-content');
 
-  if (!id) { window.location.href = '/news.html'; return; }
+  if (!id) {
+    window.location.href = '/news.html';
+    return;
+  }
 
   try {
-    // التصحيح النهائي للرابط: حذف كلمة json لأن سيرفرك لا يدعمها
-    const input = encodeURIComponent(JSON.stringify({ "0": { "id": id } }));
-    const apiUrl = `https://khotwabknd-gj8oeubw.manus.space/api/news.getById?batch=1&input=${input}`;
+    const input = encodeURIComponent(
+      JSON.stringify({ "0": { "id": Number(id) } })
+    );
+
+    const apiUrl =
+      `${window.KHOTWA_CONFIG.API_BASE}/news.getById?input=${input}`;
 
     const res = await fetch(apiUrl);
-    const result = await res.json();
-    
-    // استخراج البيانات مباشرة بدون كلمة json
-    const news = result[0]?.result?.data;
+    const data = await res.json();
 
-    if (!news) throw new Error("Not Found");
+    const news = data?.result?.data;
+    if (!news) throw new Error('Not found');
 
-    const title = lang === 'ar' ? (news.titleAr || news.title) : (news.titleEn || news.title);
-    const content = lang === 'ar' ? (news.contentAr || news.content) : (news.contentEn || news.content);
+    const title =
+      lang === 'ar'
+        ? news.titleAr || news.title
+        : news.titleEn || news.title;
+
+    const content =
+      lang === 'ar'
+        ? news.contentAr || news.content
+        : news.contentEn || news.content;
+
     const image = news.imageUrl || news.image || '/apple-touch-icon.png';
 
     container.innerHTML = `
       <div class="news-detail-wrapper">
         <header>
-          <h1 style="font-size: 2.5rem; color: #0f172a; margin-bottom: 15px;">${title}</h1>
-          <p style="color: #64748b; margin-bottom:30px;">📅 ${news.date || '2026'}</p>
+          <h1 style="font-size:2.5rem;color:#0f172a;margin-bottom:15px;">
+            ${title}
+          </h1>
+          <p style="color:#64748b;margin-bottom:30px;">
+            📅 ${news.date || '2026'}
+          </p>
         </header>
+
         <div class="news-main-img-container">
-          <img src="${image}" class="news-main-img" onerror="this.src='/apple-touch-icon.png'">
+          <img src="${image}" class="news-main-img"
+               onerror="this.src='/apple-touch-icon.png'">
         </div>
+
         <article class="news-article-body">
-          ${content ? content.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('') : ''}
+          ${
+            content
+              ? content.split('\n')
+                  .filter(p => p.trim())
+                  .map(p => `<p>${p}</p>`)
+                  .join('')
+              : ''
+          }
         </article>
       </div>
     `;
-  } catch (e) {
-    console.error("Fetch Error:", e);
-    container.innerHTML = `<div class="loading-state"><p>${lang === 'ar' ? 'عذراً، لم يتم العثور على هذا الخبر.' : 'News not found.'}</p></div>`;
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = `
+      <div class="loading-state">
+        <p>${lang === 'ar'
+          ? 'عذراً، لم يتم العثور على هذا الخبر.'
+          : 'News not found.'}
+        </p>
+      </div>
+    `;
   }
 }
 
-// تبديل اللغة
+/* تبديل اللغة */
 const langBtn = document.getElementById('lang-toggle-btn');
-const updateLang = (l) => {
-  document.documentElement.lang = l; 
-  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
-  document.querySelectorAll('[data-lang]').forEach(el => el.hidden = el.getAttribute('data-lang') !== l);
-  localStorage.setItem('khotwa_lang', l);
-  loadNewsDetail();
-};
-
-if(langBtn) langBtn.onclick = () => updateLang(document.documentElement.lang === 'ar' ? 'en' : 'ar');
+if (langBtn) {
+  langBtn.onclick = () => {
+    const current = document.documentElement.lang === 'ar' ? 'en' : 'ar';
+    document.documentElement.lang = current;
+    document.documentElement.dir = current === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.hidden = el.getAttribute('data-lang') !== current;
+    });
+    localStorage.setItem('khotwa_lang', current);
+    loadNewsDetail();
+  };
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-  updateLang(localStorage.getItem('khotwa_lang') || 'ar');
+  const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
+  document.documentElement.lang = savedLang;
+  document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.hidden = el.getAttribute('data-lang') !== savedLang;
+  });
+  loadNewsDetail();
 });
 </script>
+
 </body>
 </html>
