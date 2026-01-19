@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مجلس طلاب خطوة | البوابة الذكية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --council-navy: #0a1d37;
+            --council-gold: #c5a059;
+            --council-light: #f4f7f6;
+            --accent-gradient: linear-gradient(135deg, #0a1d37 0%, #1a3a5f 100%);
+            --gold-gradient: linear-gradient(135deg, #c5a059 0%, #e2c285 100%);
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--council-light);
+            color: var(--council-navy);
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            border-radius: 16px;
+            color: #94a3b8;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 700;
+        }
+        .sidebar-link:hover {
+            background: rgba(197, 160, 89, 0.05);
+            color: var(--council-gold);
+        }
+        .sidebar-link.active {
+            background: var(--gold-gradient);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(197, 160, 89, 0.3);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: slideUp 0.5s ease; }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 1rem;
+        }
+
+        .rank-tag {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        /* Certificate Styles */
+        .cert-frame {
+            border: 8px double var(--council-navy);
+            background-image: radial-gradient(circle at center, white 0%, #fcfcfc 100%);
+            position: relative;
+        }
+        .cert-frame::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 2px solid var(--council-gold);
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    <!-- API System with Fallback -->
+    <script>
+        const KhotwaAPI = (function () {
+            const API_BASE = "https://khotwabknd-gj8oeubw.manus.space/api";
+            
+            // بيانات وهمية للعمل في حال تعطل السيرفر
+            const MOCK_DATA = {
+                events: [
+                    { id: '1', title: 'لقاء القهوة الطلابية', desc: 'مناقشة مفتوحة مع عميد شؤون الطلاب.', date: '20 يناير', status: 'متاح' },
+                    { id: '2', title: 'دورة الأمن السيبراني', desc: 'تعلم كيف تحمي بياناتك الشخصية.', date: '22 يناير', status: 'متاح' },
+                    { id: '3', title: 'ورشة البحث العلمي', desc: 'أساسيات كتابة الأوراق البحثية.', date: '15 يناير', status: 'منتهي' }
+                ],
+                points: 2450,
+                badges: ['award', 'zap', 'shield', 'star']
+            };
+
+            function getVisitorId() {
+                let id = localStorage.getItem("v_id");
+                if (!id) {
+                    id = "v_" + Math.random().toString(36).substr(2, 9);
+                    localStorage.setItem("v_id", id);
+                }
+                return id;
+            }
+
+            async function apiCall(endpoint) {
+                try {
+                    // محاولة الاتصال بالسيرفر مع مهلة زمنية قصيرة
+                    const controller = new AbortController();
+                    const id = setTimeout(() => controller.abort(), 2000);
+                    const response = await fetch(`${API_BASE}/${endpoint}`, { signal: controller.signal });
+                    clearTimeout(id);
+                    if(!response.ok) throw new Error("Server Error");
+                    return await response.json();
+                } catch (e) {
+                    console.warn(`Using Mock Data for ${endpoint}`);
+                    if(endpoint.includes('events')) return MOCK_DATA.events;
+                    if(endpoint.includes('points')) return { points: MOCK_DATA.points };
+                    return null;
+                }
+            }
+
+            return {
+                getVisitorId,
+                getEvents: () => apiCall('events'),
+                getPoints: () => apiCall('gamification/points')
+            };
+        })();
+    </script>
+
+    <!-- Auth Flow -->
+    <div id="auth-overlay" class="fixed inset-0 bg-[#0a1d37] z-[100] flex items-center justify-center p-6">
+        <div class="bg-white rounded-[3rem] max-w-lg w-full p-12 shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full -mr-16 -mt-16"></div>
+            
+            <div id="login-step" class="text-center">
+                <div class="w-20 h-20 bg-gold/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="sparkles" class="text-gold w-10 h-10"></i>
+                </div>
+                <h1 class="text-3xl font-black text-navy mb-2">بوابة مجلس الطلاب</h1>
+                <p class="text-slate-400 text-sm mb-10">الرجاء إدخال بياناتك الأكاديمية للمتابعة</p>
+                
+                <div class="space-y-4 text-right">
+                    <label class="text-xs font-bold text-slate-500 mr-2 uppercase">البريد الجامعي</label>
+                    <input type="email" id="u-email" class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-gold outline-none transition-all" placeholder="name@uni.edu">
+                    
+                    <label class="text-xs font-bold text-slate-500 mr-2 uppercase">رقم الـ PS</label>
+                    <input type="text" id="u-ps" class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-gold outline-none transition-all" placeholder="PS123456">
+                    
+                    <button onclick="sendOTP()" class="w-full py-5 mt-6 rounded-2xl bg-[#c5a059] text-white font-black shadow-xl shadow-gold/30 hover:scale-[1.02] active:scale-95 transition-all">
+                        دخول للمنصة
+                    </button>
+                </div>
+            </div>
+
+            <div id="otp-step" class="hidden text-center">
+                <h1 class="text-2xl font-black text-navy mb-2">تأكيد الهوية</h1>
+                <p class="text-slate-400 text-sm mb-8">أدخل الرمز المرسل إلى بريدك (للتجربة: 123456)</p>
+                <input type="text" id="otp" maxlength="6" class="w-full text-center text-3xl font-bold tracking-[1rem] py-5 rounded-2xl bg-slate-50 border-none mb-6 outline-none" placeholder="000000">
+                <button onclick="verify()" class="w-full py-5 rounded-2xl bg-navy text-white font-black shadow-xl transition-all">تأكيد ودخول</button>
+                <button onclick="backToLogin()" class="mt-4 text-xs font-bold text-slate-400 hover:text-navy">تعديل البيانات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="w-80 bg-white border-l border-slate-100 h-screen sticky top-0 flex flex-col p-8 hidden shadow-sm" id="main-sidebar">
+        <div class="flex items-center gap-4 mb-12 px-2">
+            <div class="w-12 h-12 bg-navy rounded-2xl flex items-center justify-center rotate-3 shadow-lg shadow-navy/20">
+                <i data-lucide="layers" class="text-gold w-6 h-6"></i>
+            </div>
+            <div>
+                <h2 class="font-black text-xl tracking-tight">خُـطـوة</h2>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">المجلس الطلابي</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 space-y-3">
+            <button onclick="switchTab('dashboard')" class="sidebar-link active w-full" data-tab="dashboard">
+                <i data-lucide="grid"></i> <span>الرئيسية</span>
+            </button>
+            <button onclick="switchTab('events')" class="sidebar-link w-full" data-tab="events">
+                <i data-lucide="compass"></i> <span>الفعاليات</span>
+            </button>
+            <button onclick="switchTab('certificates')" class="sidebar-link w-full" data-tab="certificates">
+                <i data-lucide="award"></i> <span>الشهادات</span>
+            </button>
+            <button onclick="switchTab('profile')" class="sidebar-link w-full" data-tab="profile">
+                <i data-lucide="user-circle"></i> <span>ملفي الشخصي</span>
+            </button>
+        </nav>
+
+        <div class="mt-auto p-6 bg-slate-50 rounded-[2rem] relative overflow-hidden">
+            <div class="relative z-10">
+                <p class="text-[10px] font-black text-slate-400 mb-1 uppercase">رتبة الطالب</p>
+                <p class="text-lg font-black rank-tag italic">عضو ذهبي</p>
+            </div>
+            <i data-lucide="award" class="absolute -bottom-2 -left-2 w-16 h-16 text-gold/10 -rotate-12"></i>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-12 hidden" id="main-content">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-12">
+            <div>
+                <h2 id="page-title" class="text-4xl font-black text-navy mb-2">مرحباً، <span id="user-display-name" class="text-gold">طالبنا العزيز</span> 👋</h2>
+                <p class="text-slate-400 font-medium">لوحة التحكم الذكية</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="bg-white p-2 rounded-2xl border border-slate-100 flex items-center gap-3 px-4 shadow-sm">
+                    <div class="w-8 h-8 bg-gold/10 rounded-lg flex items-center justify-center">
+                        <i data-lucide="zap" class="text-gold w-4 h-4"></i>
+                    </div>
+                    <span class="font-black text-navy" id="header-points">0</span>
+                </div>
+                <button onclick="location.reload()" class="w-12 h-12 bg-white border border-slate-100 rounded-2xl flex items-center justify-center text-red-400 hover:bg-red-50 transition-colors">
+                    <i data-lucide="log-out" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="tab-content active space-y-10">
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="stat-card bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform"></div>
+                    <p class="relative z-10 text-slate-400 text-xs font-black mb-4 uppercase">الرصيد المعرفي</p>
+                    <h3 class="relative z-10 text-5xl font-black text-navy" id="dash-points">0</h3>
+                </div>
+                <div class="stat-card bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform"></div>
+                    <p class="relative z-10 text-slate-400 text-xs font-black mb-4 uppercase">الفعاليات المسجلة</p>
+                    <h3 class="relative z-10 text-5xl font-black text-navy" id="dash-events-count">0</h3>
+                </div>
+                <div class="stat-card bg-navy p-8 rounded-[2.5rem] shadow-xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform"></div>
+                    <p class="relative z-10 text-white/50 text-xs font-black mb-4 uppercase">المستوى الحالي</p>
+                    <h3 class="relative z-10 text-4xl font-black text-gold italic">نخبة خطوة</h3>
+                </div>
+            </div>
+
+            <!-- Announcement -->
+            <div class="bg-navy rounded-[3rem] p-12 text-white flex items-center justify-between relative overflow-hidden shadow-2xl">
+                <div class="max-w-lg relative z-10">
+                    <span class="bg-gold/20 text-gold px-4 py-1 rounded-full text-[10px] font-black uppercase mb-4 inline-block tracking-widest">إعلان هام</span>
+                    <h3 class="text-3xl font-black mb-4 leading-tight">فتح باب التسجيل للمجلس الطلابي</h3>
+                    <p class="text-slate-400 mb-8 text-sm">كن صوتاً لزملائك، وقد التغيير في جامعتك. آخر موعد للتقديم 30 يناير.</p>
+                    <button class="px-8 py-4 bg-gold rounded-2xl font-black text-navy hover:scale-105 transition-transform">قدم الآن</button>
+                </div>
+                <i data-lucide="megaphone" class="w-48 h-48 text-white/5 rotate-12 absolute -left-10"></i>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div id="profile" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div class="lg:col-span-4 space-y-8">
+                    <div class="bg-white rounded-[3rem] p-10 text-center border border-slate-100 shadow-sm">
+                        <div class="relative w-40 h-40 mx-auto mb-8">
+                            <div class="absolute inset-0 bg-gold rounded-[3rem] rotate-6"></div>
+                            <div class="absolute inset-0 bg-navy rounded-[3rem] flex items-center justify-center text-white text-6xl font-black" id="p-init">S</div>
+                        </div>
+                        <h3 class="text-2xl font-black text-navy mb-1" id="p-name">--</h3>
+                        <p class="text-gold font-bold text-sm mb-6 uppercase tracking-widest" id="p-ps">--</p>
+                        <div class="flex justify-center gap-2">
+                            <span class="px-3 py-1 bg-green-50 text-green-600 text-[10px] font-black rounded-full">حساب موثق</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
+                        <h4 class="font-black text-navy mb-6 flex items-center gap-2">
+                            <i data-lucide="shield" class="text-gold w-5 h-5"></i> سجل الأوسمة
+                        </h4>
+                        <div class="badge-grid" id="p-badges"></div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-8 bg-white rounded-[3rem] p-12 border border-slate-100 shadow-sm">
+                    <h4 class="text-2xl font-black text-navy mb-10 italic">المعلومات الشخصية</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase mr-2 tracking-widest">البريد الإلكتروني</label>
+                            <div class="p-5 rounded-2xl bg-slate-50 font-bold text-navy" id="p-email">--</div>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase mr-2 tracking-widest">معرف النظام</label>
+                            <div class="p-5 rounded-2xl bg-slate-50 font-bold text-navy text-[10px] truncate" id="p-vid">--</div>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase mr-2 tracking-widest">الجامعة</label>
+                            <input type="text" class="w-full p-5 rounded-2xl bg-slate-50 border-transparent focus:bg-white focus:ring-2 focus:ring-gold outline-none font-bold text-navy transition-all" placeholder="أدخل اسم الجامعة">
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase mr-2 tracking-widest">التخصص</label>
+                            <input type="text" class="w-full p-5 rounded-2xl bg-slate-50 border-transparent focus:bg-white focus:ring-2 focus:ring-gold outline-none font-bold text-navy transition-all" placeholder="أدخل تخصصك">
+                        </div>
+                    </div>
+                    <button class="mt-8 px-8 py-4 bg-navy text-white rounded-2xl font-bold text-xs hover:bg-gold transition-colors">حفظ التغييرات</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events -->
+        <div id="events" class="tab-content">
+            <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </div>
+
+        <!-- Certificates (Added Back) -->
+        <div id="certificates" class="tab-content">
+            <div id="cert-view" class="hidden">
+                <div class="bg-white rounded-[2.5rem] p-12 shadow-xl text-center cert-frame max-w-4xl mx-auto">
+                    <div class="flex justify-between items-start mb-12">
+                        <div class="text-right">
+                            <h2 class="text-xl font-black text-navy">مجلس طلاب خطوة</h2>
+                            <p class="text-[10px] text-slate-400 tracking-widest">KHOTWA STUDENT COUNCIL</p>
+                        </div>
+                        <i data-lucide="award" class="w-16 h-16 text-gold"></i>
+                    </div>
+                    
+                    <h1 class="text-5xl font-black text-navy mb-6" style="font-family: serif;">شهادة حضور</h1>
+                    <p class="text-slate-500 font-medium italic mb-8">نشهد بأن الطالب/الطالبة</p>
+                    <h2 class="text-4xl font-black text-gold mb-8 pb-4 border-b-2 border-gold/20 inline-block" id="cert-name">الاسم هنا</h2>
+                    <p class="text-slate-500 font-medium italic mb-8">قد أتم بنجاح حضور فعالية:</p>
+                    <h3 class="text-3xl font-black text-navy mb-16" id="cert-title">عنوان الفعالية</h3>
+                    
+                    <div class="flex justify-between items-end mt-12 pt-8 border-t border-slate-100">
+                        <div class="text-center">
+                            <p class="text-xs font-bold text-slate-400 mb-2">التاريخ</p>
+                            <p class="font-black text-navy">2026/01/20</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-20 h-20 border-4 border-gold rounded-full flex items-center justify-center mx-auto mb-2 opacity-50">
+                                <span class="text-[8px] font-black text-gold">ختم المجلس</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-xs font-bold text-slate-400 mb-2">رئيس المجلس</p>
+                            <p class="font-black text-navy" style="font-family: cursive;">سلطان . ش</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <button onclick="printCert()" class="px-10 py-4 bg-navy text-white rounded-2xl font-bold shadow-lg hover:bg-gold transition-colors">طباعة الشهادة</button>
+                    <button onclick="document.getElementById('cert-view').classList.add('hidden'); document.getElementById('cert-list').classList.remove('hidden')" class="px-10 py-4 text-slate-400 font-bold hover:text-navy">عودة</button>
+                </div>
+            </div>
+
+            <div id="cert-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cert Item -->
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm text-center group hover:shadow-xl transition-all">
+                    <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
+                        <i data-lucide="check-circle" class="w-10 h-10"></i>
+                    </div>
+                    <h4 class="font-black text-navy text-lg mb-2">ورشة البحث العلمي</h4>
+                    <p class="text-xs text-slate-400 mb-6">تاريخ الإصدار: 15 يناير</p>
+                    <button onclick="showCert('ورشة البحث العلمي')" class="w-full py-3 bg-navy text-white rounded-xl font-bold text-xs hover:bg-gold transition-colors">عرض الشهادة</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // LOGIC
+        function sendOTP() {
+            const e = document.getElementById('u-email').value;
+            const p = document.getElementById('u-ps').value;
+            if(!e || !p) return alert("الرجاء ملء البيانات");
+            document.getElementById('login-step').classList.add('hidden');
+            document.getElementById('otp-step').classList.remove('hidden');
+        }
+
+        function backToLogin() {
+            document.getElementById('otp-step').classList.add('hidden');
+            document.getElementById('login-step').classList.remove('hidden');
+        }
+
+        async function verify() {
+            const otp = document.getElementById('otp').value;
+            if(otp.length !== 6) return alert("الرمز غير صحيح");
+
+            const email = document.getElementById('u-email').value;
+            const ps = document.getElementById('u-ps').value;
+            const init = email.charAt(0).toUpperCase();
+            
+            // Fetch Data (with Mock fallback)
+            const pointsData = await KhotwaAPI.getPoints();
+            const events = await KhotwaAPI.getEvents();
+            
+            // Sync UI
+            document.getElementById('user-display-name').innerText = email.split('@')[0];
+            document.getElementById('header-points').innerText = pointsData?.points || 0;
+            document.getElementById('dash-points').innerText = pointsData?.points || 0;
+            document.getElementById('dash-events-count').innerText = events ? events.length : 0;
+            
+            document.getElementById('p-name').innerText = email.split('@')[0].toUpperCase();
+            document.getElementById('p-ps').innerText = ps;
+            document.getElementById('p-email').innerText = email;
+            document.getElementById('p-init').innerText = init;
+            document.getElementById('p-vid').innerText = KhotwaAPI.getVisitorId();
+
+            document.getElementById('auth-overlay').style.display = 'none';
+            document.getElementById('main-sidebar').classList.remove('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+            
+            renderBadges();
+            renderEvents(events);
+            lucide.createIcons();
+        }
+
+        function renderBadges() {
+            const container = document.getElementById('p-badges');
+            const icons = ['award', 'zap', 'shield', 'star', 'target'];
+            container.innerHTML = icons.map(i => `
+                <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-300 hover:text-gold hover:bg-gold/10 transition-all cursor-help">
+                    <i data-lucide="${i}"></i>
+                </div>
+            `).join('');
+        }
+
+        function renderEvents(events) {
+            const grid = document.getElementById('events-grid');
+            if(!events || events.length === 0) {
+                grid.innerHTML = '<p class="text-center col-span-3 text-slate-400">لا توجد فعاليات</p>';
+                return;
+            }
+            grid.innerHTML = events.map(ev => `
+                <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="w-14 h-14 bg-navy rounded-2xl flex items-center justify-center text-gold shadow-lg shadow-navy/20">
+                            <i data-lucide="calendar"></i>
+                        </div>
+                        <span class="text-[10px] font-black text-white bg-gold px-3 py-1 rounded-full uppercase">${ev.date}</span>
+                    </div>
+                    <h4 class="text-xl font-black text-navy mb-3 relative z-10">${ev.title}</h4>
+                    <p class="text-sm text-slate-400 mb-8 leading-relaxed relative z-10">${ev.desc}</p>
+                    <button class="w-full py-4 rounded-2xl bg-slate-50 text-navy font-black hover:bg-navy hover:text-white transition-all relative z-10">سجل اهتمامك</button>
+                </div>
+            `).join('');
+        }
+
+        function showCert(title) {
+            document.getElementById('cert-list').classList.add('hidden');
+            document.getElementById('cert-view').classList.remove('hidden');
+            document.getElementById('cert-title').innerText = title;
+            document.getElementById('cert-name').innerText = document.getElementById('p-name').innerText;
+        }
+
+        function printCert() {
+            window.print();
+        }
+
+        function switchTab(t) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(t).classList.add('active');
+            document.querySelectorAll('.sidebar-link').forEach(l => {
+                l.classList.remove('active');
+                if(l.dataset.tab === t) l.classList.add('active');
+            });
+            const titles = { 'dashboard': 'الرئيسية', 'events': 'الفعاليات', 'profile': 'الملف الشخصي', 'certificates': 'الشهادات' };
+            const name = document.getElementById('p-name').innerText;
+            document.getElementById('page-title').innerHTML = `${titles[t]}، <span class="text-gold">${name}</span> 👋`;
+            lucide.createIcons();
+        }
+
+        window.onload = () => lucide.createIcons();
+    </script>
+</body>
+</html>
