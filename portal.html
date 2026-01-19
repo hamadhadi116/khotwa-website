@@ -136,34 +136,31 @@
 <script>
 let CURRENT_ROLE = "student";
 
-/* OTP */
+/* SEND OTP */
 async function sendOTP() {
   const email = document.getElementById("email").value;
   if (!email) return alert("أدخل البريد");
 
-  await fetch(`${KhotwaAPI ? '' : ''}`);
-  await KhotwaAPI.loadSettings();
-  await fetch(KhotwaAPI ? '' : '');
+  if (!window.KhotwaAPI?.sendOTP) {
+    alert("KhotwaAPI غير محمّل");
+    return;
+  }
 
-  await fetch(`${window.KhotwaAPI ? '' : ''}`);
-
-  await KhotwaAPI.sendOTP?.(email); // لو مضافة بالباكند
+  await KhotwaAPI.sendOTP(email);
 
   document.getElementById("step-email").classList.add("hidden");
   document.getElementById("step-otp").classList.remove("hidden");
 }
 
-/* VERIFY */
+/* VERIFY OTP */
 async function verifyOTP() {
   const email = document.getElementById("email").value;
-  const otp = document.getElementById("otp").value;
+  const code = document.getElementById("otp").value;
 
-  const res = await fetch(
-    `${KhotwaAPI ? '' : ''}`
-  );
+  if (!code) return alert("أدخل الرمز");
 
-  // مثال بسيط
-  CURRENT_ROLE = email.includes("@khotwa") ? "admin" : "student";
+  const res = await KhotwaAPI.verifyOTP(email, code);
+  CURRENT_ROLE = res.role || "student";
 
   startApp(email);
 }
@@ -182,10 +179,10 @@ async function startApp(email) {
   }
 
   const stats = await KhotwaAPI.getStatistics();
-  document.getElementById("newsCount").innerText = stats.newsCount;
-  document.getElementById("eventsCount").innerText = stats.eventsCount;
-  document.getElementById("registrationsCount").innerText = stats.registrationsCount;
-  document.getElementById("commentsCount").innerText = stats.commentsCount;
+  document.getElementById("newsCount").innerText = stats.newsCount ?? 0;
+  document.getElementById("eventsCount").innerText = stats.eventsCount ?? 0;
+  document.getElementById("registrationsCount").innerText = stats.registrationsCount ?? 0;
+  document.getElementById("commentsCount").innerText = stats.commentsCount ?? 0;
 }
 
 /* NAV */
