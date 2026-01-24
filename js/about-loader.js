@@ -32,8 +32,21 @@
     const visionEl = document.querySelector('[data-section="vision"] p');
     const missionEl = document.querySelector('[data-section="mission"] p');
 
-    if (visionEl && visionText) visionEl.textContent = visionText;
-    if (missionEl && missionText) missionEl.textContent = missionText;
+    if (visionEl) {
+      const fallbackVision =
+        lang === 'ar'
+          ? visionEl.dataset.defaultAr
+          : visionEl.dataset.defaultEn;
+      visionEl.textContent = visionText || fallbackVision || '';
+    }
+
+    if (missionEl) {
+      const fallbackMission =
+        lang === 'ar'
+          ? missionEl.dataset.defaultAr
+          : missionEl.dataset.defaultEn;
+      missionEl.textContent = missionText || fallbackMission || '';
+    }
   }
 
   /* ==============================
