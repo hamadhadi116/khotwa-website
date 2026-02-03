@@ -17,23 +17,20 @@
   </script>
 
   <style>
-    body {
-      padding-top: 100px;
-      background: #ffffff;
+    body { 
+      padding-top: 100px !important; 
+      background-color: #ffffff; 
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       margin: 0;
     }
-
     main { flex: 1; }
-
     .news-detail-wrapper {
       max-width: 850px;
       margin: 0 auto 60px;
       padding: 0 20px;
     }
-
     .news-main-img-container {
       width: 100%;
       border-radius: 20px;
@@ -41,61 +38,29 @@
       margin: 30px 0;
       background: #f8fafc;
     }
-
     .news-main-img {
       width: 100%;
       max-height: 550px;
       object-fit: cover;
       display: block;
     }
-
     .news-article-body {
       font-size: 1.25rem;
       line-height: 1.8;
       color: #334155;
     }
-
     .news-article-body p {
       margin-bottom: 24px;
     }
-
     .loading-state {
       text-align: center;
       padding: 120px 0;
       color: #94a3b8;
     }
-
-    @media (max-width: 960px) {
-      #primary-nav {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        padding: 20px;
-        border-bottom: 2px solid #1e40af;
-        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        z-index: 1000;
-      }
-
-      #primary-nav[data-open="true"] {
-        display: flex !important;
-      }
-
-      .menu-toggle {
-        display: block !important;
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 1.5rem;
-      }
-    }
-
     [hidden] { display: none !important; }
   </style>
 
+  <!-- نفس ملف API المستخدم في صفحة الأخبار -->
   <script src="/assets/khotwa-api.js"></script>
 </head>
 
@@ -108,25 +73,12 @@
       <span data-lang="ar">مجلس طلاب خطوة</span>
       <span data-lang="en" hidden>Khotwa Council</span>
     </a>
-
-    <button id="menu-toggle" class="menu-toggle" aria-label="Menu" aria-expanded="false">
-      ☰
-    </button>
-
+    <button id="menu-toggle" class="menu-toggle">☰</button>
     <div class="nav-links" id="primary-nav" data-open="false">
-      <a href="/index.html">
-        <span data-lang="ar">الرئيسية</span>
-        <span data-lang="en" hidden>Home</span>
-      </a>
-      <a href="/news.html" class="active">
-        <span data-lang="ar">الأخبار</span>
-        <span data-lang="en" hidden>News</span>
-      </a>
-      <a href="/events.html">
-        <span data-lang="ar">الفعاليات</span>
-        <span data-lang="en" hidden>Events</span>
-      </a>
-      <button id="lang-toggle-btn" class="lang-toggle" aria-label="Toggle language">
+      <a href="/index.html"><span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span></a>
+      <a href="/news.html" class="active"><span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span></a>
+      <a href="/events.html"><span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span></a>
+      <button id="lang-toggle-btn" class="lang-toggle">
         <span data-lang="ar">English</span>
         <span data-lang="en" hidden>عربي</span>
       </button>
@@ -152,9 +104,7 @@
         </p>
       </div>
       <div style="display:flex;gap:1.5rem;">
-        <a href="https://instagram.com/khotwa.sc" target="_blank" rel="noopener noreferrer">
-          Instagram
-        </a>
+        <a href="https://instagram.com/khotwa.sc" target="_blank">Instagram</a>
         <a href="/contact.html" data-lang="ar">تواصل معنا</a>
         <a href="/contact.html" data-lang="en" hidden>Contact Us</a>
       </div>
@@ -162,102 +112,106 @@
   </div>
 </footer>
 
+<script src="/js/menu-toggle.js"></script>
+
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+async function loadNewsDetail() {
+  const params = new URLSearchParams(window.location.search);
+  const id = Number(params.get('id'));
+  const lang = localStorage.getItem('khotwa_lang') || 'ar';
+  const container = document.getElementById('news-content');
 
-  /* ===== Language ===== */
-  const updateLanguage = (lang) => {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.querySelectorAll('[data-lang]').forEach(el => {
-      el.hidden = el.dataset.lang !== lang;
-    });
-    localStorage.setItem('khotwa_lang', lang);
-  };
+  if (!id) {
+    window.location.href = '/news.html';
+    return;
+  }
 
-  updateLanguage(localStorage.getItem('khotwa_lang') || 'ar');
+  try {
+    // نفس الاستدعاء المستخدم في news.html
+    const response = await KhotwaAPI.getNews();
 
-  document.getElementById('lang-toggle-btn')?.addEventListener('click', () => {
-    updateLanguage(document.documentElement.lang === 'ar' ? 'en' : 'ar');
-    loadNewsDetail();
-  });
+    const items = Array.isArray(response)
+      ? response
+      : (response?.result?.data || []);
 
-  /* ===== Menu Toggle ===== */
-  const menuToggle = document.getElementById('menu-toggle');
-  const nav = document.getElementById('primary-nav');
+    const news = items.find(n => Number(n.id) === id);
+    if (!news) throw new Error('Not found');
 
-  menuToggle?.addEventListener('click', () => {
-    const open = nav.dataset.open === 'true';
-    nav.dataset.open = (!open).toString();
-    menuToggle.setAttribute('aria-expanded', (!open).toString());
-  });
-
-  /* ===== Load News Detail ===== */
-  window.loadNewsDetail = async function () {
-    const params = new URLSearchParams(window.location.search);
-    const id = Number(params.get('id'));
-    const container = document.getElementById('news-content');
-    const lang = document.documentElement.lang;
-
-    if (!id) {
-      window.location.href = '/news.html';
-      return;
-    }
-
-    try {
-      const response = await KhotwaAPI.getNews();
-      const items = Array.isArray(response) ? response : (response?.result?.data || []);
-      const news = items.find(n => Number(n.id) === id);
-
-      if (!news) throw new Error('Not found');
-
-      const title = lang === 'ar'
+    const title =
+      lang === 'ar'
         ? (news.titleAr || news.title)
         : (news.titleEn || news.title);
 
-      const content = lang === 'ar'
+    const content =
+      lang === 'ar'
         ? (news.contentAr || news.content)
         : (news.contentEn || news.content);
 
-      const image = news.imageUrl || news.image || news.coverImage || '/apple-touch-icon.png';
+    const image =
+      news.imageUrl || news.image || news.coverImage || '/apple-touch-icon.png';
 
-      container.innerHTML = `
-        <div class="news-detail-wrapper">
-          <header>
-            <h1>${title}</h1>
-            <p style="color:#64748b;margin-bottom:30px;">
-              📅 ${news.date || '2026'}
-            </p>
-          </header>
+    container.innerHTML = `
+      <div class="news-detail-wrapper">
+        <header>
+          <h1 style="font-size:2.5rem;color:#0f172a;margin-bottom:15px;">
+            ${title}
+          </h1>
+          <p style="color:#64748b;margin-bottom:30px;">
+            📅 ${news.date || '2026'}
+          </p>
+        </header>
 
-          <div class="news-main-img-container">
-            <img src="${image}" class="news-main-img" onerror="this.src='/apple-touch-icon.png'">
-          </div>
-
-          <article class="news-article-body">
-            ${
-              content
-                ? content.split('\n')
-                    .filter(p => p.trim())
-                    .map(p => `<p>${p}</p>`)
-                    .join('')
-                : ''
-            }
-          </article>
+        <div class="news-main-img-container">
+          <img src="${image}" class="news-main-img"
+               onerror="this.src='/apple-touch-icon.png'">
         </div>
-      `;
-    } catch (e) {
-      console.error(e);
-      container.innerHTML = `
-        <div class="loading-state">
-          ${lang === 'ar'
-            ? 'عذراً، لم يتم العثور على هذا الخبر.'
-            : 'News not found.'}
-        </div>
-      `;
-    }
+
+        <article class="news-article-body">
+          ${
+            content
+              ? content.split('\n')
+                  .filter(p => p.trim())
+                  .map(p => `<p>${p}</p>`)
+                  .join('')
+              : ''
+          }
+        </article>
+      </div>
+    `;
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = `
+      <div class="loading-state">
+        ${lang === 'ar'
+          ? 'عذراً، لم يتم العثور على هذا الخبر.'
+          : 'News not found.'}
+      </div>
+    `;
+  }
+}
+
+/* تبديل اللغة */
+const langBtn = document.getElementById('lang-toggle-btn');
+if (langBtn) {
+  langBtn.onclick = () => {
+    const current = document.documentElement.lang === 'ar' ? 'en' : 'ar';
+    document.documentElement.lang = current;
+    document.documentElement.dir = current === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.hidden = el.getAttribute('data-lang') !== current;
+    });
+    localStorage.setItem('khotwa_lang', current);
+    loadNewsDetail();
   };
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('khotwa_lang') || 'ar';
+  document.documentElement.lang = savedLang;
+  document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.hidden = el.getAttribute('data-lang') !== savedLang;
+  });
   loadNewsDetail();
 });
 </script>
