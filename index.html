@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>الرئيسية – مجلس طلاب خطوة</title>
-  
+
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/khotwa-redesign.css">
@@ -18,29 +18,95 @@
 
   <style>
     :root { --primary: #1e40af; --ring: #e2e8f0; }
-    
-    .hero { padding: 8rem 0; background: radial-gradient(circle at top right, #f8fafc, #e2e8f0); text-align: center; border-bottom: 1px solid var(--ring); }
-    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--primary); font-weight: 800; margin-bottom: 1.5rem; }
-    .hero p { font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto 2.5rem; line-height: 1.8; }
-    
-    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-main { padding: 1rem 2.5rem; border-radius: 14px; text-decoration: none; font-weight: 700; transition: 0.3s; display: inline-block; }
+
+    .hero {
+      padding: 8rem 0;
+      background: radial-gradient(circle at top right, #f8fafc, #e2e8f0);
+      text-align: center;
+      border-bottom: 1px solid var(--ring);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: #64748b;
+      max-width: 800px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-main {
+      padding: 1rem 2.5rem;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.3s;
+      display: inline-block;
+    }
+
     .btn-primary { background: var(--primary); color: white !important; }
     .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
-    
+
     .stats-section { padding: 4rem 0; background: white; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
-    .stat-item h2 { font-size: 3rem; color: var(--primary); font-weight: 800; margin-bottom: 0.5rem; }
-    
-    .main-footer { background: #ffffff; border-top: 1px solid #e2e8f0; padding: 4rem 0 2rem; margin-top: 4rem; }
-    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
-    .footer-col h4 { color: var(--primary); margin-bottom: 1.5rem; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item h2 {
+      font-size: 3rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .main-footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 4rem 0 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-col h4 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
     .social-icons img { width: 30px; height: 30px; }
 
-    /* تحسين ظهور القائمة بناءً على كود menu-toggle.js */
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid #f1f5f9;
+      color: #94a3b8;
+    }
+
     @media (max-width: 960px) {
       #primary-nav {
-        display: none; 
+        display: none;
         flex-direction: column;
         position: absolute;
         top: 100%;
@@ -52,10 +118,11 @@
         box-shadow: 0 10px 15px rgba(0,0,0,0.1);
         z-index: 1000;
       }
-      /* الربط مع حالة data-open التي يغيرها السكربت */
+
       #primary-nav[data-open="true"] {
         display: flex !important;
       }
+
       .menu-toggle {
         display: block !important;
         background: none;
@@ -64,126 +131,184 @@
         color: var(--primary);
       }
     }
-    
+
     [hidden] { display: none !important; }
   </style>
 </head>
+
 <body>
 
-  <nav class="navbar">
-    <div class="container nav-inner">
-      <a class="brand" href="/index.html">
-        <img src="/apple-touch-icon.png" class="logo" alt="Logo">
-        <span data-lang="ar">مجلس طلاب خطوة</span>
-        <span data-lang="en" hidden>Khotwa Council</span>
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a class="brand" href="/index.html">
+      <img src="/apple-touch-icon.png" class="logo" alt="Logo">
+      <span data-lang="ar">مجلس طلاب خطوة</span>
+      <span data-lang="en" hidden>Khotwa Council</span>
+    </a>
+
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <div class="nav-links" id="primary-nav" data-open="false">
+      <a href="/index.html" class="active">
+        <span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span>
       </a>
-
-      <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
+      <a href="/news.html">
+        <span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span>
+      </a>
+      <a href="/events.html">
+        <span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span>
+      </a>
+      <a href="/calendar.html">
+        <span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span>
+      </a>
+      <button class="lang-toggle" id="lang-toggle-btn" aria-label="Toggle language">
+        <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
       </button>
+    </div>
+  </div>
+</nav>
 
-      <div class="nav-links" id="primary-nav" data-open="false">
-        <a href="/index.html" class="active">
-          <span data-lang="ar">الرئيسية</span><span data-lang="en" hidden>Home</span>
-        </a>
-        <a href="/news.html">
-          <span data-lang="ar">الأخبار</span><span data-lang="en" hidden>News</span>
-        </a>
-        <a href="/events.html">
-          <span data-lang="ar">الفعاليات</span><span data-lang="en" hidden>Events</span>
-        </a>
-        <a href="/calendar.html">
-          <span data-lang="ar">التقويم</span><span data-lang="en" hidden>Calendar</span>
-        </a>
-        <button class="lang-toggle" id="lang-toggle-btn">
-          <span data-lang="ar">English</span><span data-lang="en" hidden>عربي</span>
-        </button>
+<header class="hero">
+  <div class="container">
+    <h1>
+      <span data-lang="ar">أهلاً بك في مجلس خطوة</span>
+      <span data-lang="en" hidden>Welcome to Khotwa Council</span>
+    </h1>
+
+    <p data-lang="ar">البيت الجامعي لطلاب برنامج خطوة في ملبورن. نجمع بين العلم والمبادرة.</p>
+    <p data-lang="en" hidden>The home for Khotwa students in Melbourne. Joining education and initiative.</p>
+
+    <div class="cta-buttons">
+      <a href="/events.html" class="btn-main btn-primary">
+        <span data-lang="ar">استكشف الفعاليات</span><span data-lang="en" hidden>Events</span>
+      </a>
+      <a href="/about.html" class="btn-main btn-secondary">
+        <span data-lang="ar">تعرف علينا</span><span data-lang="en" hidden>About Us</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- 🔢 STATS -->
+<section class="stats-section" id="stats">
+  <div class="container stats-grid">
+    <div class="stat-item">
+      <h2 class="counter" data-target="50">0</h2>
+      <p data-lang="ar">فعالية</p><p data-lang="en" hidden>Events</p>
+    </div>
+    <div class="stat-item">
+      <h2 class="counter" data-target="200">0</h2>
+      <p data-lang="ar">طالب</p><p data-lang="en" hidden>Students</p>
+    </div>
+    <div class="stat-item">
+      <h2 class="counter" data-target="100" data-suffix="%">0%</h2>
+      <p data-lang="ar">دعم طلابي</p><p data-lang="en" hidden>Support</p>
+    </div>
+  </div>
+</section>
+
+<footer class="main-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 data-lang="ar">مجلس طلاب خطوة</h4>
+        <h4 data-lang="en" hidden>Khotwa Council</h4>
+        <p data-lang="ar">تمثيل الطلاب وتقديم الدعم في ملبورن، أستراليا.</p>
+        <p data-lang="en" hidden>Representing and supporting students in Melbourne, Australia.</p>
       </div>
-    </div>
-  </nav>
 
-  <header class="hero">
-    <div class="container">
-      <h1 data-lang="ar">أهلاً بك في مجلس خطوة</h1>
-      <h1 data-lang="en" hidden>Welcome to Khotwa Council</h1>
-      <p data-lang="ar">البيت الجامعي لطلاب برنامج خطوة في ملبورن. نجمع بين العلم والمبادرة.</p>
-      <p data-lang="en" hidden>The home for Khotwa students in Melbourne. Joining education and initiative.</p>
-      <div class="cta-buttons">
-        <a href="/events.html" class="btn-main btn-primary">
-          <span data-lang="ar">استكشف الفعاليات</span><span data-lang="en" hidden>Events</span>
-        </a>
-        <a href="/about.html" class="btn-main btn-secondary">
-          <span data-lang="ar">تعرف علينا</span><span data-lang="en" hidden>About Us</span>
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <section class="stats-section">
-    <div class="container stats-grid">
-      <div class="stat-item"><h2 id="count1">+50</h2><p data-lang="ar">فعالية</p><p data-lang="en" hidden>Events</p></div>
-      <div class="stat-item"><h2 id="count2">+200</h2><p data-lang="ar">طالب</p><p data-lang="en" hidden>Students</p></div>
-      <div class="stat-item"><h2 id="count3">100%</h2><p data-lang="ar">دعم طلابي</p><p data-lang="en" hidden>Support</p></div>
-    </div>
-  </section>
-
-  <footer class="main-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4 data-lang="ar">مجلس طلاب خطوة</h4><h4 data-lang="en" hidden>Khotwa Council</h4>
-          <p data-lang="ar">تمثيل الطلاب وتقديم الدعم في ملبورن، أستراليا.</p>
-          <p data-lang="en" hidden>Representing and supporting students in Melbourne, Australia.</p>
+      <div class="footer-col">
+        <h4 data-lang="ar">تابعنا</h4>
+        <h4 data-lang="en" hidden>Follow Us</h4>
+        <div class="social-icons">
+          <a href="https://instagram.com/khotwa.sc" target="_blank" rel="noopener noreferrer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
+          </a>
         </div>
-        <div class="footer-col">
-          <h4 data-lang="ar">تابعنا</h4><h4 data-lang="en" hidden>Follow Us</h4>
-          <div class="social-icons">
-            <a href="https://instagram.com/khotwa.sc" target="_blank">
-               <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom" style="text-align: center; padding-top: 2rem; border-top: 1px solid #f1f5f9; color: #94a3b8;">
-        <p>© 2026 Khotwa Council | <span data-lang="ar">ملبورن، أستراليا</span><span data-lang="en" hidden>Melbourne, Australia</span></p>
       </div>
     </div>
-  </footer>
 
-  <script src="/assets/push-notifications.js"></script>
-  <script src="/assets/comments-and-registration.js"></script>
-  <script src="/js/menu-toggle.js"></script>
+    <div class="footer-bottom">
+      <p>© 2026 Khotwa Council |
+        <span data-lang="ar">ملبورن، أستراليا</span>
+        <span data-lang="en" hidden>Melbourne, Australia</span>
+      </p>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    // نظام تبديل اللغة
-    const langBtn = document.getElementById('lang-toggle-btn');
-    const updateLanguage = (lang) => {
-      document.documentElement.lang = lang;
-      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        el.hidden = el.getAttribute('data-lang') !== lang;
-      });
-      localStorage.setItem('khotwa_lang', lang);
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ===== Language System ===== */
+  const langBtn = document.getElementById('lang-toggle-btn');
+  const updateLanguage = (lang) => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.hidden = el.dataset.lang !== lang;
+    });
+    localStorage.setItem('khotwa_lang', lang);
+  };
+  updateLanguage(localStorage.getItem('khotwa_lang') || 'ar');
+  langBtn?.addEventListener('click', () => {
+    updateLanguage(document.documentElement.lang === 'ar' ? 'en' : 'ar');
+  });
+
+  /* ===== Menu Toggle ===== */
+  const menuToggle = document.getElementById('menu-toggle');
+  const nav = document.getElementById('primary-nav');
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = nav.dataset.open === 'true';
+    nav.dataset.open = (!isOpen).toString();
+    menuToggle.setAttribute('aria-expanded', (!isOpen).toString());
+  });
+
+  /* ===== Stats Counter Animation ===== */
+  const counters = document.querySelectorAll('.counter');
+
+  const animateCounter = (el) => {
+    const target = +el.dataset.target;
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const increment = Math.max(1, Math.floor(target / 80));
+
+    const update = () => {
+      current += increment;
+      if (current >= target) {
+        el.textContent = target + suffix;
+      } else {
+        el.textContent = current + suffix;
+        requestAnimationFrame(update);
+      }
     };
+    update();
+  };
 
-    if(langBtn) {
-      langBtn.onclick = () => {
-        const current = document.documentElement.lang === 'ar' ? 'en' : 'ar';
-        updateLanguage(current);
-      };
-    }
-
-    // عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', () => {
-      updateLanguage(localStorage.getItem('khotwa_lang') || 'ar');
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
       }
     });
-  </script>
+  }, { threshold: 0.6 });
+
+  counters.forEach(counter => observer.observe(counter));
+
+  /* ===== Service Worker ===== */
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .catch(err => console.warn('Service Worker failed:', err));
+  }
+});
+</script>
+
 </body>
 </html>
